@@ -28,7 +28,6 @@ a {
 #header h1 {
   font-size: 20px;
   color: white;
-  margin-right: 100px;
   font-weight: bold;
 }
 
@@ -38,8 +37,9 @@ a {
 }
 
 #header .button {
-    float: left;
-    margin: -2px 0 -3px 50px;
+    position: absolute;
+    top: 8px;
+    left: 60px;
     padding: 4px 10px;
 }
 
@@ -50,6 +50,10 @@ a {
 #content h1 {
     color: white;
     font-size: 24px;
+}
+
+#content h2 {
+    margin-top: 4px;
 }
 
 ul.albums, ul.thumbs {
