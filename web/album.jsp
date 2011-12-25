@@ -14,6 +14,7 @@
 <div id="header">
     <a href="/" class="button" onclick="return transitionTo(this.href)">Gallery<span></span></a>
     <h1 id="title"><%=album.getTitle().getPlainText()%> <span class="by">by <%=album.getNickname()%></span></h1>
+    <a href="http://picasaweb.google.com/<%=album.getUsername()%>" class="button right"><img src="/img/picasa-logo.png">Picasaweb<span></span></a>
 </div>
 <div id="content">
     <h1><%=album.getTitle().getPlainText()%></h1>

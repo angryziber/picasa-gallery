@@ -43,6 +43,18 @@ a {
     padding: 4px 10px;
 }
 
+#header .button.right {
+    top: 8px;
+    right: 50px;
+    left: auto;
+}
+
+#header .button img {
+    position: relative;
+    height: 16px;
+    margin: -2px 3px -3px 0;
+}
+
 #content {
     margin: 60px 20px 20px 40px;
 }

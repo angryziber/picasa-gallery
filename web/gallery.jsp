@@ -11,6 +11,7 @@
 <body>
 <div id="header">
     <h1 id="title"><%=gallery.getNickname()%> Photography</h1>
+    <a href="http://picasaweb.google.com/<%=gallery.getUsername()%>" class="button right"><img src="/img/picasa-logo.png">Picasaweb<span></span></a>
 </div>
 <div id="content">
     <ul class="albums">
