@@ -27,7 +27,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="AppEngine API" level="project" />
-    <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="web-inf-lib" level="project" />
   </component>
 </module>
 

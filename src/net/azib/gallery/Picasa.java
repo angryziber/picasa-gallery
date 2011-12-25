@@ -14,6 +14,10 @@ public class Picasa {
 
     PicasawebService service = new PicasawebService("xxx");
 
+    public String getTitle() {
+        return "Albums";
+    }
+
     public List<AlbumEntry> getAlbums() throws IOException, ServiceException {
         UserFeed feed = service.getFeed(new URL("https://picasaweb.google.com/data/feed/api/user/" + USER + "?kind=album"), UserFeed.class);
         return feed.getAlbumEntries();
