@@ -29,7 +29,7 @@ public class Picasa {
     }
 
     public AlbumFeed getAlbum(String name) {
-        return feed("https://picasaweb.google.com/data/feed/api/user/" + USER + "/album/" + name + "?imgmax=1600&thumbsize=144c", AlbumFeed.class);
+        return feed("https://picasaweb.google.com/data/feed/api/user/" + USER + "/album/" + name + "?imgmax=1024&thumbsize=144c", AlbumFeed.class);
     }
 
     private <T extends IFeed> T feed(String url, Class<T> type) {

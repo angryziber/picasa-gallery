@@ -4,9 +4,13 @@ body {
   background: black;
 }
 
+a {
+    text-decoration: none;
+}
+
 #header {
   position: fixed;
-  z-index: 1000;
+  z-index: 10;
   top: 0;
   width: 100%;
   padding: 10px;
@@ -19,6 +23,11 @@ body {
   filter: alpha(opacity=80);
   margin-left: -20px;
   border-bottom: 1px solid black;
+}
+
+#header h1 {
+    font-size: 20px;
+    color: white;
 }
 
 #content {
@@ -78,7 +87,7 @@ ul.albums li .title {
 ul.albums li:hover .title {
     overflow: visible;
     width: auto;
-    z-index: 100;
+    z-index: 9;
     opacity: 0.8;
 }
 
@@ -94,104 +103,6 @@ ul.albums li:hover .title > .info {
     display: inline;
 }
 
-div.thumbs  {
-  margin: 50px 12px 12px 12px;
-  clear: both;
-  padding: 6px;
-  text-align: center;
-}
-
-
-
-div.thumbs img.horizontal {
-  width: 256px;
-}
-
-div.thumbs img.vertical {
-  height: 256px;
-}
-
-div.thumbs a {
-  margin: 2px;
-  padding: 8px;
-  display: block;
-  float: left;
-  width: 260px;
-  height: 260px;
-  line-height: 260px;
-  background-color: #333333;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-}
-
-div.thumbs a:hover {
-  background-color: #444444;
-}
-
-div.thumbs img, div.photo img {
-  vertical-align: middle;
-  padding: 1px;
-  border: 1px solid #AAAAAA;
-}
-
-#navi_photo {
-  position: absolute;
-  left: 10px;
-}
-
-#navi_thumbs {
-  position: absolute;
-  right: 20px;
-}
-
-.navi a {
-  float: left;
-  border: 1px solid #444444;
-  display: block;
-  height: 1.4em;
-  margin-left: 10px;
-  text-align: center;
-  padding-top: 1px;
-  padding-left: 12px;
-  padding-right: 12px;
-  color: #000000;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 4px;
-}
-
-.navi a:hover {
-  text-decoration: none;
-  background-color: #FEFEFE;
-  color: #000000;
-}
-
-#title {
-  font-weight: bold;
-  margin: 0;
-  padding: 0;
-  margin-left: 3px;
-  font-size: large;
-}
-
-a {
-  text-decoration: none;
-  color: #000000;
-}
-
-div.photo {
-  text-align: center;
-  vertical-align: middle;
-  margin-top: 60px;
-  margin-bottom: 60px;
-}
-
-div.photo a {
-  color: #AAAAAA;
-  display: inline;
-  float: none;
-}
-
-div.photo a:hover {
-  text-decoration: underline;
-  text-color: #FEFEFE;
+#sb-wrapper-inner {
+    border: 2px solid white !important;
 }

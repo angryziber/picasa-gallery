@@ -2,15 +2,24 @@
 <%@ page import="net.azib.gallery.Picasa" %>
 <%@ page import="com.google.gdata.data.photos.AlbumFeed" %>
 <%@ page import="com.google.gdata.data.photos.PhotoEntry" %>
+<%@ page import="com.google.gdata.data.media.mediarss.MediaContent" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% AlbumFeed album = new Picasa().getAlbum(request.getPathInfo().substring(1)); %>
 <html>
 <head>
     <title><%=album.getTitle().getPlainText()%></title>
     <link rel="stylesheet" media="screen" href="reset.css">
+    <link rel="stylesheet" media="screen" href="shadowbox/shadowbox.css">
     <link rel="stylesheet" media="screen" href="gallery.css">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-    <%--<script type="text/javascript" src="gallery.js"></script>--%>
+    <script type="text/javascript" src="shadowbox/shadowbox.js"></script>
+    <script type="text/javascript">
+        Shadowbox.init({
+            continuous: true,
+            overlayOpacity: 0.8,
+            viewportPadding: 5
+        });
+    </script>
 </head>
 <body>
 <div id="header">
@@ -24,7 +33,10 @@
     <ul class="thumbs">
         <% for (PhotoEntry photo : album.getPhotoEntries()) { %>
             <li>
-                <a href="<%=photo.getMediaContents().get(0).getUrl()%>">
+                <% MediaContent media = photo.getMediaContents().get(0); %>
+                <a id="<%=photo.getGphotoId()%>" href="<%=media.getUrl()%>"
+                   title="<%=photo.getDescription().getPlainText()%>"
+                   rel="shadowbox[album];height=<%=media.getHeight()%>;width=<%=media.getWidth()%>">
                     <img src="<%=photo.getMediaThumbnails().get(0).getUrl()%>">
                 </a>
             </li>
