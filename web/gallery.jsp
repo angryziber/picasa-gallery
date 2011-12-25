@@ -6,20 +6,17 @@
 <html>
 <head>
     <title>Photos by <%=gallery.getNickname()%></title>
-    <link rel="stylesheet" media="screen" href="reset.css">
-    <link rel="stylesheet" media="screen" href="gallery.css">
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-    <%--<script type="text/javascript" src="gallery.js"></script>--%>
+    <%@include file="head.jsp"%>
 </head>
 <body>
 <div id="header">
-    <h1 id="title">Photos by <%=gallery.getNickname()%></h1>
+    <h1 id="title">Albums by <%=gallery.getNickname()%></h1>
 </div>
 <div id="content">
     <ul class="albums">
         <% for (AlbumEntry album : gallery.getAlbumEntries()) { %>
             <li>
-                <a href="<%=album.getName()%>">
+                <a onclick="return transitionTo(this.href)" href="/<%=album.getName()%>">
                     <img src="<%=album.getMediaThumbnails().get(0).getUrl()%>">
                     <div class="title">
                         <span class="info"><%=album.getPhotosUsed()%></span>

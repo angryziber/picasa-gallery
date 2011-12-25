@@ -8,22 +8,11 @@
 <html>
 <head>
     <title><%=album.getTitle().getPlainText()%> by <%=album.getNickname()%></title>
-    <link rel="stylesheet" media="screen" href="reset.css">
-    <link rel="stylesheet" media="screen" href="shadowbox/shadowbox.css">
-    <link rel="stylesheet" media="screen" href="gallery.css">
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-    <script type="text/javascript" src="shadowbox/shadowbox.js"></script>
-    <script type="text/javascript">
-        Shadowbox.init({
-            continuous: true,
-            overlayOpacity: 0.8,
-            viewportPadding: 5
-        });
-    </script>
+    <%@include file="head.jsp"%>
 </head>
 <body>
 <div id="header">
-    <a href="/" class="button">Gallery<span></span></a>
+    <a href="/" class="button" onclick="return transitionTo(this.href)">Gallery<span></span></a>
     <h1 id="title"><%=album.getTitle().getPlainText()%> <span class="by">by <%=album.getNickname()%></span></h1>
 </div>
 <div id="content">
