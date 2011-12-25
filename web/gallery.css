@@ -2,11 +2,11 @@ body {
   font-family: luxi sans, trebuchet ms, sans-serif;
   color: #888;
   background: black;
-  margin-top: 60px;
 }
 
 #header {
   position: fixed;
+  z-index: 1000;
   top: 0;
   width: 100%;
   padding: 10px;
@@ -17,31 +17,46 @@ body {
   text-align: center;
   opacity: 0.8;
   filter: alpha(opacity=80);
-  margin-left: -12px;
+  margin-left: -20px;
+  border-bottom: 1px solid black;
 }
 
-ul.albums {
+#content {
+    margin: 60px 20px 20px 40px;
+}
+
+#content h1 {
+    color: white;
+    font-size: 24px;
+}
+
+ul.albums, ul.thumbs {
     list-style: none;
-    padding: 0 20px;
 }
 
-ul.albums img {
+ul.albums li, ul.thumbs li {
+    float: left;
+    margin: 0 10px 10px 0;
+    position: relative;
+}
+
+ul.albums li img, ul.thumbs li img {
+    border: 3px solid #313131;
+}
+
+ul.albums li img {
     width: 160px;
     height: 160px;
 }
 
-ul.albums li {
-    float: left;
-    margin: 5px;
-    position: relative;
+ul.thumbs li {
+    width: 155px;
+    height: 155px;
+    text-align: center;
 }
 
-ul.albums li img {
-    border: 3px solid #313131;
-}
-
-ul.albums li .holder {
-    position: relative;
+ul.albums li:hover img {
+    border-color: #616161;
 }
 
 ul.albums li .title {
@@ -85,6 +100,8 @@ div.thumbs  {
   padding: 6px;
   text-align: center;
 }
+
+
 
 div.thumbs img.horizontal {
   width: 256px;
@@ -148,17 +165,12 @@ div.thumbs img, div.photo img {
   color: #000000;
 }
 
-#title, #offline {
+#title {
   font-weight: bold;
   margin: 0;
   padding: 0;
   margin-left: 3px;
   font-size: large;
-  letter-spacing: .3em;
-}
-
-#offline {
-  color: red;
 }
 
 a {
