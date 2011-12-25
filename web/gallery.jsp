@@ -10,7 +10,7 @@
 </head>
 <body>
 <div id="header">
-    <h1 id="title">Albums by <%=gallery.getNickname()%></h1>
+    <h1 id="title"><%=gallery.getNickname()%> Photography</h1>
 </div>
 <div id="content">
     <ul class="albums">
