@@ -7,7 +7,7 @@
 <% AlbumFeed album = new Picasa().getAlbum(request.getPathInfo().substring(1)); %>
 <html>
 <head>
-    <title><%=album.getTitle().getPlainText()%></title>
+    <title><%=album.getTitle().getPlainText()%> by <%=album.getNickname()%></title>
     <link rel="stylesheet" media="screen" href="reset.css">
     <link rel="stylesheet" media="screen" href="shadowbox/shadowbox.css">
     <link rel="stylesheet" media="screen" href="gallery.css">
@@ -23,7 +23,8 @@
 </head>
 <body>
 <div id="header">
-    <h1 id="title"><%=album.getTitle().getPlainText()%></h1>
+    <a href="/" class="button">Gallery<span></span></a>
+    <h1 id="title"><%=album.getTitle().getPlainText()%> <span class="by">by <%=album.getNickname()%></span></h1>
 </div>
 <div id="content">
     <h1><%=album.getTitle().getPlainText()%></h1>

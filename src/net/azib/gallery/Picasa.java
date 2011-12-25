@@ -17,15 +17,10 @@ import java.util.List;
 public class Picasa {
     static String USER = "anton.keks";
 
-    PicasawebService service = new PicasawebService("xxx");
+    PicasawebService service = new PicasawebService(USER);
 
-    public String getTitle() {
-        return "Albums";
-    }
-
-    public List<AlbumEntry> getAlbums() {
-        UserFeed feed = feed("http://picasaweb.google.com/data/feed/api/user/" + USER + "?kind=album", UserFeed.class);
-        return feed.getAlbumEntries();
+    public UserFeed getGallery() {
+        return feed("http://picasaweb.google.com/data/feed/api/user/" + USER + "?kind=album&thumbsize=160c", UserFeed.class);
     }
 
     public AlbumFeed getAlbum(String name) {
