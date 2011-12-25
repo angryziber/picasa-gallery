@@ -87,33 +87,37 @@ ul.albums li .title {
     left: 3px;
     padding: 4px 4px 0 3px;
     color: white;
-    background: black;
-    opacity: 0.5;
+    background-color: black;
+    background-color: rgba(0,0,0,0.5);
     width: 153px;
     min-width: 153px;
     height: 19px;
     overflow: hidden;
     white-space: nowrap;
     text-shadow: 1px 1px black;
+    -webkit-transition: background-color 2s ease-out;
 }
 
 ul.albums li:hover .title {
     overflow: visible;
     width: auto;
     z-index: 9;
-    opacity: 0.8;
+    background-color: rgba(0,0,0,0.8);
+    -webkit-transition: background-color 500ms ease-out;
 }
 
 ul.albums li .title > .info {
-    display: none;
     color: gray;
     float: right;
     margin-left: 3px;
     width: auto;
+    opacity: 0;
+    -webkit-transition: opacity 1s ease-out;
 }
 
 ul.albums li:hover .title > .info {
-    display: inline;
+    opacity: 1;
+    -webkit-transition: opacity 500ms ease-out;
 }
 
 #sb-wrapper-inner {
