@@ -3,17 +3,13 @@
            xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
            version="2.5">
 
-    <servlet>
-        <servlet-name>index</servlet-name>
-        <jsp-file>/index.jsp</jsp-file>
-    </servlet>
+    <filter>
+        <filter-name>router</filter-name>
+        <filter-class>net.azib.photos.RequestRouter</filter-class>
+    </filter>
 
-    <servlet-mapping>
-        <servlet-name>index</servlet-name>
+    <filter-mapping>
+        <filter-name>router</filter-name>
         <url-pattern>/*</url-pattern>
-    </servlet-mapping>
-
-    <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
-    </welcome-file-list>
+    </filter-mapping>
 </web-app>

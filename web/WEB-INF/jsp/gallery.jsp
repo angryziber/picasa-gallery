@@ -1,11 +1,11 @@
 <%@ page import="com.google.gdata.data.photos.AlbumEntry" %>
-<%@ page import="net.azib.gallery.Picasa" %>
+<%@ page import="net.azib.photos.Picasa" %>
 <%@ page import="com.google.gdata.data.photos.UserFeed" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% UserFeed gallery = new Picasa().getGallery(); %>
+<% UserFeed gallery = (UserFeed) request.getAttribute("gallery"); %>
 <html>
 <head>
-    <title>Photos by <%=gallery.getNickname()%></title>
+    <title><%=gallery.getNickname()%> Photography</title>
     <%@include file="head.jsp"%>
 </head>
 <body>

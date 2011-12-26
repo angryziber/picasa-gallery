@@ -1,13 +1,12 @@
 <%@ page import="com.google.gdata.data.photos.AlbumEntry" %>
-<%@ page import="net.azib.gallery.Picasa" %>
+<%@ page import="net.azib.photos.Picasa" %>
 <%@ page import="com.google.gdata.data.photos.AlbumFeed" %>
 <%@ page import="com.google.gdata.data.photos.PhotoEntry" %>
 <%@ page import="com.google.gdata.data.media.mediarss.MediaContent" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-String[] parts = request.getPathInfo().split("/");
-AlbumFeed album = new Picasa().getAlbum(parts[1]);
-String requestedPhotoId = parts.length > 2 ? parts[2] : null;
+AlbumFeed album = (AlbumFeed) request.getAttribute("album");
+String requestedPhotoId = (String) request.getAttribute("photoId");
 %>
 <html>
 <head>
