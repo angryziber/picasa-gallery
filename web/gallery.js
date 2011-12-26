@@ -96,8 +96,15 @@ function initMap() {
         minZoom: 1
     });
     for (var i in markers) {
-        new google.maps.Marker({position: markers[i].pos, map: map, title: markers[i].title});
+        var marker = new google.maps.Marker({position: markers[i].pos, map: map, title: markers[i].title});
         bounds.extend(markers[i].pos);
+        function listen(i) {
+            google.maps.event.addListener(marker, 'click', function() {
+                $('.albums a').eq(i).click();
+            });
+        }
+        listen(i);
+        markers[i].marker = marker;
     }
     map.fitBounds(bounds);
 }
@@ -106,7 +113,9 @@ function updateLayout() {
     var photoWidth = ($('.albums').length ? 166 : 150) + 10;
     var photosInRow = Math.floor($(window).width() / photoWidth);
     $('#content').width(photosInRow * photoWidth);
-    if ($('#map').length) initMap();
+    if ($('#map').length) {
+        setTimeout(initMap, 300);
+    }
 }
 
 $(function() {
