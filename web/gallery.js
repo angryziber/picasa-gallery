@@ -1,8 +1,10 @@
-function transitionTo(href) {
-    if (!history.pushState) return true;
+if (history.replaceState) history.replaceState(location.pathname, window.title, location.pathname);
+window.onpopstate = function(event) {
+    console.log('pop ' + event.state);
+    if (event.state) onStateChange(event.state);
+};
 
-    history.pushState(href, href, href);
-
+function onStateChange(href) {
     if (Shadowbox.isOpen()) {
         Shadowbox.close();
         return;
@@ -28,34 +30,32 @@ function transitionTo(href) {
         content.fadeIn();
         Shadowbox.setup();
     });
+}
+
+function transitionTo(href) {
+    if (!history.pushState) return true;
+
+    history.pushState(href, href, href);
+    onStateChange(href);
     return false;
 }
 
-function updatePhotoURL(e) {
-    var id = e.link.id;
+function stateURL(e) {
     var album = location.pathname.split('/')[1];
-    var url = '/' + album + '/' + id;
-    if (history.pushState)
-        history.pushState(url, e.link.title, url);
-}
-
-function returnAlbumURL() {
-    var album = location.pathname.split('/')[1];
-    var url = '/' + album;
-    if (history.pushState)
-        history.pushState(url, '', url);
+    return '/' + album + (e ? '/' + e.link.id : '');
 }
 
 Shadowbox.init({
     continuous: true,
     overlayOpacity: 0.8,
     viewportPadding: 5,
-    onOpen: updatePhotoURL,
-    onChange: updatePhotoURL,
-    onClose: returnAlbumURL
+    onOpen: function(e) {
+        if (history.pushState) history.pushState(stateURL(e), e.link.title, stateURL(e));
+    },
+    onChange: function(e) {
+        if (history.replaceState) history.replaceState(stateURL(e), e.link.title, stateURL(e));
+    },
+    onClose: function() {
+        if (history.replaceState) history.replaceState(stateURL(), '', stateURL());
+    }
 });
-
-if (history.replaceState) history.replaceState(location.pathname, window.title, location.pathname);
-window.onpopstate = function(event) {
-    if (event.state) transitionTo(event.state);
-};
