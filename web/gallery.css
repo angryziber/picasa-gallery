@@ -175,14 +175,14 @@ ul.albums li:hover .title > .info {
     font-weight: bold;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
     background-image: -webkit-gradient(linear, 0% 0%, 0% 90%, from(rgba(4, 4, 4, 10.9)), to(rgba(92, 92, 92, 1)));
-    background-image: -moz-linear-gradient(top, bottom, from(rgba(4, 4, 4, 0.9)), to(rgba(92, 92, 92, 1)));
+    background-image: -moz-linear-gradient(top, rgba(4, 4, 4, 0.9), rgba(92, 92, 92, 1));
     -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 4px, rgba(0, 0, 0, 0.6) 0px -2px 6px;
     -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 4px, rgba(0, 0, 0, 0.6) 0px -2px 6px;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 4px, rgba(0, 0, 0, 0.6) 0px -2px 6px;
 }
 .button:hover {
-    background-image: -webkit-gradient(linear, 0% 0%, 0% 90%, from(rgba(4, 4, 4, 10.9)), to(rgba(192, 192, 192, 1)));
-    background-image: -moz-linear-gradient(top, bottom, from(rgba(4, 4, 4, 0.9)), to(rgba(192, 192, 192, 1)));
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 90%, from(rgba(4, 4, 4, 10.9)), to(rgb(164, 164, 164)));
+    background-image: -moz-linear-gradient(top, rgba(4, 4, 4, 0.9), rgb(164, 164, 164));
 }
 .button:active {
     box-shadow: none;
@@ -199,5 +199,5 @@ ul.albums li:hover .title > .info {
     border-radius: 4px;
     background-color: rgba(255, 255, 255, 0.25);
     background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255, 255, 255, 0.8)), to(rgba(255, 255, 255, 0)));
-    background-image: -moz-linear-gradient(top, bottom, from(rgba(255, 255, 255, 0.8)), to(rgba(255, 255, 255, 0)));
+    background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
 }
