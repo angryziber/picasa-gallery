@@ -1,0 +1,6 @@
+Good-looking frontend for Google's Picasaweb photo galleries.
+Uses Google Data API to fetch and display your albums and photos.
+
+A small Java application made to be hosted for free on Google App Engine.
+
+For all those you wished their Picasaweb gallery had black background!
