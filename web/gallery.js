@@ -1,4 +1,6 @@
-if (history.replaceState) history.replaceState(location.href, window.title, location.href);
+var ajaxNavigation = history.replaceState && !navigator.appVersion.match(/Mobile/);
+
+if (ajaxNavigation) history.replaceState(location.href, window.title, location.href);
 window.onpopstate = function(event) {
     if (event.state) onStateChange(event.state);
 };
@@ -32,7 +34,7 @@ function onStateChange(href) {
 }
 
 function transitionTo(href) {
-    if (!history.pushState) return true;
+    if (!ajaxNavigation) return true;
 
     history.pushState(href, href, href);
     onStateChange(href);
@@ -40,7 +42,7 @@ function transitionTo(href) {
 }
 
 function goto(href) {
-    if (history.pushState) transitionTo(href);
+    if (ajaxNavigation) transitionTo(href);
     else location.href = href;
 }
 

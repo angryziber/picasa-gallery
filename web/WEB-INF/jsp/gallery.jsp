@@ -4,6 +4,7 @@
 
 <html>
 <head>
+    <meta name="viewport" content="width=600">
     <title>${gallery.nickname} Photography</title>
     <%@include file="head.jsp"%>
 </head>

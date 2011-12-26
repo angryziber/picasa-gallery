@@ -18,11 +18,7 @@ public class RequestRouter implements Filter {
         String agent = request.getHeader("User-Agent");
         String path = request.getRequestURI();
 
-        if (agent != null && agent.contains("Mobile")) {
-            // redirect mobile users to the real Picasaweb
-            response.sendRedirect("http://picasaweb.google.com/" + Picasa.USER);
-        }
-        else if (path == null || "/".equals(path)) {
+        if (path == null || "/".equals(path)) {
             request.setAttribute("gallery", picasa.getGallery());
             render("gallery", request, response);
         }
