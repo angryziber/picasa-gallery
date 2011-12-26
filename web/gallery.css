@@ -107,6 +107,10 @@ ul.albums li img, ul.thumbs li img {
     border: 3px solid #313131;
 }
 
+ul.albums li {
+    height: 166px; /* for FF */
+}
+
 ul.albums li img {
     width: 160px;
     height: 160px;
