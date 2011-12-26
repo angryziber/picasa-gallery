@@ -28,6 +28,7 @@ function onStateChange(href) {
         var content = html.filter('#content');
         content.hide();
         $('#content').replaceWith(content);
+        updateLayout();
         content.fadeIn();
         Shadowbox.setup();
     });
@@ -70,18 +71,54 @@ Shadowbox.init({
     }
 });
 
-$.ajaxSetup({
-   error: function(req) {
-       if (req.status == 0) return;
-       alert('Failed: ' + req.status + ' ' + req.statusText + (req.responseText && req.responseText.length < 200 ? ': ' + req.responseText : ''));
-       location.href = '/';
-   }
-});
-
 function doSearch() {
     goto('/' + $('#search').val());
     return false;
 }
+
+var markers = [];
+var map, bounds;
+function latLng(lat, lon) {
+    return new google.maps.LatLng(lat, lon);
+}
+function initMap() {
+    bounds = new google.maps.LatLngBounds();
+    map = new google.maps.Map($('#map')[0], {
+        mapTypeId: google.maps.MapTypeId.TERRAIN,
+        styles: [{
+            stylers: [
+              { saturation: -5 },
+              { gamma: 0.38 },
+              { lightness: -33 }
+            ]
+        }],
+        streetViewControl: false,
+        minZoom: 1
+    });
+    for (var i in markers) {
+        new google.maps.Marker({position: markers[i].pos, map: map, title: markers[i].title});
+        bounds.extend(markers[i].pos);
+    }
+    map.fitBounds(bounds);
+}
+
+function updateLayout() {
+    var photoWidth = ($('.albums').length ? 166 : 150) + 10;
+    var photosInRow = Math.floor($(window).width() / photoWidth);
+    $('#content').width(photosInRow * photoWidth);
+    if ($('#map').length) initMap();
+}
+
+$(function() {
+    updateLayout();
+    $.ajaxSetup({
+       error: function(req) {
+           if (req.status == 0) return;
+           alert('Failed: ' + req.status + ' ' + req.statusText + (req.responseText && req.responseText.length < 200 ? ': ' + req.responseText : ''));
+           location.href = '/';
+       }
+    });
+});
 
 (function($) {
     $.fn.touchwipe = function(settings) {

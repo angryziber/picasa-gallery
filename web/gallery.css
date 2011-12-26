@@ -76,7 +76,12 @@ a {
 }
 
 #content {
-    margin: 60px 20px 20px 40px;
+    width: 960px;
+    margin: 60px auto;
+}
+
+.clear {
+    clear: left;
 }
 
 #content h1 {
@@ -157,10 +162,11 @@ ul.albums li:hover .title > .info {
 }
 
 #map {
-    height: 300px;
-    width: 95%;
-    margin-top: 20px;
-    clear: both;
+    float: right;
+    width: 336px;
+    height: 336px;
+    margin: 0 10px 10px 0;
+    border: 3px solid #313131;
 }
 
 #sb-wrapper-inner {
