@@ -2,8 +2,13 @@ function transitionTo(href) {
     if (!history.pushState) return true;
 
     history.pushState(href, href, href);
-    $('#content').fadeOut();
 
+    if (Shadowbox.isOpen()) {
+        Shadowbox.close();
+        return;
+    }
+
+    $('#content').fadeOut();
     loadingReady = false;
     setTimeout(function() {
         if (!loadingReady)
@@ -26,17 +31,31 @@ function transitionTo(href) {
     return false;
 }
 
-function init() {
-    Shadowbox.init({
-        continuous: true,
-        overlayOpacity: 0.8,
-        viewportPadding: 5
-    });
+function updatePhotoURL(e) {
+    var id = e.link.id;
+    var album = location.pathname.split('/')[1];
+    var url = '/' + album + '/' + id;
+    if (history.pushState)
+        history.pushState(url, e.link.title, url);
 }
 
-init();
-if (history.replaceState) history.replaceState(location.href, window.title, location.href);
+function returnAlbumURL() {
+    var album = location.pathname.split('/')[1];
+    var url = '/' + album;
+    if (history.pushState)
+        history.pushState(url, '', url);
+}
 
-window.onPopState = function(event) {
+Shadowbox.init({
+    continuous: true,
+    overlayOpacity: 0.8,
+    viewportPadding: 5,
+    onOpen: updatePhotoURL,
+    onChange: updatePhotoURL,
+    onClose: returnAlbumURL
+});
+
+if (history.replaceState) history.replaceState(location.pathname, window.title, location.pathname);
+window.onpopstate = function(event) {
     if (event.state) transitionTo(event.state);
 };

@@ -4,11 +4,20 @@
 <%@ page import="com.google.gdata.data.photos.PhotoEntry" %>
 <%@ page import="com.google.gdata.data.media.mediarss.MediaContent" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% AlbumFeed album = new Picasa().getAlbum(request.getPathInfo().substring(1)); %>
+<%
+String[] parts = request.getPathInfo().split("/");
+AlbumFeed album = new Picasa().getAlbum(parts[1]);
+String requestedPhotoId = parts.length > 2 ? parts[2] : null;
+%>
 <html>
 <head>
     <title><%=album.getTitle().getPlainText()%> by <%=album.getNickname()%></title>
     <%@include file="head.jsp"%>
+    <% if (requestedPhotoId != null) { %>
+        <script type="text/javascript">
+            $(window).load(function() { $('a#<%=requestedPhotoId%>').click(); });
+        </script>
+    <% } %>
 </head>
 <body>
 <div id="header">
