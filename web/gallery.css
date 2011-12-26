@@ -156,6 +156,13 @@ ul.albums li:hover .title > .info {
     -webkit-transition: opacity 500ms ease-out;
 }
 
+#map {
+    height: 300px;
+    width: 95%;
+    margin-top: 20px;
+    clear: both;
+}
+
 #sb-wrapper-inner {
     border: 2px solid white !important;
 }
