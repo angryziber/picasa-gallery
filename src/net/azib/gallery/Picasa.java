@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.List;
 
 public class Picasa {
-    static String USER = "anton.keks";
+    public static String USER = "anton.keks";
 
     PicasawebService service = new PicasawebService(USER);
 
