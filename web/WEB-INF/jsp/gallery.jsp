@@ -9,8 +9,9 @@
 </head>
 <body>
 <div id="header">
+    <a href="http://picasaweb.google.com/${gallery.username}" class="button"><img src="/img/picasa-logo.png">Picasaweb<span></span></a>
     <h1 id="title">${gallery.nickname} Photography</h1>
-    <a href="http://picasaweb.google.com/${gallery.username}" class="button right"><img src="/img/picasa-logo.png">Picasaweb<span></span></a>
+    <form onsubmit="return doSearch()"><input id="search"></form>
 </div>
 <div id="content">
     <ul class="albums">

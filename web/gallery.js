@@ -39,6 +39,11 @@ function transitionTo(href) {
     return false;
 }
 
+function goto(href) {
+    if (history.pushState) transitionTo(href);
+    else location.href = href;
+}
+
 function stateURL(e) {
     var album = location.pathname.split('/')[1];
     return '/' + album + (e ? '/' + e.link.id : '');
@@ -66,3 +71,8 @@ $.ajaxSetup({
        location.href = '/';
    }
 });
+
+function doSearch() {
+    goto('/' + $('#search').val());
+    return false;
+}

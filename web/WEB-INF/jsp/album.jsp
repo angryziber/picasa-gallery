@@ -16,7 +16,7 @@
 <div id="header">
     <a href="/" class="button" onclick="return transitionTo(this.href)">Gallery<span></span></a>
     <h1 id="title">${album.title.plainText} <span class="by">by ${album.nickname}</span></h1>
-    <a href="http://picasaweb.google.com/${album.username}" class="button right"><img src="/img/picasa-logo.png">Picasaweb<span></span></a>
+    <form onsubmit="return doSearch()"><input id="search"></form>
 </div>
 <div id="content">
     <h1>${album.title.plainText}</h1>

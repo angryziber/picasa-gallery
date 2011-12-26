@@ -2,6 +2,7 @@ body {
   font-family: luxi sans, trebuchet ms, sans-serif;
   color: #888;
   background: black;
+  overflow-y: scroll;
 }
 
 a {
@@ -44,8 +45,24 @@ a {
 }
 
 #header .button.right {
-    right: 50px;
+    right: 20px;
     left: auto;
+}
+
+#header #search {
+    position: absolute;
+    top: 6px;
+    right: 40px;
+    width: 120px;
+    padding: 3px 20px 3px 6px;
+    border: 1px solid #313131;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(255,255,255,0.7), inset 0 1px 2px rgba(0,0,0,0.6);
+    background: white url(/img/search-icon.png) right 1px no-repeat;
+}
+
+#header #search:focus {
+    outline: none;
 }
 
 #header .button:active {
@@ -96,7 +113,7 @@ ul.thumbs li img {
     text-align: center;
 }
 
-ul.albums li:hover img {
+ul.albums li:hover img, ul.thumbs li:hover img {
     border-color: #616161;
 }
 
@@ -159,8 +176,8 @@ ul.albums li:hover .title > .info {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
     background-image: -webkit-gradient(linear, 0% 0%, 0% 90%, from(rgba(4, 4, 4, 10.9)), to(rgba(92, 92, 92, 1)));
     background-image: -moz-linear-gradient(top, bottom, from(rgba(4, 4, 4, 0.9)), to(rgba(92, 92, 92, 1)));
-    /*-webkit-box-shadow: rgba(192, 192, 192, 0.75) 0px 8px 24px;*/
-    /*-moz-box-shadow: rgba(192, 192, 192, 0.75) 0px 8px 24px;*/
+    -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 4px, rgba(0, 0, 0, 0.6) 0px -2px 6px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 4px, rgba(0, 0, 0, 0.6) 0px -2px 6px;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 4px, rgba(0, 0, 0, 0.6) 0px -2px 6px;
 }
 .button:hover {
