@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="gallery" scope="request" type="com.google.gdata.data.photos.UserFeed"/>
 
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=600">
