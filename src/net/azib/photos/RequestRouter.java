@@ -37,7 +37,7 @@ public class RequestRouter implements Filter {
     void render(String jsp, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setAttribute("picasa", picasa);
         response.setContentType("text/html; charset=utf8");
-        request.getRequestDispatcher("WEB-INF/jsp/" + jsp + ".jsp").include(request, response);
+        request.getRequestDispatcher("/WEB-INF/jsp/" + jsp + ".jsp").include(request, response);
     }
 
     public void destroy() {
