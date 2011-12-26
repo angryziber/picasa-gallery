@@ -134,6 +134,7 @@ ul.albums li .title {
     color: white;
     background-color: black;
     background-color: rgba(0,0,0,0.5);
+    filter: alpha(opacity=80);
     width: 153px;
     min-width: 153px;
     height: 19px;
