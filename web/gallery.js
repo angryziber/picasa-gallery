@@ -1,6 +1,5 @@
-if (history.replaceState) history.replaceState(location.pathname, window.title, location.pathname);
+if (history.replaceState) history.replaceState(location.href, window.title, location.href);
 window.onpopstate = function(event) {
-    console.log('pop ' + event.state);
     if (event.state) onStateChange(event.state);
 };
 

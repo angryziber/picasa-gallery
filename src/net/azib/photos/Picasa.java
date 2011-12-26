@@ -2,6 +2,7 @@ package net.azib.photos;
 
 import com.google.gdata.client.photos.PicasawebService;
 import com.google.gdata.data.IFeed;
+import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.photos.AlbumFeed;
 import com.google.gdata.data.photos.UserFeed;
 
@@ -17,8 +18,18 @@ public class Picasa {
     }
 
     public AlbumFeed getAlbum(String name) {
-        return feed("http://picasaweb.google.com/data/feed/api/user/" + USER + "/album/" + name + "?imgmax=1024&thumbsize=144c", AlbumFeed.class);
-        //return feed("http://picasaweb.google.com/data/feed/api/user/" + USER + "?kind=photo&q=" + name + "&imgmax=1024&thumbsize=144c", AlbumFeed.class);
+        try {
+            return feed("http://picasaweb.google.com/data/feed/api/user/" + USER + "/album/" + name + "?imgmax=1024&thumbsize=144c", AlbumFeed.class);
+        }
+        catch (RuntimeException e) {
+            AlbumFeed results = search(name);
+            results.setTitle(new PlainTextConstruct("Photos matching '" + name + "'"));
+            return results;
+        }
+    }
+
+    public AlbumFeed search(String query) {
+        return feed("http://picasaweb.google.com/data/feed/api/user/" + USER + "?kind=photo&q=" + query + "&imgmax=1024&thumbsize=144c", AlbumFeed.class);
     }
 
     private <T extends IFeed> T feed(String url, Class<T> type) {
