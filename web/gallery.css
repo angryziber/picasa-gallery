@@ -44,9 +44,12 @@ a {
 }
 
 #header .button.right {
-    top: 8px;
     right: 50px;
     left: auto;
+}
+
+#header .button:active {
+    top: 9px;
 }
 
 #header .button img {
@@ -163,6 +166,9 @@ ul.albums li:hover .title > .info {
 .button:hover {
     background-image: -webkit-gradient(linear, 0% 0%, 0% 90%, from(rgba(4, 4, 4, 10.9)), to(rgba(192, 192, 192, 1)));
     background-image: -moz-linear-gradient(top, bottom, from(rgba(4, 4, 4, 0.9)), to(rgba(192, 192, 192, 1)));
+}
+.button:active {
+    box-shadow: none;
 }
 .button span {
     position: absolute;
