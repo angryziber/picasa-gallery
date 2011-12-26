@@ -59,3 +59,11 @@ Shadowbox.init({
         if (history.replaceState) history.replaceState(stateURL(), '', stateURL());
     }
 });
+
+$.ajaxSetup({
+   error: function(req) {
+       if (req.status == 0) return;
+       alert('Failed: ' + req.status + ' ' + req.statusText + (req.responseText && req.responseText.length < 200 ? ': ' + req.responseText : ''));
+       location.href = '/';
+   }
+});
