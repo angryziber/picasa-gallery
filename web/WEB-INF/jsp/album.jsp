@@ -29,9 +29,9 @@
         <c:forEach var="photo" items="${album.photoEntries}">
             <li>
                 <c:set var="media" value="${photo.mediaContents[0]}"/>
-                <a id="${photo.gphotoId}" href="${media.url}"
+                <a id="${photo.gphotoId}" href="${media.url}" class="photo"
                    title="${photo.description.plainText}"
-                   rel="shadowbox[album];height=${media.height};width=${media.width}">
+                   rel="${media.width}x${media.height}">
                     <img src="/img/empty.png" class="missing" rel="${photo.mediaThumbnails[0].url}">
                 </a>
             </li>

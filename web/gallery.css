@@ -180,8 +180,20 @@ ul.albums li:hover .title > .info {
     border: 3px solid #313131;
 }
 
-#sb-wrapper-inner {
-    border: 2px solid white !important;
+#photo-wrapper {
+    display: none;
+    background: black;
+    background: rgba(0,0,0,0.8);
+    position: absolute;
+    z-index: 666;
+}
+
+#photo-container {
+    margin: 0 auto;
+}
+
+#photo-container img {
+    border: 2px solid white;
 }
 
 #footer {

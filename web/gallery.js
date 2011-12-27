@@ -6,8 +6,8 @@ window.onpopstate = function(event) {
 };
 
 function onStateChange(href) {
-    if (Shadowbox.isOpen()) {
-        Shadowbox.close();
+    if (photoViewer.isOpen()) {
+        photoViewer.close();
         return;
     }
 
@@ -15,7 +15,7 @@ function onStateChange(href) {
     loadingReady = false;
     setTimeout(function() {
         if (!loadingReady)
-            $('#content').empty().append('<div id="sb-loading"><div id="sb-loading-inner"><span>Loading...</span></div></div>').show();
+            $('#content').empty().append('<div style="text-align: center"><img src="/img/loading.gif">Loading...</div>').show();
     }, 2000);
 
     $.get(href, function(html) {
@@ -30,7 +30,7 @@ function onStateChange(href) {
         $('#content').replaceWith(content);
         updateLayout();
         content.fadeIn();
-        Shadowbox.setup();
+        photoViewer.setup();
     });
 }
 
@@ -47,9 +47,9 @@ function goto(href) {
     else location.href = href;
 }
 
-function stateURL(e) {
+function stateURL(photo) {
     var album = location.pathname.split('/')[1];
-    return '/' + album + (e ? '/' + e.link.id : '');
+    return '/' + album + (photo ? '/' + photo.id : '');
 }
 
 function loadVisibleThumbs() {
@@ -69,24 +69,95 @@ function loadVisibleThumbs() {
     });
 }
 
-Shadowbox.init({
-    continuous: true,
-    overlayOpacity: 0.8,
-    viewportPadding: 5,
-    onOpen: function(e) {
-        if (history.pushState) history.pushState(stateURL(e), e.link.title, stateURL(e));
-        $('#sb-container').touchwipe({
-            wipeLeft: Shadowbox.next,
-            wipeRight: Shadowbox.previous
-        });
-    },
-    onChange: function(e) {
-        if (history.replaceState) history.replaceState(stateURL(e), e.link.title, stateURL(e));
-    },
-    onClose: function() {
-        if (history.replaceState) history.replaceState(stateURL(), '', stateURL());
+function PhotoViewer() {
+    var pv = this;
+    var w = $(window);
+    var wrapper, img;
+    var photos = [];
+    var index = 0;
+    var isOpen = false;
+
+    var pub = {
+        setup: function() {
+            photos = [];
+            $('a.photo').click(pv.open).each(function() {
+                var dim = this.rel.split('x');
+                photos.push({href: this.href, width: dim[0], height: dim[1], title: this.title, id: this.id});
+            });
+            wrapper = $('<div id="photo-wrapper"><div id="photo-container"><img src="/img/empty.png"></div></div>').appendTo($('body'));
+            img = wrapper.find('img');
+        },
+
+        isOpen: function() {
+            return isOpen;
+        },
+
+        open: function(e) {
+            e.preventDefault();
+            isOpen = true;
+            onResize();
+            $(document).keydown(onKeydown);
+            $(window).resize(onResize);
+            index = $('a.photo').index(this);
+            display();
+            wrapper.fadeIn();
+
+            var photo = photos[index];
+            if (history.pushState) history.pushState(stateURL(photo), photo.title, stateURL(photo));
+            wrapper.touchwipe({
+                wipeLeft: pub.next,
+                wipeRight: pub.previous
+            });
+        },
+
+        close: function() {
+            isOpen = false;
+            wrapper.fadeOut();
+            $(document).unbind('keydown', onKeydown);
+            $(window).unbind('resize', onResize);
+
+            if (history.replaceState) history.replaceState(stateURL(), '', stateURL());
+        },
+
+        next: function() {
+            index++;
+            if (index >= photos.length) index = 0;
+            display();
+        },
+
+        prev: function() {
+            index--;
+            if (index < 0) index = photos.length-1;
+            display();
+        }
+    };
+    $.each(pub, function(name, fun) {pv[name] = fun});
+
+    pv.setup();
+
+    function onResize() {
+        wrapper.width(w.width()).height(w.height() * 1.5).offset({left: w.scrollLeft(), top: w.scrollTop()});
     }
-});
+
+    function onKeydown(e) {
+        switch (e.which) {
+            case 27: pv.close(); break;
+            case 32:
+            case 39: pv.next(); break;
+            case 37: pv.prev(); break;
+        }
+    }
+
+    function display() {
+        var photo = photos[index];
+        img.parent().width(photo.width);
+        //img.width(photo.width);
+        //img.height(photo.height);
+        img.attr('src', photo.href);
+
+        if (history.replaceState) history.replaceState(stateURL(photo), photo.title, stateURL(photo));
+    }
+}
 
 function doSearch() {
     goto('/' + $('#search').val());
@@ -139,8 +210,11 @@ function updateLayout() {
     }
 }
 
+var photoViewer = new PhotoViewer();
+
 $(function() {
     updateLayout();
+    photoViewer.setup();
     $(window).resize(updateLayout);
     $(window).scroll(loadVisibleThumbs);
     $.ajaxSetup({
