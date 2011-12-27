@@ -52,11 +52,15 @@ a {
 #header #search {
     position: absolute;
     top: 6px;
-    right: 40px;
+    right: 50px;
     width: 120px;
     padding: 3px 20px 3px 6px;
     border: 1px solid #313131;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
     border-radius: 6px;
+    -moz-box-shadow: 0 1px 2px rgba(255,255,255,0.7), inset 0 1px 2px rgba(0,0,0,0.6);
+    -webkit-box-shadow: 0 1px 2px rgba(255,255,255,0.7), inset 0 1px 2px rgba(0,0,0,0.6);
     box-shadow: 0 1px 2px rgba(255,255,255,0.7), inset 0 1px 2px rgba(0,0,0,0.6);
     background: white url(/img/search-icon.png) right 1px no-repeat;
 }
