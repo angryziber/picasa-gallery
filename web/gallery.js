@@ -141,7 +141,7 @@ function PhotoViewer() {
     }
 
     function onResize() {
-        wrapper.width(w.width()).height(w.height() * 1.5).offset({left: w.scrollLeft(), top: w.scrollTop()});
+        wrapper.width(w.width()).height(w.height()).offset({left: w.scrollLeft(), top: w.scrollTop()});
         display();
         centerImage();
     }
@@ -152,6 +152,7 @@ function PhotoViewer() {
             case 32:
             case 39: pv.next(); break;
             case 37: pv.prev(); break;
+            // TODO: home, end
         }
     }
 
@@ -159,7 +160,7 @@ function PhotoViewer() {
         var photo = photos[index];
 
         img.removeAttr('width').removeAttr('height');
-        var ww = w.width() - 4, wh = w.height() - 4;
+        var ww = wrapper.width(), wh = wrapper.height();
         if (photo.width > ww || photo.height > wh) {
             if (ww / wh > photo.width / photo.height)
                 img.attr('height', wh);
