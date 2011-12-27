@@ -86,9 +86,7 @@ function PhotoViewer() {
             });
             wrapper = $('<div id="photo-wrapper"><div id="photo-container"><img src="/img/empty.png"></div></div>').appendTo($('body'));
             img = wrapper.find('img');
-            img.load(function() {
-                img.parent().width(img.width());
-            });
+            img.load(centerImage);
         },
 
         isOpen: function() {
@@ -138,8 +136,14 @@ function PhotoViewer() {
 
     pv.setup();
 
+    function centerImage() {
+        img.parent().width(img.width());
+    }
+
     function onResize() {
         wrapper.width(w.width()).height(w.height() * 1.5).offset({left: w.scrollLeft(), top: w.scrollTop()});
+        display();
+        centerImage();
     }
 
     function onKeydown(e) {
