@@ -32,6 +32,11 @@
             <script type="text/javascript">markers.push({pos: latLng(${album.geoLocation.latitude}, ${album.geoLocation.longitude}), title:'${album.title.plainText}'});</script>
         </c:forEach>
     </ul>
+
+    <div id="footer">
+        Photos by ${gallery.nickname}. All rights reserved.
+        Rendered by <a href="http://github.com/angryziber/picasa-gallery">Picasa Gallery</a>
+    </div>
 </div>
 </body>
 </html>
