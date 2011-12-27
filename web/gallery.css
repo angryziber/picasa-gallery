@@ -161,13 +161,11 @@ ul.albums li .title > .info {
     float: right;
     margin-left: 3px;
     width: auto;
-    opacity: 0;
-    -webkit-transition: opacity 1s ease-out;
+    display: none;
 }
 
 ul.albums li:hover .title > .info {
-    opacity: 1;
-    -webkit-transition: opacity 500ms ease-out;
+    display: block;
 }
 
 #map {
