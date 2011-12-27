@@ -53,23 +53,19 @@ function stateURL(e) {
 }
 
 function loadVisibleThumbs() {
-	var visibleTop, visibleBottom;
-	if (window.innerHeight) {
-		visibleTop = window.pageYOffset;
-		visibleBottom = visibleTop + window.innerHeight;
-	} else if (document.documentElement) {
-		visibleTop = document.documentElement.scrollTop;
-		visibleBottom = visibleTop + document.documentElement.clientHeight;
-	}
-	visibleTop -= 150; visibleBottom += 150;
+	var visibleTop = $(window).scrollTop() - 150;
+    var visibleBottom = visibleTop + $(window).height() + 300;
 
+    var found;
     $('img.missing').each(function() {
         var img = $(this);
         var top = img.offset().top;
         if (top >= visibleTop && top <= visibleBottom) {
             img.attr('src', img.attr('rel'));
             img.removeClass('missing');
+            found = true;
         }
+        else if (found) return false;
     });
 }
 
