@@ -112,12 +112,12 @@ ul.albums li img, ul.thumbs li img {
 }
 
 ul.albums li {
-    height: 166px; /* for FF */
+    height: 218px; /* for FF */
 }
 
 ul.albums li img {
-    width: 160px;
-    height: 160px;
+    width: 212px;
+    height: 212px;
 }
 
 ul.thumbs li img {
@@ -132,15 +132,15 @@ ul.albums li:hover img, ul.thumbs li:hover img {
 
 ul.albums li .title {
     position: absolute;
-    top: 140px;
+    top: 192px;
     left: 3px;
     padding: 4px 4px 0 3px;
     color: white;
     background-color: black;
     background-color: rgba(0,0,0,0.5);
     filter: alpha(opacity=80);
-    width: 153px;
-    min-width: 153px;
+    width: 205px;
+    min-width: 205px;
     height: 19px;
     overflow: hidden;
     white-space: nowrap;
@@ -172,14 +172,21 @@ ul.albums li:hover .title > .info {
 
 #map {
     float: right;
-    width: 336px;
-    height: 336px;
+    width: 440px;
+    height: 440px;
     margin: 0 10px 10px 0;
     border: 3px solid #313131;
 }
 
 #sb-wrapper-inner {
     border: 2px solid white !important;
+}
+
+#footer {
+    clear: both;
+    padding-top: 20px;
+    text-align: center;
+    color: #999;
 }
 
 .button {

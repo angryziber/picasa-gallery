@@ -14,7 +14,7 @@ public class Picasa {
     PicasawebService service = new PicasawebService(USER);
 
     public UserFeed getGallery() {
-        return feed("?kind=album&thumbsize=160c", UserFeed.class);
+        return feed("?kind=album&thumbsize=212c", UserFeed.class);
     }
 
     public AlbumFeed getAlbum(String name) {

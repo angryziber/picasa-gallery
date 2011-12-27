@@ -93,7 +93,9 @@ function initMap() {
             ]
         }],
         streetViewControl: false,
-        minZoom: 1
+        zoomControl: false,
+        panControl: false,
+        minZoom: 2
     });
     for (var i in markers) {
         var marker = new google.maps.Marker({position: markers[i].pos, map: map, title: markers[i].title});
@@ -110,7 +112,7 @@ function initMap() {
 }
 
 function updateLayout() {
-    var photoWidth = ($('.albums').length ? 166 : 150) + 10;
+    var photoWidth = ($('.albums').length ? 218 : 150) + 10;
     var photosInRow = Math.floor($(window).width() / photoWidth);
     $('#content').width(photosInRow * photoWidth);
     if ($('#map').length) {
