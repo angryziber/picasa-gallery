@@ -86,6 +86,9 @@ function PhotoViewer() {
             });
             wrapper = $('<div id="photo-wrapper"><div id="photo-container"><img src="/img/empty.png"></div></div>').appendTo($('body'));
             img = wrapper.find('img');
+            img.load(function() {
+                img.parent().width(img.width());
+            });
         },
 
         isOpen: function() {
@@ -150,11 +153,17 @@ function PhotoViewer() {
 
     function display() {
         var photo = photos[index];
-        img.parent().width(photo.width);
-        //img.width(photo.width);
-        //img.height(photo.height);
-        img.attr('src', photo.href);
 
+        img.removeAttr('width').removeAttr('height');
+        var ww = w.width() - 4, wh = w.height() - 4;
+        if (photo.width > ww || photo.height > wh) {
+            if (ww / wh > photo.width / photo.height)
+                img.attr('height', wh);
+            else
+                img.attr('width', ww);
+        }
+
+        img.attr('src', photo.href);
         if (history.replaceState) history.replaceState(stateURL(photo), photo.title, stateURL(photo));
     }
 }
