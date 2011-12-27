@@ -52,6 +52,27 @@ function stateURL(e) {
     return '/' + album + (e ? '/' + e.link.id : '');
 }
 
+function loadVisibleThumbs() {
+	var visibleTop, visibleBottom;
+	if (window.innerHeight) {
+		visibleTop = window.pageYOffset;
+		visibleBottom = visibleTop + window.innerHeight;
+	} else if (document.documentElement) {
+		visibleTop = document.documentElement.scrollTop;
+		visibleBottom = visibleTop + document.documentElement.clientHeight;
+	}
+	visibleTop -= 150; visibleBottom += 150;
+
+    $('img.missing').each(function() {
+        var img = $(this);
+        var top = img.offset().top;
+        if (top >= visibleTop && top <= visibleBottom) {
+            img.attr('src', img.attr('rel'));
+            img.removeClass('missing');
+        }
+    });
+}
+
 Shadowbox.init({
     continuous: true,
     overlayOpacity: 0.8,
@@ -116,6 +137,7 @@ function updateLayout() {
     var photoWidth = ($('.albums').length ? 218 : 150) + 10;
     var photosInRow = Math.floor($(window).width() / photoWidth);
     $('#content').width(photosInRow * photoWidth);
+    loadVisibleThumbs();
     if ($('#map').length) {
         setTimeout(initMap, 300);
     }
@@ -123,6 +145,8 @@ function updateLayout() {
 
 $(function() {
     updateLayout();
+    $(window).resize(updateLayout);
+    $(window).scroll(loadVisibleThumbs);
     $.ajaxSetup({
        error: function(req) {
            if (req.status == 0) return;

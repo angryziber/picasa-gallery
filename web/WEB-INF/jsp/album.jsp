@@ -32,7 +32,7 @@
                 <a id="${photo.gphotoId}" href="${media.url}"
                    title="${photo.description.plainText}"
                    rel="shadowbox[album];height=${media.height};width=${media.width}">
-                    <img src="${photo.mediaThumbnails[0].url}">
+                    <img src="/img/empty.png" class="missing" rel="${photo.mediaThumbnails[0].url}">
                 </a>
             </li>
         </c:forEach>
