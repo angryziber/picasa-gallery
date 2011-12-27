@@ -95,7 +95,7 @@ function initMap() {
         streetViewControl: false,
         zoomControl: false,
         panControl: false,
-        minZoom: 2
+        minZoom: 1
     });
     for (var i in markers) {
         var marker = new google.maps.Marker({position: markers[i].pos, map: map, title: markers[i].title});
@@ -109,6 +109,7 @@ function initMap() {
         markers[i].marker = marker;
     }
     map.fitBounds(bounds);
+    map.panBy(0, 15);
 }
 
 function updateLayout() {
