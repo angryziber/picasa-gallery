@@ -150,6 +150,7 @@ $(function() {
            location.href = '/';
        }
     });
+    $('a#m').attr('href', 'm' + 'ail' + 'to:' + $('a#m').attr('href') + String.fromCharCode(64) + 'gmail.com');
 });
 
 (function($) {

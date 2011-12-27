@@ -34,7 +34,7 @@
     </ul>
 
     <div id="footer">
-        Photos by ${gallery.nickname}. All rights reserved.
+        Photos by <a id="m" href="${gallery.username}">${gallery.nickname}</a>. All rights reserved.
         Rendered by <a href="http://github.com/angryziber/picasa-gallery">Picasa Gallery</a>
     </div>
 </div>
