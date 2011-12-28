@@ -155,22 +155,30 @@ function PhotoViewer() {
     };
     $.each(pub, function(name, fun) {pv[name] = fun});
 
-    var lastMousePos;
-    function onMouseMove(e) {
-        var newMousePos = e.pageX + ":" + e.pageY;
-        if (lastMousePos != newMousePos)
-            wrapper.css('cursor', 'default');
-        lastMousePos = newMousePos;
-    }
-
-    function onMouseClick(e) {
+    function posAction(x, y) {
         var img = wrapper.find('img');
         var left = img.offset().left;
         var right = left + img.width();
         var delta = img.width() / 4;
-        if (e.pageX >= left && e.pageX <= left + delta) pv.prev();
-        else if (e.pageX >= right - delta && e.pageX <= right) pv.next();
-        else pv.close();
+        if (x >= left-20 && x <= left + delta) return pv.prev;
+        else if (x >= right - delta && x <= right+20) return pv.next;
+        else return pv.close;
+    }
+
+    var lastMousePos;
+    function onMouseMove(e) {
+        var newMousePos = e.pageX + ":" + e.pageY;
+        if (lastMousePos != newMousePos) {
+            var action = posAction(e.pageX, e.pageY);
+            var cursor = action == pv.prev ? 'w-resize' : action == pv.next ? 'e-resize' : 'default';
+            wrapper.css('cursor', cursor);
+        }
+        lastMousePos = newMousePos;
+    }
+
+    function onMouseClick(e) {
+        e.preventDefault();
+        posAction(e.pageX, e.pageY)();
     }
 
     function onKeydown(e) {
