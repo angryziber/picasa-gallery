@@ -72,7 +72,7 @@ function loadVisibleThumbs() {
 function PhotoViewer() {
     var pv = this;
     var w = $(window);
-    var wrapper;
+    var wrapper, title;
     var photos = [];
     var index = 0;
     var isOpen = false;
@@ -86,7 +86,8 @@ function PhotoViewer() {
             });
             wrapper = $('#photo-wrapper');
             if (!wrapper.length)
-                wrapper = $('<div id="photo-wrapper"><div id="photo-title"></div></div>').appendTo($('body'));
+                wrapper = $('<div id="photo-wrapper"><div class="title"></div></div>').appendTo($('body'));
+            title = wrapper.find('.title');
         },
 
         isOpen: function() {
@@ -163,9 +164,14 @@ function PhotoViewer() {
         img.offset({left: (w.width()-img.width())/2, top: (w.height()-img.height())/2});
     }
 
+    function centerTitle() {
+        title.offset({left: Math.max(0, (w.width() - title.width()) / 2)});
+    }
+
     function onResize() {
         wrapper.width(w.width()).height(w.height()).offset({left: w.scrollLeft(), top: w.scrollTop()});
         centerImage();
+        centerTitle();
     }
 
     function onKeydown(e) {
@@ -209,8 +215,8 @@ function PhotoViewer() {
         newImg.style.display = 'none';
         newImg.src = photo.href;
 
-        var title = $('#photo-title');
         title.text(photo.title);
+        centerTitle();
         if (photo.title) title.fadeIn(); else title.fadeOut();
 
         // TODO: display loading spinner
