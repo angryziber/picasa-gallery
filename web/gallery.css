@@ -185,6 +185,7 @@ ul.albums li:hover .title > .info {
     background: black;
     background: rgba(0,0,0,0.9);
     position: absolute;
+    position: fixed;
     z-index: 666;
 }
 
