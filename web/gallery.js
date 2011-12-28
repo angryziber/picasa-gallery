@@ -76,6 +76,7 @@ function PhotoViewer() {
     var photos = [];
     var index = 0;
     var isOpen = false;
+    var lastMousePos;
 
     var pub = {
         setup: function() {
@@ -108,6 +109,13 @@ function PhotoViewer() {
             index = $('a.photo').index(this);
             wrapper.find('img').remove();
             wrapper.fadeIn();
+            wrapper.mousemove(function(e) {
+                var newMousePos = e.pageX + ":" + e.pageY;
+                if (lastMousePos != newMousePos)
+                    wrapper.css('cursor', 'default');
+                lastMousePos = newMousePos;
+            });
+
             loadPhoto();
 
             var photo = photos[index];
@@ -200,7 +208,7 @@ function PhotoViewer() {
         wrapper.append(img);
         centerImage(img);
         img.fadeIn();
-        wrapper.css('cursor', 'default');
+        wrapper.css('cursor', 'none');
 
         // preload next image
         if (index < photos.length-1)
