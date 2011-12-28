@@ -197,6 +197,18 @@ ul.albums li:hover .title > .info {
     border: 2px solid #313131;
 }
 
+#photo-title {
+    position: relative;
+    bottom: 50px;
+    z-index: 777;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    text-shadow: 1px 1px 1px black;
+    background: rgba(0,0,0,0.3)
+}
+
 #footer {
     clear: both;
     padding-top: 20px;

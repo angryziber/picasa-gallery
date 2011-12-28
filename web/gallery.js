@@ -84,7 +84,7 @@ function PhotoViewer() {
                 var dim = this.rel.split('x');
                 photos.push({href: this.href, width: dim[0], height: dim[1], title: this.title, id: this.id});
             });
-            wrapper = $('<div id="photo-wrapper"><div id="photo-container"></div></div>').appendTo($('body'));
+            wrapper = $('<div id="photo-wrapper"><div id="photo-container"></div><div id="photo-title"></div></div>').appendTo($('body'));
         },
 
         isOpen: function() {
@@ -200,6 +200,11 @@ function PhotoViewer() {
         }
 
         $('#photo-container img').fadeOut();
+
+        var title = $('#photo-title');
+        title.text(photo.title);
+        if (photo.title) title.fadeIn(); else title.fadeOut();
+
         // TODO: display loading spinner
         if (history.replaceState) history.replaceState(stateURL(photo), photo.title, stateURL(photo));
     }
