@@ -76,7 +76,6 @@ function PhotoViewer() {
     var photos = [];
     var index = 0;
     var isOpen = false;
-    var lastMousePos;
 
     var pub = {
         setup: function() {
@@ -109,12 +108,8 @@ function PhotoViewer() {
             index = $('a.photo').index(this);
             wrapper.find('img').remove();
             wrapper.fadeIn();
-            wrapper.mousemove(function(e) {
-                var newMousePos = e.pageX + ":" + e.pageY;
-                if (lastMousePos != newMousePos)
-                    wrapper.css('cursor', 'default');
-                lastMousePos = newMousePos;
-            });
+            wrapper.click(onMouseClick);
+            wrapper.mousemove(onMouseMove);
 
             loadPhoto();
 
@@ -160,7 +155,45 @@ function PhotoViewer() {
     };
     $.each(pub, function(name, fun) {pv[name] = fun});
 
-    pv.setup();
+    var lastMousePos;
+    function onMouseMove(e) {
+        var newMousePos = e.pageX + ":" + e.pageY;
+        if (lastMousePos != newMousePos)
+            wrapper.css('cursor', 'default');
+        lastMousePos = newMousePos;
+    }
+
+    function onMouseClick(e) {
+        var img = wrapper.find('img');
+        var left = img.offset().left;
+        var right = left + img.width();
+        var delta = img.width() / 4;
+        if (e.pageX >= left && e.pageX <= left + delta) pv.prev();
+        else if (e.pageX >= right - delta && e.pageX <= right) pv.next();
+        else pv.close();
+    }
+
+    function onKeydown(e) {
+        switch (e.which) {
+            case 27: pv.close(); break;
+            case 32:
+            case 34:
+            case 40:
+            case 39: pv.next(); e.preventDefault(); break;
+            case 8:
+            case 33:
+            case 38:
+            case 37: pv.prev(); e.preventDefault(); break;
+            case 36: pv.first(); e.preventDefault(); break;
+            case 35: pv.last(); e.preventDefault(); break;
+        }
+    }
+
+    function onResize() {
+        wrapper.width(w.width()).height(w.height()).offset({left: w.scrollLeft(), top: w.scrollTop()});
+        centerImage();
+        centerTitle();
+    }
 
     function centerImage(img) {
         if (!img) img = wrapper.find('img');
@@ -179,28 +212,6 @@ function PhotoViewer() {
 
     function centerTitle() {
         title.offset({left: Math.max(0, (w.width() - title.width()) / 2)});
-    }
-
-    function onResize() {
-        wrapper.width(w.width()).height(w.height()).offset({left: w.scrollLeft(), top: w.scrollTop()});
-        centerImage();
-        centerTitle();
-    }
-
-    function onKeydown(e) {
-        switch (e.which) {
-            case 27: pv.close(); break;
-            case 32:
-            case 34:
-            case 40:
-            case 39: pv.next(); e.preventDefault(); break;
-            case 8:
-            case 33:
-            case 38:
-            case 37: pv.prev(); e.preventDefault(); break;
-            case 36: pv.first(); e.preventDefault(); break;
-            case 35: pv.last(); e.preventDefault(); break;
-        }
     }
 
     function imageOnLoad() {
