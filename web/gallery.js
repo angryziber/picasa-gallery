@@ -128,6 +128,16 @@ function PhotoViewer() {
             index--;
             if (index < 0) index = photos.length-1;
             display();
+        },
+
+        first: function() {
+            index = 0;
+            display();
+        },
+
+        last: function() {
+            index = photos.length-1;
+            display();
         }
     };
     $.each(pub, function(name, fun) {pv[name] = fun});
@@ -148,9 +158,15 @@ function PhotoViewer() {
         switch (e.which) {
             case 27: pv.close(); break;
             case 32:
-            case 39: pv.next(); break;
-            case 37: pv.prev(); break;
-            // TODO: home, end
+            case 34:
+            case 40:
+            case 39: pv.next(); e.preventDefault(); break;
+            case 8:
+            case 33:
+            case 38:
+            case 37: pv.prev(); e.preventDefault(); break;
+            case 36: pv.first(); e.preventDefault(); break;
+            case 35: pv.last(); e.preventDefault(); break;
         }
     }
 
