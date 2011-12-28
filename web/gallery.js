@@ -84,10 +84,15 @@ function PhotoViewer() {
                 var dim = this.rel.split('x');
                 photos.push({href: this.href, width: dim[0], height: dim[1], title: this.title, id: this.id});
             });
+
             wrapper = $('#photo-wrapper');
             if (!wrapper.length)
                 wrapper = $('<div id="photo-wrapper"><div class="title"></div></div>').appendTo($('body'));
+
             title = wrapper.find('.title');
+            title.hover(function() {
+                title.fadeOut();
+            });
         },
 
         isOpen: function() {
@@ -103,7 +108,7 @@ function PhotoViewer() {
             index = $('a.photo').index(this);
             wrapper.find('img').remove();
             wrapper.fadeIn();
-            display();
+            loadPhoto();
 
             var photo = photos[index];
             if (history.pushState) history.pushState(stateURL(photo), photo.title, stateURL(photo));
@@ -126,23 +131,23 @@ function PhotoViewer() {
         next: function() {
             index++;
             if (index >= photos.length) index = 0;
-            display();
+            loadPhoto();
         },
 
         prev: function() {
             index--;
             if (index < 0) index = photos.length-1;
-            display();
+            loadPhoto();
         },
 
         first: function() {
             index = 0;
-            display();
+            loadPhoto();
         },
 
         last: function() {
             index = photos.length-1;
-            display();
+            loadPhoto();
         }
     };
     $.each(pub, function(name, fun) {pv[name] = fun});
@@ -195,6 +200,7 @@ function PhotoViewer() {
         wrapper.append(img);
         centerImage(img);
         img.fadeIn();
+        wrapper.css('cursor', 'default');
 
         // preload next image
         if (index < photos.length-1)
@@ -204,7 +210,8 @@ function PhotoViewer() {
             }, 100);
     }
 
-    function display() {
+    function loadPhoto() {
+        wrapper.css('cursor', 'wait');
         wrapper.find('img').fadeOut(function() {
             $(this).remove();
         });
@@ -219,7 +226,6 @@ function PhotoViewer() {
         centerTitle();
         if (photo.title) title.fadeIn(); else title.fadeOut();
 
-        // TODO: display loading spinner
         if (history.replaceState) history.replaceState(stateURL(photo), photo.title, stateURL(photo));
     }
 }
