@@ -174,8 +174,8 @@ function PhotoViewer() {
         var photo = photos[index];
 
         var newImg = new Image();
-        newImg.src = photo.href;
         newImg.onload = centerImage;
+        newImg.src = photo.href;
 
         var ww = wrapper.width(), wh = wrapper.height();
         if (photo.width > ww || photo.height > wh) {
