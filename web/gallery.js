@@ -72,7 +72,7 @@ function loadVisibleThumbs() {
 function PhotoViewer() {
     var pv = this;
     var w = $(window);
-    var wrapper, img;
+    var wrapper;
     var photos = [];
     var index = 0;
     var isOpen = false;
@@ -84,9 +84,7 @@ function PhotoViewer() {
                 var dim = this.rel.split('x');
                 photos.push({href: this.href, width: dim[0], height: dim[1], title: this.title, id: this.id});
             });
-            wrapper = $('<div id="photo-wrapper"><div id="photo-container"><img src="/img/empty.png"></div></div>').appendTo($('body'));
-            img = wrapper.find('img');
-            img.load(centerImage);
+            wrapper = $('<div id="photo-wrapper"><div id="photo-container"></div></div>').appendTo($('body'));
         },
 
         isOpen: function() {
@@ -137,7 +135,7 @@ function PhotoViewer() {
     pv.setup();
 
     function centerImage() {
-        img.parent().width(img.width());
+        $('#photo-container').width($('#photo-container img').width());
     }
 
     function onResize() {
@@ -159,16 +157,22 @@ function PhotoViewer() {
     function display() {
         var photo = photos[index];
 
-        img.removeAttr('width').removeAttr('height');
+        var newImg = new Image();
+        newImg.src = photo.href;
+        newImg.onload = centerImage;
+
         var ww = wrapper.width(), wh = wrapper.height();
         if (photo.width > ww || photo.height > wh) {
             if (ww / wh > photo.width / photo.height)
-                img.attr('height', wh);
+                newImg.height = wh;
             else
-                img.attr('width', ww);
+                newImg.width = ww;
         }
 
-        img.attr('src', photo.href);
+        $('#photo-container img').fadeOut();
+        $(newImg).hide();
+        $('#photo-container').html(newImg);
+        $(newImg).fadeIn();
         if (history.replaceState) history.replaceState(stateURL(photo), photo.title, stateURL(photo));
     }
 }
