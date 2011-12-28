@@ -193,7 +193,8 @@ function PhotoViewer() {
     }
 
     function onResize() {
-        wrapper.width(w.width()).height(w.height()).offset({left: w.scrollLeft(), top: w.scrollTop()});
+        h = innerHeight ? innerHeight : w.height(); // iPhone workaround, http://bugs.jquery.com/ticket/6724
+        wrapper.width(w.width()).height(h).offset({left: w.scrollLeft(), top: w.scrollTop()});
         centerImage();
         centerTitle();
     }
@@ -210,7 +211,8 @@ function PhotoViewer() {
             else
                 img.attr('width', ww);
         }
-        img.offset({left: (w.width()-img.width())/2, top: (w.height()-img.height())/2});
+        img.css('top', (wrapper.height()-img.height())/2);
+        img.css('left', (wrapper.width()-img.width())/2);
     }
 
     function centerTitle() {
@@ -306,6 +308,7 @@ function updateLayout() {
 var photoViewer = new PhotoViewer();
 
 $(function() {
+    scrollTo(0, 1);
     updateLayout();
     photoViewer.setup();
     $(window).resize(updateLayout);
