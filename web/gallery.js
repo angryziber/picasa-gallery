@@ -86,7 +86,7 @@ function PhotoViewer() {
             });
             wrapper = $('#photo-wrapper');
             if (!wrapper.length)
-                wrapper = $('<div id="photo-wrapper"><div id="photo-container"></div><div id="photo-title"></div></div>').appendTo($('body'));
+                wrapper = $('<div id="photo-wrapper"><div id="photo-title"></div></div>').appendTo($('body'));
         },
 
         isOpen: function() {
@@ -149,13 +149,22 @@ function PhotoViewer() {
     pv.setup();
 
     function centerImage(img) {
-        if (!img) img = $('#photo-container img');
-        $('#photo-container').width(img.width());
+        if (!img) img = wrapper.find('img');
+        if (!img.length) return;
+
+        var photo = photos[index];
+        var ww = wrapper.width(), wh = wrapper.height();
+        if (photo.width > ww || photo.height > wh) {
+            if (ww / wh > photo.width / photo.height)
+                img.attr('height', wh);
+            else
+                img.attr('width', ww);
+        }
+        img.offset({left: (w.width()-img.width())/2, top: (w.height()-img.height())/2});
     }
 
     function onResize() {
         wrapper.width(w.width()).height(w.height()).offset({left: w.scrollLeft(), top: w.scrollTop()});
-        display();
         centerImage();
     }
 
@@ -177,7 +186,7 @@ function PhotoViewer() {
 
     function imageOnLoad() {
         var img = $(this);
-        $('#photo-container').html(img);
+        wrapper.append(img);
         centerImage(img);
         img.fadeIn();
 
@@ -190,22 +199,15 @@ function PhotoViewer() {
     }
 
     function display() {
-        var photo = photos[index];
+        wrapper.find('img').fadeOut(function() {
+            $(this).remove();
+        });
 
+        var photo = photos[index];
         var newImg = new Image();
         newImg.onload = imageOnLoad;
         newImg.style.display = 'none';
         newImg.src = photo.href;
-
-        var ww = wrapper.width(), wh = wrapper.height();
-        if (photo.width > ww || photo.height > wh) {
-            if (ww / wh > photo.width / photo.height)
-                newImg.height = wh;
-            else
-                newImg.width = ww;
-        }
-
-        $('#photo-container img').fadeOut();
 
         var title = $('#photo-title');
         title.text(photo.title);

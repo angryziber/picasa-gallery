@@ -189,17 +189,14 @@ ul.albums li:hover .title > .info {
     z-index: 666;
 }
 
-#photo-container {
-    margin: 0 auto;
-}
-
-#photo-container img {
+#photo-wrapper img {
+    position: absolute;
     border: 2px solid #313131;
 }
 
-#photo-title {
-    position: relative;
-    bottom: 50px;
+#photo-wrapper #photo-title {
+    position: absolute;
+    bottom: 20px;
     z-index: 777;
     text-align: center;
     padding: 5px;
