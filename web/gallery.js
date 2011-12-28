@@ -116,6 +116,7 @@ function PhotoViewer() {
             $(window).unbind('resize', onResize);
 
             if (history.replaceState) history.replaceState(stateURL(), '', stateURL());
+            wrapper.find('img').remove();
         },
 
         next: function() {
@@ -174,7 +175,19 @@ function PhotoViewer() {
         var photo = photos[index];
 
         var newImg = new Image();
-        newImg.onload = centerImage;
+        newImg.onload = function() {
+            $('#photo-container').html(newImg);
+            centerImage();
+            $(newImg).fadeIn();
+
+            // preload next image
+            if (index < photos.length-1)
+                setTimeout(function() {
+                    var tmp = new Image();
+                    tmp.src = photos[index+1].href;
+                }, 100);
+        };
+        newImg.style.display = 'none';
         newImg.src = photo.href;
 
         var ww = wrapper.width(), wh = wrapper.height();
@@ -186,9 +199,7 @@ function PhotoViewer() {
         }
 
         $('#photo-container img').fadeOut();
-        $(newImg).hide();
-        $('#photo-container').html(newImg);
-        $(newImg).fadeIn();
+        // TODO: display loading spinner
         if (history.replaceState) history.replaceState(stateURL(photo), photo.title, stateURL(photo));
     }
 }
