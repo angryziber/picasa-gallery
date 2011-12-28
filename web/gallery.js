@@ -85,10 +85,8 @@ function PhotoViewer() {
                 photos.push({href: this.href, width: dim[0], height: dim[1], title: this.title, id: this.id});
             });
 
-            wrapper = $('#photo-wrapper');
-            if (!wrapper.length)
-                wrapper = $('<div id="photo-wrapper"><div class="title"></div></div>').appendTo($('body'));
-
+            $('#photo-wrapper').remove();
+            wrapper = $('<div id="photo-wrapper"><div class="title"></div></div>').appendTo($('body'));
             title = wrapper.find('.title');
             title.hover(function() {
                 title.fadeOut();
@@ -99,8 +97,7 @@ function PhotoViewer() {
             return isOpen;
         },
 
-        open: function(e) {
-            e.preventDefault();
+        open: function() {
             isOpen = true;
             onResize();
             $(document).keydown(onKeydown);
@@ -112,20 +109,17 @@ function PhotoViewer() {
             wrapper.mousemove(onMouseMove);
 
             loadPhoto();
-
             var photo = photos[index];
             if (history.pushState) history.pushState(stateURL(photo), photo.title, stateURL(photo));
-            wrapper.touchwipe({
-                wipeLeft: pub.next,
-                wipeRight: pub.previous
-            });
+            return false;
         },
 
         close: function() {
             isOpen = false;
             wrapper.fadeOut();
-            $(document).unbind('keydown', onKeydown);
-            $(window).unbind('resize', onResize);
+            wrapper.unbind();
+            $(document).unbind('keydown');
+            $(window).unbind('resize');
 
             if (history.replaceState) history.replaceState(stateURL(), '', stateURL());
             wrapper.find('img').remove();
@@ -177,23 +171,24 @@ function PhotoViewer() {
     }
 
     function onMouseClick(e) {
-        e.preventDefault();
         posAction(e.pageX, e.pageY)();
+        return false;
     }
 
     function onKeydown(e) {
         switch (e.which) {
-            case 27: pv.close(); break;
+            case 27: pv.close(); return false;
             case 32:
             case 34:
             case 40:
-            case 39: pv.next(); e.preventDefault(); break;
+            case 39: pv.next(); return false;
             case 8:
             case 33:
             case 38:
-            case 37: pv.prev(); e.preventDefault(); break;
-            case 36: pv.first(); e.preventDefault(); break;
-            case 35: pv.last(); e.preventDefault(); break;
+            case 37: pv.prev(); return false;
+            case 36: pv.first(); return false;
+            case 35: pv.last(); return false;
+            default: return true;
         }
     }
 
@@ -324,73 +319,3 @@ $(function() {
     });
     $('a#m').attr('href', 'm' + 'ail' + 'to:' + $('a#m').attr('href') + String.fromCharCode(64) + 'gmail.com');
 });
-
-(function($) {
-    $.fn.touchwipe = function(settings) {
-        var config = {
-            min_move_x: 20,
-            min_move_y: 20,
-            wipeLeft: function() {},
-            wipeRight: function() {},
-            wipeUp: function() {},
-            wipeDown: function() {},
-            preventDefaultEvents: true
-        };
-
-        if (settings) $.extend(config, settings);
-
-        this.each(function() {
-            var startX;
-            var startY;
-            var isMoving = false;
-
-            function cancelTouch() {
-                this.removeEventListener('touchmove', onTouchMove);
-                startX = null;
-                isMoving = false;
-            }
-
-            function onTouchMove(e) {
-                if (config.preventDefaultEvents) {
-                    e.preventDefault();
-                }
-                if (isMoving) {
-                    var x = e.touches[0].pageX;
-                    var y = e.touches[0].pageY;
-                    var dx = startX - x;
-                    var dy = startY - y;
-                    if (Math.abs(dx) >= config.min_move_x) {
-                        cancelTouch();
-                        if (dx > 0)
-                            config.wipeLeft();
-                        else
-                            config.wipeRight();
-                        isMoving = false;
-                    }
-                    else if (Math.abs(dy) >= config.min_move_y) {
-                        cancelTouch();
-                        if (dy > 0)
-                            config.wipeDown();
-                        else
-                            config.wipeUp();
-                        isMoving = false;
-                    }
-                }
-            }
-
-            function onTouchStart(e) {
-                if (e.touches.length == 1) {
-                    startX = e.touches[0].pageX;
-                    startY = e.touches[0].pageY;
-                    isMoving = true;
-                    this.addEventListener('touchmove', onTouchMove, false);
-                }
-            }
-
-            if ('ontouchstart' in document.documentElement)
-                this.addEventListener('touchstart', onTouchStart, false);
-        });
-
-        return this;
-    };
-})(jQuery);
