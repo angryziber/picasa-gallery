@@ -84,7 +84,9 @@ function PhotoViewer() {
                 var dim = this.rel.split('x');
                 photos.push({href: this.href, width: dim[0], height: dim[1], title: this.title, id: this.id});
             });
-            wrapper = $('<div id="photo-wrapper"><div id="photo-container"></div><div id="photo-title"></div></div>').appendTo($('body'));
+            wrapper = $('#photo-wrapper');
+            if (!wrapper.length)
+                wrapper = $('<div id="photo-wrapper"><div id="photo-container"></div><div id="photo-title"></div></div>').appendTo($('body'));
         },
 
         isOpen: function() {
@@ -146,8 +148,9 @@ function PhotoViewer() {
 
     pv.setup();
 
-    function centerImage() {
-        $('#photo-container').width($('#photo-container img').width());
+    function centerImage(img) {
+        if (!img) img = $('#photo-container img');
+        $('#photo-container').width(img.width());
     }
 
     function onResize() {
@@ -172,22 +175,25 @@ function PhotoViewer() {
         }
     }
 
+    function imageOnLoad() {
+        var img = $(this);
+        $('#photo-container').html(img);
+        centerImage(img);
+        img.fadeIn();
+
+        // preload next image
+        if (index < photos.length-1)
+            setTimeout(function() {
+                var tmp = new Image();
+                tmp.src = photos[index+1].href;
+            }, 100);
+    }
+
     function display() {
         var photo = photos[index];
 
         var newImg = new Image();
-        newImg.onload = function() {
-            $('#photo-container').html(newImg);
-            centerImage();
-            $(newImg).fadeIn();
-
-            // preload next image
-            if (index < photos.length-1)
-                setTimeout(function() {
-                    var tmp = new Image();
-                    tmp.src = photos[index+1].href;
-                }, 100);
-        };
+        newImg.onload = imageOnLoad;
         newImg.style.display = 'none';
         newImg.src = photo.href;
 
