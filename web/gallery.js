@@ -98,8 +98,9 @@ function PhotoViewer() {
             $(document).keydown(onKeydown);
             $(window).resize(onResize);
             index = $('a.photo').index(this);
-            display();
+            wrapper.find('img').remove();
             wrapper.fadeIn();
+            display();
 
             var photo = photos[index];
             if (history.pushState) history.pushState(stateURL(photo), photo.title, stateURL(photo));
