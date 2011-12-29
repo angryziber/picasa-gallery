@@ -87,6 +87,8 @@ function PhotoViewer() {
 
             $('#photo-wrapper').remove();
             wrapper = $('<div id="photo-wrapper"><div class="title"></div></div>').appendTo($('body'));
+            wrapper[0].ontouchstart = onTouchStart;
+            wrapper[0].ontouchmove = onTouchMove;
             title = wrapper.find('.title');
             title.hover(function() {
                 title.fadeOut();
@@ -173,6 +175,27 @@ function PhotoViewer() {
     function onMouseClick(e) {
         posAction(e.pageX, e.pageY)();
         return false;
+    }
+
+    var touchStartX;
+    function onTouchStart(e) {
+        if (e.touches.length == 1)
+            touchStartX = e.touches[0].pageX;
+    }
+    function onTouchMove(e) {
+        if (!touchStartX) return false;
+        var dx = e.touches[0].pageX - touchStartX;
+        if (dx > 20) {
+            pv.next();
+            touchStartX = null;
+            return false;
+        }
+        if (dx < -20) {
+            pv.prev();
+            touchStartX = null;
+            return false;
+        }
+        return true;
     }
 
     function onKeydown(e) {
