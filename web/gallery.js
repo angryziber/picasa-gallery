@@ -153,6 +153,7 @@ function PhotoViewer() {
 
     function posAction(x, y) {
         var img = wrapper.find('img');
+        if (!img.length) return pv.close;
         var left = img.offset().left;
         var right = left + img.width();
         var delta = img.width() / 4;
@@ -216,7 +217,7 @@ function PhotoViewer() {
     }
 
     function onResize() {
-        h = innerHeight ? innerHeight : w.height(); // iPhone workaround, http://bugs.jquery.com/ticket/6724
+        h = window.innerHeight ? window.innerHeight : w.height(); // iPhone workaround, http://bugs.jquery.com/ticket/6724
         wrapper.width(w.width()).height(h).offset({left: w.scrollLeft(), top: w.scrollTop()});
         centerImage();
         centerTitle();
