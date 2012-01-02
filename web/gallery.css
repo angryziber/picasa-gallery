@@ -85,7 +85,7 @@ a {
 }
 
 .clear {
-    clear: left;
+    clear: both;
 }
 
 #content h1 {
@@ -170,6 +170,15 @@ ul.albums li .title > .info {
 
 ul.albums li:hover .title > .info {
     display: block;
+}
+
+#facebook-album-button {
+    overflow: hidden;
+    width: 90px;
+    height: 20px;
+    position: absolute;
+    top: 60px;
+    right: 10px
 }
 
 #map {

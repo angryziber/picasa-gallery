@@ -22,9 +22,10 @@
 <div id="content">
     <h1>${album.title.plainText}</h1>
     <h2>${album.description.plainText}</h2>
+    <iframe id="facebook-album-button" scrolling="no" frameborder="0" allowtransparency="true"
+            src="http://www.facebook.com/plugins/like.php?href=http://<%=request.getHeader("host")%>/${album.name}&layout=button_count&action=like&width=90&height=20&colorscheme=dark"></iframe>
     <br>
-
-    <ul class="thumbs">
+    <ul class="thumbs clear">
         <c:forEach var="photo" items="${album.photoEntries}">
             <li>
                 <c:set var="media" value="${photo.mediaContents[0]}"/>

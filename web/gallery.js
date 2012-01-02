@@ -47,6 +47,11 @@ function goto(href) {
     else location.href = href;
 }
 
+function facebookButton() {
+    return '<iframe id="facebook-button" scrolling="no" frameborder="0" allowtransparency="true" style="overflow: hidden; width: 90px; height: 20px; position: absolute; top: 60px; right: 10px"' +
+           'src="http://www.facebook.com/plugins/like.php?href=' + location.href + '&layout=button_count&action=like&width=90&height=20&colorscheme=dark"></iframe>'
+}
+
 function stateURL(photo) {
     var album = location.pathname.split('/')[1];
     return '/' + album + (photo ? '/' + photo.id : '');
