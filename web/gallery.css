@@ -80,7 +80,7 @@ a {
 }
 
 #content {
-    width: 960px;
+    width: 710px; /* initial for mobile devices */
     margin: 60px auto;
 }
 

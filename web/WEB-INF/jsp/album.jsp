@@ -5,7 +5,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=710">
     <title>${album.title.plainText} by ${album.nickname}</title>
     <%@include file="head.jsp"%>
     <c:if test="${photoId != null}">
@@ -37,6 +36,7 @@
             </li>
         </c:forEach>
     </ul>
+
 </div>
 </body>
 </html>

@@ -5,7 +5,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=700">
     <title>${gallery.nickname} Photography</title>
     <%@include file="head.jsp"%>
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
