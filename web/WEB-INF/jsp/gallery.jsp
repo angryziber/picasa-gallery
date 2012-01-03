@@ -19,6 +19,7 @@
     <div id="map"></div>
     <ul class="albums">
         <c:forEach var="album" items="${gallery.albumEntries}">
+            <c:if test="${album.photosUsed > 0}">
             <li>
                 <a onclick="return transitionTo(this.href)" href="/${album.name}${picasa.urlSuffix}">
                     <img src="${album.mediaThumbnails[0].url}">
@@ -29,6 +30,7 @@
                 </a>
             </li>
             <script type="text/javascript">markers.push({pos: latLng(${album.geoLocation.latitude}, ${album.geoLocation.longitude}), title:'${album.title.plainText}'});</script>
+            </c:if>
         </c:forEach>
     </ul>
 
@@ -36,7 +38,7 @@
         Photos by <a id="m" href="${gallery.username}">${gallery.nickname}</a>. All rights reserved.
         <br>
         Rendered by <a href="http://github.com/angryziber/picasa-gallery">Picasa Gallery</a>.
-        Try with <a href="javascript:changeUsername('${gallery.username}')">your own</a> gallery.
+        View your <a href="javascript:changeUsername('${gallery.username}')">own gallery</a>.
     </div>
 </div>
 </body>

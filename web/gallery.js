@@ -79,7 +79,7 @@ function loadVisibleThumbs(maxCount) {
 }
 
 function changeUsername(username) {
-    username = prompt('Picasaweb username:', username);
+    username = prompt('View photos by Google/Picasaweb user:', username);
     if (username) goto('/?by=' + username);
 }
 
