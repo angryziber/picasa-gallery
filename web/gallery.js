@@ -31,6 +31,7 @@ function onStateChange(href) {
         updateLayout();
         content.fadeIn();
         photoViewer.setup();
+        setTimeout(initMap, 300);
     });
 }
 
@@ -79,7 +80,7 @@ function loadVisibleThumbs(maxCount) {
 }
 
 function changeUsername(username) {
-    username = prompt('View photos by Google/Picasaweb user:', username);
+    username = prompt('Show photos by Google/Picasaweb user:', username);
     if (username) goto('/?by=' + username);
 }
 
@@ -304,12 +305,14 @@ function doSearch() {
 }
 
 var markers = [];
-var map, bounds;
+var map;
 function latLng(lat, lon) {
     return new google.maps.LatLng(lat, lon);
 }
 function initMap() {
-    bounds = new google.maps.LatLngBounds();
+    if (!$('#map').length) return;
+
+    var bounds = new google.maps.LatLngBounds();
     map = new google.maps.Map($('#map')[0], {
         mapTypeId: google.maps.MapTypeId.TERRAIN,
         styles: [{
@@ -324,6 +327,7 @@ function initMap() {
         panControl: false,
         minZoom: 1
     });
+
     for (var i in markers) {
         var marker = new google.maps.Marker({position: markers[i].pos, map: map, title: markers[i].title});
         bounds.extend(markers[i].pos);
@@ -335,8 +339,15 @@ function initMap() {
         listen(i);
         markers[i].marker = marker;
     }
-    map.fitBounds(bounds);
-    map.panBy(0, 15);
+
+    if (markers.length > 0) {
+        map.fitBounds(bounds);
+        map.panBy(0, 15);
+    }
+    else {
+        map.setCenter(latLng(0, 0));
+        map.setZoom(1);
+    }
 }
 
 function updateLayout() {
@@ -345,9 +356,6 @@ function updateLayout() {
     var photosInColumn = Math.ceil($(window).height() / photoWidth);
     $('#content').width(photosInRow * photoWidth);
     loadVisibleThumbs(photosInRow * (photosInColumn * 2));
-    if ($('#map').length) {
-        setTimeout(initMap, 300);
-    }
 }
 
 var photoViewer = new PhotoViewer();
@@ -355,6 +363,7 @@ var photoViewer = new PhotoViewer();
 $(function() {
     scrollTo(0, 1);
     updateLayout();
+    setTimeout(initMap, 300);
     photoViewer.setup();
     $(window).resize(updateLayout);
     $(window).scroll(loadVisibleThumbs);

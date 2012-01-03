@@ -20,16 +20,18 @@
     <ul class="albums">
         <c:forEach var="album" items="${gallery.albumEntries}">
             <c:if test="${album.photosUsed > 0}">
-            <li>
-                <a onclick="return transitionTo(this.href)" href="/${album.name}${picasa.urlSuffix}">
-                    <img src="${album.mediaThumbnails[0].url}">
-                    <div class="title">
-                        <span class="info">${album.photosUsed}</span>
-                        ${album.title.plainText}
-                    </div>
-                </a>
-            </li>
-            <script type="text/javascript">markers.push({pos: latLng(${album.geoLocation.latitude}, ${album.geoLocation.longitude}), title:'${album.title.plainText}'});</script>
+                <li>
+                    <a onclick="return transitionTo(this.href)" href="/${album.name}${picasa.urlSuffix}">
+                        <img src="${album.mediaThumbnails[0].url}">
+                        <div class="title">
+                            <span class="info">${album.photosUsed}</span>
+                            ${album.title.plainText}
+                        </div>
+                    </a>
+                </li>
+                <c:if test="${album.geoLocation != null}">
+                    <script type="text/javascript">markers.push({pos: latLng(${album.geoLocation.latitude}, ${album.geoLocation.longitude}), title:'${album.title.plainText}'});</script>
+                </c:if>
             </c:if>
         </c:forEach>
     </ul>
