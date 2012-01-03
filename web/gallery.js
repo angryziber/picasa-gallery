@@ -39,6 +39,7 @@ function transitionTo(href) {
 
     history.pushState(href, href, href);
     onStateChange(href);
+    _gaq.push(['_trackPageview', href]);
     return false;
 }
 
@@ -47,9 +48,10 @@ function goto(href) {
     else location.href = href;
 }
 
-function facebookButton() {
-    return '<iframe id="facebook-button" scrolling="no" frameborder="0" allowtransparency="true" style="overflow: hidden; width: 90px; height: 20px; position: absolute; top: 60px; right: 10px"' +
-           'src="http://www.facebook.com/plugins/like.php?href=' + location.href + '&layout=button_count&action=like&width=90&height=20&colorscheme=dark"></iframe>'
+function facebookButton(href) {
+    if (!href) href = location.href;
+    return '<iframe id="facebook-button" scrolling="no" frameborder="0" allowtransparency="true" ' +
+           'src="http://www.facebook.com/plugins/like.php?href=' + href + '&layout=button_count&action=like&width=90&height=20&colorscheme=dark"></iframe>'
 }
 
 function stateURL(photo) {
@@ -279,7 +281,13 @@ function PhotoViewer() {
         centerTitle();
         if (photo.title) title.fadeIn(); else title.fadeOut();
 
-        if (history.replaceState) history.replaceState(stateURL(photo), photo.title, stateURL(photo));
+        var url = stateURL(photo);
+        if (history.replaceState) history.replaceState(url, photo.title, url);
+        _gaq.push(['_trackPageview', url]);
+
+        // TODO show only on mouse-move or something (+on mobile devices)
+//        wrapper.find('#facebook-button').remove();
+//        wrapper.append(facebookButton('http://' + location.host + stateURL(photo)));
     }
 }
 
