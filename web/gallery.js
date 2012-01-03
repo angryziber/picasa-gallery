@@ -56,7 +56,7 @@ function facebookButton(href) {
 
 function stateURL(photo) {
     var album = location.pathname.split('/')[1];
-    return '/' + album + (photo ? '/' + photo.id : '');
+    return '/' + album + (photo ? '/' + photo.id : '') + location.search;
 }
 
 function loadVisibleThumbs(maxCount) {
@@ -76,6 +76,11 @@ function loadVisibleThumbs(maxCount) {
         else if (found) return false;
         if (++count > maxCount) return false;
     });
+}
+
+function changeUsername(username) {
+    username = prompt('Picasaweb username:', username);
+    if (username) goto('/?by=' + username);
 }
 
 function PhotoViewer() {
@@ -294,7 +299,7 @@ function PhotoViewer() {
 }
 
 function doSearch() {
-    goto('/' + $('#search').val());
+    goto('/' + $('#search').val() + location.search);
     return false;
 }
 

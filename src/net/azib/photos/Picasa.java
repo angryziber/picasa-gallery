@@ -11,20 +11,22 @@ import java.net.URL;
 import java.util.Properties;
 
 public class Picasa {
-    // TODO change username
-    String user;
-    String analytics;
-    PicasawebService service;
+    static Properties config = loadConfig();
+    static String defaultUser = config.getProperty("google.user");
+    static String analytics = config.getProperty("google.analytics");
+    static PicasawebService service = new PicasawebService(defaultUser);
+    String user = defaultUser;
 
-    public Picasa() {
-        Properties config = loadConfig();
-        user = config.getProperty("google.user");
-        analytics = config.getProperty("google.analytics");
-        service = new PicasawebService(user);
+    public Picasa(String user) {
+        if (user != null) this.user = user;
     }
 
     public String getUser() {
         return user;
+    }
+    
+    public String getUrlSuffix() {
+        return !user.equals(defaultUser) ? "?by=" + user : "";
     }
 
     public String getAnalytics() {
@@ -52,17 +54,17 @@ public class Picasa {
 
     private <T extends IFeed> T feed(String url, Class<T> type) {
         try {
-            return service.getFeed(new URL("http://picasaweb.google.com/data/feed/api/user/" + user + url), type);
+            return service.getFeed(new URL("http://picasaweb.google.com/data/feed/api/user/" + getUser() + url), type);
         }
         catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
 
-    private Properties loadConfig() {
+    private static Properties loadConfig() {
         Properties config = new Properties();
         try {
-            config.load(getClass().getResourceAsStream("/config.properties"));
+            config.load(Picasa.class.getResourceAsStream("/config.properties"));
         }
         catch (IOException e) {
             throw new RuntimeException("Can't load config.properties");

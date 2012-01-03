@@ -20,7 +20,7 @@
     <ul class="albums">
         <c:forEach var="album" items="${gallery.albumEntries}">
             <li>
-                <a onclick="return transitionTo(this.href)" href="/${album.name}">
+                <a onclick="return transitionTo(this.href)" href="/${album.name}${picasa.urlSuffix}">
                     <img src="${album.mediaThumbnails[0].url}">
                     <div class="title">
                         <span class="info">${album.photosUsed}</span>
@@ -34,7 +34,9 @@
 
     <div id="footer">
         Photos by <a id="m" href="${gallery.username}">${gallery.nickname}</a>. All rights reserved.
-        Rendered by <a href="http://github.com/angryziber/picasa-gallery">Picasa Gallery</a>
+        <br>
+        Rendered by <a href="http://github.com/angryziber/picasa-gallery">Picasa Gallery</a>.
+        Try with <a href="javascript:changeUsername('${gallery.username}')">your own</a> gallery.
     </div>
 </div>
 </body>

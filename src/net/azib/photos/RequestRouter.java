@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class RequestRouter implements Filter {
-    Picasa picasa = new Picasa();
-
     public void init(FilterConfig config) throws ServletException {
     }
 
@@ -18,6 +16,9 @@ public class RequestRouter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
         String path = request.getRequestURI();
+
+        Picasa picasa = new Picasa(request.getParameter("by"));
+        request.setAttribute("picasa", picasa);
 
         if (path == null || "/".equals(path)) {
             render("gallery", picasa.getGallery(), request, response);
@@ -30,7 +31,6 @@ public class RequestRouter implements Filter {
     }
 
     void render(String template, BaseFeed feed, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.setAttribute("picasa", picasa);
         request.setAttribute(template, feed);
 
         response.setContentType("text/html; charset=utf8");

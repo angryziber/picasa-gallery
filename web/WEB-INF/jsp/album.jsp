@@ -15,7 +15,7 @@
 </head>
 <body>
 <div id="header">
-    <a href="/" class="button" onclick="return transitionTo(this.href)">Gallery<span></span></a>
+    <a href="/${picasa.urlSuffix}" class="button" onclick="return transitionTo(this.href)">Gallery<span></span></a>
     <h1 id="title">${album.title.plainText} <span class="by">by ${album.nickname}</span></h1>
     <form onsubmit="return doSearch()"><input id="search"></form>
 </div>
@@ -23,7 +23,7 @@
     <h1>${album.title.plainText}</h1>
     <h2>${album.description.plainText}</h2>
     <iframe id="facebook-album-button" scrolling="no" frameborder="0" allowtransparency="true"
-            src="http://www.facebook.com/plugins/like.php?href=http://<%=request.getHeader("host")%>/${album.name}&layout=button_count&action=like&width=90&height=20&colorscheme=dark"></iframe>
+            src="http://www.facebook.com/plugins/like.php?href=http://<%=request.getHeader("host")%>/${album.name}${picasa.urlSuffix}&layout=button_count&action=like&width=90&height=20&colorscheme=dark"></iframe>
     <br>
     <ul class="thumbs clear">
         <c:forEach var="photo" items="${album.photoEntries}">
