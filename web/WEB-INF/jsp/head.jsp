@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:useBean id="picasa" scope="request" type="net.azib.photos.Picasa"/>
 
 <meta name="viewport" content="width=700">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -10,9 +11,10 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="/gallery.js"></script>
 
+<c:if test="${picasa.analytics != null}">
 <script type="text/javascript">
     var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-10776266-1']);
+    _gaq.push(['_setAccount', '${picasa.analytics}']);
     _gaq.push(['_setDomainName', location.hostname.substring(location.hostname.lastIndexOf('.', 3)+1)]);
     _gaq.push(['_trackPageview']);
     (function() {
@@ -21,3 +23,4 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
 </script>
+</c:if>

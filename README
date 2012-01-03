@@ -9,7 +9,7 @@ Example gallery: http://photos.azib.net/
 How to use it for your own photos:
 
 - Clone this repository as described on Github
-- Specify your Picasaweb username in src/net/azib/photos/Picasa.java (TODO: make it configurable)
+- Specify your Picasaweb username in src/config.properties
 - Specify your AppEngine application ID in web/WEB-INF/appengine-web.xml
 - Download AppEngine SDK from Google
 - Use AppEngine SDK / Eclipse / IntelliJ IDEA to deploy your application
