@@ -59,11 +59,12 @@ function stateURL(photo) {
     return '/' + album + (photo ? '/' + photo.id : '');
 }
 
-function loadVisibleThumbs() {
+function loadVisibleThumbs(maxCount) {
+    if (!maxCount) maxCount = 10000;
 	var visibleTop = $(window).scrollTop() - 150;
     var visibleBottom = visibleTop + $(window).height() + 300;
 
-    var found;
+    var found = false, count = 0;
     $('img.missing').each(function() {
         var img = $(this);
         var top = img.offset().top;
@@ -73,6 +74,7 @@ function loadVisibleThumbs() {
             found = true;
         }
         else if (found) return false;
+        if (++count > maxCount) return false;
     });
 }
 
@@ -335,8 +337,9 @@ function initMap() {
 function updateLayout() {
     var photoWidth = ($('.albums').length ? 218 : 150) + 10;
     var photosInRow = Math.floor($(window).width() / photoWidth);
+    var photosInColumn = Math.ceil($(window).height() / photoWidth);
     $('#content').width(photosInRow * photoWidth);
-    loadVisibleThumbs();
+    loadVisibleThumbs(photosInRow * (photosInColumn * 2));
     if ($('#map').length) {
         setTimeout(initMap, 300);
     }
