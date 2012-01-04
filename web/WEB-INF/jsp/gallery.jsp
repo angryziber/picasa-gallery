@@ -17,6 +17,7 @@
 </div>
 <div id="content">
     <div id="map"></div>
+    <script type="text/javascript">markers = [];</script>
     <ul class="albums">
         <c:forEach var="album" items="${gallery.albumEntries}">
             <c:if test="${album.photosUsed > 0}">

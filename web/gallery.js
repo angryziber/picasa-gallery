@@ -28,6 +28,7 @@ function onStateChange(href) {
         var content = html.filter('#content');
         content.hide();
         $('#content').replaceWith(content);
+        $('#content').append(html.filter('script'));
         updateLayout();
         content.fadeIn();
         photoViewer.setup();
