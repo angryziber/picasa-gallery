@@ -328,17 +328,13 @@ function initMap() {
         minZoom: 1
     });
 
-    for (var i in markers) {
-        var marker = new google.maps.Marker({position: markers[i].pos, map: map, title: markers[i].title});
-        bounds.extend(markers[i].pos);
-        function listen(i) {
-            google.maps.event.addListener(marker, 'click', function() {
-                $('.albums a').eq(i).click();
-            });
-        }
-        listen(i);
-        markers[i].marker = marker;
-    }
+    $.each(markers, function(i, marker) {
+        this.marker = new google.maps.Marker({position: this.pos, map: map, title: this.title});
+        bounds.extend(this.pos);
+        google.maps.event.addListener(this.marker, 'click', function() {
+            $('.albums a#' + marker.id).click();
+        });
+    });
 
     if (markers.length > 0) {
         map.fitBounds(bounds);
