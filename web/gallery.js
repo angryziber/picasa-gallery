@@ -11,28 +11,36 @@ function onStateChange(href) {
         return;
     }
 
-    $('#content').fadeOut();
-    loadingReady = false;
+    var fadeOutFinished = $.Deferred(), contentLoaded = $.Deferred();
+    $('#content').fadeOut(function() {
+        $(this).remove(); fadeOutFinished.resolve();
+    });
+
+    $.when(fadeOutFinished, contentLoaded).then(function() {
+        updateLayout();
+        photoViewer.setup();
+        $('#loading').remove();
+        $('#content').fadeIn();
+        setTimeout(initMap, 300);
+    });
+
     setTimeout(function() {
-        if (!loadingReady)
-            $('#content').empty().append('<div style="text-align: center"><img src="/img/loading.gif">Loading...</div>').show();
+        if (!contentLoaded.isResolved())
+            $('<div id="loading" style="text-align: center; margin-top: 100px; position: absolute; width: 100%"><img src="/img/loading.gif">Loading...</div>').insertAfter($('#header'));
     }, 2000);
 
     $.get(href, function(html) {
-        loadingReady = true;
         html = $(html);
+        $('body').append(html.filter('script'));
+
         var header = html.filter('#header');
         document.title = header.find('#title').text();
         $('#header').replaceWith(header);
 
         var content = html.filter('#content');
         content.hide();
-        $('#content').replaceWith(content);
-        $('#content').append(html.filter('script'));
-        updateLayout();
-        content.fadeIn();
-        photoViewer.setup();
-        setTimeout(initMap, 300);
+        content.insertAfter($('#header'));
+        contentLoaded.resolve();
     });
 }
 
