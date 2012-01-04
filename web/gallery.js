@@ -86,96 +86,94 @@ function changeUsername(username) {
 }
 
 function PhotoViewer() {
-    var pv = this;
+    var pub = this;
     var w = $(window);
     var wrapper, title;
     var photos = [];
     var index = 0;
     var isOpen = false;
 
-    var pub = {
-        setup: function() {
-            photos = [];
-            $('a.photo').click(pv.open).each(function() {
-                var dim = this.rel.split('x');
-                photos.push({href: this.href, width: dim[0], height: dim[1], title: this.title, id: this.id});
-            });
+    pub.setup = function() {
+        photos = [];
+        $('a.photo').click(pub.open).each(function() {
+            var dim = this.rel.split('x');
+            photos.push({href: this.href, width: dim[0], height: dim[1], title: this.title, id: this.id});
+        });
 
-            $('#photo-wrapper').remove();
-            wrapper = $('<div id="photo-wrapper"><div class="title"></div></div>').appendTo($('body'));
-            wrapper[0].ontouchstart = onTouchStart;
-            wrapper[0].ontouchmove = onTouchMove;
-            title = wrapper.find('.title');
-            title.hover(function() {
-                title.fadeOut();
-            });
-        },
+        $('#photo-wrapper').remove();
+        wrapper = $('<div id="photo-wrapper"><div class="title"></div></div>').appendTo($('body'));
+        wrapper[0].ontouchstart = onTouchStart;
+        wrapper[0].ontouchmove = onTouchMove;
+        wrapper.click(onMouseClick);
+        wrapper.mousemove(onMouseMove);
 
-        isOpen: function() {
-            return isOpen;
-        },
-
-        open: function() {
-            isOpen = true;
-            onResize();
-            $(document).keydown(onKeydown);
-            $(window).resize(onResize);
-            index = $('a.photo').index(this);
-            wrapper.find('img').remove();
-            wrapper.fadeIn();
-            wrapper.click(onMouseClick);
-            wrapper.mousemove(onMouseMove);
-
-            loadPhoto();
-            var photo = photos[index];
-            if (history.pushState) history.pushState(stateURL(photo), photo.title, stateURL(photo));
-            return false;
-        },
-
-        close: function() {
-            isOpen = false;
-            wrapper.fadeOut();
-            wrapper.unbind();
-            $(document).unbind('keydown');
-            $(window).unbind('resize');
-
-            if (history.replaceState) history.replaceState(stateURL(), '', stateURL());
-            wrapper.find('img').remove();
-        },
-
-        next: function() {
-            index++;
-            if (index >= photos.length) index = 0;
-            loadPhoto();
-        },
-
-        prev: function() {
-            index--;
-            if (index < 0) index = photos.length-1;
-            loadPhoto();
-        },
-
-        first: function() {
-            index = 0;
-            loadPhoto();
-        },
-
-        last: function() {
-            index = photos.length-1;
-            loadPhoto();
-        }
+        title = wrapper.find('.title');
+        title.hover(function() {
+            title.fadeOut();
+        });
     };
-    $.each(pub, function(name, fun) {pv[name] = fun});
+
+    pub.isOpen = function() {
+        return isOpen;
+    };
+
+    pub.open = function() {
+        if (isOpen) return;
+        isOpen = true;
+        onResize();
+        $(document).keydown(onKeydown);
+        $(window).resize(onResize);
+        index = $('a.photo').index(this);
+        wrapper.find('img').remove();
+        wrapper.fadeIn();
+
+        loadPhoto();
+        var photo = photos[index];
+        if (history.pushState) history.pushState(stateURL(photo), photo.title, stateURL(photo));
+        return false;
+    };
+
+    pub.close = function() {
+        isOpen = false;
+        wrapper.fadeOut();
+        $(document).unbind('keydown');
+        $(window).unbind('resize');
+
+        if (history.replaceState) history.replaceState(stateURL(), '', stateURL());
+        wrapper.find('img').remove();
+    };
+
+    pub.next = function() {
+        index++;
+        if (index >= photos.length) index = 0;
+        loadPhoto();
+    };
+
+    pub.prev = function() {
+        index--;
+        if (index < 0) index = photos.length-1;
+        loadPhoto();
+    };
+
+    pub.first = function() {
+        index = 0;
+        loadPhoto();
+    };
+
+    pub.last = function() {
+        index = photos.length-1;
+        loadPhoto();
+    };
 
     function posAction(x, y) {
         var img = wrapper.find('img');
-        if (!img.length) return pv.close;
+        if (!img.length) return pub.close;
         var left = img.offset().left;
         var right = left + img.width();
         var delta = img.width() / 4;
-        if (x >= left-20 && x <= left + delta) return pv.prev;
-        else if (x >= right - delta && x <= right+20) return pv.next;
-        else return pv.close;
+        if (x >= left-20 && x <= left + delta) return pub.prev;
+        else if (x >= right - delta && x <= right+20) return pub.next;
+        else return pub.close;
     }
 
     var lastMousePos;
@@ -183,7 +181,7 @@ function PhotoViewer() {
         var newMousePos = e.pageX + ":" + e.pageY;
         if (lastMousePos != newMousePos) {
             var action = posAction(e.pageX, e.pageY);
-            var cursor = action == pv.prev ? 'w-resize' : action == pv.next ? 'e-resize' : 'default';
+            var cursor = action == pub.prev ? 'w-resize' : action == pub.next ? 'e-resize' : 'default';
             wrapper.css('cursor', cursor);
         }
         lastMousePos = newMousePos;
@@ -203,31 +201,29 @@ function PhotoViewer() {
         if (!touchStartX) return false;
         var dx = e.touches[0].pageX - touchStartX;
         if (dx > 20) {
-            pv.next();
+            pub.next();
             touchStartX = null;
-            return false;
         }
-        if (dx < -20) {
-            pv.prev();
+        else if (dx < -20) {
+            pub.prev();
             touchStartX = null;
-            return false;
         }
-        return true;
+        return touchStartX;
     }
 
     function onKeydown(e) {
         switch (e.which) {
-            case 27: pv.close(); return false;
+            case 27: pub.close(); return false;
             case 32:
             case 34:
             case 40:
-            case 39: pv.next(); return false;
+            case 39: pub.next(); return false;
             case 8:
             case 33:
             case 38:
-            case 37: pv.prev(); return false;
-            case 36: pv.first(); return false;
-            case 35: pv.last(); return false;
+            case 37: pub.prev(); return false;
+            case 36: pub.first(); return false;
+            case 35: pub.last(); return false;
             default: return true;
         }
     }
