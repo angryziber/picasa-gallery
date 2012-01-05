@@ -164,7 +164,7 @@ function PhotoViewer() {
             pub.prev();
             touchStartX = null;
         }
-        return touchStartX;
+        return false;
     }
 
     function onKeydown(e) {
@@ -306,7 +306,7 @@ function fadeTo(href) {
 }
 
 $(function() {
-    scrollTo(0, 1);
+    setTimeout(function() {scrollTo(0, 1)}, 10);
     updateLayout();
     $('#content').fadeIn(1000);
 
