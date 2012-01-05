@@ -7,17 +7,20 @@
 <head>
     <title>${album.title.plainText} by ${album.nickname}</title>
     <%@include file="head.jsp"%>
-    <c:if test="${photoId != null}">
-        <script type="text/javascript">
-            $(window).load(function() { $('a#${photoId}').click(); });
-        </script>
-    </c:if>
+    <script type="text/javascript">
+        $(window).load(function() {
+            new PhotoViewer().setup();
+            <c:if test="${photoId != null}">
+            $('a#${photoId}').click();
+            </c:if>
+        });
+    </script>
 </head>
-<body>
+<body style="background:black">
 <div id="header">
-    <a href="/${picasa.urlSuffix}" class="button" onclick="return transitionTo(this.href)">Gallery<span></span></a>
+    <a href="/${picasa.urlSuffix}" class="button fade">Gallery<span></span></a>
     <h1 id="title">${album.title.plainText} <span class="by">by ${album.nickname}</span></h1>
-    <form onsubmit="return doSearch()"><input id="search"></form>
+    <form id="search"><input></form>
 </div>
 <div id="content">
     <h1>${album.title.plainText}</h1>

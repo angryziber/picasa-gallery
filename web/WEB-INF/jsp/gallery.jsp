@@ -7,12 +7,15 @@
 <head>
     <title>${gallery.nickname} Photography</title>
     <%@include file="head.jsp"%>
+    <script type="text/javascript">
+        $(initMap);
+    </script>
 </head>
-<body>
+<body style="background:black">
 <div id="header">
     <a href="http://picasaweb.google.com/${gallery.username}" class="button"><img src="/img/picasa-logo.png">Picasaweb<span></span></a>
     <h1 id="title">${gallery.nickname} Photography</h1>
-    <form onsubmit="return doSearch()"><input id="search"></form>
+    <form id="search"><input></form>
 </div>
 <div id="content">
     <div id="map"></div>
@@ -21,7 +24,7 @@
         <c:forEach var="album" items="${gallery.albumEntries}">
             <c:if test="${album.photosUsed > 0}">
                 <li>
-                    <a id="${album.gphotoId}" onclick="return transitionTo(this.href)" href="/${album.name}${picasa.urlSuffix}">
+                    <a id="${album.gphotoId}" class="fade" href="/${album.name}${picasa.urlSuffix}">
                         <img src="${album.mediaThumbnails[0].url}">
                         <div class="title">
                             <span class="info">${album.photosUsed}</span>

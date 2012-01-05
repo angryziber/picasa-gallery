@@ -1,63 +1,3 @@
-var ajaxNavigation = history.replaceState && !navigator.appVersion.match(/Mobile/);
-
-if (ajaxNavigation) history.replaceState(location.href, window.title, location.href);
-window.onpopstate = function(event) {
-    if (event.state) onStateChange(event.state);
-};
-
-function onStateChange(href) {
-    if (photoViewer.isOpen()) {
-        photoViewer.close();
-        return;
-    }
-
-    var fadeOutFinished = $.Deferred(), contentLoaded = $.Deferred();
-    $('#content').fadeOut(function() {
-        $(this).remove(); fadeOutFinished.resolve();
-    });
-
-    $.when(fadeOutFinished, contentLoaded).then(function() {
-        updateLayout();
-        photoViewer.setup();
-        $('#loading').remove();
-        $('#content').fadeIn();
-        setTimeout(initMap, 300);
-    });
-
-    setTimeout(function() {
-        if (!contentLoaded.isResolved())
-            $('<div id="loading" style="text-align: center; margin-top: 100px; position: absolute; width: 100%"><img src="/img/loading.gif">Loading...</div>').insertAfter($('#header'));
-    }, 2000);
-
-    $.get(href, function(html) {
-        html = $(html);
-        $('body').append(html.filter('script'));
-
-        var header = html.filter('#header');
-        document.title = header.find('#title').text();
-        $('#header').replaceWith(header);
-
-        var content = html.filter('#content');
-        content.hide();
-        content.insertAfter($('#header'));
-        contentLoaded.resolve();
-    });
-}
-
-function transitionTo(href) {
-    if (!ajaxNavigation) return true;
-
-    history.pushState(href, href, href);
-    onStateChange(href);
-    _gaq.push(['_trackPageview', href]);
-    return false;
-}
-
-function goto(href) {
-    if (ajaxNavigation) transitionTo(href);
-    else location.href = href;
-}
-
 function facebookButton(href) {
     if (!href) href = location.href;
     return '<iframe id="facebook-button" scrolling="no" frameborder="0" allowtransparency="true" ' +
@@ -90,7 +30,7 @@ function loadVisibleThumbs(maxCount) {
 
 function changeUsername(username) {
     username = prompt('Show photos by Google/Picasaweb user:', username);
-    if (username) goto('/?by=' + username);
+    if (username) fadeTo('/?by=' + username);
 }
 
 function PhotoViewer() {
@@ -119,6 +59,7 @@ function PhotoViewer() {
         title.hover(function() {
             title.fadeOut();
         });
+        return this;
     };
 
     pub.isOpen = function() {
@@ -131,6 +72,8 @@ function PhotoViewer() {
         onResize();
         $(document).keydown(onKeydown);
         $(window).resize(onResize);
+        window.onpopstate = onPopState;
+
         index = $('a.photo').index(this);
         wrapper.find('img').remove();
         wrapper.fadeIn();
@@ -146,6 +89,7 @@ function PhotoViewer() {
         wrapper.fadeOut();
         $(document).unbind('keydown');
         $(window).unbind('resize');
+        window.onpopstate = $.noop;
 
         if (history.replaceState) history.replaceState(stateURL(), '', stateURL());
         wrapper.find('img').remove();
@@ -172,6 +116,10 @@ function PhotoViewer() {
         index = photos.length-1;
         loadPhoto();
     };
+
+    function onPopState(event) {
+        if (event.state) pub.close();
+    }
 
     function posAction(x, y) {
         var img = wrapper.find('img');
@@ -304,21 +252,13 @@ function PhotoViewer() {
     }
 }
 
-function doSearch() {
-    goto('/' + $('#search').val() + location.search);
-    return false;
-}
-
 var markers = [];
-var map;
 function latLng(lat, lon) {
     return new google.maps.LatLng(lat, lon);
 }
 function initMap() {
-    if (!$('#map').length) return;
-
     var bounds = new google.maps.LatLngBounds();
-    map = new google.maps.Map($('#map')[0], {
+    var map = new google.maps.Map($('#map')[0], {
         mapTypeId: google.maps.MapTypeId.TERRAIN,
         styles: [{
             stylers: [
@@ -359,21 +299,30 @@ function updateLayout() {
     loadVisibleThumbs(photosInRow * (photosInColumn * 2));
 }
 
-var photoViewer = new PhotoViewer();
+function fadeTo(href) {
+    $('#content').fadeOut(function() {
+        location.href = href;
+    });
+}
 
 $(function() {
     scrollTo(0, 1);
+
+    $('#content').hide();
     updateLayout();
-    setTimeout(initMap, 300);
-    photoViewer.setup();
+    $('#content').fadeIn(1000);
+
+    $('a.fade').click(function() {
+        fadeTo(this.href);
+        return false;
+    });
+
+    $('form#search').submit(function() {
+        fadeTo('/' + $(this).find('input').val() + location.search);
+        return false;
+    });
+
     $(window).resize(updateLayout);
     $(window).scroll(loadVisibleThumbs);
-    $.ajaxSetup({
-       error: function(req) {
-           if (req.status == 0) return;
-           alert('Failed: ' + req.status + ' ' + req.statusText + (req.responseText && req.responseText.length < 200 ? ': ' + req.responseText : ''));
-           location.href = '/';
-       }
-    });
     $('a#m').attr('href', 'm' + 'ail' + 'to:' + $('a#m').attr('href') + String.fromCharCode(64) + 'gmail.com');
 });

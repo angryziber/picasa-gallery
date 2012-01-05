@@ -1,7 +1,11 @@
+html {
+    background: #000;
+}
+
 body {
   font-family: luxi sans, trebuchet ms, sans-serif;
   color: #888;
-  background: black;
+  background: #000;
   overflow-y: scroll;
 }
 
@@ -49,7 +53,7 @@ a {
     left: auto;
 }
 
-#header #search {
+#header #search input {
     position: absolute;
     top: 6px;
     right: 50px;
@@ -65,7 +69,7 @@ a {
     background: white url(/img/search-icon.png) right 1px no-repeat;
 }
 
-#header #search:focus {
+#header #search input:focus {
     outline: none;
 }
 
@@ -80,7 +84,7 @@ a {
 }
 
 #content {
-    width: 710px; /* initial for mobile devices */
+    width: 100%;
     margin: 60px auto;
 }
 
