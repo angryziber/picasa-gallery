@@ -84,6 +84,7 @@ a {
 }
 
 #content {
+    display: none; /* will fade in */
     width: 100%;
     margin: 60px auto;
 }

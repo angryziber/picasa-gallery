@@ -307,8 +307,6 @@ function fadeTo(href) {
 
 $(function() {
     scrollTo(0, 1);
-
-    $('#content').hide();
     updateLayout();
     $('#content').fadeIn(1000);
 
