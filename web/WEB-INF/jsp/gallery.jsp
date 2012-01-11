@@ -6,6 +6,8 @@
 <html>
 <head>
     <title>${gallery.nickname} Photography</title>
+    <meta name="description" content="${gallery.nickname} photo albums from around the World">
+    <meta name="keywords" content='${gallery.nickname},photos,picasa,picasaweb,gallery,albums,travel,photography'>
     <%@include file="head.jsp"%>
     <script type="text/javascript">
         $(initMap);

@@ -4,8 +4,6 @@
 <meta name="viewport" content="width=700">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="description" content="Anton Keks photo albums from around the World">
-<meta name="keywords" content='Anton Keks,photos,picasa,picasaweb,gallery,albums,travel,photography'>
 
 <link rel="stylesheet" media="screen" href="/reset.css">
 <link rel="stylesheet" media="screen" href="/gallery.css">
