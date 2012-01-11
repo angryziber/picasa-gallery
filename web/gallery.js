@@ -36,7 +36,7 @@ function changeUsername(username) {
 function PhotoViewer() {
     var pub = this;
     var w = $(window);
-    var wrapper, title;
+    var wrapper, title, map;
     var photos = [];
     var index = 0;
     var isOpen = false;
@@ -45,11 +45,11 @@ function PhotoViewer() {
         photos = [];
         $('a.photo').click(pub.open).each(function() {
             var dim = this.rel.split('x');
-            photos.push({href: this.href, width: dim[0], height: dim[1], title: this.title, id: this.id});
+            photos.push({href: this.href, width: dim[0], height: dim[1], title: this.title, id: this.id, pos: extractPos(this)});
         });
 
         $('#photo-wrapper').remove();
-        wrapper = $('<div id="photo-wrapper"><div class="title"></div></div>').appendTo($('body'));
+        wrapper = $('<div id="photo-wrapper"><div class="title"></div><div id="photo-map"></div></div>').appendTo($('body'));
         wrapper[0].ontouchstart = onTouchStart;
         wrapper[0].ontouchmove = onTouchMove;
         wrapper.click(onMouseClick);
@@ -249,22 +249,35 @@ function PhotoViewer() {
         // TODO show only on mouse-move or something (+on mobile devices)
 //        wrapper.find('#facebook-button').remove();
 //        wrapper.append(facebookButton('http://' + location.host + stateURL(photo)));
+
+//        if (photo.pos) {
+//            if (!map) {
+//                map = createMap('#photo-map');
+//                map.setCenter(photo.pos);
+//                map.setZoom(14);
+//            }
+//            $('#photo-map').show();
+//            new google.maps.Marker({position:photo.pos, map:map});
+//            map.panTo(photo.pos);
+//        }
+//        else {
+            $('#photo-map').hide();
+//        }
     }
 }
 
-var markers = [];
 function latLng(lat, lon) {
     return new google.maps.LatLng(lat, lon);
 }
-function initMap() {
-    var bounds = new google.maps.LatLngBounds();
-    var map = new google.maps.Map($('#map')[0], {
+
+function createMap(selector) {
+    return new google.maps.Map($(selector)[0], {
         mapTypeId: google.maps.MapTypeId.TERRAIN,
         styles: [{
             stylers: [
-              { saturation: -5 },
-              { gamma: 0.38 },
-              { lightness: -33 }
+                { saturation: -5 },
+                { gamma: 0.38 },
+                { lightness: -33 }
             ]
         }],
         streetViewControl: false,
@@ -272,22 +285,34 @@ function initMap() {
         panControl: false,
         minZoom: 1
     });
+}
 
-    $.each(markers, function(i, marker) {
-        this.marker = new google.maps.Marker({position: this.pos, map: map, title: this.title});
-        bounds.extend(this.pos);
-        google.maps.event.addListener(this.marker, 'click', function() {
-            $('.albums a#' + marker.id).click();
+function extractPos(element) {
+    var coords = $(element).attr('coords');
+    if (!coords) return null;
+    coords = coords.split(':');
+    return latLng(coords[0], coords[1]);
+}
+
+function initMap() {
+    var bounds = new google.maps.LatLngBounds();
+    var map = createMap('#map');
+    $('ul.albums > li > a').each(function (i, link) {
+        var pos = extractPos(this);
+        if (!pos) return;
+        this.marker = new google.maps.Marker({position:pos, map:map, title:$(link).find('.title > .text').text()});
+        bounds.extend(pos);
+        google.maps.event.addListener(this.marker, 'click', function () {
+            $(link).click();
         });
     });
 
-    if (markers.length > 0) {
-        map.fitBounds(bounds);
-        map.panBy(0, 15);
-    }
-    else {
+    if (bounds.isEmpty()) {
         map.setCenter(latLng(0, 0));
         map.setZoom(1);
+    } else {
+        map.fitBounds(bounds);
+        map.panBy(0, 15);
     }
 }
 

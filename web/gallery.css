@@ -225,6 +225,15 @@ ul.albums li:hover .title > .info {
     background: rgba(0,0,0,0.3)
 }
 
+#photo-map {
+    position:absolute;
+    width: 200px;
+    height: 150px;
+    right: 0;
+    bottom: 0;
+    background: transparent;
+}
+
 #footer {
     clear: both;
     padding-top: 20px;

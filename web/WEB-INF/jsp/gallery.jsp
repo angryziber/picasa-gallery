@@ -19,22 +19,19 @@
 </div>
 <div id="content">
     <div id="map"></div>
-    <script type="text/javascript">markers = [];</script>
     <ul class="albums">
         <c:forEach var="album" items="${gallery.albumEntries}">
             <c:if test="${album.photosUsed > 0}">
                 <li>
-                    <a id="${album.gphotoId}" class="fade" href="/${album.name}${picasa.urlSuffix}">
+                    <a id="${album.gphotoId}" class="fade" href="/${album.name}${picasa.urlSuffix}"
+                        <c:if test="${album.geoLocation != null}">coords="${album.geoLocation.latitude}:${album.geoLocation.longitude}"</c:if>>
                         <img src="${album.mediaThumbnails[0].url}">
                         <div class="title">
                             <span class="info">${album.photosUsed}</span>
-                            ${album.title.plainText}
+                            <span class="text">${album.title.plainText}</span>
                         </div>
                     </a>
                 </li>
-                <c:if test="${album.geoLocation != null}">
-                    <script type="text/javascript">markers.push({id: '${album.gphotoId}', pos: latLng(${album.geoLocation.latitude}, ${album.geoLocation.longitude}), title:'${album.title.plainText}'});</script>
-                </c:if>
             </c:if>
         </c:forEach>
     </ul>
