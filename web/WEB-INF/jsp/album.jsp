@@ -1,11 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:useBean id="album" scope="request" type="com.google.gdata.data.photos.AlbumFeed"/>
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>${album.title.plainText} by ${album.nickname}</title>
+    <meta name="description" content="${album.description.plainText}">
+    <meta name="keywords" content="${album.nickname},photos,${fn:replace(album.title.plainText, " ", ",")},${fn:replace(album.description.plainText, " ", ",")}">
     <%@include file="head.jsp"%>
     <script type="text/javascript">
         $(window).load(function() {
