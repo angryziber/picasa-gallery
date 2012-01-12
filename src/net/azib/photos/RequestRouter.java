@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static javax.servlet.http.HttpServletResponse.SC_NOT_FOUND;
+
 public class RequestRouter implements Filter {
     public void init(FilterConfig config) throws ServletException {
     }
@@ -22,6 +24,9 @@ public class RequestRouter implements Filter {
 
         if (path == null || "/".equals(path)) {
             render("gallery", picasa.getGallery(), request, response);
+        }
+        else if (path.lastIndexOf('.') >= path.length() - 4) {
+            response.sendError(SC_NOT_FOUND);
         }
         else {
             String[] parts = path.split("/");
