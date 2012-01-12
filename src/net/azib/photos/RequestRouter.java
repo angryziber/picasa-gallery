@@ -26,7 +26,7 @@ public class RequestRouter implements Filter {
             render("gallery", picasa.getGallery(), request, response);
         }
         else if (path.lastIndexOf('.') >= path.length() - 4) {
-            response.sendError(SC_NOT_FOUND);
+            chain.doFilter(req, resp);
         }
         else {
             String[] parts = path.split("/");

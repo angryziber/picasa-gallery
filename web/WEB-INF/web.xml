@@ -12,4 +12,15 @@
         <filter-name>router</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <servlet>
+        <servlet-name>sitemap</servlet-name>
+        <servlet-class>net.azib.photos.SiteMapServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>sitemap</servlet-name>
+        <url-pattern>/robots.txt</url-pattern>
+        <url-pattern>/sitemap.xml</url-pattern>
+    </servlet-mapping>
 </web-app>
