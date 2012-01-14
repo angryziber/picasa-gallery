@@ -31,11 +31,11 @@
             <c:if test="${album.photosUsed > 0}">
                 <a id="${album.gphotoId}" class="fade" href="/${album.name}${picasa.urlSuffix}"
                     <c:if test="${album.geoLocation != null}">coords="${album.geoLocation.latitude}:${album.geoLocation.longitude}"</c:if>>
-                    <img src="${album.mediaThumbnails[0].url}">
+                    <img src="${album.mediaThumbnails[0].url}" alt="${album.title.plainText} photos, pictures">
                     <div class="title">
                         <span class="info">${album.photosUsed}</span>
                         <span class="text">${album.title.plainText}</span>
-                        <span class="description">${album.description.plainText}</span>
+                        <span class="description hidden">${album.description.plainText}</span>
                     </div>
                 </a>
             </c:if>
@@ -49,5 +49,7 @@
         View your <a href="javascript:changeUsername('${gallery.username}')">own gallery</a>.
     </div>
 </div>
+
+<h2 class="hidden">${gallery.nickname} <b>photos</b> and pictures</h2>
 </body>
 </html>

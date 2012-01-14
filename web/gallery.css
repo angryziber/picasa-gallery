@@ -102,6 +102,10 @@ h2 {
     clear: both;
 }
 
+.hidden {
+    display: none;
+}
+
 #content h1 {
     color: white;
     font-size: 170%;
