@@ -50,8 +50,6 @@ function PhotoViewer() {
 
         $('#photo-wrapper').remove();
         wrapper = $('<div id="photo-wrapper"><div class="title"></div><div id="photo-map"></div></div>').appendTo($('body'));
-        wrapper[0].ontouchstart = onTouchStart;
-        wrapper[0].ontouchmove = onTouchMove;
         wrapper.click(onMouseClick);
         wrapper.mousemove(onMouseMove);
 
@@ -73,6 +71,8 @@ function PhotoViewer() {
         $(document).keydown(onKeydown);
         $(window).resize(onResize);
         window.onpopstate = onPopState;
+        wrapper[0].ontouchstart = onTouchStart;
+        wrapper[0].ontouchmove = onTouchMove;
 
         index = $('a.photo').index(this);
         wrapper.find('img').remove();
@@ -150,8 +150,7 @@ function PhotoViewer() {
 
     var touchStartX;
     function onTouchStart(e) {
-        if (e.touches.length == 1)
-            touchStartX = e.touches[0].pageX;
+        touchStartX = e.touches[0].pageX;
     }
     function onTouchMove(e) {
         if (!touchStartX) return false;
@@ -185,10 +184,9 @@ function PhotoViewer() {
     }
 
     function onResize() {
+        if (window.innerHeight) wrapper.height(window.innerHeight); // iPhone workaround, http://bugs.jquery.com/ticket/6724, height:100% doesn't work if address bar is hidden
         if (wrapper.css('position') == 'absolute') { // fixed not supported on eg, Android and iOS < 4
-            h = window.innerHeight ? window.innerHeight : w.height(); // iPhone workaround, http://bugs.jquery.com/ticket/6724
-            console.log(w.scrollTop());
-            wrapper.width(w.width()).height(h).css('top', w.scrollTop());
+            wrapper.width(w.width()).css('top', w.scrollTop());
         }
         centerImage();
         centerTitle();
