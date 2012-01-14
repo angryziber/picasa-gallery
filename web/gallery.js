@@ -67,7 +67,7 @@ function PhotoViewer() {
     };
 
     pub.open = function() {
-        if (isOpen) return;
+        if (isOpen) return false;
         isOpen = true;
         onResize();
         $(document).keydown(onKeydown);
@@ -185,8 +185,11 @@ function PhotoViewer() {
     }
 
     function onResize() {
-        h = window.innerHeight ? window.innerHeight : w.height(); // iPhone workaround, http://bugs.jquery.com/ticket/6724
-        wrapper.width(w.width()).height(h).offset({left: w.scrollLeft(), top: w.scrollTop()});
+        if (wrapper.css('position') == 'absolute') { // fixed not supported on eg, Android and iOS < 4
+            h = window.innerHeight ? window.innerHeight : w.height(); // iPhone workaround, http://bugs.jquery.com/ticket/6724
+            console.log(w.scrollTop());
+            wrapper.width(w.width()).height(h).css('top', w.scrollTop());
+        }
         centerImage();
         centerTitle();
     }
