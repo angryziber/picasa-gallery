@@ -46,7 +46,7 @@
         });
     </script>
 </head>
-<body style="background:black">
+<body style="background:black; color: gray">
 <div id="header">
     <a href="/${picasa.urlSuffix}" class="button fade">Gallery<span></span></a>
     <h1 id="title">${album.title.plainText} <span class="by">by ${album.nickname}</span></h1>
