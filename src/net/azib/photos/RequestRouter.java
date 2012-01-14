@@ -1,14 +1,14 @@
 package net.azib.photos;
 
 import com.google.gdata.data.BaseFeed;
+import com.google.gdata.data.photos.AlbumFeed;
+import com.google.gdata.data.photos.GphotoEntry;
 import com.google.gdata.data.photos.UserFeed;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
-import static javax.servlet.http.HttpServletResponse.SC_NOT_FOUND;
 
 public class RequestRouter implements Filter {
     public void init(FilterConfig config) throws ServletException {
@@ -21,6 +21,7 @@ public class RequestRouter implements Filter {
 
         Picasa picasa = new Picasa(request.getParameter("by"));
         request.setAttribute("picasa", picasa);
+        request.setAttribute("host", request.getHeader("host"));
 
         if (path == null || "/".equals(path)) {
             render("gallery", picasa.getGallery(), request, response);
@@ -30,8 +31,16 @@ public class RequestRouter implements Filter {
         }
         else {
             String[] parts = path.split("/");
-            request.setAttribute("photoId", parts.length > 2 ? parts[2] : null);
-            render("album", picasa.getAlbum(parts[1]), request, response);
+            AlbumFeed album = picasa.getAlbum(parts[1]);
+            if (parts.length > 2) {
+                for (GphotoEntry photo : album.getPhotoEntries()) {
+                    if (photo.getGphotoId().equals(parts[2])) {
+                        request.setAttribute("photo", photo);
+                        break;
+                    }
+                }
+            }
+            render("album", album, request, response);
         }
     }
 

@@ -7,7 +7,11 @@
 <head>
     <title>${gallery.nickname} Photography</title>
     <meta name="description" content="${gallery.nickname} photo albums from around the World">
-    <meta name="keywords" content='${gallery.nickname},photos,picasa,picasaweb,gallery,albums,travel,photography'>
+    <meta name="keywords" content="${gallery.nickname},photos,picasa,picasaweb,gallery,albums,travel,photography">
+    <meta property="og:title" content="${gallery.nickname} Photography">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="${gallery.albumEntries[0].mediaContents[0].url}">
+    <meta property="og:site_name" content="${gallery.nickname} Photography">
     <%@include file="head.jsp"%>
     <script type="text/javascript">
         $(initMap);

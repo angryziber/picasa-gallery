@@ -9,12 +9,38 @@
     <title>${album.title.plainText} by ${album.nickname}</title>
     <meta name="description" content="${album.description.plainText}">
     <meta name="keywords" content="${album.nickname},photos,${fn:replace(album.title.plainText, " ", ",")},${fn:replace(album.description.plainText, " ", ",")}">
+
+    <c:if test="${photo == null}">
+        <meta name="medium" content="image">
+        <meta property="og:type" content="photos:album">
+        <meta property="og:title" content="${album.title.plainText} by ${album.nickname}">
+        <meta property="og:description" content="${album.description.plainText}">
+        <meta property="og:image" content="${album.icon}">
+        <link rel="image_src" href="${album.icon}">
+        <c:if test="${album.geoLocation != null}">
+            <meta property="og:latitude" content="${album.geoLocation.latitude}">
+            <meta property="og:longitude" content="${album.geoLocation.longitude}">
+        </c:if>
+    </c:if>
+    <c:if test="${photo != null}">
+        <meta name="medium" content="image">
+        <meta property="og:type" content="photos:photo">
+        <c:if test="${fn:length(photo.description.plainText) > 0}"><meta property="og:description" content="${photo.description.plainText}"></c:if>
+        <c:if test="${fn:length(photo.description.plainText) == 0}"><meta property="og:description" content="${album.description.plainText}"></c:if>
+        <meta property="og:image" content="${photo.mediaContents[0].url}">
+        <c:if test="${photo.geoLocation != null}">
+            <meta property="og:latitude" content="${photo.geoLocation.latitude}">
+            <meta property="og:longitude" content="${photo.geoLocation.longitude}">
+        </c:if>
+    </c:if>
+    <meta property="og:site_name" content="${album.nickname} Photography">
+
     <%@include file="head.jsp"%>
     <script type="text/javascript">
         $(window).load(function() {
             new PhotoViewer().setup();
-            <c:if test="${photoId != null}">
-            $('a#${photoId}').click();
+            <c:if test="${photo != null}">
+            $('a#${photo.gphotoId}').click();
             </c:if>
         });
     </script>

@@ -1,12 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="picasa" scope="request" type="net.azib.photos.Picasa"/>
 
+<meta property="fb:admins" content="${picasa.user}"/>
+<meta property="og:url" content="http://${host}${pageContext.request.servletPath}">
+
 <meta name="viewport" content="width=700">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-<link rel="stylesheet" media="screen" href="/reset.css">
-<link rel="stylesheet" media="screen" href="/gallery.css">
+<link rel="stylesheet" href="/reset.css">
+<link rel="stylesheet" href="/gallery.css">
+<link rel="apple-touch-icon" href="/img/picasa-logo.png"/>
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="/gallery.js"></script>
