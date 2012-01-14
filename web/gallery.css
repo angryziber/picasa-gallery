@@ -178,6 +178,10 @@ h2 {
     display: none;
 }
 
+.albums a .title > .description {
+    display: none; /* this is for search engines */
+}
+
 #facebook-button, #facebook-album-button {
     overflow: hidden;
     width: 90px;
