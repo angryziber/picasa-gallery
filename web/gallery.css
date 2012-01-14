@@ -313,4 +313,8 @@ ul.albums li:hover .title > .info {
     #footer {
         font-size: 70%;
     }
+
+    #photo-wrapper img {
+        border: none;
+    }
 }
