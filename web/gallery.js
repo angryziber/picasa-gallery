@@ -301,7 +301,7 @@ function extractPos(element) {
 function initMap() {
     var bounds = new google.maps.LatLngBounds();
     var map = createMap('#map');
-    $('ul.albums > li > a').each(function (i, link) {
+    $('.albums > a').each(function (i, link) {
         var pos = extractPos(this);
         if (!pos) return;
         this.marker = new google.maps.Marker({position:pos, map:map, title:$(link).find('.title > .text').text()});
