@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="picasa" scope="request" type="net.azib.photos.Picasa"/>
 
-<meta property="fb:admins" content="${picasa.user}"/>
 <meta property="og:url" content="http://${host}${pageContext.request.servletPath}">
+<meta property="fb:admins" content="${picasa.user}"/>
 
 <meta name="viewport" content="width=700">
 <meta name="apple-mobile-web-app-capable" content="yes">
