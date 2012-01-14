@@ -7,6 +7,7 @@
 <html>
 <head>
     <title>${album.title.plainText} by ${album.nickname}</title>
+    <meta name="viewport" content="width=650, intitial-scale=1.0, user-scalable=no">
     <meta name="description" content="${album.description.plainText}">
     <meta name="keywords" content="${album.nickname},photos,${fn:replace(album.title.plainText, " ", ",")},${fn:replace(album.description.plainText, " ", ",")}">
 

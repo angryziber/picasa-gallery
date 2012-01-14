@@ -7,6 +7,7 @@ body {
   color: #888;
   background: #000;
   overflow-y: scroll;
+  font-size: 14px;
 }
 
 a {
@@ -19,7 +20,6 @@ a {
   top: 0;
   width: 100%;
   padding: 10px;
-  font-size: 14px;
   color: white;
   text-shadow: 1px 0 black;
   background: #313131 url(/img/header-bg.gif) top left repeat-x;
@@ -30,15 +30,23 @@ a {
   border-bottom: 1px solid black;
 }
 
+h1 {
+    font-size: 150%;
+}
+
+h2 {
+    font-size: 115%;
+}
+
 #header h1 {
-  font-size: 20px;
   color: white;
+  font-size: 140%;
   font-weight: bold;
 }
 
 #header h1 .by {
     font-weight: normal;
-    font-size: 16px;
+    font-size: 80%;
 }
 
 #header .button {
@@ -58,6 +66,7 @@ a {
     top: 6px;
     right: 50px;
     width: 120px;
+    font-size: 100%;
     padding: 3px 20px 3px 6px;
     border: 1px solid #313131;
     -moz-border-radius: 6px;
@@ -95,7 +104,7 @@ a {
 
 #content h1 {
     color: white;
-    font-size: 24px;
+    font-size: 170%;
 }
 
 #content h2 {
@@ -285,4 +294,23 @@ ul.albums li:hover .title > .info {
     background-color: rgba(255, 255, 255, 0.25);
     background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255, 255, 255, 0.8)), to(rgba(255, 255, 255, 0)));
     background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
+}
+
+@media screen and (max-device-width: 569px) {
+    body {
+        font-size: 20px;
+    }
+
+    #header .button {
+        left: 30px;
+    }
+
+    #header #search input {
+        right: 10px;
+        width: 100px;
+    }
+
+    #footer {
+        font-size: 70%;
+    }
 }

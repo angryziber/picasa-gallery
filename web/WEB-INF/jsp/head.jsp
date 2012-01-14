@@ -4,7 +4,6 @@
 <meta property="og:url" content="http://${host}${pageContext.request.servletPath}">
 <meta property="fb:admins" content="${picasa.user}"/>
 
-<meta name="viewport" content="width=700">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
