@@ -201,10 +201,13 @@ function PhotoViewer() {
         var photo = photos[index];
         var ww = wrapper.width(), wh = wrapper.height();
         if (photo.width > ww || photo.height > wh) {
-            if (ww / wh > photo.width / photo.height)
+            if (ww / wh > photo.width / photo.height) {
                 img.attr('height', wh);
-            else
+                img.removeAttr('width');
+            } else {
                 img.attr('width', ww);
+                img.removeAttr('height');
+            }
         }
         img.css('top', (wrapper.height()-img.height())/2);
         img.css('left', (wrapper.width()-img.width())/2);
