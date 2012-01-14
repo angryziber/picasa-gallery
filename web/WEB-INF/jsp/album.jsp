@@ -58,19 +58,17 @@
     <iframe id="facebook-album-button" scrolling="no" frameborder="0" allowtransparency="true"
             src="http://www.facebook.com/plugins/like.php?href=http://<%=request.getHeader("host")%>/${album.name}${picasa.urlSuffix}&layout=button_count&action=like&width=90&height=20&colorscheme=dark"></iframe>
     <br>
-    <ul class="thumbs clear">
+    <div class="thumbs clear">
         <c:forEach var="photo" items="${album.photoEntries}">
-            <li>
-                <c:set var="media" value="${photo.mediaContents[0]}"/>
-                <a id="${photo.gphotoId}" href="${media.url}" class="photo"
-                   title="${photo.description.plainText}"
-                   rel="${media.width}x${media.height}"
-                   <c:if test="${photo.geoLocation != null}">coords="${photo.geoLocation.latitude}:${photo.geoLocation.longitude}"</c:if>>
-                    <img src="/img/empty.png" class="missing" rel="${photo.mediaThumbnails[0].url}">
-                </a>
-            </li>
+            <c:set var="media" value="${photo.mediaContents[0]}"/>
+            <a id="${photo.gphotoId}" href="${media.url}" class="photo"
+               title="${photo.description.plainText}"
+               rel="${media.width}x${media.height}"
+               <c:if test="${photo.geoLocation != null}">coords="${photo.geoLocation.latitude}:${photo.geoLocation.longitude}"</c:if>>
+                <img src="/img/empty.png" class="missing" rel="${photo.mediaThumbnails[0].url}">
+            </a>
         </c:forEach>
-    </ul>
+    </div>
 
 </div>
 </body>

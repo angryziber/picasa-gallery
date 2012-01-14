@@ -111,40 +111,36 @@ h2 {
     margin-top: 4px;
 }
 
-ul.albums, ul.thumbs {
-    list-style: none;
-}
-
-ul.albums li, ul.thumbs li {
+.albums a, .thumbs a {
     float: left;
     margin: 0 10px 10px 0;
     position: relative;
 }
 
-ul.albums li img, ul.thumbs li img {
+.albums a img, .thumbs a img {
     border: 3px solid #313131;
 }
 
-ul.albums li {
+.albums a {
     height: 218px; /* for FF */
 }
 
-ul.albums li img {
+.albums a img {
     width: 212px;
     height: 212px;
 }
 
-ul.thumbs li img {
+.thumbs a img {
     width: 144px;
     height: 144px;
     text-align: center;
 }
 
-ul.albums li:hover img, ul.thumbs li:hover img {
+.albums a:hover img, .thumbs a:hover img {
     border-color: #616161;
 }
 
-ul.albums li .title {
+.albums a .title {
     position: absolute;
     top: 192px;
     left: 3px;
@@ -164,7 +160,7 @@ ul.albums li .title {
     transition: 2s ease-out;
 }
 
-ul.albums li:hover .title {
+.albums a:hover .title {
     overflow: visible;
     width: auto;
     z-index: 9;
@@ -174,16 +170,12 @@ ul.albums li:hover .title {
     transition: 500ms ease-out;
 }
 
-ul.albums li .title > .info {
+.albums a .title > .info {
     color: gray;
     float: right;
     margin-left: 3px;
     width: auto;
     display: none;
-}
-
-ul.albums li:hover .title > .info {
-    display: block;
 }
 
 #facebook-button, #facebook-album-button {
@@ -306,6 +298,14 @@ ul.albums li:hover .title > .info {
     background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
 }
 
+/* only desktop */
+@media screen and (min-device-width: 1024px) {
+    .albums a:hover .title > .info {
+        display: block;
+    }
+}
+
+/* only mobile */
 @media screen and (max-device-width: 569px) {
     body {
         font-size: 20px;
@@ -321,10 +321,14 @@ ul.albums li:hover .title > .info {
     }
 
     #footer {
-        font-size: 70%;
+        font-size: 14px;
     }
 
     #photo-wrapper img {
         border: none;
+    }
+
+    #photo-wrapper .title {
+        font-size: 12px;
     }
 }
