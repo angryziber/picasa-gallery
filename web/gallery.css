@@ -226,12 +226,18 @@ ul.albums li:hover .title > .info {
     border: 2px solid #313131;
 }
 
-#photo-wrapper .title {
+#photo-wrapper .title-wrapper {
     position: absolute;
+    left: 50%;
     bottom: 20px;
+}
+
+#photo-wrapper .title {
+    position: relative;
+    left: -50%;
     z-index: 777;
     text-align: center;
-    padding: 5px;
+    padding: 5px 10px;
     border-radius: 5px;
     color: white;
     text-shadow: 1px 1px 1px black;

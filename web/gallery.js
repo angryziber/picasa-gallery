@@ -49,7 +49,7 @@ function PhotoViewer() {
         });
 
         $('#photo-wrapper').remove();
-        wrapper = $('<div id="photo-wrapper"><div class="title"></div><div id="photo-map"></div></div>').appendTo($('body'));
+        wrapper = $('<div id="photo-wrapper"><div class="title-wrapper"><div class="title"></div></div><div id="photo-map"></div></div>').appendTo($('body'));
         wrapper.click(onMouseClick);
         wrapper.mousemove(onMouseMove);
 
@@ -212,7 +212,7 @@ function PhotoViewer() {
     }
 
     function centerTitle() {
-        title.offset({left: Math.max(0, (w.width() - title.width()) / 2)});
+        title.css('width', title.height() > title.css('line-height').replace('px', '') ? w.width()*0.95 : 'auto');
     }
 
     function imageOnLoad() {
@@ -243,8 +243,8 @@ function PhotoViewer() {
         newImg.src = photo.href;
 
         title.text(photo.title);
-        centerTitle();
         if (photo.title) title.fadeIn(); else title.fadeOut();
+        centerTitle();
 
         var url = stateURL(photo);
         if (history.replaceState) history.replaceState(url, photo.title, url);
