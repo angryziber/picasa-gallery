@@ -137,7 +137,7 @@ function PhotoViewer() {
         var newMousePos = e.pageX + ":" + e.pageY;
         if (lastMousePos != newMousePos) {
             var action = posAction(e.pageX, e.pageY);
-            var cursor = action == pub.prev ? 'w-resize' : action == pub.next ? 'e-resize' : 'default';
+            var cursor = action == pub.prev ? 'url(/img/left-cursor.png),w-resize' : action == pub.next ? 'url(/img/right-cursor.png),e-resize' : 'default';
             wrapper.css('cursor', cursor);
         }
         lastMousePos = newMousePos;
