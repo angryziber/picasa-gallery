@@ -86,11 +86,11 @@
     <div id="photo-map"></div>
     <div id="photo-controls" class="visible">
         <div class="header">
-            <button class="button first" onclick="viewer.close()">Close<span></span></button>
-            <button class="button" id="slideshow">Start Slideshow<span></span></button>
-            <button class="button" id="decInterval">-<span></span></button>
+            <a class="button first" onclick="viewer.close()">Close<span></span></a>
+            <a class="button" id="slideshow">Start Slideshow<span></span></a>
+            <a class="button" id="decInterval">-<span></span></a>
             <span class="left"><span id="interval">3</span> sec</span>
-            <button class="button" id="incInterval">+<span></span></button>
+            <a class="button" id="incInterval">+<span></span></a>
             <span class="left" id="timeRemaining"></span>
             <h1>${album.title.plainText} <small id="position"></small></h1>
         </div>
