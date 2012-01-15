@@ -38,13 +38,14 @@
 
     <%@include file="head.jsp"%>
     <script type="text/javascript">
+        var viewer = new PhotoViewer();
         $(window).load(function() {
             if ($(window).width() > 1550) {
                 $('a.photo').each(function(i, link) {
                     link.href = link.href.replace('/s1024/', '/s1600/');
                 });
             }
-            new PhotoViewer().setup();
+            viewer.setup();
             <c:if test="${photo != null}">
             $('a#${photo.gphotoId}').click();
             </c:if>
@@ -85,7 +86,8 @@
     <div id="photo-map"></div>
     <div id="photo-controls" class="visible">
         <div class="header">
-            <button class="button first" id="slideshow">Start Slideshow<span></span></button>
+            <button class="button first" onclick="viewer.close()">Close<span></span></button>
+            <button class="button" id="slideshow">Start Slideshow<span></span></button>
             <button class="button" id="decInterval">-<span></span></button>
             <span class="left"><span id="interval">3</span> sec</span>
             <button class="button" id="incInterval">+<span></span></button>
