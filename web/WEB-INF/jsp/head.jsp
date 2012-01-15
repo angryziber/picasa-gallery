@@ -8,11 +8,11 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 <link rel="stylesheet" href="/reset.css">
-<link rel="stylesheet" href="/gallery.css?v=3">
+<link rel="stylesheet" href="/gallery.css?v=4">
 <link rel="apple-touch-icon" href="/img/picasa-logo.png"/>
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script type="text/javascript" src="/gallery.js?v=3"></script>
+<script type="text/javascript" src="/gallery.js?v=4"></script>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
 <c:if test="${picasa.analytics != null}">
