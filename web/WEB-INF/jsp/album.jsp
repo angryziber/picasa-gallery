@@ -57,7 +57,7 @@
 <div id="header" class="header">
     <a href="/${picasa.urlSuffix}" class="button fade">Gallery<span></span></a>
     <form id="search"><input></form>
-    <h1 id="title">${album.title.plainText} <span class="by">by ${album.nickname}</span></h1>
+    <h1 id="title">${album.title.plainText} <small>by ${album.nickname}</small></h1>
 </div>
 
 <div id="content">
@@ -90,7 +90,7 @@
             <span class="left"><span id="interval">3</span> sec</span>
             <button class="button" id="incInterval">+<span></span></button>
             <span class="left" id="timeRemaining"></span>
-            <h1>${album.title.plainText} <span id="position"></span></h1>
+            <h1>${album.title.plainText} <small id="position"></small></h1>
         </div>
     </div>
 </div>

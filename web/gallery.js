@@ -36,7 +36,7 @@ function changeUsername(username) {
 function PhotoViewer() {
     var pub = this;
     var w = $(window);
-    var wrapper, title, map, controls, interval, timeRemaining;
+    var wrapper, title, map, controls, position, interval, timeRemaining;
     var slideshow = null;
     var photos = [];
     var index = 0;
@@ -56,6 +56,7 @@ function PhotoViewer() {
         controls.find('#slideshow').click(pub.slideshow);
         controls.find('#incInterval').click(incInterval);
         controls.find('#decInterval').click(decInterval);
+        position = controls.find('#position');
         interval = controls.find('#interval');
         timeRemaining = controls.find('#timeRemaining');
 
@@ -134,13 +135,19 @@ function PhotoViewer() {
     };
 
     function showTimeRemaining() {
-        timeRemaining.text('Remaining ' + ((photos.length - index) * interval.text()) + ' sec');
+        var sec = (photos.length - index - 1) * interval.text();
+        var min = 0;
+        if (sec > 60) {
+            min = Math.floor(sec / 60);
+            sec = sec % 60;
+        }
+        timeRemaining.text((min ? min + ' min ' : '') + sec + ' sec');
     }
 
     function startSlideshow() {
         slideshow = setInterval(function() {
-            showTimeRemaining();
             pub.next();
+            showTimeRemaining();
         }, interval.text()*1000);
         controls.find('#slideshow.button').html('Stop Slideshow<span></span>');
         showTimeRemaining();
@@ -302,6 +309,8 @@ function PhotoViewer() {
         var url = stateURL(photo);
         if (history.replaceState) history.replaceState(url, photo.title, url);
         _gaq.push(['_trackPageview', url]);
+
+        position.text((index+1) + ' of ' + photos.length);
 
         controls.find('.facebook-button').remove();
         controls.find('.header').prepend(facebookButton('http://' + location.host + stateURL(photo)));

@@ -45,14 +45,14 @@ h2 {
   font-weight: bold;
 }
 
-.header h1 .by {
+.header h1 small {
     font-weight: normal;
     font-size: 80%;
 }
 
 .header .button {
     padding: 4px 10px;
-    margin: 0 20px;
+    margin: 0 10px;
     float: left;
 }
 
@@ -306,6 +306,12 @@ h2 {
 
 #photo-controls .facebook-button {
     float: right;
+}
+
+#photo-controls h1 {
+    position: relative;
+    left: -160px;
+    z-index: -1;
 }
 
 .button {
