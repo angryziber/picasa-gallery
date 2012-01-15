@@ -87,7 +87,7 @@
     <div id="photo-controls" class="visible">
         <div class="header">
             <a class="button first" onclick="viewer.close()">Close<span></span></a>
-            <a class="button" id="slideshow">Start Slideshow<span></span></a>
+            <a class="button" id="slideshow">Slideshow<span></span></a>
             <a class="button" id="decInterval">-<span></span></a>
             <span class="left"><span id="interval">3</span> sec</span>
             <a class="button" id="incInterval">+<span></span></a>

@@ -149,13 +149,13 @@ function PhotoViewer() {
             pub.next();
             showTimeRemaining();
         }, interval.text()*1000);
-        controls.find('#slideshow.button').html('Stop Slideshow<span></span>');
+        controls.find('#slideshow.button').html('Stop<span></span>');
         showTimeRemaining();
     }
 
     function stopSlideshow() {
         clearInterval(slideshow); slideshow = null;
-        controls.find('#slideshow.button').html('Start Slideshow<span></span>');
+        controls.find('#slideshow.button').html('Slideshow<span></span>');
         timeRemaining.empty();
     }
 
