@@ -6,7 +6,7 @@ mobile device support, and full-screen photo browsing with quick loading (prefet
 
 For all those who wish their Picasaweb gallery had black background!
 
-See example gallery: http://photos.azib.net/ - use the link at the bottom to try it with your own gallery!
+Example gallery: [Anton Keks Photos](http://photos.azib.net/) - use the link at the bottom to try it with your own gallery!
 
 How does it work?
 =================
@@ -19,7 +19,7 @@ Features
 ========
 
 - Dark theme that emphasizes photos
-- Shows your exising Picasaweb albums, no copying or syncing needed
+- Shows your exising Picasaweb albums, no additional storage needed
 - Search within the gallery (by tags, keywords, descriptions, etc)
 - Nice bookmarkable URLs for albums, individual photos, search results
 - Gallery map if albums are geotagged, album map coming soon
@@ -32,7 +32,6 @@ Features
 - Facebook like buttons for albums and individual photos
 - Opengraph metadata (for FB sharing, etc)
 - Google analytics support
-- Google AppEngine support
 
 How to use it for your own photos
 =================================
@@ -41,7 +40,7 @@ How to use it for your own photos
 - Specify your Picasaweb username in src/config.properties
 - Specify your AppEngine application ID in web/WEB-INF/appengine-web.xml
 - Download AppEngine SDK from Google
-- Use AppEngine SDK / Eclipse / IntelliJ IDEA to deploy your application
+- Use AppEngine SDK / Eclipse / IntelliJ IDEA to deploy your application.
   Details here: http://code.google.com/appengine/docs/java/gettingstarted/uploading.html
 
 P.S. the app is a standard Java Servlet-based application, so it will work without AppEngine as well.
