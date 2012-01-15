@@ -1,6 +1,6 @@
 function facebookButton(href) {
     if (!href) href = location.href;
-    return '<iframe id="facebook-button" scrolling="no" frameborder="0" allowtransparency="true" ' +
+    return '<iframe class="facebook-button" scrolling="no" frameborder="0" allowtransparency="true" ' +
            'src="http://www.facebook.com/plugins/like.php?href=' + href + '&layout=button_count&action=like&width=90&height=20&colorscheme=dark"></iframe>'
 }
 
@@ -36,7 +36,8 @@ function changeUsername(username) {
 function PhotoViewer() {
     var pub = this;
     var w = $(window);
-    var wrapper, title, map, controls;
+    var wrapper, title, map, controls, interval, timeRemaining;
+    var slideshow = null;
     var photos = [];
     var index = 0;
     var isOpen = false;
@@ -52,6 +53,11 @@ function PhotoViewer() {
         wrapper.click(onMouseClick);
         wrapper.mousemove(onMouseMove);
         controls = wrapper.find('#photo-controls');
+        controls.find('#slideshow').click(pub.slideshow);
+        controls.find('#incInterval').click(incInterval);
+        controls.find('#decInterval').click(decInterval);
+        interval = controls.find('#interval');
+        timeRemaining = controls.find('#timeRemaining');
 
         title = wrapper.find('.title');
         title.hover(function() {
@@ -96,6 +102,7 @@ function PhotoViewer() {
 
         if (history.replaceState) history.replaceState(stateURL(), '', stateURL());
         wrapper.find('img').remove();
+        stopSlideshow();
     };
 
     pub.next = function() {
@@ -119,6 +126,47 @@ function PhotoViewer() {
         index = photos.length-1;
         loadPhoto();
     };
+
+    pub.slideshow = function() {
+        if (slideshow) stopSlideshow();
+        else startSlideshow();
+        return false;
+    };
+
+    function showTimeRemaining() {
+        timeRemaining.text('Remaining ' + ((photos.length - index) * interval.text()) + ' sec');
+    }
+
+    function startSlideshow() {
+        slideshow = setInterval(function() {
+            showTimeRemaining();
+            pub.next();
+        }, interval.text()*1000);
+        controls.find('#slideshow.button').html('Stop Slideshow<span></span>');
+        showTimeRemaining();
+    }
+
+    function stopSlideshow() {
+        clearInterval(slideshow); slideshow = null;
+        controls.find('#slideshow.button').html('Start Slideshow<span></span>');
+        timeRemaining.empty();
+    }
+
+    function incInterval() {
+        interval.text(parseInt(interval.text())+1);
+        if (slideshow) {
+            stopSlideshow(); startSlideshow();
+        }
+        return false;
+    }
+
+    function decInterval() {
+        interval.text(Math.max(1, parseInt(interval.text())-1));
+        if (slideshow) {
+            stopSlideshow(); startSlideshow();
+        }
+        return false;
+    }
 
     function onPopState(event) {
         if (event.state) pub.close();
@@ -255,9 +303,8 @@ function PhotoViewer() {
         if (history.replaceState) history.replaceState(url, photo.title, url);
         _gaq.push(['_trackPageview', url]);
 
-        // TODO show only on mouse-move or something (+on mobile devices)
-//        wrapper.find('#facebook-button').remove();
-//        wrapper.append(facebookButton('http://' + location.host + stateURL(photo)));
+        controls.find('.facebook-button').remove();
+        controls.find('.header').prepend(facebookButton('http://' + location.host + stateURL(photo)));
 
 //        if (photo.pos) {
 //            if (!map) {

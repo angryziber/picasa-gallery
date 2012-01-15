@@ -56,14 +56,14 @@
 
 <div id="header" class="header">
     <a href="/${picasa.urlSuffix}" class="button fade">Gallery<span></span></a>
-    <h1 id="title">${album.title.plainText} <span class="by">by ${album.nickname}</span></h1>
     <form id="search"><input></form>
+    <h1 id="title">${album.title.plainText} <span class="by">by ${album.nickname}</span></h1>
 </div>
 
 <div id="content">
     <h1>${album.title.plainText}</h1>
     <h2>${album.description.plainText}</h2>
-    <iframe id="facebook-album-button" scrolling="no" frameborder="0" allowtransparency="true"
+    <iframe class="facebook-button" scrolling="no" frameborder="0" allowtransparency="true"
             src="http://www.facebook.com/plugins/like.php?href=http://<%=request.getHeader("host")%>/${album.name}${picasa.urlSuffix}&layout=button_count&action=like&width=90&height=20&colorscheme=dark"></iframe>
     <br>
     <div class="thumbs clear">
@@ -85,7 +85,12 @@
     <div id="photo-map"></div>
     <div id="photo-controls" class="visible">
         <div class="header">
-            Controls!
+            <button class="button first" id="slideshow">Start Slideshow<span></span></button>
+            <button class="button" id="decInterval">-<span></span></button>
+            <span class="left"><span id="interval">3</span> sec</span>
+            <button class="button" id="incInterval">+<span></span></button>
+            <span class="left" id="timeRemaining"></span>
+            <h1>${album.title.plainText} <span id="position"></span></h1>
         </div>
     </div>
 </div>

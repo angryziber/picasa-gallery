@@ -23,8 +23,8 @@
 
 <div id="header" class="header">
     <a href="http://picasaweb.google.com/${gallery.username}" class="button"><img src="/img/picasa-logo.png">Picasaweb<span></span></a>
-    <h1 id="title">${gallery.nickname} Photography</h1>
     <form id="search"><input></form>
+    <h1 id="title">${gallery.nickname} Photography</h1>
 </div>
 
 <div id="content">
