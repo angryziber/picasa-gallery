@@ -19,7 +19,6 @@ a {
   z-index: 10;
   top: 0;
   width: 100%;
-  height: 25px;
   padding: 10px;
   color: white;
   text-shadow: 1px 0 black;
@@ -369,13 +368,22 @@ h2 {
         font-size: 20px;
     }
 
-    #header .button {
-        left: 30px;
+    .header .button:first-child, .header .button.first {
+        margin-left: 30px;
     }
 
-    #header #search input {
-        right: 10px;
+    .header #search input {
+        margin-right: 10px;
         width: 100px;
+    }
+
+    #photo-controls {
+        display: none; /* TODO fix this for mobile devices */
+    }
+
+    #photo-controls h1 {
+        left: 0;
+        clear: both;
     }
 
     #footer {
