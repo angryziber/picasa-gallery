@@ -44,8 +44,7 @@ function PhotoViewer() {
     pub.setup = function() {
         photos = [];
         $('a.photo').click(pub.open).each(function() {
-            var dim = this.rel.split('x');
-            photos.push({href: this.href, width: dim[0], height: dim[1], title: this.title, id: this.id, pos: extractPos(this)});
+            photos.push({href: this.href, title: this.title, id: this.id, pos: extractPos(this)});
         });
 
         $('#photo-wrapper').remove();
@@ -216,6 +215,8 @@ function PhotoViewer() {
     }
 
     function imageOnLoad() {
+        photos[index].width = this.width;
+        photos[index].height = this.height;
         var img = $(this);
         wrapper.append(img);
         centerImage(img);
