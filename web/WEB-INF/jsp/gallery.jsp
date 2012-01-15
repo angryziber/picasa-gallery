@@ -18,12 +18,15 @@
         $(initMap);
     </script>
 </head>
+
 <body style="background:black; color: gray">
-<div id="header">
+
+<div id="header" class="header">
     <a href="http://picasaweb.google.com/${gallery.username}" class="button"><img src="/img/picasa-logo.png">Picasaweb<span></span></a>
     <h1 id="title">${gallery.nickname} Photography</h1>
     <form id="search"><input></form>
 </div>
+
 <div id="content">
     <div id="map"></div>
     <div class="albums">

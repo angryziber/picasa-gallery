@@ -36,7 +36,7 @@ function changeUsername(username) {
 function PhotoViewer() {
     var pub = this;
     var w = $(window);
-    var wrapper, title, map;
+    var wrapper, title, map, controls;
     var photos = [];
     var index = 0;
     var isOpen = false;
@@ -47,10 +47,11 @@ function PhotoViewer() {
             photos.push({href: this.href, title: this.title, id: this.id, pos: extractPos(this)});
         });
 
-        $('#photo-wrapper').remove();
-        wrapper = $('<div id="photo-wrapper"><div class="title-wrapper"><div class="title"></div></div><div id="photo-map"></div></div>').appendTo($('body'));
+        wrapper = $('#photo-wrapper');
+        wrapper.unbind();
         wrapper.click(onMouseClick);
         wrapper.mousemove(onMouseMove);
+        controls = wrapper.find('#photo-controls');
 
         title = wrapper.find('.title');
         title.hover(function() {
@@ -76,6 +77,9 @@ function PhotoViewer() {
         index = $('a.photo').index(this);
         wrapper.find('img').remove();
         wrapper.fadeIn();
+        setTimeout(function() {
+            controls.removeClass('visible');
+        }, 2000);
 
         loadPhoto();
         var photo = photos[index];

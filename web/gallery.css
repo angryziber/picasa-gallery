@@ -14,7 +14,7 @@ a {
     text-decoration: none;
 }
 
-#header {
+.header {
   position: fixed;
   z-index: 10;
   top: 0;
@@ -38,30 +38,30 @@ h2 {
     font-size: 115%;
 }
 
-#header h1 {
+.header h1 {
   color: white;
   font-size: 140%;
   font-weight: bold;
 }
 
-#header h1 .by {
+.header h1 .by {
     font-weight: normal;
     font-size: 80%;
 }
 
-#header .button {
+.header .button {
     position: absolute;
     top: 8px;
     left: 60px;
     padding: 4px 10px;
 }
 
-#header .button.right {
+.header .button.right {
     right: 20px;
     left: auto;
 }
 
-#header #search input {
+.header #search input {
     position: absolute;
     top: 6px;
     right: 50px;
@@ -78,15 +78,15 @@ h2 {
     background: white url(/img/search-icon.png) right 1px no-repeat;
 }
 
-#header #search input:focus {
+.header #search input:focus {
     outline: none;
 }
 
-#header .button:active {
+.header .button:active {
     top: 9px;
 }
 
-#header .button img {
+.header .button img {
     position: relative;
     height: 16px;
     margin: -2px 3px -3px 0;
@@ -262,6 +262,29 @@ h2 {
 
 #footer a {
     color: #aaa;
+}
+
+#photo-controls {
+    position: relative;
+    top: -50px;
+    width: 100%;
+    z-index: 1000;
+    cursor: auto;
+    padding-bottom: 50px;
+    -webkit-transition: top 0.5s;
+    -moz-transition: top 0.5s;
+    transition: top 0.5s;
+}
+
+#photo-controls .header {
+    position: relative;
+}
+
+#photo-controls:hover, #photo-controls.visible {
+    top: 0;
+    -webkit-transition: top 0.5s;
+    -moz-transition: top 0.5s;
+    transition: top 0.5s;
 }
 
 .button {

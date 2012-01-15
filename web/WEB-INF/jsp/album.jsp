@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>${album.title.plainText} by ${album.nickname}</title>
+    <title>${album.title.plainText} by ${album.nickname} - Photos</title>
     <meta name="viewport" content="width=650, user-scalable=no">
     <meta name="description" content="${album.description.plainText}">
     <meta name="keywords" content="${album.nickname},photos,${fn:replace(album.title.plainText, " ", ",")},${fn:replace(album.description.plainText, " ", ",")}">
@@ -51,12 +51,15 @@
         });
     </script>
 </head>
+
 <body style="background:black; color: gray">
-<div id="header">
+
+<div id="header" class="header">
     <a href="/${picasa.urlSuffix}" class="button fade">Gallery<span></span></a>
     <h1 id="title">${album.title.plainText} <span class="by">by ${album.nickname}</span></h1>
     <form id="search"><input></form>
 </div>
+
 <div id="content">
     <h1>${album.title.plainText}</h1>
     <h2>${album.description.plainText}</h2>
@@ -76,5 +79,16 @@
     </div>
 
 </div>
+
+<div id="photo-wrapper">
+    <div class="title-wrapper"><div class="title"></div></div>
+    <div id="photo-map"></div>
+    <div id="photo-controls" class="visible">
+        <div class="header">
+            Controls!
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
