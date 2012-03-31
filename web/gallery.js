@@ -144,17 +144,21 @@ function PhotoViewer() {
         timeRemaining.text((min ? min + ' min ' : '') + sec + ' sec');
     }
 
-    function startSlideshow() {
-        slideshow = setInterval(function() {
+    function setSlideshowTimeout() {
+        slideshow = setTimeout(function() {
             pub.next();
             showTimeRemaining();
-        }, interval.text()*1000);
+        }, interval.text() * 1000);
+    }
+
+    function startSlideshow() {
+        setSlideshowTimeout();
         controls.find('#slideshow.button').html('Stop<span></span>');
         showTimeRemaining();
     }
 
     function stopSlideshow() {
-        clearInterval(slideshow); slideshow = null;
+        clearTimeout(slideshow); slideshow = null;
         controls.find('#slideshow.button').html('Slideshow<span></span>');
         timeRemaining.empty();
     }
@@ -281,6 +285,9 @@ function PhotoViewer() {
         centerImage(img);
         img.fadeIn();
         wrapper.css('cursor', 'none');
+
+        if (slideshow)
+            setSlideshowTimeout();
 
         // preload next image
         if (index < photos.length-1)
