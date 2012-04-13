@@ -7,15 +7,17 @@
 <html>
 <head>
     <title>${photo.description.plainText}</title>
-    <meta name="viewport" content="width=650, user-scalable=no">
-    <script>
-        function center(img) {
-            img.style.left = ((innerWidth - img.width) / 2) + 'px';
+    <style type="text/css">
+        html, body, img {
+            background:black;
+            height: 100%;
+            margin: 0;
+            text-align: center;
+            overflow-y: hidden;
         }
-    </script>
+    </style>
 </head>
-
-<body style="background:black; color: gray; margin: 0 auto">
-    <img src="${photo.mediaContents[0].url}" style="position:absolute; height:100%;" onload="center(this)">
+<body>
+    <img src="${photo.mediaContents[0].url}">
 </body>
 </html>
