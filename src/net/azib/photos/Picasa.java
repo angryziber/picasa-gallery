@@ -4,10 +4,12 @@ import com.google.gdata.client.photos.PicasawebService;
 import com.google.gdata.data.IFeed;
 import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.photos.AlbumFeed;
+import com.google.gdata.data.photos.PhotoEntry;
 import com.google.gdata.data.photos.UserFeed;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.Properties;
 
 public class Picasa {
@@ -31,6 +33,11 @@ public class Picasa {
 
     public String getAnalytics() {
         return analytics;
+    }
+
+    public PhotoEntry getRandomPhoto() {
+        List<PhotoEntry> photos = feed("?kind=photo&imgmax=1024", AlbumFeed.class).getPhotoEntries();
+        return photos.get((int)(Math.random() * photos.size()));
     }
 
     public UserFeed getGallery() {

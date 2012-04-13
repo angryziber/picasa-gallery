@@ -1,9 +1,9 @@
 package net.azib.photos;
 
 import com.google.gdata.data.BaseFeed;
+import com.google.gdata.data.Source;
 import com.google.gdata.data.photos.AlbumFeed;
 import com.google.gdata.data.photos.GphotoEntry;
-import com.google.gdata.data.photos.UserFeed;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +23,10 @@ public class RequestRouter implements Filter {
         request.setAttribute("picasa", picasa);
         request.setAttribute("host", request.getHeader("host"));
 
-        if (path == null || "/".equals(path)) {
+        if (request.getParameter("random") != null) {
+            render("photo", picasa.getRandomPhoto(), request, response);
+        }
+        else if (path == null || "/".equals(path)) {
             render("gallery", picasa.getGallery(), request, response);
         }
         else if (path.lastIndexOf('.') >= path.length() - 4) {
@@ -44,12 +47,14 @@ public class RequestRouter implements Filter {
         }
     }
 
-    void render(String template, BaseFeed feed, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.setAttribute(template, feed);
+    void render(String template, Object source, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        request.setAttribute(template, source);
 
         response.setContentType("text/html; charset=utf8");
-        response.addDateHeader("Last-Modified", feed.getUpdated().getValue());
-        response.addHeader("ETag", feed.getEtag());
+        if (source instanceof Source)
+            response.addDateHeader("Last-Modified", ((Source)source).getUpdated().getValue());
+        if (source instanceof BaseFeed)
+            response.addHeader("ETag", ((BaseFeed)source).getEtag());
 
         request.getRequestDispatcher("/WEB-INF/jsp/" + template + ".jsp").include(request, response);
     }
