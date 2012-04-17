@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>${photo.description.plainText}</title>
+    <title>Random photo by ${picasa.user}</title>
     <style type="text/css">
         html, body, img {
             background: black;
