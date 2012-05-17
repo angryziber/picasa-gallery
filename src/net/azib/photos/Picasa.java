@@ -53,12 +53,29 @@ public class Picasa {
 
     public GphotoEntry getRandomPhoto() {
       List<AlbumEntry> albums = getGallery().getAlbumEntries();
-      AlbumEntry album = albums.get((int)(Math.random() * albums.size()));
+      AlbumEntry album = weightedRandom(albums);
       List<GphotoEntry> photos = feed("/album/" + album.getName() + "?kind=photo&imgmax=1600&max-results=1000&fields=entry(content)", AlbumFeed.class).getEntries();
-      return photos.get((int)(Math.random() * photos.size()));
+      return photos.get(random(photos.size()));
     }
 
-    public AlbumFeed search(String query) {
+    AlbumEntry weightedRandom(List<AlbumEntry> albums) {
+      int sum = 0;
+      for (AlbumEntry album : albums) sum += album.getPhotosUsed();
+      int index = random(sum);
+
+      sum = 0;
+      for (AlbumEntry album : albums) {
+        sum += album.getPhotosUsed();
+        if (sum > index) return album;
+      }
+      return albums.get(0);
+    }
+
+  int random(int max) {
+    return (int)(Math.random() * max);
+  }
+
+  public AlbumFeed search(String query) {
         return feed("?kind=photo&q=" + query + "&imgmax=1024&thumbsize=144c", AlbumFeed.class);
     }
 
