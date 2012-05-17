@@ -32,6 +32,8 @@ Features
 - Facebook like buttons for albums and individual photos
 - Opengraph metadata (for FB sharing, etc)
 - Google analytics support
+- Viewing of other people's albums, just add "?by=username" parameter
+- Showing of a single (weighted) random photo from all albums, just add "?random" parameter
 
 How to use it for your own photos
 =================================
