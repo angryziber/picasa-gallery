@@ -3,6 +3,7 @@ package net.azib.photos;
 import com.google.gdata.client.photos.PicasawebService;
 import com.google.gdata.data.IFeed;
 import com.google.gdata.data.PlainTextConstruct;
+import com.google.gdata.data.photos.AlbumEntry;
 import com.google.gdata.data.photos.AlbumFeed;
 import com.google.gdata.data.photos.GphotoEntry;
 import com.google.gdata.data.photos.UserFeed;
@@ -35,11 +36,6 @@ public class Picasa {
         return analytics;
     }
 
-    public GphotoEntry getRandomPhoto() {
-        List<GphotoEntry> photos = feed("?kind=photo&imgmax=1600&max-results=500&fields=entry(content)", AlbumFeed.class).getEntries();
-        return photos.get((int)(Math.random() * photos.size()));
-    }
-
     public UserFeed getGallery() {
         return feed("?kind=album&thumbsize=212c", UserFeed.class);
     }
@@ -53,6 +49,13 @@ public class Picasa {
             results.setTitle(new PlainTextConstruct("Photos matching '" + name + "'"));
             return results;
         }
+    }
+
+    public GphotoEntry getRandomPhoto() {
+      List<AlbumEntry> albums = getGallery().getAlbumEntries();
+      AlbumEntry album = albums.get((int)(Math.random() * albums.size()));
+      List<GphotoEntry> photos = feed("/album/" + album.getName() + "?kind=photo&imgmax=1600&max-results=1000&fields=entry(content)", AlbumFeed.class).getEntries();
+      return photos.get((int)(Math.random() * photos.size()));
     }
 
     public AlbumFeed search(String query) {
