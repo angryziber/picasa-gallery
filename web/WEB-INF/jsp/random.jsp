@@ -19,8 +19,8 @@
             position: absolute;
             bottom: 10px;
             right: 20px;
-            color: gray;
-            padding: 5px;
+            color: white;
+            padding: 3px 5px;
             background: rgba(0,0,0,0.3);
             border-radius: 4px;
             font-family: sans-serif;
@@ -35,6 +35,6 @@
     </script>
 </head>
 <body>
-    <div id="title">${picasa.user}</div>
+    <div id="title">${picasa.nickname}</div>
 </body>
 </html>
