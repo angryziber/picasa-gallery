@@ -46,10 +46,10 @@
     </div>
 
     <div id="footer">
-        Photos by <a id="m" href="${gallery.username}">${gallery.nickname}</a>. All rights reserved.
+        Photos by <a id="m" href="${picasa.user}">${gallery.nickname}</a>. All rights reserved.
         <br>
         Rendered by <a href="http://github.com/angryziber/picasa-gallery">Picasa Gallery</a>.
-        View your <a href="javascript:changeUsername('${gallery.username}')">own gallery</a>.
+        View your <a href="javascript:changeUsername('${picasa.user}')">own gallery</a>.
     </div>
 </div>
 
