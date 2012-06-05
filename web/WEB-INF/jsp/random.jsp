@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Random photo by ${picasa.user}</title>
+    <title>Random photo by ${random.nickname} from ${random.album}</title>
     <style type="text/css">
         html, body, img {
             background: black;
