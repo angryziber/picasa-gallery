@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:useBean id="gallery" scope="request" type="com.google.gdata.data.photos.UserFeed"/>
 
 <!DOCTYPE html>
@@ -46,7 +47,7 @@
     </div>
 
     <div id="footer">
-        Photos by <a id="m" href="${picasa.user}">${gallery.nickname}</a>. All rights reserved.
+        Photos by <a id="m" href="${picasa.user}">${gallery.nickname}</a>. All rights reserved. <a href="?random${fn:replace(picasa.urlSuffix, '?', '&')}">Random photo</a>.
         <br>
         Rendered by <a href="http://github.com/angryziber/picasa-gallery">Picasa Gallery</a>.
         View your <a href="javascript:changeUsername('${picasa.user}')">own gallery</a>.
