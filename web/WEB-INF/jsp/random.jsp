@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<jsp:useBean id="photo" scope="request" type="com.google.gdata.data.photos.GphotoEntry"/>
+<jsp:useBean id="random" scope="request" type="com.google.gdata.data.photos.GphotoEntry"/>
 
 <!DOCTYPE html>
 <html>
@@ -15,16 +15,26 @@
             text-align: center;
             overflow-y: hidden;
         }
+        #title {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            color: gray;
+            padding: 5px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 4px;
+            font-family: sans-serif;
+        }
     </style>
     <script type="text/javascript">
         var img = new Image();
         img.onload = function() {
             document.body.appendChild(img);
         };
-        img.src = '${photo.content.uri}';
+        img.src = '${random.content.uri}';
     </script>
 </head>
 <body>
-
+    <div id="title">${picasa.user}</div>
 </body>
 </html>

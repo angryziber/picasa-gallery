@@ -24,7 +24,7 @@ public class RequestRouter implements Filter {
         request.setAttribute("host", request.getHeader("host"));
 
         if (request.getParameter("random") != null) {
-            render("photo", picasa.getRandomPhoto(), request, response);
+            render("random", picasa.getRandomPhoto(), request, response);
         }
         else if (path == null || "/".equals(path)) {
             render("gallery", picasa.getGallery(), request, response);
