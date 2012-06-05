@@ -19,7 +19,6 @@ public class Picasa {
     static String analytics = config.getProperty("google.analytics");
     static PicasawebService service = new PicasawebService(defaultUser);
     String user = defaultUser;
-    String nickname = user;
 
     public Picasa(String user) {
         if (user != null) this.user = user;
@@ -27,10 +26,6 @@ public class Picasa {
 
     public String getUser() {
         return user;
-    }
-
-    public String getNickname() {
-        return nickname;
     }
 
     public String getUrlSuffix() {
@@ -42,16 +37,12 @@ public class Picasa {
     }
 
     public UserFeed getGallery() {
-        UserFeed gallery = feed("?kind=album&thumbsize=212c", UserFeed.class);
-        nickname = gallery.getNickname();
-        return gallery;
+        return feed("?kind=album&thumbsize=212c", UserFeed.class);
     }
 
     public AlbumFeed getAlbum(String name) {
         try {
-            AlbumFeed album = feed("/album/" + name + "?imgmax=1024&thumbsize=144c", AlbumFeed.class);
-            nickname = album.getNickname();
-            return album;
+            return feed("/album/" + name + "?imgmax=1024&thumbsize=144c", AlbumFeed.class);
         }
         catch (RuntimeException e) {
             AlbumFeed results = search(name);
@@ -60,11 +51,11 @@ public class Picasa {
         }
     }
 
-    public GphotoEntry getRandomPhoto() {
+    public RandomPhoto getRandomPhoto() {
         List<AlbumEntry> albums = getGallery().getAlbumEntries();
         AlbumEntry album = weightedRandom(albums);
         List<GphotoEntry> photos = feed("/album/" + album.getName() + "?kind=photo&imgmax=1600&max-results=1000&fields=entry(content)", AlbumFeed.class).getEntries();
-        return photos.get(random(photos.size()));
+        return new RandomPhoto(photos.get(random(photos.size())), album.getNickname(), album.getTitle().getPlainText());
     }
 
     AlbumEntry weightedRandom(List<AlbumEntry> albums) {
@@ -85,9 +76,7 @@ public class Picasa {
     }
 
     public AlbumFeed search(String query) {
-        AlbumFeed results = feed("?kind=photo&q=" + query + "&imgmax=1024&thumbsize=144c", AlbumFeed.class);
-        nickname = results.getNickname();
-        return results;
+        return feed("?kind=photo&q=" + query + "&imgmax=1024&thumbsize=144c", AlbumFeed.class);
     }
 
     private <T extends IFeed> T feed(String url, Class<T> type) {
@@ -108,5 +97,29 @@ public class Picasa {
             throw new RuntimeException("Can't load config.properties");
         }
         return config;
+    }
+
+    public class RandomPhoto {
+        private final GphotoEntry photo;
+        private final String nickname;
+        private final String album;
+
+        public RandomPhoto(GphotoEntry photo, String nickname, String album) {
+            this.photo = photo;
+            this.nickname = nickname;
+            this.album = album;
+        }
+
+        public GphotoEntry getPhoto() {
+            return photo;
+        }
+
+        public String getNickname() {
+            return nickname;
+        }
+
+        public String getAlbum() {
+            return album;
+        }
     }
 }
