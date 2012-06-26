@@ -96,6 +96,8 @@
             <h1>${album.title.plainText} <small id="position"></small></h1>
         </div>
     </div>
+    <div id="internal-photo-wrapper">
+    </div>
 </div>
 
 </body>
