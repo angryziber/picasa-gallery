@@ -73,6 +73,7 @@
             <a id="${photo.gphotoId}" href="${media.url}" class="photo"
                title="${photo.description.plainText}"
                rel="${media.width}x${media.height}"
+               onclick="return false;"
                <c:if test="${photo.geoLocation != null}">coords="${photo.geoLocation.latitude}:${photo.geoLocation.longitude}"</c:if>>
                 <img src="/img/empty.png" class="missing" rel="${photo.mediaThumbnails[0].url}">
             </a>
@@ -94,6 +95,8 @@
             <span class="left" id="timeRemaining"></span>
             <h1>${album.title.plainText} <small id="position"></small></h1>
         </div>
+    </div>
+    <div id="internal-photo-wrapper">
     </div>
 </div>
 
