@@ -39,6 +39,7 @@ function PhotoViewer() {
     var pub = this;
     var w = $(window);
     var wrapper, internalwrapper, title, map, controls, position, interval, timeRemaining;
+    var marker;
     var slideshow = null;
     var photos = [];
     var index = 0;
@@ -333,9 +334,11 @@ function PhotoViewer() {
                 map.setView(photo.pos, 14);
             }
             $('#photo-map').show();
-            if (!photo.marker) {
-                photos[index].marker = new L.Marker(photo.pos, {icon: markerIcon});
-                map.addLayer(photos[index].marker);
+            if (!marker) {
+                marker = new L.Marker(photo.pos, {icon: markerIcon});
+                map.addLayer(marker);
+            } else {
+                marker.setLatLng(photo.pos);
             }
         }
         else {
