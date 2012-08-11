@@ -4,7 +4,7 @@
 <jsp:useBean id="album" scope="request" type="com.google.gdata.data.photos.AlbumFeed"/>
 
 <!DOCTYPE html>
-<html>
+<html xmlns:fb="http://ogp.me/ns/fb#">
 <head>
     <title>${album.title.plainText} by ${album.nickname} - Photos</title>
     <meta name="viewport" content="width=650, user-scalable=no">
@@ -55,6 +55,15 @@
 
 <body style="background:black; color: gray">
 
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
 <div id="header" class="header">
     <a href="/${picasa.urlSuffix}" class="button fade">Gallery<span></span></a>
     <form id="search"><input></form>
@@ -64,8 +73,7 @@
 <div id="content">
     <h1>${album.title.plainText}</h1>
     <h2>${album.description.plainText}</h2>
-    <iframe class="facebook-button" scrolling="no" frameborder="0" allowtransparency="true"
-            src="http://www.facebook.com/plugins/like.php?href=http://<%=request.getHeader("host")%>/${album.name}${picasa.urlSuffix}&amp;layout=button_count&amp;action=like&amp;width=90&amp;height=20&amp;colorscheme=dark"></iframe>
+    <fb:like href="href=http://<%=request.getHeader("host")%>/${album.name}${picasa.urlSuffix}" send="false" layout="button_count" width="90" show_faces="false" ></fb:like>
     <br>
     <div class="thumbs clear">
         <c:forEach var="photo" items="${album.photoEntries}">
