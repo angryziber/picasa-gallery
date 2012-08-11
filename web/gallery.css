@@ -205,7 +205,6 @@ h2 {
 }
 
 #content .facebook-button {
-    overflow: hidden;
     position: absolute;
     top: 60px;
     right: 10px

@@ -73,7 +73,9 @@
 <div id="content">
     <h1>${album.title.plainText}</h1>
     <h2>${album.description.plainText}</h2>
-    <fb:like href="href=http://<%=request.getHeader("host")%>/${album.name}${picasa.urlSuffix}" send="false" layout="button_count" width="90" show_faces="false" ></fb:like>
+    <div class="facebook-button">
+        <fb:like href="href=http://<%=request.getHeader("host")%>/${album.name}${picasa.urlSuffix}" send="false" layout="button_count" width="90" show_faces="false" ></fb:like>
+    </div>
     <br>
     <div class="thumbs clear">
         <c:forEach var="photo" items="${album.photoEntries}">
