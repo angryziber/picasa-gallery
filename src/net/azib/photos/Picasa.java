@@ -10,14 +10,21 @@ import com.google.gdata.data.photos.UserFeed;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
+
+import static java.lang.System.currentTimeMillis;
+import static java.util.Collections.synchronizedMap;
 
 public class Picasa {
     static Properties config = loadConfig();
     static String defaultUser = config.getProperty("google.user");
     static String analytics = config.getProperty("google.analytics");
     static PicasawebService service = new PicasawebService(defaultUser);
+
+    static Map<String, IFeed> cache = synchronizedMap(new HashMap<String, IFeed>());
+    static Map<String, Long> cacheExpiration = synchronizedMap(new HashMap<String, Long>());
+    static final long CACHE_EXPIRATION = 30 * 60 * 1000; // 30 min
+
     String user = defaultUser;
 
     public Picasa(String user) {
@@ -37,12 +44,12 @@ public class Picasa {
     }
 
     public UserFeed getGallery() {
-        return feed("?kind=album&thumbsize=212c", UserFeed.class);
+        return cachedFeed("?kind=album&thumbsize=212c", UserFeed.class);
     }
 
     public AlbumFeed getAlbum(String name) {
         try {
-            return feed("/album/" + name + "?imgmax=1024&thumbsize=144c", AlbumFeed.class);
+            return cachedFeed("/album/" + name + "?imgmax=1024&thumbsize=144c", AlbumFeed.class);
         }
         catch (RuntimeException e) {
             AlbumFeed results = search(name);
@@ -54,7 +61,7 @@ public class Picasa {
     public RandomPhoto getRandomPhoto() {
         List<AlbumEntry> albums = getGallery().getAlbumEntries();
         AlbumEntry album = weightedRandom(albums);
-        List<GphotoEntry> photos = feed("/album/" + album.getName() + "?kind=photo&imgmax=1600&max-results=1000&fields=entry(content)", AlbumFeed.class).getEntries();
+        List<GphotoEntry> photos = cachedFeed("/album/" + album.getName() + "?kind=photo&imgmax=1600&max-results=1000&fields=entry(content)", AlbumFeed.class).getEntries();
         return new RandomPhoto(photos.get(random(photos.size())), album.getNickname(), album.getTitle().getPlainText());
     }
 
@@ -79,9 +86,25 @@ public class Picasa {
         return feed("?kind=photo&q=" + query + "&imgmax=1024&thumbsize=144c", AlbumFeed.class);
     }
 
+    private <T extends IFeed> T cachedFeed(String url, Class<T> type) {
+        final String key = (user + url).intern();
+        synchronized (key) {
+            Long expiration = cacheExpiration.get(key);
+            if (expiration != null && expiration > currentTimeMillis()) {
+                return (T)cache.get(key);
+            }
+            else {
+                T feed = feed(url, type);
+                cache.put(key, feed);
+                cacheExpiration.put(key, currentTimeMillis() + CACHE_EXPIRATION);
+                return feed;
+            }
+        }
+    }
+
     private <T extends IFeed> T feed(String url, Class<T> type) {
         try {
-            return service.getFeed(new URL("http://picasaweb.google.com/data/feed/api/user/" + getUser() + url), type);
+            return service.getFeed(new URL("http://picasaweb.google.com/data/feed/api/user/" + user + url), type);
         }
         catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
