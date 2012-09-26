@@ -17,7 +17,7 @@ public class RequestRouter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
-        String path = request.getRequestURI();
+        String path = request.getServletPath();
 
         Picasa picasa = new Picasa(request.getParameter("by"));
         request.setAttribute("picasa", picasa);
