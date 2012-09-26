@@ -28,6 +28,8 @@ function loadVisibleThumbs(maxCount) {
     });
 }
 
+var markerIcon;
+
 function changeUsername(username) {
     username = prompt('Show photos by Google/Picasaweb user:', username);
     if (username) fadeTo('/?by=' + username);
@@ -36,7 +38,8 @@ function changeUsername(username) {
 function PhotoViewer() {
     var pub = this;
     var w = $(window);
-    var wrapper, title, map, controls, position, interval, timeRemaining;
+    var wrapper, internalwrapper, title, map, controls, position, interval, timeRemaining;
+    var marker;
     var slideshow = null;
     var photos = [];
     var index = 0;
@@ -49,6 +52,7 @@ function PhotoViewer() {
         });
 
         wrapper = $('#photo-wrapper');
+        internalwrapper = $('#internal-photo-wrapper');
         wrapper.unbind();
         wrapper.click(onMouseClick);
         wrapper.mousemove(onMouseMove);
@@ -82,7 +86,7 @@ function PhotoViewer() {
         wrapper[0].ontouchmove = onTouchMove;
 
         index = $('a.photo').index(this);
-        wrapper.find('img').remove();
+        internalwrapper.find('img').remove();
         wrapper.fadeIn();
         setTimeout(function() {
             controls.removeClass('visible');
@@ -102,7 +106,7 @@ function PhotoViewer() {
         window.onpopstate = $.noop;
 
         if (history.replaceState) history.replaceState(stateURL(), '', stateURL());
-        wrapper.find('img').remove();
+        internalwrapper.find('img').remove();
         stopSlideshow();
     };
 
@@ -184,7 +188,7 @@ function PhotoViewer() {
     }
 
     function posAction(x, y) {
-        var img = wrapper.find('img');
+        var img = internalwrapper.find('img');
         if (!img.length) return pub.close;
         var left = img.offset().left;
         var right = left + img.width();
@@ -255,7 +259,7 @@ function PhotoViewer() {
     }
 
     function centerImage(img) {
-        if (!img) img = wrapper.find('img');
+        if (!img) img = internalwrapper.find('img');
         if (!img.length) return;
 
         var photo = photos[index];
@@ -281,7 +285,7 @@ function PhotoViewer() {
         photos[index].width = this.width;
         photos[index].height = this.height;
         var img = $(this);
-        wrapper.append(img);
+        internalwrapper.append(img);
         centerImage(img);
         img.fadeIn();
         wrapper.css('cursor', 'none');
@@ -299,7 +303,7 @@ function PhotoViewer() {
 
     function loadPhoto() {
         wrapper.css('cursor', 'wait');
-        wrapper.find('img').fadeOut(function() {
+        internalwrapper.find('img').fadeOut(function() {
             $(this).remove();
         });
 
@@ -322,41 +326,47 @@ function PhotoViewer() {
         controls.find('.facebook-button').remove();
         controls.find('.header').prepend(facebookButton('http://' + location.host + stateURL(photo)));
 
-//        if (photo.pos) {
-//            if (!map) {
-//                map = createMap('#photo-map');
-//                map.setCenter(photo.pos);
-//                map.setZoom(14);
-//            }
-//            $('#photo-map').show();
-//            new google.maps.Marker({position:photo.pos, map:map});
-//            map.panTo(photo.pos);
-//        }
-//        else {
+        if (photo.pos) {
+            if (!map) {
+                map = createMap('photo-map');
+                map.setView(photo.pos, 14);
+            } else {
+                map.setView(photo.pos, 14);
+            }
+            $('#photo-map').show();
+            if (!marker) {
+                marker = new L.Marker(photo.pos, {icon: markerIcon});
+                map.addLayer(marker);
+            } else {
+                marker.setLatLng(photo.pos);
+            }
+        }
+        else {
             $('#photo-map').hide();
-//        }
+        }
     }
 }
 
 function latLng(lat, lon) {
-    return new google.maps.LatLng(lat, lon);
+    return new L.LatLng(lat, lon);
 }
 
 function createMap(selector) {
-    return new google.maps.Map($(selector)[0], {
-        mapTypeId: google.maps.MapTypeId.TERRAIN,
-        styles: [{
-            stylers: [
-                { saturation: -5 },
-                { gamma: 0.38 },
-                { lightness: -33 }
-            ]
-        }],
-        streetViewControl: false,
-        zoomControl: false,
-        panControl: false,
-        minZoom: 1
-    });
+    var map = new L.Map(selector);
+
+    if (!markerIcon) {
+        markerIcon = new (L.Icon.extend({
+            iconUrl: "/img/marker.png",
+            shadowUrl: "/img/marker-shadow.png"
+        }))();
+    }
+
+    var mapUrl = 'http://otile1.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg';
+
+    var layer = new L.TileLayer(mapUrl, {maxZoom: 18, attribution: ("Map data © <a href='http://osm.org'>OpenStreetMap</a> contributors, CC-BY-SA; rendering by <a href='http://open.mapquestapi.com/'>MapQuest</a>")});
+    map.addLayer(layer);
+
+    return map;
 }
 
 function extractPos(element) {
@@ -367,24 +377,24 @@ function extractPos(element) {
 }
 
 function initMap() {
-    var bounds = new google.maps.LatLngBounds();
-    var map = createMap('#map');
+    var bounds = new L.LatLngBounds();
+    var map = createMap('map');
     $('.albums > a').each(function (i, link) {
         var pos = extractPos(this);
         if (!pos) return;
-        this.marker = new google.maps.Marker({position:pos, map:map, title:$(link).find('.title > .text').text()});
+        this.marker = new L.Marker(pos, {title: $(link).find('.title > .text').text(), icon: markerIcon});
+        map.addLayer(this.marker);
         bounds.extend(pos);
-        google.maps.event.addListener(this.marker, 'click', function () {
+        this.marker.on('click', function () {
             $(link).click();
         });
     });
 
-    if (bounds.isEmpty()) {
-        map.setCenter(latLng(0, 0));
-        map.setZoom(1);
+    if (!bounds.getSouthWest()) {
+        map.setView(latLng(0, 0), 1);
     } else {
         map.fitBounds(bounds);
-        map.panBy(0, 15);
+        map.panBy(L.Point(0, 15));
     }
 }
 

@@ -205,7 +205,6 @@ h2 {
 }
 
 #content .facebook-button {
-    overflow: hidden;
     position: absolute;
     top: 60px;
     right: 10px
@@ -224,6 +223,10 @@ h2 {
     border: 3px solid #313131;
 }
 
+.leaflet-map-pane {
+    z-index: 7;
+}
+
 #photo-wrapper {
     display: none;
     background: black;
@@ -237,7 +240,7 @@ h2 {
     z-index: 666;
 }
 
-#photo-wrapper img {
+#photo-wrapper > div > img {
     position: absolute;
     border: 2px solid #313131;
 }
@@ -266,7 +269,6 @@ h2 {
     height: 150px;
     right: 0;
     bottom: 0;
-    background: transparent;
 }
 
 #footer {
