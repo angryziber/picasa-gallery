@@ -205,7 +205,6 @@ h2 {
 }
 
 #content .facebook-button {
-    overflow: hidden;
     position: absolute;
     top: 60px;
     right: 10px
@@ -222,6 +221,10 @@ h2 {
     height: 440px;
     margin: 0 10px 10px 0;
     border: 3px solid #313131;
+}
+
+.leaflet-map-pane {
+    z-index: 7;
 }
 
 #photo-wrapper {
