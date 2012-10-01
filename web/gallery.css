@@ -159,33 +159,30 @@ h2 {
 
 .albums a .title {
     position: absolute;
-    top: 161px;
+    bottom: 3px;
     left: 3px;
-    padding: 33px 4px 0 5px;
+    right: 3px;
+    height: 50px;
     background: rgba(0,0,0,0.5);
     background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.9) 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.9))); /* Chrome,Safari4+ */
     background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.9) 100%);
-    height: 21px;
-    width: 203px;
-    min-width: 203px;
-    overflow: hidden;
-    white-space: nowrap;
     color: white;
     text-shadow: 1px 1px black;
 }
 
-.albums a:hover .title {
-    overflow: visible;
-    width: auto;
-    z-index: 9;
+.albums a .title > .text {
+    position: absolute;
+    left: 5px;
+    right: 5px;
+    bottom: 8px;
 }
 
 .albums a .title > .info {
+    position: absolute;
+    right: 5px;
+    bottom: 7px;
     color: gray;
-    float: right;
-    margin-left: 3px;
-    width: auto;
     display: none;
 }
 
