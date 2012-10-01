@@ -17,6 +17,7 @@
     <%@include file="head.jsp"%>
     <script type="text/javascript">
         $(initMap);
+        $(initAlbumFilter);
     </script>
 </head>
 
@@ -24,7 +25,7 @@
 
 <div id="header" class="header">
     <a href="http://picasaweb.google.com/${gallery.username}" class="button"><img src="/img/picasa-logo.png">Picasaweb<span></span></a>
-    <form id="search"><input></form>
+    <form id="search"><input type="text" placeholder="Filter or Search" title="Type to filter albums or press enter to search for individual photos"></form>
     <h1 id="title">${gallery.nickname} Photography</h1>
 </div>
 
