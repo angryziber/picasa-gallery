@@ -7,8 +7,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-<link rel="stylesheet" href="/reset.css">
-<link rel="stylesheet" href="/gallery.css?v=5">
+<link rel="stylesheet" type="text/css" href="/reset.css">
+<link rel="stylesheet" type="text/css" href="/gallery.css?v=5">
 <link rel="apple-touch-icon" href="/img/picasa-logo.png"/>
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
