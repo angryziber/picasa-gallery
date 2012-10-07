@@ -102,8 +102,12 @@ function PhotoViewer() {
         window.onpopstate = $.noop;
 
         if (history.replaceState) history.replaceState(stateURL(), '', stateURL());
-        wrapper.find('img').remove();
         stopSlideshow();
+        var img = wrapper.find('img');
+        var thumb = $('a#' + photos[index].id);
+        img.animate({top:thumb.offset().top - $('body').scrollTop(), left:thumb.offset().left, height:thumb.height(), width:thumb.width()}, 500, function() {
+            img.remove();
+        });
     };
 
     pub.next = function() {
@@ -321,6 +325,12 @@ function PhotoViewer() {
 
         controls.find('.facebook-button').remove();
         controls.find('.header').prepend(facebookButton('http://' + location.host + stateURL(photo)));
+
+        if (window.scrollTo && wrapper.css('position') == 'fixed') {
+            var photoPos = $('a#' + photo.id).offset();
+            if (photoPos.top + 150 > $(window).scrollTop() + $(window).height())
+                window.scrollTo(photoPos.left, photoPos.top - 50);
+        }
 
 //        if (photo.pos) {
 //            if (!map) {

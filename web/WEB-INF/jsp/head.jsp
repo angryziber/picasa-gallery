@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" href="/img/picasa-logo.png"/>
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script type="text/javascript" src="/gallery.js?v=5"></script>
+<script type="text/javascript" src="/gallery.js?v=6"></script>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
 <script type="text/javascript">
