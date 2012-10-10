@@ -406,12 +406,8 @@ function initAlbumFilter() {
     $('#search input').keyup(function() {
         var q = $(this).val().toLowerCase();
         // Note: direct CSS is much faster than $.show() and $.hide()
-        if (q.length < 3) {
-            $('.albums a').each(function() {this.style.display='block'});
-            return;
-        }
         $.each(albums, function(id, text) {
-            var matches = text.match(q);
+            var matches = q.length < 3 || text.match(q);
             document.getElementById(id).style.display = matches ? 'block' : 'none';
         });
     });
