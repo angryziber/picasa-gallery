@@ -104,8 +104,9 @@ function PhotoViewer() {
         if (history.replaceState) history.replaceState(stateURL(), '', stateURL());
         stopSlideshow();
         var img = wrapper.find('img');
-        var thumb = $('a#' + photos[index].id);
-        img.animate({top:thumb.offset().top - $('body').scrollTop(), left:thumb.offset().left, height:thumb.height(), width:thumb.width()}, 500, function() {
+        var thumb = $('#' + photos[index].id);
+        var fixed = wrapper.css('position') == 'fixed';
+        img.animate({top:thumb.offset().top - (fixed ? w.scrollTop() : 0), left:thumb.offset().left, height:thumb.height(), width:thumb.width()}, 500, function() {
             img.remove();
         });
     };
