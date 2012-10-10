@@ -327,10 +327,10 @@ function PhotoViewer() {
         controls.find('.facebook-button').remove();
         controls.find('.header').prepend(facebookButton('http://' + location.host + stateURL(photo)));
 
-        if (window.scrollTo && wrapper.css('position') == 'fixed') {
-            var photoPos = $('a#' + photo.id).offset();
-            if (photoPos.top + 150 > $(window).scrollTop() + $(window).height())
-                window.scrollTo(photoPos.left, photoPos.top - 50);
+        if (wrapper.css('position') == 'fixed') {
+            var thumbPos = $('#' + photo.id).offset();
+            if (thumbPos.top + 150 > w.scrollTop() + w.height())
+                scrollTo(thumbPos.left, w.scrollTop() + 250);
         }
 
 //        if (photo.pos) {
