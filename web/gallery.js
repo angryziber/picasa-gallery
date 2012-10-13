@@ -377,6 +377,12 @@ function extractPos(element) {
     return latLng(coords[0], coords[1]);
 }
 
+function setMarkerIcon(marker, name) {
+    marker.setIcon('http://maps.google.com/mapfiles/' + name + '.png');
+    marker.setShadow(new google.maps.MarkerImage('http://maps.google.com/mapfiles/shadow50.png', null, null, new google.maps.Point(10, 34)));
+    marker.setZIndex(1000);
+}
+
 function initMap() {
     var bounds = new google.maps.LatLngBounds();
     var map = createMap('#map');
@@ -385,9 +391,9 @@ function initMap() {
         if (!pos) return;
         this.marker = new google.maps.Marker({position:pos, map:map, title:$(link).find('.title > .text').text()});
         bounds.extend(pos);
-        google.maps.event.addListener(this.marker, 'click', function () {
-            $(link).click();
-        });
+        google.maps.event.addListener(this.marker, 'click', function() {$(link).click();});
+        $(this).mouseover(function() {setMarkerIcon(this.marker, 'marker_orange');});
+        $(this).mouseout(function() {setMarkerIcon(this.marker, 'marker');});
     });
 
     if (bounds.isEmpty()) {
