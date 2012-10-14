@@ -211,6 +211,7 @@ function PhotoViewer() {
     }
 
     function onMouseClick(e) {
+        if ($('#photo-map').is(':hover')) return false;
         posAction(e.pageX, e.pageY)();
         return false;
     }
@@ -289,9 +290,7 @@ function PhotoViewer() {
         var img = $(this);
         wrapper.append(img);
         centerImage(img);
-        img.fadeIn(function() {
-            if (photo.pos && !map.getBounds().contains(photo.pos)) map.panTo(photo.pos);
-        });
+        img.fadeIn();
         wrapper.css('cursor', 'none');
 
         if (slideshow)
@@ -343,12 +342,14 @@ function PhotoViewer() {
                 map.setCenter(photo.pos);
                 map.setZoom(14);
                 marker = new google.maps.Marker({position:photo.pos, map:map});
+                //$('#photo-map').hover(function(){setTimeout(function(){map.panTo(photos[index].pos)}, 500)});
             }
             marker.setPosition(photo.pos);
-            $('#photo-map').show();
+            if (!map.getBounds().contains(photo.pos)) map.panTo(photo.pos);
+            $('#photo-map').fadeIn();
         }
         else {
-            $('#photo-map').hide();
+            $('#photo-map').fadeOut();
         }
     }
 }

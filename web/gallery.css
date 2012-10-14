@@ -259,6 +259,20 @@ h2 {
     bottom: 0;
     background: transparent;
     opacity: 0.5;
+    -webkit-transition: 0.3s;
+    -moz-transition: 0.3s;
+    transition: 0.3s;
+}
+
+#photo-map:hover {
+    height: 200px;
+    width: 260px;
+    z-index: 1000;
+    opacity: 1;
+    -webkit-transition: 0.3s;
+    -moz-transition: 0.3s;
+    transition: 0.3s;
+    border: 2px solid #666;
 }
 
 #footer {
@@ -371,6 +385,10 @@ h2 {
 
     #photo-controls {
         display: none; /* TODO fix this for mobile devices */
+    }
+
+    #photo-map {
+        display: none !important;
     }
 
     #photo-controls h1 {
