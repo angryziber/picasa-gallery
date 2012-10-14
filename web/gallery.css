@@ -228,7 +228,7 @@ h2 {
     z-index: 666;
 }
 
-#photo-wrapper img {
+#photo-wrapper img.photo {
     position: absolute;
     border: 2px solid #313131;
 }
@@ -253,11 +253,12 @@ h2 {
 
 #photo-map {
     position:absolute;
-    width: 200px;
-    height: 150px;
+    width: 140px;
+    height: 140px;
     right: 0;
     bottom: 0;
     background: transparent;
+    opacity: 0.5;
 }
 
 #footer {
@@ -381,7 +382,7 @@ h2 {
         font-size: 14px;
     }
 
-    #photo-wrapper img {
+    #photo-wrapper img.photo {
         border: none;
     }
 

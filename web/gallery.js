@@ -36,7 +36,7 @@ function changeUsername(username) {
 function PhotoViewer() {
     var pub = this;
     var w = $(window);
-    var wrapper, title, map, controls, position, interval, timeRemaining;
+    var wrapper, title, map, marker, controls, position, interval, timeRemaining;
     var slideshow = null;
     var photos = [];
     var index = 0;
@@ -82,7 +82,7 @@ function PhotoViewer() {
         wrapper[0].ontouchmove = onTouchMove;
 
         index = $('a.photo').index(this);
-        wrapper.find('img').remove();
+        wrapper.find('img.photo').remove();
         wrapper.fadeIn();
         setTimeout(function() {
             controls.removeClass('visible');
@@ -103,7 +103,7 @@ function PhotoViewer() {
 
         if (history.replaceState) history.replaceState(stateURL(), '', stateURL());
         stopSlideshow();
-        var img = wrapper.find('img');
+        var img = wrapper.find('img.photo');
         var thumb = $('#' + photos[index].id);
         var fixed = wrapper.css('position') == 'fixed';
         img.animate({top:thumb.offset().top - (fixed ? w.scrollTop() : 0), left:thumb.offset().left, height:thumb.height(), width:thumb.width()}, 500, function() {
@@ -189,7 +189,7 @@ function PhotoViewer() {
     }
 
     function posAction(x, y) {
-        var img = wrapper.find('img');
+        var img = wrapper.find('img.photo');
         if (!img.length) return pub.close;
         var left = img.offset().left;
         var right = left + img.width();
@@ -260,7 +260,7 @@ function PhotoViewer() {
     }
 
     function centerImage(img) {
-        if (!img) img = wrapper.find('img');
+        if (!img) img = wrapper.find('img.photo');
         if (!img.length) return;
 
         var photo = photos[index];
@@ -283,12 +283,15 @@ function PhotoViewer() {
     }
 
     function imageOnLoad() {
-        photos[index].width = this.width;
-        photos[index].height = this.height;
+        var photo = photos[index];
+        photo.width = this.width;
+        photo.height = this.height;
         var img = $(this);
         wrapper.append(img);
         centerImage(img);
-        img.fadeIn();
+        img.fadeIn(function() {
+            if (photo.pos && !map.getBounds().contains(photo.pos)) map.panTo(photo.pos);
+        });
         wrapper.css('cursor', 'none');
 
         if (slideshow)
@@ -304,14 +307,15 @@ function PhotoViewer() {
 
     function loadPhoto() {
         wrapper.css('cursor', 'wait');
-        wrapper.find('img').fadeOut(function() {
+        wrapper.find('img.photo').fadeOut(function() {
             $(this).remove();
         });
 
         var photo = photos[index];
         var newImg = new Image();
-        newImg.onload = imageOnLoad;
+        newImg.className = 'photo';
         newImg.style.display = 'none';
+        newImg.onload = imageOnLoad;
         newImg.src = photo.href;
 
         title.text(photo.title);
@@ -333,19 +337,19 @@ function PhotoViewer() {
                 scrollTo(thumbPos.left, w.scrollTop() + 250);
         }
 
-//        if (photo.pos) {
-//            if (!map) {
-//                map = createMap('#photo-map');
-//                map.setCenter(photo.pos);
-//                map.setZoom(14);
-//            }
-//            $('#photo-map').show();
-//            new google.maps.Marker({position:photo.pos, map:map});
-//            map.panTo(photo.pos);
-//        }
-//        else {
+        if (photo.pos) {
+            if (!map) {
+                map = createMap('#photo-map', {mapTypeControl:false});
+                map.setCenter(photo.pos);
+                map.setZoom(14);
+                marker = new google.maps.Marker({position:photo.pos, map:map});
+            }
+            marker.setPosition(photo.pos);
+            $('#photo-map').show();
+        }
+        else {
             $('#photo-map').hide();
-//        }
+        }
     }
 }
 
@@ -353,8 +357,8 @@ function latLng(lat, lon) {
     return new google.maps.LatLng(lat, lon);
 }
 
-function createMap(selector) {
-    return new google.maps.Map($(selector)[0], {
+function createMap(selector, moreOpts) {
+    var options = {
         mapTypeId: google.maps.MapTypeId.TERRAIN,
         styles: [{
             stylers: [
@@ -367,7 +371,9 @@ function createMap(selector) {
         zoomControl: false,
         panControl: false,
         minZoom: 1
-    });
+    };
+    $.extend(options, moreOpts);
+    return new google.maps.Map($(selector)[0], options);
 }
 
 function extractPos(element) {
