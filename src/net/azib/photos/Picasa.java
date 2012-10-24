@@ -26,9 +26,14 @@ public class Picasa {
     static final long CACHE_EXPIRATION = 30 * 60 * 1000; // 30 min
 
     String user = defaultUser;
+    String authkey;
 
-    public Picasa(String user) {
+    public Picasa() {
+    }
+
+    public Picasa(String user, String authkey) {
         if (user != null) this.user = user;
+        this.authkey = authkey;
     }
 
     public String getUser() {
@@ -104,7 +109,9 @@ public class Picasa {
 
     private <T extends IFeed> T feed(String url, Class<T> type) {
         try {
-            return service.getFeed(new URL("http://picasaweb.google.com/data/feed/api/user/" + user + url), type);
+            url = "http://picasaweb.google.com/data/feed/api/user/" + user + url;
+            if (authkey != null) url += (url.contains("?") ? "&" : "?") + "authkey=" + authkey;
+            return service.getFeed(new URL(url), type);
         }
         catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);

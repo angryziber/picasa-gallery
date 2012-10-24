@@ -23,7 +23,7 @@ public class SiteMapServlet extends HttpServlet {
         }
         else if (req.getServletPath().equals("/sitemap.xml")) {
             resp.setContentType("text/xml");
-            Picasa picasa = new Picasa(null);
+            Picasa picasa = new Picasa();
             req.setAttribute("gallery", picasa.getGallery());
             req.getRequestDispatcher("/WEB-INF/jsp/sitemap.jsp").forward(req, resp);
         }

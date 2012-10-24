@@ -19,7 +19,7 @@ public class RequestRouter implements Filter {
         HttpServletResponse response = (HttpServletResponse) resp;
         String path = request.getServletPath();
 
-        Picasa picasa = new Picasa(request.getParameter("by"));
+        Picasa picasa = new Picasa(request.getParameter("by"), request.getParameter("authkey"));
         request.setAttribute("picasa", picasa);
         request.setAttribute("host", request.getHeader("host"));
 
