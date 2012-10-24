@@ -1,7 +1,7 @@
 function facebookButton(href) {
+    if (!$('.facebook-button').length) return '';
     if (!href) href = location.href;
-    return '<iframe class="facebook-button" scrolling="no" frameborder="0" allowtransparency="true" ' +
-           'src="http://www.facebook.com/plugins/like.php?href=' + href + '&layout=button_count&action=like&width=90&height=20&colorscheme=dark"></iframe>'
+    return $('.facebook-button')[0].outerHTML.replace(/href=.*?"$/, 'href=' + href);
 }
 
 function stateURL(photo) {

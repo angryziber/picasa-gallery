@@ -64,8 +64,10 @@
 <div id="content">
     <h1>${album.title.plainText}</h1>
     <h2>${album.description.plainText}</h2>
-    <iframe class="facebook-button" scrolling="no" frameborder="0" allowtransparency="true"
-            src="http://www.facebook.com/plugins/like.php?href=http://<%=request.getHeader("host")%>/${album.name}${picasa.urlSuffix}&layout=button_count&action=like&width=90&height=20&colorscheme=dark"></iframe>
+    <c:if test="${album.access != 'private'}">
+        <iframe class="facebook-button" scrolling="no" frameborder="0" allowtransparency="true"
+                src="http://www.facebook.com/plugins/like.php?layout=button_count&action=like&width=90&height=20&colorscheme=dark&href=http://<%=request.getHeader("host")%>/${album.name}${picasa.urlSuffix}"></iframe>
+    </c:if>
     <br>
     <div class="thumbs clear">
         <c:forEach var="photo" items="${album.photoEntries}">
