@@ -77,7 +77,7 @@
                rel="${media.width}x${media.height}"
                onclick="return false;"
                <c:if test="${photo.geoLocation != null}">data-coords="${photo.geoLocation.latitude}:${photo.geoLocation.longitude}"</c:if>
-               <c:if test="${photo.exifTags != null}">data-exif="${photo.exifTags.apetureFNumber}:${photo.exifTags.exposureTime}:${photo.exifTags.isoEquivalent}"</c:if>>
+               <c:if test="${photo.exifTags != null}">data-exif="${photo.exifTags.apetureFNumber}:${photo.exifTags.exposureTime}:${photo.exifTags.isoEquivalent}:${photo.exifTags.focalLength}"</c:if>>
                 <img src="/img/empty.png" class="missing" rel="${photo.mediaThumbnails[0].url}">
             </a>
         </c:forEach>
@@ -88,7 +88,16 @@
 <div id="photo-wrapper">
     <div class="title-wrapper"><div class="title"></div></div>
     <div id="photo-map"></div>
-    <div id="photo-exif"></div>
+    <table id="photo-exif">
+        <tr>
+            <td id="aperture"></td>
+            <td id="iso"></td>
+        </tr>
+        <tr>
+            <td id="shutter"></td>
+            <td id="focal"></td>
+        </tr>
+    </table>
     <div id="photo-controls" class="visible">
         <div class="header">
             <a class="button first" onclick="viewer.close()">Close<span></span></a>

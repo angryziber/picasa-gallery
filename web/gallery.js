@@ -338,11 +338,13 @@ function PhotoViewer() {
         }
 
         if (photo.exif) {
-            var shutter = photo.exif.shutter < 1 ? ('1/' + Math.round(1/photo.exif.shutter)) : (photo.exif.shutter + '"');
-            exif.text('F/' + photo.exif.aperture + ' ' + shutter + ' ISO' + photo.exif.iso);
+            exif.find('#aperture').text('f/' + photo.exif.aperture);
+            exif.find('#shutter').text(photo.exif.shutter < 1 ? ('1/' + Math.round(1/photo.exif.shutter)) : (photo.exif.shutter + '"'));
+            exif.find('#iso').text('ISO' + photo.exif.iso);
+            exif.find('#focal').text(photo.exif.focal + 'mm');
         }
         else
-            exit.empty();
+            exif.find('td').empty();
 
         if (photo.pos) {
             if (!map) {
@@ -396,7 +398,7 @@ function extractExif(element) {
     var exif = $(element).attr('data-exif');
     if (!exif) return null;
     exif = exif.split(':');
-    return {aperture:exif[0], shutter:exif[1], iso:exif[2]};
+    return {aperture:exif[0], shutter:exif[1], iso:exif[2], focal:exif[3]};
 }
 
 function setMarkerIcon(marker, name) {

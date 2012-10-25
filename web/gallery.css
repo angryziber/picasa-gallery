@@ -254,7 +254,12 @@ h2 {
 #photo-exif {
     position: absolute;
     top: 5px;
-    left: 5px;
+    right: 5px;
+    color: #555;
+}
+
+#photo-exif td {
+    padding: 2px;
 }
 
 #photo-map {
