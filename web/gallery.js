@@ -36,7 +36,7 @@ function changeUsername(username) {
 function PhotoViewer() {
     var pub = this;
     var w = $(window);
-    var wrapper, title, map, marker, controls, position, interval, timeRemaining;
+    var wrapper, title, map, marker, controls, position, interval, timeRemaining, exif;
     var slideshow = null;
     var photos = [];
     var index = 0;
@@ -45,7 +45,7 @@ function PhotoViewer() {
     pub.setup = function() {
         photos = [];
         $('a.photo').click(pub.open).each(function() {
-            photos.push({href: this.href, title: this.title, id: this.id, pos: extractPos(this)});
+            photos.push({href: this.href, title: this.title, id: this.id, pos: extractPos(this), exif: extractExif(this)});
         });
 
         wrapper = $('#photo-wrapper');
@@ -59,6 +59,7 @@ function PhotoViewer() {
         position = controls.find('#position');
         interval = controls.find('#interval');
         timeRemaining = controls.find('#timeRemaining');
+        exif = wrapper.find('#photo-exif');
 
         title = wrapper.find('.title');
         title.hover(function() {
@@ -336,6 +337,13 @@ function PhotoViewer() {
                 scrollTo(thumbPos.left, w.scrollTop() + 250);
         }
 
+        if (photo.exif) {
+            var shutter = photo.exif.shutter < 1 ? ('1/' + Math.round(1/photo.exif.shutter)) : (photo.exif.shutter + '"');
+            exif.text('F/' + photo.exif.aperture + ' ' + shutter + ' ISO' + photo.exif.iso);
+        }
+        else
+            exit.empty();
+
         if (photo.pos) {
             if (!map) {
                 map = createMap('#photo-map', {mapTypeControl:false});
@@ -378,10 +386,17 @@ function createMap(selector, moreOpts) {
 }
 
 function extractPos(element) {
-    var coords = $(element).attr('coords');
+    var coords = $(element).attr('data-coords');
     if (!coords) return null;
     coords = coords.split(':');
     return latLng(coords[0], coords[1]);
+}
+
+function extractExif(element) {
+    var exif = $(element).attr('data-exif');
+    if (!exif) return null;
+    exif = exif.split(':');
+    return {aperture:exif[0], shutter:exif[1], iso:exif[2]};
 }
 
 function setMarkerIcon(marker, name) {

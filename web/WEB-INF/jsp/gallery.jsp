@@ -35,7 +35,7 @@
         <c:forEach var="album" items="${gallery.albumEntries}">
             <c:if test="${album.photosUsed > 0}">
                 <a id="${album.gphotoId}" class="fade" href="/${album.name}${picasa.urlSuffix}"
-                    <c:if test="${album.geoLocation != null}">coords="${album.geoLocation.latitude}:${album.geoLocation.longitude}"</c:if>>
+                    <c:if test="${album.geoLocation != null}">data-coords="${album.geoLocation.latitude}:${album.geoLocation.longitude}"</c:if>>
                     <img src="${album.mediaThumbnails[0].url}" alt="${album.title.plainText} photos, pictures">
                     <div class="title">
                         <span class="info">${album.photosUsed}</span>

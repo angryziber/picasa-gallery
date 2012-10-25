@@ -76,7 +76,8 @@
                title="${photo.description.plainText}"
                rel="${media.width}x${media.height}"
                onclick="return false;"
-               <c:if test="${photo.geoLocation != null}">coords="${photo.geoLocation.latitude}:${photo.geoLocation.longitude}"</c:if>>
+               <c:if test="${photo.geoLocation != null}">data-coords="${photo.geoLocation.latitude}:${photo.geoLocation.longitude}"</c:if>
+               <c:if test="${photo.exifTags != null}">data-exif="${photo.exifTags.apetureFNumber}:${photo.exifTags.exposureTime}:${photo.exifTags.isoEquivalent}"</c:if>>
                 <img src="/img/empty.png" class="missing" rel="${photo.mediaThumbnails[0].url}">
             </a>
         </c:forEach>
@@ -87,6 +88,7 @@
 <div id="photo-wrapper">
     <div class="title-wrapper"><div class="title"></div></div>
     <div id="photo-map"></div>
+    <div id="photo-exif"></div>
     <div id="photo-controls" class="visible">
         <div class="header">
             <a class="button first" onclick="viewer.close()">Close<span></span></a>

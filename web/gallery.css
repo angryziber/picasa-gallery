@@ -251,6 +251,12 @@ h2 {
     background: rgba(0,0,0,0.3)
 }
 
+#photo-exif {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+
 #photo-map {
     position:absolute;
     width: 140px;
@@ -387,7 +393,7 @@ h2 {
         display: none; /* TODO fix this for mobile devices */
     }
 
-    #photo-map {
+    #photo-map, #photo-exif {
         display: none !important;
     }
 
