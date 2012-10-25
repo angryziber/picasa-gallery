@@ -350,7 +350,7 @@ function PhotoViewer() {
             if (!map) {
                 map = createMap('#photo-map', {mapTypeControl:false});
                 map.setCenter(photo.pos);
-                map.setZoom(14);
+                map.setZoom(12);
                 marker = new google.maps.Marker({position:photo.pos, map:map});
                 //$('#photo-map').hover(function(){setTimeout(function(){map.panTo(photos[index].pos)}, 500)});
             }
