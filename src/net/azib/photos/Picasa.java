@@ -54,7 +54,7 @@ public class Picasa {
 
     public AlbumFeed getAlbum(String name) {
         try {
-            return cachedFeed("/album/" + name + "?imgmax=1024&thumbsize=144c", AlbumFeed.class);
+            return cachedFeed("/album/" + name + "?imgmax=1600&thumbsize=144c", AlbumFeed.class);
         }
         catch (RuntimeException e) {
             AlbumFeed results = search(name);
