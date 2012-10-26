@@ -3,10 +3,7 @@ package net.azib.photos;
 import com.google.gdata.client.photos.PicasawebService;
 import com.google.gdata.data.IFeed;
 import com.google.gdata.data.PlainTextConstruct;
-import com.google.gdata.data.photos.AlbumEntry;
-import com.google.gdata.data.photos.AlbumFeed;
-import com.google.gdata.data.photos.GphotoEntry;
-import com.google.gdata.data.photos.UserFeed;
+import com.google.gdata.data.photos.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -61,6 +58,10 @@ public class Picasa {
             results.setTitle(new PlainTextConstruct("Photos matching '" + name + "'"));
             return results;
         }
+    }
+
+    public List<CommentEntry> getAlbumComments(String albumName) {
+      return cachedFeed("/album/" + albumName + "?kind=comment", PhotoFeed.class).getCommentEntries();
     }
 
     public RandomPhoto getRandomPhoto() {

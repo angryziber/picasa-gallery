@@ -3,12 +3,14 @@ package net.azib.photos;
 import com.google.gdata.data.BaseFeed;
 import com.google.gdata.data.Source;
 import com.google.gdata.data.photos.AlbumFeed;
+import com.google.gdata.data.photos.CommentEntry;
 import com.google.gdata.data.photos.GphotoEntry;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 public class RequestRouter implements Filter {
     public void init(FilterConfig config) throws ServletException {
@@ -43,6 +45,7 @@ public class RequestRouter implements Filter {
                     }
                 }
             }
+            request.setAttribute("comments", picasa.getAlbumComments(parts[1]));
             render("album", album, request, response);
         }
     }

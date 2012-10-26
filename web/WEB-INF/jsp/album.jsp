@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:useBean id="album" scope="request" type="com.google.gdata.data.photos.AlbumFeed"/>
+<jsp:useBean id="comments" scope="request" type="java.util.List"/>
 
 <!DOCTYPE html>
 <html>
@@ -98,6 +99,11 @@
             <td id="focal"></td>
         </tr>
     </table>
+    <c:forEach var="comment" items="${comments}">
+        <div class="comment photo-${comment.photoId} hidden">
+            ${comment.title.plainText}: ${comment.textContent.content.plainText}
+        </div>
+    </c:forEach>
     <div id="photo-controls" class="visible">
         <div class="header">
             <a class="button first" onclick="viewer.close()">Close<span></span></a>
