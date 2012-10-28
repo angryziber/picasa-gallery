@@ -1,3 +1,6 @@
+<%@ page import="com.google.gdata.data.photos.GphotoUsername" %>
+<%@ page import="com.google.gdata.data.Person" %>
+<%@ page import="com.google.gdata.data.photos.GphotoThumbnail" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -102,8 +105,12 @@
     <div id="photo-comments">
         <c:forEach var="comment" items="${comments}">
             <div class="comment photo-${comment.photoId} hidden">
-                <strong>${comment.title.plainText}</strong><br>
-                ${comment.textContent.content.plainText}
+                <c:set var="author" value="${comment.authors[0]}"/>
+                <img src="<%=((Person)pageContext.getAttribute("author")).getExtension(GphotoThumbnail.class).getValue()%>">
+                <a target="_blank" href="/?by=<%=((Person)pageContext.getAttribute("author")).getExtension(GphotoUsername.class).getValue()%>">
+                    ${author.name}
+                </a>
+                <br>${comment.textContent.content.plainText}
             </div>
         </c:forEach>
     </div>

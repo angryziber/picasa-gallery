@@ -273,15 +273,6 @@ h2 {
   transition: 0.3s;
 }
 
-#photo-comments .comment {
-  margin-bottom: 10px;
-  text-shadow: 1px 1px 1px black;
-}
-
-#photo-comments .comment strong {
-  font-style: italic;
-}
-
 #photo-comments:hover {
   z-index: 1000;
   color: white;
@@ -290,6 +281,37 @@ h2 {
   -webkit-transition: 0.3s;
   -moz-transition: 0.3s;
   transition: 0.3s;
+}
+
+#photo-comments .comment {
+  margin-bottom: 10px;
+  text-shadow: 1px 1px 1px black;
+  clear: both;
+}
+
+#photo-comments .comment img {
+  float: left;
+  height: 48px;
+  margin-right: 7px;
+  margin-bottom: 7px;
+  border-radius: 5px;
+  opacity: 0.4;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  transition: 0.3s;
+}
+
+#photo-comments:hover img {
+  opacity: 1;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  transition: 0.3s;
+}
+
+#photo-comments .comment a {
+  font-style: italic;
+  color: inherit;
+  margin-bottom: 5px;
 }
 
 #photo-map {

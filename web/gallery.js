@@ -212,7 +212,7 @@ function PhotoViewer() {
     }
 
     function onMouseClick(e) {
-        if ($('#photo-map').is(':hover')) return false;
+        if ($('#photo-map').is(':hover') || $('#photo-comments').is(':hover')) return false;
         posAction(e.pageX, e.pageY)();
         return false;
     }
