@@ -254,8 +254,9 @@ h2 {
 #photo-exif {
     position: absolute;
     top: 5px;
-    right: 5px;
+    left: 5px;
     color: #555;
+    text-shadow: 1px 1px 1px black;
 }
 
 #photo-exif td {
