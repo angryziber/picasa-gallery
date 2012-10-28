@@ -1,6 +1,8 @@
 <%@ page import="com.google.gdata.data.photos.GphotoUsername" %>
 <%@ page import="com.google.gdata.data.Person" %>
 <%@ page import="com.google.gdata.data.photos.GphotoThumbnail" %>
+<%@ page import="net.azib.photos.Picasa" %>
+<%@ page import="com.google.gdata.data.photos.AlbumFeed" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -107,7 +109,8 @@
             <div class="comment photo-${comment.photoId} hidden">
                 <c:set var="author" value="${comment.authors[0]}"/>
                 <img src="<%=((Person)pageContext.getAttribute("author")).getExtension(GphotoThumbnail.class).getValue()%>">
-                <a target="_blank" href="/?by=<%=((Person)pageContext.getAttribute("author")).getExtension(GphotoUsername.class).getValue()%>">
+                <%String username = ((Person)pageContext.getAttribute("author")).getExtension(GphotoUsername.class).getValue();%>
+                <a target="_blank" href="/<%=((AlbumFeed)request.getAttribute("album")).getUsername().equals(username) ? "" : "?by=" + username%>">
                     ${author.name}
                 </a>
                 <br>${comment.textContent.content.plainText}
