@@ -99,11 +99,14 @@
             <td id="focal"></td>
         </tr>
     </table>
-    <c:forEach var="comment" items="${comments}">
-        <div class="comment photo-${comment.photoId} hidden">
-            ${comment.title.plainText}: ${comment.textContent.content.plainText}
-        </div>
-    </c:forEach>
+    <div id="photo-comments">
+        <c:forEach var="comment" items="${comments}">
+            <div class="comment photo-${comment.photoId} hidden">
+                <strong>${comment.title.plainText}</strong><br>
+                ${comment.textContent.content.plainText}
+            </div>
+        </c:forEach>
+    </div>
     <div id="photo-controls" class="visible">
         <div class="header">
             <a class="button first" onclick="viewer.close()">Close<span></span></a>

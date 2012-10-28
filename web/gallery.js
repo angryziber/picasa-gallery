@@ -337,6 +337,9 @@ function PhotoViewer() {
                 scrollTo(thumbPos.left, w.scrollTop() + 250);
         }
 
+        wrapper.find('.comment').fadeOut();
+        wrapper.find('.comment.photo-' + photo.id).fadeIn();
+
         if (photo.exif) {
             exif.find('#aperture').text('f/' + photo.exif.aperture);
             exif.find('#shutter').text(photo.exif.shutter < 1 ? ('1/' + Math.round(1/photo.exif.shutter)) : (photo.exif.shutter + '"'));

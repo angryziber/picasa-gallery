@@ -262,6 +262,36 @@ h2 {
     padding: 2px;
 }
 
+#photo-comments {
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  padding: 10px;
+  border-radius: 5px;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  transition: 0.3s;
+}
+
+#photo-comments .comment {
+  margin-bottom: 10px;
+  text-shadow: 1px 1px 1px black;
+}
+
+#photo-comments .comment strong {
+  font-style: italic;
+}
+
+#photo-comments:hover {
+  z-index: 1000;
+  color: white;
+  background: black;
+  background: rgba(0,0,0,0.3);
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  transition: 0.3s;
+}
+
 #photo-map {
     position:absolute;
     width: 140px;
@@ -398,7 +428,7 @@ h2 {
         display: none; /* TODO fix this for mobile devices */
     }
 
-    #photo-map, #photo-exif {
+    #photo-map, #photo-exif, #photo-comments {
         display: none !important;
     }
 
