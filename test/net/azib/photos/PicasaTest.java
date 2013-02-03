@@ -14,26 +14,26 @@ public class PicasaTest {
 
   @Test
   public void weightedRandomDistributesAccordingToTheSizeOfAlbum() throws Exception {
-    AlbumEntry album1 = mock(AlbumEntry.class);
-    when(album1.getPhotosUsed()).thenReturn(1);
-    AlbumEntry album2 = mock(AlbumEntry.class);
-    when(album2.getPhotosUsed()).thenReturn(2);
-    AlbumEntry album3 = mock(AlbumEntry.class);
-    when(album3.getPhotosUsed()).thenReturn(3);
+    AlbumEntry album1 = mock(AlbumEntry.class, "album1");
+    when(album1.getPhotosUsed()).thenReturn(10);
+    AlbumEntry album2 = mock(AlbumEntry.class, "album2");
+    when(album2.getPhotosUsed()).thenReturn(20);
+    AlbumEntry album3 = mock(AlbumEntry.class, "album3");
+    when(album3.getPhotosUsed()).thenReturn(30);
 
     List<AlbumEntry> albums = asList(album1, album2, album3);
     picasa = spy(picasa);
 
-    doReturn(0).when(picasa).random(6);
+    doReturn(0).when(picasa).random(30);
     assertSame(album1, picasa.weightedRandom(albums));
 
-    doReturn(1).when(picasa).random(6);
+    doReturn(6).when(picasa).random(30);
     assertSame(album2, picasa.weightedRandom(albums));
 
-    doReturn(3).when(picasa).random(6);
+    doReturn(16).when(picasa).random(30);
     assertSame(album3, picasa.weightedRandom(albums));
 
-    doReturn(5).when(picasa).random(6);
+    doReturn(27).when(picasa).random(30);
     assertSame(album3, picasa.weightedRandom(albums));
   }
 }

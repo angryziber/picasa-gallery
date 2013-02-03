@@ -17,6 +17,7 @@ public class Picasa {
     static String defaultUser = config.getProperty("google.user");
     static String analytics = config.getProperty("google.analytics");
     static PicasawebService service = new PicasawebService(defaultUser);
+    static Random random = new Random(System.nanoTime() / Runtime.getRuntime().freeMemory());
 
     static Map<String, IFeed> cache = synchronizedMap(new HashMap<String, IFeed>());
     static Map<String, Long> cacheExpiration = synchronizedMap(new HashMap<String, Long>());
@@ -85,13 +86,14 @@ public class Picasa {
     }
 
     int random(int max) {
-        return (int)(Math.random() * max);
+        return random.nextInt(max);
     }
 
     public AlbumFeed search(String query) {
         return feed("?kind=photo&q=" + query + "&imgmax=1024&thumbsize=144c", AlbumFeed.class);
     }
 
+    @SuppressWarnings({"unchecked", "SynchronizationOnLocalVariableOrMethodParameter"})
     private <T extends IFeed> T cachedFeed(String url, Class<T> type) {
         final String key = (user + url).intern();
         synchronized (key) {
