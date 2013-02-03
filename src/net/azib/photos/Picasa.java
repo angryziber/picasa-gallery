@@ -74,15 +74,19 @@ public class Picasa {
 
     AlbumEntry weightedRandom(List<AlbumEntry> albums) {
         int sum = 0;
-        for (AlbumEntry album : albums) sum += album.getPhotosUsed() >> 1;
+        for (AlbumEntry album : albums) sum += transform(album.getPhotosUsed());
         int index = random(sum);
 
         sum = 0;
         for (AlbumEntry album : albums) {
-            sum += album.getPhotosUsed() >> 1;
+            sum += transform(album.getPhotosUsed());
             if (sum > index) return album;
         }
         return albums.get(0);
+    }
+
+    int transform(int n) {
+      return n; // (int)(10 * Math.log10(n*10));
     }
 
     int random(int max) {

@@ -24,16 +24,16 @@ public class PicasaTest {
     List<AlbumEntry> albums = asList(album1, album2, album3);
     picasa = spy(picasa);
 
-    doReturn(0).when(picasa).random(30);
+    doReturn(0).when(picasa).random(60);
     assertSame(album1, picasa.weightedRandom(albums));
 
-    doReturn(6).when(picasa).random(30);
+    doReturn(11).when(picasa).random(60);
     assertSame(album2, picasa.weightedRandom(albums));
 
-    doReturn(16).when(picasa).random(30);
+    doReturn(31).when(picasa).random(60);
     assertSame(album3, picasa.weightedRandom(albums));
 
-    doReturn(27).when(picasa).random(30);
+    doReturn(45).when(picasa).random(60);
     assertSame(album3, picasa.weightedRandom(albums));
   }
 }
