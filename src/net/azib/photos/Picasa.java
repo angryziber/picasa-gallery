@@ -85,8 +85,8 @@ public class Picasa {
         return albums.get(0);
     }
 
-    int transform(int n) {
-      return n; // (int)(10 * Math.log10(n*10));
+    int transform(double n) {
+      return (int)(100.0 * Math.log10(1 + n / 50.0));
     }
 
     int random(int max) {
