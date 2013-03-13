@@ -25,12 +25,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>jsonp</servlet-name>
+        <servlet-name>gallery-jsonp</servlet-name>
         <servlet-class>net.azib.photos.JsonpServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>jsonp</servlet-name>
-        <url-pattern>/jsonp.js</url-pattern>
+        <servlet-name>gallery-jsonp</servlet-name>
+        <url-pattern>/data/gallery.js</url-pattern>
     </servlet-mapping>
 </web-app>
