@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
-  <application>anton-photos</application>
-  <version>2</version>
-  <threadsafe>true</threadsafe>
+    <application>anton-photos</application>
+    <version>2</version>
+    <threadsafe>true</threadsafe>
+    <static-files>
+        <include path="/**.jpg"/>
+        <include path="/**.png"/>
+        <include path="/**.gif"/>
+        <include path="/**.ico"/>
+        <include path="/**.css"/>
+        <include path="/**.js"/>
+    </static-files>
 </appengine-web-app>
