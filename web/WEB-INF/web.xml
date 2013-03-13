@@ -23,4 +23,14 @@
         <url-pattern>/robots.txt</url-pattern>
         <url-pattern>/sitemap.xml</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>jsonp</servlet-name>
+        <servlet-class>net.azib.photos.JsonpServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>jsonp</servlet-name>
+        <url-pattern>/jsonp.js</url-pattern>
+    </servlet-mapping>
 </web-app>
