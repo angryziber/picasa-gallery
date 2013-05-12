@@ -48,11 +48,11 @@ function PhotoViewer() {
         wrapper.click(onMouseClick);
         wrapper.mousemove(onMouseMove);
         controls = wrapper.find('#photo-controls');
-        controls.find('#incInterval').click(incInterval);
-        controls.find('#decInterval').click(decInterval);
+        controls.find('#inc-interval').click(incInterval);
+        controls.find('#dec-interval').click(decInterval);
         position = controls.find('#position');
         interval = controls.find('#interval');
-        timeRemaining = controls.find('#timeRemaining');
+        timeRemaining = controls.find('#time-remaining');
         exif = wrapper.find('#photo-exif');
 
         title = wrapper.find('.title');

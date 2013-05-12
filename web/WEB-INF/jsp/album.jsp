@@ -123,14 +123,14 @@
         </c:forEach>
     </div>
     <div id="photo-controls" class="visible">
-        <div class="header">
+        <div class="header clearfix">
             <a class="button first" onclick="viewer.close()">Close</a>
             <a class="button" id="slideshow" href="#slideshow">Slideshow</a>
-            <a class="button" id="decInterval">-</a>
+            <a class="button" id="dec-interval">-</a>
             <span class="left"><span id="interval">3</span> sec</span>
-            <a class="button" id="incInterval">+</a>
-            <span class="left" id="timeRemaining"></span>
-            <h1>${album.title.plainText} <small id="position"></small></h1>
+            <a class="button" id="inc-interval">+</a>
+            <span class="left" id="time-remaining"></span>
+            <h1><span id="photo-controls-title">${album.title.plainText}</span> <small id="position"></small></h1>
         </div>
     </div>
 </div>

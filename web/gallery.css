@@ -10,6 +10,15 @@ body {
   font-size: 14px;
 }
 
+.clearfix:before, .clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
 a {
     text-decoration: none;
 }
@@ -39,6 +48,10 @@ h2 {
 }
 
 .header h1 {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
   color: white;
   font-size: 140%;
   font-weight: bold;
@@ -76,14 +89,22 @@ h2 {
 }
 
 .header #search input {
-    float: right;
+    position: absolute;
+    right: 0;
     margin: 0 40px 0 20px;
-    width: 120px;
+    width: 8%;
     background: white url(/img/search-icon.png) right 1px no-repeat;
+    -webkit-transition: 0.3s;
+    -moz-transition: 0.3s;
+    transition: 0.3s;
 }
 
 .header #search input:focus {
     outline: none;
+    width: 15%;
+    -webkit-transition: 0.3s;
+    -moz-transition: 0.3s;
+    transition: 0.3s;
 }
 
 .header .button:active {
@@ -235,7 +256,7 @@ h2 {
     bottom: 20px;
 }
 
-#photo-wrapper .title {
+#photo-wrapper .title-wrapper .title {
     position: relative;
     left: -50%;
     z-index: 777;
@@ -419,6 +440,30 @@ h2 {
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
 }
 
+@media screen and (max-width: 900px) {
+  #photo-controls h1 {
+    position: static;
+    float: left;
+  }
+
+  #photo-controls #photo-controls-title {
+    display: none;
+  }
+
+  #photo-controls h1 small {
+    margin-left: 20px;
+  }
+
+  #photo-controls #time-remaining {
+    font-size: 10px;
+    line-height: 16px;
+  }
+
+  .header .button.first, .header .button:first-child {
+    margin-left: 20px;
+  }
+}
+
 /* only desktop */
 @media screen and (min-device-width: 1024px) {
     .albums a:hover .title > .info {
@@ -441,17 +486,8 @@ h2 {
         width: 100px;
     }
 
-    #photo-controls {
-        display: none; /* TODO fix this for mobile devices */
-    }
-
     #photo-map, #photo-exif, #photo-comments {
         display: none !important;
-    }
-
-    #photo-controls h1 {
-        left: 0;
-        clear: both;
     }
 
     #footer {
