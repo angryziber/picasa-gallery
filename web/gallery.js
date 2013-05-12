@@ -48,7 +48,6 @@ function PhotoViewer() {
         wrapper.click(onMouseClick);
         wrapper.mousemove(onMouseMove);
         controls = wrapper.find('#photo-controls');
-        controls.find('#slideshow').click(pub.slideshow);
         controls.find('#incInterval').click(incInterval);
         controls.find('#decInterval').click(decInterval);
         position = controls.find('#position');
@@ -84,7 +83,8 @@ function PhotoViewer() {
             controls.removeClass('visible');
         }, 2000);
 
-        if (location.hash == '#slideshow') startSlideshow();
+        onHashChange();
+        $(window).bind('hashchange', onHashChange);
         loadPhoto();
         var photo = photos[index];
         if (history.pushState) history.pushState(stateURL(photo), photo.title, stateURL(photo));
@@ -98,10 +98,11 @@ function PhotoViewer() {
         });
         $(document).unbind('keydown');
         $(window).unbind('resize');
+        $(window).unbind('hashchange');
         window.onpopstate = $.noop;
 
-        if (history.replaceState) history.replaceState(stateURL(), '', stateURL());
         stopSlideshow();
+        if (history.replaceState) history.replaceState(stateURL(), '', stateURL());
         var img = wrapper.find('img.photo');
         var thumb = $('#' + photos[index].id);
         var fixed = wrapper.css('position') == 'fixed';
@@ -138,6 +139,12 @@ function PhotoViewer() {
         return false;
     };
 
+    function onHashChange() {
+        var hash = location.hash.substring(1);
+        if (hash == 'slideshow') startSlideshow();
+        else if (slideshow) stopSlideshow();
+    }
+
     function stateURL(photo) {
         var album = location.pathname.split('/')[1];
         return '/' + album + (photo ? '/' + photo.id : '') + location.search + (slideshow ? '#slideshow' : '');
@@ -163,16 +170,14 @@ function PhotoViewer() {
 
     function startSlideshow() {
         setSlideshowTimeout();
-        controls.find('#slideshow.button').html('Stop');
+        controls.find('#slideshow.button').text('Stop').attr('href', '#');
         showTimeRemaining();
-        location.hash = '#slideshow';
     }
 
     function stopSlideshow() {
         clearTimeout(slideshow); slideshow = null;
-        controls.find('#slideshow.button').html('Slideshow');
+        controls.find('#slideshow.button').text('Slideshow').attr('href', '#slideshow');
         timeRemaining.empty();
-        location.hash = '';
     }
 
     function incInterval() {
@@ -218,7 +223,7 @@ function PhotoViewer() {
     }
 
     function onMouseClick(e) {
-        if ($('#photo-map').is(':hover') || $('#photo-comments').is(':hover')) return false;
+        if ($('#photo-map:hover, #photo-comments:hover, #photo-controls:hover, a:hover').length) return true;
         posAction(e.pageX, e.pageY)();
         return false;
     }
