@@ -28,11 +28,11 @@ Features
 - No pagination (but only visible thumbnails are loaded)
 - Keyboard navigation
 - Mobile device support, eg iPhone, iPad, Android (including touch events)
-- Slideshow with adjustable delay
 - Facebook like buttons for albums and individual photos
 - Opengraph metadata (for FB sharing, etc)
 - Google analytics support
 - Viewing of other people's albums, just add "?by=username" parameter
+- Slideshow with adjustable delay, add "#slideshow" to the URL if you want it to start automatically
 - Showing of a single (weighted) random photo from all albums, just add "?random" parameter
 
 How to use it for your own photos
@@ -46,6 +46,7 @@ How to use it for your own photos
   
   	    $ ant -Dsdk.dir=path/to/appengine-java-sdk compile
 
-- Use AppEngine SDK / Eclipse / IntelliJ IDEA to deploy your application.
+- Use AppEngine SDK / Eclipse / IntelliJ IDEA to upload your application.
   Details here: <http://code.google.com/appengine/docs/java/gettingstarted/uploading.html>
+
 P.S. the app is a standard Java Servlet-based application, so it will work without AppEngine as well.
