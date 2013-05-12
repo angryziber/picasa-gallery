@@ -52,9 +52,14 @@
                 });
             }
             viewer.setup();
-            <c:if test="${photo != null}">
-            $('a#${photo.gphotoId}').click();
-            </c:if>
+            <c:choose>
+                <c:when test="${photo != null}">
+                    $('a#${photo.gphotoId}').click();
+                </c:when>
+                <c:otherwise>
+                    if (location.hash == '#slideshow') $('a.photo').eq(0).click();
+                </c:otherwise>
+            </c:choose>
         });
     </script>
 </head>

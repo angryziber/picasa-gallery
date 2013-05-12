@@ -4,11 +4,6 @@ function facebookButton(href) {
     return $('.facebook-button')[0].outerHTML.replace(/href=.*?"$/, 'href=' + href);
 }
 
-function stateURL(photo) {
-    var album = location.pathname.split('/')[1];
-    return '/' + album + (photo ? '/' + photo.id : '') + location.search;
-}
-
 function loadVisibleThumbs(maxCount) {
     if (!maxCount) maxCount = 10000;
 	var visibleTop = $(window).scrollTop() - 150;
@@ -89,6 +84,7 @@ function PhotoViewer() {
             controls.removeClass('visible');
         }, 2000);
 
+        if (location.hash == '#slideshow') startSlideshow();
         loadPhoto();
         var photo = photos[index];
         if (history.pushState) history.pushState(stateURL(photo), photo.title, stateURL(photo));
@@ -140,6 +136,11 @@ function PhotoViewer() {
         return false;
     };
 
+    function stateURL(photo) {
+        var album = location.pathname.split('/')[1];
+        return '/' + album + (photo ? '/' + photo.id : '') + location.search + (slideshow ? '#slideshow' : '');
+    }
+
     function showTimeRemaining() {
         var sec = (photos.length - index - 1) * interval.text();
         var min = 0;
@@ -151,6 +152,7 @@ function PhotoViewer() {
     }
 
     function setSlideshowTimeout() {
+        if (slideshow) clearTimeout(slideshow);
         slideshow = setTimeout(function() {
             pub.next();
             showTimeRemaining();
@@ -161,12 +163,14 @@ function PhotoViewer() {
         setSlideshowTimeout();
         controls.find('#slideshow.button').html('Stop<span></span>');
         showTimeRemaining();
+        location.hash = '#slideshow';
     }
 
     function stopSlideshow() {
         clearTimeout(slideshow); slideshow = null;
         controls.find('#slideshow.button').html('Slideshow<span></span>');
         timeRemaining.empty();
+        location.hash = '';
     }
 
     function incInterval() {
