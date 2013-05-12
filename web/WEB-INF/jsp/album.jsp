@@ -67,7 +67,7 @@
 <body style="background:black; color: gray">
 
 <div id="header" class="header">
-    <a href="/${picasa.urlSuffix}" class="button fade">Gallery<span></span></a>
+    <a href="/${picasa.urlSuffix}" class="button fade">Gallery</a>
     <form id="search"><input></form>
     <h1 id="title">${album.title.plainText} <small>by ${album.nickname}</small></h1>
 </div>
@@ -124,11 +124,11 @@
     </div>
     <div id="photo-controls" class="visible">
         <div class="header">
-            <a class="button first" onclick="viewer.close()">Close<span></span></a>
-            <a class="button" id="slideshow">Slideshow<span></span></a>
-            <a class="button" id="decInterval">-<span></span></a>
+            <a class="button first" onclick="viewer.close()">Close</a>
+            <a class="button" id="slideshow">Slideshow</a>
+            <a class="button" id="decInterval">-</a>
             <span class="left"><span id="interval">3</span> sec</span>
-            <a class="button" id="incInterval">+<span></span></a>
+            <a class="button" id="incInterval">+</a>
             <span class="left" id="timeRemaining"></span>
             <h1>${album.title.plainText} <small id="position"></small></h1>
         </div>

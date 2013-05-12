@@ -163,14 +163,14 @@ function PhotoViewer() {
 
     function startSlideshow() {
         setSlideshowTimeout();
-        controls.find('#slideshow.button').html('Stop<span></span>');
+        controls.find('#slideshow.button').html('Stop');
         showTimeRemaining();
         location.hash = '#slideshow';
     }
 
     function stopSlideshow() {
         clearTimeout(slideshow); slideshow = null;
-        controls.find('#slideshow.button').html('Slideshow<span></span>');
+        controls.find('#slideshow.button').html('Slideshow');
         timeRemaining.empty();
         location.hash = '';
     }

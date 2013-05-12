@@ -410,7 +410,8 @@ h2 {
 .button:active {
     box-shadow: none;
 }
-.button span {
+.button:after {
+    content: '';
     position: absolute;
     display: block;
     width: 100%;
