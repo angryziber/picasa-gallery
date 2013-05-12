@@ -42,7 +42,10 @@ How to use it for your own photos
 - Specify your Picasaweb username in src/config.properties
 - Specify your AppEngine application ID in web/WEB-INF/appengine-web.xml
 - Download AppEngine SDK from Google
-- Use AppEngine SDK / Eclipse / IntelliJ IDEA to deploy your application.
-  Details here: http://code.google.com/appengine/docs/java/gettingstarted/uploading.html
+- If you don't use any IDE, use ant to compile by this command:
+  
+  	    $ ant -Dsdk.dir=path/to/appengine-java-sdk compile
 
+- Use AppEngine SDK / Eclipse / IntelliJ IDEA to deploy your application.
+  Details here: <http://code.google.com/appengine/docs/java/gettingstarted/uploading.html>
 P.S. the app is a standard Java Servlet-based application, so it will work without AppEngine as well.
