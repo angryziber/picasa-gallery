@@ -93,7 +93,9 @@ function PhotoViewer() {
 
     pub.close = function() {
         isOpen = false;
-        wrapper.fadeOut();
+        wrapper.fadeOut(function() {
+            controls.addClass('visible')
+        });
         $(document).unbind('keydown');
         $(window).unbind('resize');
         window.onpopstate = $.noop;
