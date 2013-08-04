@@ -33,8 +33,9 @@ public class RequestRouter implements Filter {
         String path = request.getServletPath();
 
         String by = request.getParameter("by");
+        boolean isRandom = request.getParameter("random") != null;
         String userAgent = request.getHeader("User-Agent");
-        if (isBot(userAgent) && by != null) {
+        if (isBot(userAgent) && (by != null || isRandom)) {
           response.sendError(SC_FORBIDDEN);
           return;
         }
@@ -44,7 +45,7 @@ public class RequestRouter implements Filter {
             request.setAttribute("picasa", picasa);
             request.setAttribute("host", request.getHeader("host"));
 
-            if (request.getParameter("random") != null) {
+            if (isRandom) {
                 render("random", picasa.getRandomPhoto(), request, response);
             }
             else if (path == null || "/".equals(path)) {
