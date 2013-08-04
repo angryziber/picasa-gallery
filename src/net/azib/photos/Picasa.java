@@ -2,8 +2,8 @@ package net.azib.photos;
 
 import com.google.gdata.client.photos.PicasawebService;
 import com.google.gdata.data.IFeed;
-import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.photos.*;
+import com.google.gdata.util.ServiceException;
 
 import java.io.IOException;
 import java.net.URL;
@@ -46,19 +46,19 @@ public class Picasa {
         return analytics;
     }
 
-    public UserFeed getGallery() {
+    public UserFeed getGallery() throws IOException, ServiceException {
         return cachedFeed("?kind=album&thumbsize=212c", UserFeed.class);
     }
 
-    public AlbumFeed getAlbum(String name) {
+    public AlbumFeed getAlbum(String name) throws IOException, ServiceException {
         return cachedFeed("/album/" + name + "?imgmax=1600&thumbsize=144c", AlbumFeed.class);
     }
 
-    public List<CommentEntry> getAlbumComments(String albumName) {
+    public List<CommentEntry> getAlbumComments(String albumName) throws IOException, ServiceException {
       return cachedFeed("/album/" + albumName + "?kind=comment", PhotoFeed.class).getCommentEntries();
     }
 
-    public RandomPhoto getRandomPhoto() {
+    public RandomPhoto getRandomPhoto() throws IOException, ServiceException {
         List<AlbumEntry> albums = getGallery().getAlbumEntries();
         AlbumEntry album = weightedRandom(albums);
         List<GphotoEntry> photos = cachedFeed("/album/" + album.getName() + "?kind=photo&imgmax=1600&max-results=1000&fields=entry(content)", AlbumFeed.class).getEntries();
@@ -86,12 +86,12 @@ public class Picasa {
         return random.nextInt(max);
     }
 
-    public AlbumFeed search(String query) {
+    public AlbumFeed search(String query) throws IOException, ServiceException {
         return feed("?kind=photo&q=" + query + "&imgmax=1024&thumbsize=144c", AlbumFeed.class);
     }
 
     @SuppressWarnings({"unchecked", "SynchronizationOnLocalVariableOrMethodParameter"})
-    private <T extends IFeed> T cachedFeed(String url, Class<T> type) {
+    private <T extends IFeed> T cachedFeed(String url, Class<T> type) throws IOException, ServiceException {
         final String key = (user + url).intern();
         synchronized (key) {
             Long expiration = cacheExpiration.get(key);
@@ -107,15 +107,10 @@ public class Picasa {
         }
     }
 
-    private <T extends IFeed> T feed(String url, Class<T> type) {
-        try {
-            url = "http://picasaweb.google.com/data/feed/api/user/" + user + url;
-            if (authkey != null) url += (url.contains("?") ? "&" : "?") + "authkey=" + authkey;
-            return service.getFeed(new URL(url), type);
-        }
-        catch (Exception e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
+    private <T extends IFeed> T feed(String url, Class<T> type) throws IOException, ServiceException {
+        url = "http://picasaweb.google.com/data/feed/api/user/" + user + url;
+        if (authkey != null) url += (url.contains("?") ? "&" : "?") + "authkey=" + authkey;
+        return service.getFeed(new URL(url), type);
     }
 
     private static Properties loadConfig() {
