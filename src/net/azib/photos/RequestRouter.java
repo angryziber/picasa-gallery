@@ -88,7 +88,7 @@ public class RequestRouter implements Filter {
         }
     }
 
-  private boolean isBot(String userAgent) {
+  static boolean isBot(String userAgent) {
     return userAgent == null || userAgent.toLowerCase().contains("bot/") || userAgent.contains("spider/");
   }
 
