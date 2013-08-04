@@ -6,6 +6,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="album" scope="request" type="com.google.gdata.data.photos.AlbumFeed"/>
 <jsp:useBean id="comments" scope="request" type="java.util.List"/>
 
@@ -87,6 +88,7 @@
                title="${photo.description.plainText}"
                rel="${media.width}x${media.height}"
                onclick="return false;"
+               data-time="<fmt:formatDate value="${photo.timestamp}" pattern="yyyy-MM-dd HH:mm"/>"
                <c:if test="${photo.geoLocation != null}">data-coords="${photo.geoLocation.latitude}:${photo.geoLocation.longitude}"</c:if>
                <c:if test="${photo.exifTags != null}">data-exif="${photo.exifTags.apetureFNumber}:${photo.exifTags.exposureTime}:${photo.exifTags.isoEquivalent}:${photo.exifTags.focalLength}"</c:if>>
                 <img src="/img/empty.png" class="missing" rel="${photo.mediaThumbnails[0].url}">
@@ -100,6 +102,9 @@
     <div class="title-wrapper"><div class="title"></div></div>
     <div id="photo-map"></div>
     <table id="photo-exif">
+        <tr>
+            <td id="time" colspan="2"></td>
+        </tr>
         <tr>
             <td id="aperture"></td>
             <td id="iso"></td>

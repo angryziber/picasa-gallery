@@ -40,7 +40,7 @@ function PhotoViewer() {
     pub.setup = function() {
         photos = [];
         $('a.photo').click(pub.open).each(function() {
-            photos.push({href: this.href, title: this.title, id: this.id, pos: extractPos(this), exif: extractExif(this)});
+            photos.push({href: this.href, title: this.title, id: this.id, pos: extractPos(this), exif: extractExif(this), time: $(this).data('time')});
         });
 
         wrapper = $('#photo-wrapper');
@@ -351,6 +351,7 @@ function PhotoViewer() {
         wrapper.find('.comment').fadeOut();
         wrapper.find('.comment.photo-' + photo.id).fadeIn();
 
+        exif.find('#time').text(photo.time);
         if (photo.exif) {
             exif.find('#aperture').text('f/' + photo.exif.aperture);
             exif.find('#shutter').text(photo.exif.shutter < 1 ? ('1/' + Math.round(1/photo.exif.shutter)) : (photo.exif.shutter + '"'));
@@ -402,14 +403,14 @@ function createMap(selector, moreOpts) {
 }
 
 function extractPos(element) {
-    var coords = $(element).attr('data-coords');
+    var coords = $(element).data('coords');
     if (!coords) return null;
     coords = coords.split(':');
     return latLng(coords[0], coords[1]);
 }
 
 function extractExif(element) {
-    var exif = $(element).attr('data-exif');
+    var exif = $(element).data('exif');
     if (!exif) return null;
     exif = exif.split(':');
     return {aperture:exif[0], shutter:exif[1], iso:exif[2], focal:exif[3]};
