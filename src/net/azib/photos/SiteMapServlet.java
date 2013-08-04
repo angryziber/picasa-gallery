@@ -36,7 +36,7 @@ public class SiteMapServlet extends HttpServlet {
             }
         }
         catch (ServiceException e) {
-            resp.sendError(SC_INTERNAL_SERVER_ERROR);
+            resp.sendError(SC_INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
 }
