@@ -79,11 +79,11 @@ public class Picasa {
     }
 
     int transform(double n) {
-      return (int)(100.0 * Math.log10(1 + n / 50.0));
+        return (int)(100.0 * Math.log10(1 + n / 50.0));
     }
 
     int random(int max) {
-        return random.nextInt(max);
+        return max == 0 ? 0 : random.nextInt(max);
     }
 
     public AlbumFeed search(String query) throws IOException, ServiceException {
