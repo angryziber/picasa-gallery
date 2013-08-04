@@ -416,9 +416,13 @@ function extractExif(element) {
 }
 
 function setMarkerIcon(marker, name) {
-    marker.setIcon('http://maps.google.com/mapfiles/' + name + '.png');
-    marker.setShadow(new google.maps.MarkerImage('http://maps.google.com/mapfiles/shadow50.png', null, null, new google.maps.Point(10, 34)));
-    marker.setZIndex(1000);
+    if (name) {
+        marker.setIcon('http://maps.google.com/mapfiles/' + name + '.png');
+        marker.setShadow(new google.maps.MarkerImage('http://maps.google.com/mapfiles/shadow50.png', null, null, new google.maps.Point(10, 34)));
+        marker.setZIndex(1000);
+    }
+    else
+        marker.setIcon(null);
 }
 
 function initMap() {
@@ -431,7 +435,7 @@ function initMap() {
         bounds.extend(pos);
         google.maps.event.addListener(this.marker, 'click', function() {$(link).click();});
         $(this).mouseover(function() {setMarkerIcon(this.marker, 'marker_orange');});
-        $(this).mouseout(function() {setMarkerIcon(this.marker, 'marker');});
+        $(this).mouseout(function() {setMarkerIcon(this.marker);});
     });
 
     if (bounds.isEmpty()) {
