@@ -1,7 +1,9 @@
 package net.azib.photos;
 
 import com.google.gdata.client.photos.PicasawebService;
+import com.google.gdata.data.IEntry;
 import com.google.gdata.data.IFeed;
+import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.photos.*;
 import com.google.gdata.util.ServiceException;
 
@@ -51,7 +53,15 @@ public class Picasa {
     }
 
     public AlbumFeed getAlbum(String name) throws IOException, ServiceException {
-        return cachedFeed("/album/" + name + "?imgmax=1600&thumbsize=144c", AlbumFeed.class);
+      AlbumFeed album = cachedFeed("/album/" + name + "?imgmax=1600&thumbsize=144c", AlbumFeed.class);
+      for (PhotoEntry photo : album.getPhotoEntries()) {
+        // remove filename-like descriptions that don't make any sense
+        String desc = photo.getDescription().getPlainText();
+        if (desc != null && desc.matches("(IMG|DSC)?[0-9-_.]+")) {
+          photo.setDescription(new PlainTextConstruct());
+        }
+      }
+      return album;
     }
 
     public List<CommentEntry> getAlbumComments(String albumName) throws IOException, ServiceException {
