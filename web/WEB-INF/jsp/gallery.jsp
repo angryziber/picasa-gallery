@@ -7,7 +7,7 @@
 <html>
 <head>
     <title>${gallery.nickname} Photography</title>
-    <meta name="viewport" content="width=700, user-scalable=no">
+    <c:if test="${mobile}"><meta name="viewport" content="width=700, user-scalable=no"></c:if>
     <meta name="description" content="${gallery.nickname} photo albums from around the World">
     <meta name="keywords" content="${gallery.nickname},photos,picasa,picasaweb,gallery,albums,travel,photography">
     <meta property="og:title" content="${gallery.nickname} Photography">

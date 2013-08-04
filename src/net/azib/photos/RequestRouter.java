@@ -44,6 +44,7 @@ public class RequestRouter implements Filter {
             Picasa picasa = new Picasa(by, request.getParameter("authkey"));
             request.setAttribute("picasa", picasa);
             request.setAttribute("host", request.getHeader("host"));
+            request.setAttribute("mobile", userAgent.contains("Mobile") && !userAgent.contains("iPad") && !userAgent.contains("Tab"));
 
             if (isRandom) {
                 render("random", picasa.getRandomPhoto(), request, response);
