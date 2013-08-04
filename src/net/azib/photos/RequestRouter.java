@@ -1,6 +1,7 @@
 package net.azib.photos;
 
 import com.google.gdata.data.BaseFeed;
+import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.Source;
 import com.google.gdata.data.photos.AlbumFeed;
 import com.google.gdata.data.photos.CommentEntry;
@@ -10,7 +11,9 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
+import java.util.List;
+
+import static java.util.Collections.emptyList;
 
 public class RequestRouter implements Filter {
     public void init(FilterConfig config) throws ServletException {
@@ -36,7 +39,17 @@ public class RequestRouter implements Filter {
         }
         else {
             String[] parts = path.split("/");
-            AlbumFeed album = picasa.getAlbum(parts[1]);
+            AlbumFeed album;
+            List<CommentEntry> comments = emptyList();
+            try {
+              album = picasa.getAlbum(parts[1]);
+              comments = picasa.getAlbumComments(parts[1]);
+            }
+            catch (RuntimeException e) {
+                album = picasa.search(parts[1]);
+                album.setTitle(new PlainTextConstruct("Photos matching '" + parts[1] + "'"));
+            }
+
             if (parts.length > 2) {
                 for (GphotoEntry photo : album.getPhotoEntries()) {
                     if (photo.getGphotoId().equals(parts[2])) {
@@ -45,7 +58,7 @@ public class RequestRouter implements Filter {
                     }
                 }
             }
-            request.setAttribute("comments", picasa.getAlbumComments(parts[1]));
+            request.setAttribute("comments", comments);
             render("album", album, request, response);
         }
     }

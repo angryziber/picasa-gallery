@@ -51,14 +51,7 @@ public class Picasa {
     }
 
     public AlbumFeed getAlbum(String name) {
-        try {
-            return cachedFeed("/album/" + name + "?imgmax=1600&thumbsize=144c", AlbumFeed.class);
-        }
-        catch (RuntimeException e) {
-            AlbumFeed results = search(name);
-            results.setTitle(new PlainTextConstruct("Photos matching '" + name + "'"));
-            return results;
-        }
+        return cachedFeed("/album/" + name + "?imgmax=1600&thumbsize=144c", AlbumFeed.class);
     }
 
     public List<CommentEntry> getAlbumComments(String albumName) {
