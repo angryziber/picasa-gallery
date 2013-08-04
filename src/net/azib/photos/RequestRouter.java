@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
+import static javax.servlet.http.HttpServletResponse.SC_FORBIDDEN;
 
 public class RequestRouter implements Filter {
     public void init(FilterConfig config) throws ServletException {
@@ -24,7 +25,14 @@ public class RequestRouter implements Filter {
         HttpServletResponse response = (HttpServletResponse) resp;
         String path = request.getServletPath();
 
-        Picasa picasa = new Picasa(request.getParameter("by"), request.getParameter("authkey"));
+        String by = request.getParameter("by");
+        String userAgent = request.getHeader("User-Agent");
+        if (isBot(userAgent) && by != null) {
+          response.sendError(SC_FORBIDDEN);
+          return;
+        }
+
+        Picasa picasa = new Picasa(by, request.getParameter("authkey"));
         request.setAttribute("picasa", picasa);
         request.setAttribute("host", request.getHeader("host"));
 
@@ -63,7 +71,11 @@ public class RequestRouter implements Filter {
         }
     }
 
-    void render(String template, Object source, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+  private boolean isBot(String userAgent) {
+    return userAgent == null || userAgent.toLowerCase().contains("bot/") || userAgent.contains("spider/");
+  }
+
+  void render(String template, Object source, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setAttribute(template, source);
 
         response.setContentType("text/html; charset=utf8");
