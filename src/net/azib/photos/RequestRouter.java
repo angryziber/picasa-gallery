@@ -79,11 +79,11 @@ public class RequestRouter implements Filter {
             }
         }
         catch (ResourceNotFoundException e) {
-            response.sendError(SC_NOT_FOUND, e.getMessage());
+            response.sendError(SC_NOT_FOUND, e.getResponseBody());
         }
         catch (ServiceException e) {
             context.log("GData", e);
-            response.sendError(SC_INTERNAL_SERVER_ERROR, e.getMessage());
+            response.sendError(SC_INTERNAL_SERVER_ERROR, e.getResponseBody());
         }
     }
 
