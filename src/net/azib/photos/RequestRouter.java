@@ -27,84 +27,84 @@ public class RequestRouter implements Filter {
     this.context = config.getServletContext();
   }
 
-    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) req;
-        HttpServletResponse response = (HttpServletResponse) resp;
-        String path = request.getServletPath();
+  public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
+    HttpServletRequest request = (HttpServletRequest) req;
+    HttpServletResponse response = (HttpServletResponse) resp;
+    String path = request.getServletPath();
 
-        String by = request.getParameter("by");
-        boolean isRandom = request.getParameter("random") != null;
-        String userAgent = request.getHeader("User-Agent");
-        if (isBot(userAgent) && (by != null || isRandom)) {
-          response.sendError(SC_FORBIDDEN);
-          return;
-        }
+    String by = request.getParameter("by");
+    boolean isRandom = request.getParameter("random") != null;
+    String userAgent = request.getHeader("User-Agent");
+    if (isBot(userAgent) && (by != null || isRandom)) {
+      response.sendError(SC_FORBIDDEN);
+      return;
+    }
 
+    try {
+      Picasa picasa = new Picasa(by, request.getParameter("authkey"));
+      request.setAttribute("picasa", picasa);
+      request.setAttribute("host", request.getHeader("host"));
+      request.setAttribute("mobile", userAgent.contains("Mobile") && !userAgent.contains("iPad") && !userAgent.contains("Tab"));
+
+      if (isRandom) {
+        render("random", picasa.getRandomPhoto(), request, response);
+      }
+      else if (path == null || "/".equals(path)) {
+        render("gallery", picasa.getGallery(), request, response);
+      }
+      else if (path.lastIndexOf('.') >= path.length() - 4) {
+        chain.doFilter(req, resp);
+      }
+      else {
+        String[] parts = path.split("/");
+        AlbumFeed album;
+        List<CommentEntry> comments = emptyList();
         try {
-            Picasa picasa = new Picasa(by, request.getParameter("authkey"));
-            request.setAttribute("picasa", picasa);
-            request.setAttribute("host", request.getHeader("host"));
-            request.setAttribute("mobile", userAgent.contains("Mobile") && !userAgent.contains("iPad") && !userAgent.contains("Tab"));
-
-            if (isRandom) {
-                render("random", picasa.getRandomPhoto(), request, response);
-            }
-            else if (path == null || "/".equals(path)) {
-                render("gallery", picasa.getGallery(), request, response);
-            }
-            else if (path.lastIndexOf('.') >= path.length() - 4) {
-                chain.doFilter(req, resp);
-            }
-            else {
-                String[] parts = path.split("/");
-                AlbumFeed album;
-                List<CommentEntry> comments = emptyList();
-                try {
-                  album = picasa.getAlbum(parts[1]);
-                  comments = picasa.getAlbumComments(parts[1]);
-                }
-                catch (ResourceNotFoundException e) {
-                    album = picasa.search(parts[1]);
-                    album.setTitle(new PlainTextConstruct("Photos matching '" + parts[1] + "'"));
-                }
-
-                if (parts.length > 2) {
-                    for (GphotoEntry photo : album.getPhotoEntries()) {
-                        if (photo.getGphotoId().equals(parts[2])) {
-                            request.setAttribute("photo", photo);
-                            break;
-                        }
-                    }
-                }
-                request.setAttribute("comments", comments);
-                render("album", album, request, response);
-            }
+          album = picasa.getAlbum(parts[1]);
+          comments = picasa.getAlbumComments(parts[1]);
         }
         catch (ResourceNotFoundException e) {
-            response.sendError(SC_NOT_FOUND, e.getResponseBody());
+          album = picasa.search(parts[1]);
+          album.setTitle(new PlainTextConstruct("Photos matching '" + parts[1] + "'"));
         }
-        catch (ServiceException e) {
-            context.log("GData", e);
-            response.sendError(SC_INTERNAL_SERVER_ERROR, e.getResponseBody());
+
+        if (parts.length > 2) {
+          for (GphotoEntry photo : album.getPhotoEntries()) {
+            if (photo.getGphotoId().equals(parts[2])) {
+              request.setAttribute("photo", photo);
+              break;
+            }
+          }
         }
+        request.setAttribute("comments", comments);
+        render("album", album, request, response);
+      }
     }
+    catch (ResourceNotFoundException e) {
+      response.sendError(SC_NOT_FOUND, e.getResponseBody());
+    }
+    catch (ServiceException e) {
+      context.log("GData", e);
+      response.sendError(SC_INTERNAL_SERVER_ERROR, e.getResponseBody());
+    }
+  }
 
   static boolean isBot(String userAgent) {
     return userAgent == null || userAgent.toLowerCase().contains("bot/") || userAgent.contains("spider/");
   }
 
   void render(String template, Object source, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.setAttribute(template, source);
+    request.setAttribute(template, source);
 
-        response.setContentType("text/html; charset=utf8");
-        if (source instanceof Source)
-            response.addDateHeader("Last-Modified", ((Source)source).getUpdated().getValue());
-        if (source instanceof BaseFeed)
-            response.addHeader("ETag", ((BaseFeed)source).getEtag());
+    response.setContentType("text/html; charset=utf8");
+    if (source instanceof Source)
+      response.addDateHeader("Last-Modified", ((Source) source).getUpdated().getValue());
+    if (source instanceof BaseFeed)
+      response.addHeader("ETag", ((BaseFeed) source).getEtag());
 
-        request.getRequestDispatcher("/WEB-INF/jsp/" + template + ".jsp").include(request, response);
-    }
+    request.getRequestDispatcher("/WEB-INF/jsp/" + template + ".jsp").include(request, response);
+  }
 
-    public void destroy() {
-    }
+  public void destroy() {
+  }
 }
