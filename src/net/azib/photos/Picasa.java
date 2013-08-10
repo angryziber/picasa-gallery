@@ -6,9 +6,12 @@ import com.google.gdata.data.IFeed;
 import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.photos.*;
 import com.google.gdata.util.ServiceException;
+import com.google.gdata.util.httputil.FastURLEncoder;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.*;
 
 import static java.lang.System.currentTimeMillis;
@@ -53,7 +56,7 @@ public class Picasa {
     }
 
     public AlbumFeed getAlbum(String name) throws IOException, ServiceException {
-      AlbumFeed album = cachedFeed("/album/" + name + "?imgmax=1600&thumbsize=144c", AlbumFeed.class);
+      AlbumFeed album = cachedFeed("/album/" + urlEncode(name) + "?imgmax=1600&thumbsize=144c", AlbumFeed.class);
       for (PhotoEntry photo : album.getPhotoEntries()) {
         // remove filename-like descriptions that don't make any sense
         String desc = photo.getDescription().getPlainText();
@@ -65,13 +68,13 @@ public class Picasa {
     }
 
     public List<CommentEntry> getAlbumComments(String albumName) throws IOException, ServiceException {
-      return cachedFeed("/album/" + albumName + "?kind=comment", PhotoFeed.class).getCommentEntries();
+      return cachedFeed("/album/" + urlEncode(albumName) + "?kind=comment", PhotoFeed.class).getCommentEntries();
     }
 
     public RandomPhoto getRandomPhoto() throws IOException, ServiceException {
         List<AlbumEntry> albums = getGallery().getAlbumEntries();
         AlbumEntry album = weightedRandom(albums);
-        List<GphotoEntry> photos = cachedFeed("/album/" + album.getName() + "?kind=photo&imgmax=1600&max-results=1000&fields=entry(content)", AlbumFeed.class).getEntries();
+        List<GphotoEntry> photos = cachedFeed("/album/" + urlEncode(album.getName()) + "?kind=photo&imgmax=1600&max-results=1000&fields=entry(content)", AlbumFeed.class).getEntries();
         return new RandomPhoto(photos.get(random(photos.size())), album.getNickname(), album.getTitle().getPlainText());
     }
 
@@ -97,7 +100,7 @@ public class Picasa {
     }
 
     public AlbumFeed search(String query) throws IOException, ServiceException {
-        return feed("?kind=photo&q=" + query + "&imgmax=1024&thumbsize=144c", AlbumFeed.class);
+        return feed("?kind=photo&q=" + urlEncode(query) + "&imgmax=1024&thumbsize=144c", AlbumFeed.class);
     }
 
     @SuppressWarnings({"unchecked", "SynchronizationOnLocalVariableOrMethodParameter"})
@@ -118,9 +121,18 @@ public class Picasa {
     }
 
     private <T extends IFeed> T feed(String url, Class<T> type) throws IOException, ServiceException {
-        url = "http://picasaweb.google.com/data/feed/api/user/" + user + url;
+        url = "http://picasaweb.google.com/data/feed/api/user/" + urlEncode(user) + url;
         if (authkey != null) url += (url.contains("?") ? "&" : "?") + "authkey=" + authkey;
         return service.getFeed(new URL(url), type);
+    }
+
+    static String urlEncode(String name) {
+        try {
+            return URLEncoder.encode(name, "UTF-8");
+        }
+        catch (UnsupportedEncodingException e) {
+            return name;
+        }
     }
 
     private static Properties loadConfig() {
