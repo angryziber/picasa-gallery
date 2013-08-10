@@ -1,12 +1,10 @@
 package net.azib.photos;
 
 import com.google.gdata.client.photos.PicasawebService;
-import com.google.gdata.data.IEntry;
 import com.google.gdata.data.IFeed;
 import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.photos.*;
 import com.google.gdata.util.ServiceException;
-import com.google.gdata.util.httputil.FastURLEncoder;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -56,19 +54,22 @@ public class Picasa {
     }
 
     public AlbumFeed getAlbum(String name) throws IOException, ServiceException {
-      AlbumFeed album = cachedFeed("/album/" + urlEncode(name) + "?imgmax=1600&thumbsize=144c", AlbumFeed.class);
-      for (PhotoEntry photo : album.getPhotoEntries()) {
-        // remove filename-like descriptions that don't make any sense
-        String desc = photo.getDescription().getPlainText();
-        if (desc != null && desc.matches("(IMG|DSC)?[0-9-_.]+")) {
-          photo.setDescription(new PlainTextConstruct());
+        return fixPhotoDescriptions(cachedFeed("/album/" + urlEncode(name) + "?imgmax=1600&thumbsize=144c", AlbumFeed.class));
+    }
+
+    private AlbumFeed fixPhotoDescriptions(AlbumFeed album) {
+        for (PhotoEntry photo : album.getPhotoEntries()) {
+            // remove filename-like descriptions that don't make any sense
+            String desc = photo.getDescription().getPlainText();
+            if (desc != null && desc.matches("(IMG|DSC)?[0-9-_.]+")) {
+              photo.setDescription(new PlainTextConstruct());
+            }
         }
-      }
-      return album;
+        return album;
     }
 
     public List<CommentEntry> getAlbumComments(String albumName) throws IOException, ServiceException {
-      return cachedFeed("/album/" + urlEncode(albumName) + "?kind=comment", PhotoFeed.class).getCommentEntries();
+        return cachedFeed("/album/" + urlEncode(albumName) + "?kind=comment", PhotoFeed.class).getCommentEntries();
     }
 
     public RandomPhoto getRandomPhoto() throws IOException, ServiceException {
@@ -100,7 +101,7 @@ public class Picasa {
     }
 
     public AlbumFeed search(String query) throws IOException, ServiceException {
-        return feed("?kind=photo&q=" + urlEncode(query) + "&imgmax=1024&thumbsize=144c", AlbumFeed.class);
+        return fixPhotoDescriptions(feed("?kind=photo&q=" + urlEncode(query) + "&imgmax=1024&thumbsize=144c", AlbumFeed.class));
     }
 
     @SuppressWarnings({"unchecked", "SynchronizationOnLocalVariableOrMethodParameter"})
