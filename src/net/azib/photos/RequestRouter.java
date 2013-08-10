@@ -63,7 +63,7 @@ public class RequestRouter implements Filter {
                   album = picasa.getAlbum(parts[1]);
                   comments = picasa.getAlbumComments(parts[1]);
                 }
-                catch (RuntimeException e) {
+                catch (ResourceNotFoundException e) {
                     album = picasa.search(parts[1]);
                     album.setTitle(new PlainTextConstruct("Photos matching '" + parts[1] + "'"));
                 }
