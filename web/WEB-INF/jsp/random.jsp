@@ -33,19 +33,19 @@
       text-align: right;
     }
   </style>
-  <script type="text/javascript">
-    var img = new Image();
-    img.onload = function () {
-      document.getElementById('img').style.backgroundImage = 'url(' + img.src + ')';
-    };
-    img.src = '${random.photo.content.uri}';
-  </script>
 </head>
 <body>
-<div id="img"></div>
+<div id="img" style="background-image: url(${random.photo.content.uri})"></div>
 <div id="title">
   <b>${random.album}</b><br>
   ${random.nickname}
 </div>
 </body>
+<script type="text/javascript">
+  var img = document.getElementById('img');
+  img.style.display = 'none';
+  window.onload = function() {
+    img.style.display = 'block';
+  };
+</script>
 </html>
