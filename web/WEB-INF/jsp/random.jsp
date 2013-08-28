@@ -8,14 +8,19 @@
 <head>
   <title>Random photo by ${random.nickname} from ${random.album}</title>
   <style type="text/css">
-    html, body, img {
-      background: black;
+    html, body {
       height: 100%;
+      background: black;
       margin: 0;
       text-align: center;
-      overflow-y: hidden;
     }
-
+    #img {
+      width: 100%;
+      height: 100%;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
     #title {
       position: absolute;
       bottom: 10px;
@@ -31,12 +36,13 @@
   <script type="text/javascript">
     var img = new Image();
     img.onload = function () {
-      document.body.appendChild(img);
+      document.getElementById('img').style.backgroundImage = 'url(' + img.src + ')';
     };
     img.src = '${random.photo.content.uri}';
   </script>
 </head>
 <body>
+<div id="img"></div>
 <div id="title">
   <b>${random.album}</b><br>
   ${random.nickname}
