@@ -48,6 +48,7 @@ public class RequestRouter implements Filter {
       request.setAttribute("mobile", userAgent.contains("Mobile") && !userAgent.contains("iPad") && !userAgent.contains("Tab"));
 
       if (random != null) {
+        request.setAttribute("delay", request.getParameter("delay"));
         render("random", picasa.getRandomPhoto(parseInt(random.length() > 0 ? random : "1")), request, response);
       }
       else if (path == null || "/".equals(path)) {

@@ -59,7 +59,7 @@
       img.style.backgroundImage = 'url(' + photos[index++] + ')';
       if (index >= photos.length) index = 0;
       new Image().src = photos[index];
-    }, 5000);
+    }, ${delay != null ? delay : 5000});
   </c:if>
 </script>
 </html>
