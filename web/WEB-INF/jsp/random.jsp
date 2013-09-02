@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<jsp:useBean id="random" scope="request" type="net.azib.photos.Picasa.RandomPhoto"/>
+<jsp:useBean id="random" scope="request" type="net.azib.photos.Picasa.RandomPhotos"/>
 
 <!DOCTYPE html>
 <html>
@@ -20,6 +20,9 @@
       background-position: center center;
       background-repeat: no-repeat;
       background-size: contain;
+      -webkit-transition: background-image 0.5s;
+      -moz-transition: background-image 0.5s;
+      transition: background-image 0.5s;
     }
     #title {
       position: absolute;
@@ -35,7 +38,7 @@
   </style>
 </head>
 <body>
-<div id="img" style="background-image: url(${random.photo.content.uri})"></div>
+<div id="img" style="background-image: url(${random.photos[0].content.uri})"></div>
 <div id="title">
   <b>${random.album}</b><br>
   ${random.nickname}
@@ -47,5 +50,16 @@
   window.onload = function() {
     img.style.display = 'block';
   };
+  <c:if test="${fn:length(random.photos) > 1}">
+    var photos = [<c:forEach var="photo" items="${random.photos}">'${photo.content.uri}', </c:forEach>null];
+    photos.pop();
+    var index = 1;
+    new Image().src = photos[index];
+    setInterval(function() {
+      img.style.backgroundImage = 'url(' + photos[index++] + ')';
+      if (index >= photos.length) index = 0;
+      new Image().src = photos[index];
+    }, 5000);
+  </c:if>
 </script>
 </html>

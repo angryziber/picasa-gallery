@@ -12,6 +12,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.*;
 
+import static java.lang.Math.min;
 import static java.lang.System.currentTimeMillis;
 import static java.util.Collections.synchronizedMap;
 
@@ -72,11 +73,12 @@ public class Picasa {
     return cachedFeed("/album/" + urlEncode(albumName) + "?kind=comment", PhotoFeed.class).getCommentEntries();
   }
 
-  public RandomPhoto getRandomPhoto() throws IOException, ServiceException {
+  public RandomPhotos getRandomPhoto(int numNext) throws IOException, ServiceException {
     List<AlbumEntry> albums = getGallery().getAlbumEntries();
     AlbumEntry album = weightedRandom(albums);
     List<GphotoEntry> photos = cachedFeed("/album/" + urlEncode(album.getName()) + "?kind=photo&imgmax=1600&max-results=1000&fields=entry(content)", AlbumFeed.class).getEntries();
-    return new RandomPhoto(photos.get(random(photos.size())), album.getNickname(), album.getTitle().getPlainText());
+    int index = random(photos.size());
+    return new RandomPhotos(photos.subList(index, min(index + numNext, photos.size())), album.getNickname(), album.getTitle().getPlainText());
   }
 
   AlbumEntry weightedRandom(List<AlbumEntry> albums) {
@@ -147,19 +149,19 @@ public class Picasa {
     return config;
   }
 
-  public class RandomPhoto {
-    private final GphotoEntry photo;
+  public class RandomPhotos {
+    private final List<GphotoEntry> photos;
     private final String nickname;
     private final String album;
 
-    public RandomPhoto(GphotoEntry photo, String nickname, String album) {
-      this.photo = photo;
+    public RandomPhotos(List<GphotoEntry> photos, String nickname, String album) {
+      this.photos = photos;
       this.nickname = nickname;
       this.album = album;
     }
 
-    public GphotoEntry getPhoto() {
-      return photo;
+    public List<GphotoEntry> getPhotos() {
+      return photos;
     }
 
     public String getNickname() {

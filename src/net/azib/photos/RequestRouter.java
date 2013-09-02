@@ -19,6 +19,7 @@ import static java.util.Collections.emptyList;
 import static javax.servlet.http.HttpServletResponse.SC_FORBIDDEN;
 import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 import static javax.servlet.http.HttpServletResponse.SC_NOT_FOUND;
+import static javax.xml.bind.DatatypeConverter.parseInt;
 
 public class RequestRouter implements Filter {
   private ServletContext context;
@@ -33,9 +34,9 @@ public class RequestRouter implements Filter {
     String path = request.getServletPath();
 
     String by = request.getParameter("by");
-    boolean isRandom = request.getParameter("random") != null;
+    String random = request.getParameter("random");
     String userAgent = request.getHeader("User-Agent");
-    if (isBot(userAgent) && (by != null || isRandom)) {
+    if (isBot(userAgent) && (by != null || random != null)) {
       response.sendError(SC_FORBIDDEN);
       return;
     }
@@ -46,8 +47,8 @@ public class RequestRouter implements Filter {
       request.setAttribute("host", request.getHeader("host"));
       request.setAttribute("mobile", userAgent.contains("Mobile") && !userAgent.contains("iPad") && !userAgent.contains("Tab"));
 
-      if (isRandom) {
-        render("random", picasa.getRandomPhoto(), request, response);
+      if (random != null) {
+        render("random", picasa.getRandomPhoto(parseInt(random.length() > 0 ? random : "1")), request, response);
       }
       else if (path == null || "/".equals(path)) {
         render("gallery", picasa.getGallery(), request, response);
