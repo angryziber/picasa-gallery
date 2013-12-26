@@ -23,4 +23,13 @@
         <url-pattern>/robots.txt</url-pattern>
         <url-pattern>/sitemap.xml</url-pattern>
     </servlet-mapping>
+
+    <mime-mapping>
+        <extension>css</extension>
+        <mime-type>text/css</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>js</extension>
+        <mime-type>text/javascript</mime-type>
+    </mime-mapping>
 </web-app>

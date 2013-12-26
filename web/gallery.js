@@ -4,11 +4,6 @@ function facebookButton(href) {
     return $('.facebook-button')[0].outerHTML.replace(/href=.*?"$/, 'href=' + href);
 }
 
-function stateURL(photo) {
-    var album = location.pathname.split('/')[1];
-    return '/' + album + (photo ? '/' + photo.id : '') + location.search;
-}
-
 function loadVisibleThumbs(maxCount) {
     if (!maxCount) maxCount = 10000;
 	var visibleTop = $(window).scrollTop() - 150;
@@ -45,7 +40,7 @@ function PhotoViewer() {
     pub.setup = function() {
         photos = [];
         $('a.photo').click(pub.open).each(function() {
-            photos.push({href: this.href, title: this.title, id: this.id, pos: extractPos(this), exif: extractExif(this)});
+            photos.push({href: this.href, title: this.title, id: this.id, pos: extractPos(this), exif: extractExif(this), time: $(this).data('time')});
         });
 
         wrapper = $('#photo-wrapper');
@@ -53,12 +48,11 @@ function PhotoViewer() {
         wrapper.click(onMouseClick);
         wrapper.mousemove(onMouseMove);
         controls = wrapper.find('#photo-controls');
-        controls.find('#slideshow').click(pub.slideshow);
-        controls.find('#incInterval').click(incInterval);
-        controls.find('#decInterval').click(decInterval);
+        controls.find('#inc-interval').click(incInterval);
+        controls.find('#dec-interval').click(decInterval);
         position = controls.find('#position');
         interval = controls.find('#interval');
-        timeRemaining = controls.find('#timeRemaining');
+        timeRemaining = controls.find('#time-remaining');
         exif = wrapper.find('#photo-exif');
 
         title = wrapper.find('.title');
@@ -89,6 +83,8 @@ function PhotoViewer() {
             controls.removeClass('visible');
         }, 2000);
 
+        onHashChange();
+        $(window).bind('hashchange', onHashChange);
         loadPhoto();
         var photo = photos[index];
         if (history.pushState) history.pushState(stateURL(photo), photo.title, stateURL(photo));
@@ -97,13 +93,16 @@ function PhotoViewer() {
 
     pub.close = function() {
         isOpen = false;
-        wrapper.fadeOut();
+        wrapper.fadeOut(function() {
+            controls.addClass('visible')
+        });
         $(document).unbind('keydown');
         $(window).unbind('resize');
+        $(window).unbind('hashchange');
         window.onpopstate = $.noop;
 
-        if (history.replaceState) history.replaceState(stateURL(), '', stateURL());
         stopSlideshow();
+        if (history.replaceState) history.replaceState(stateURL(), '', stateURL());
         var img = wrapper.find('img.photo');
         var thumb = $('#' + photos[index].id);
         var fixed = wrapper.css('position') == 'fixed';
@@ -140,6 +139,17 @@ function PhotoViewer() {
         return false;
     };
 
+    function onHashChange() {
+        var hash = location.hash.substring(1);
+        if (hash == 'slideshow') startSlideshow();
+        else if (slideshow) stopSlideshow();
+    }
+
+    function stateURL(photo) {
+        var album = location.pathname.split('/')[1];
+        return '/' + album + (photo ? '/' + photo.id : '') + location.search + (slideshow ? '#slideshow' : '');
+    }
+
     function showTimeRemaining() {
         var sec = (photos.length - index - 1) * interval.text();
         var min = 0;
@@ -151,6 +161,7 @@ function PhotoViewer() {
     }
 
     function setSlideshowTimeout() {
+        if (slideshow) clearTimeout(slideshow);
         slideshow = setTimeout(function() {
             pub.next();
             showTimeRemaining();
@@ -159,13 +170,13 @@ function PhotoViewer() {
 
     function startSlideshow() {
         setSlideshowTimeout();
-        controls.find('#slideshow.button').html('Stop<span></span>');
+        controls.find('#slideshow.button').text('Stop').attr('href', '#');
         showTimeRemaining();
     }
 
     function stopSlideshow() {
         clearTimeout(slideshow); slideshow = null;
-        controls.find('#slideshow.button').html('Slideshow<span></span>');
+        controls.find('#slideshow.button').text('Slideshow').attr('href', '#slideshow');
         timeRemaining.empty();
     }
 
@@ -212,7 +223,7 @@ function PhotoViewer() {
     }
 
     function onMouseClick(e) {
-        if ($('#photo-map').is(':hover') || $('#photo-comments').is(':hover')) return false;
+        if ($('#photo-map:hover, #photo-comments:hover, #photo-controls:hover, a:hover').length) return true;
         posAction(e.pageX, e.pageY)();
         return false;
     }
@@ -340,6 +351,7 @@ function PhotoViewer() {
         wrapper.find('.comment').fadeOut();
         wrapper.find('.comment.photo-' + photo.id).fadeIn();
 
+        exif.find('#time').text(photo.time);
         if (photo.exif) {
             exif.find('#aperture').text('f/' + photo.exif.aperture);
             exif.find('#shutter').text(photo.exif.shutter < 1 ? ('1/' + Math.round(1/photo.exif.shutter)) : (photo.exif.shutter + '"'));
@@ -391,23 +403,27 @@ function createMap(selector, moreOpts) {
 }
 
 function extractPos(element) {
-    var coords = $(element).attr('data-coords');
+    var coords = $(element).data('coords');
     if (!coords) return null;
     coords = coords.split(':');
     return latLng(coords[0], coords[1]);
 }
 
 function extractExif(element) {
-    var exif = $(element).attr('data-exif');
+    var exif = $(element).data('exif');
     if (!exif) return null;
     exif = exif.split(':');
     return {aperture:exif[0], shutter:exif[1], iso:exif[2], focal:exif[3]};
 }
 
 function setMarkerIcon(marker, name) {
-    marker.setIcon('http://maps.google.com/mapfiles/' + name + '.png');
-    marker.setShadow(new google.maps.MarkerImage('http://maps.google.com/mapfiles/shadow50.png', null, null, new google.maps.Point(10, 34)));
-    marker.setZIndex(1000);
+    if (name) {
+        marker.setIcon('http://maps.google.com/mapfiles/' + name + '.png');
+        marker.setShadow(new google.maps.MarkerImage('http://maps.google.com/mapfiles/shadow50.png', null, null, new google.maps.Point(10, 34)));
+        marker.setZIndex(1000);
+    }
+    else
+        marker.setIcon(null);
 }
 
 function initMap() {
@@ -420,7 +436,7 @@ function initMap() {
         bounds.extend(pos);
         google.maps.event.addListener(this.marker, 'click', function() {$(link).click();});
         $(this).mouseover(function() {setMarkerIcon(this.marker, 'marker_orange');});
-        $(this).mouseout(function() {setMarkerIcon(this.marker, 'marker');});
+        $(this).mouseout(function() {setMarkerIcon(this.marker);});
     });
 
     if (bounds.isEmpty()) {

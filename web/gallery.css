@@ -10,6 +10,15 @@ body {
   font-size: 14px;
 }
 
+.clearfix:before, .clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
 a {
     text-decoration: none;
 }
@@ -39,6 +48,10 @@ h2 {
 }
 
 .header h1 {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
   color: white;
   font-size: 140%;
   font-weight: bold;
@@ -53,6 +66,7 @@ h2 {
     padding: 4px 10px;
     margin: 0 10px;
     float: left;
+    z-index: 10;
 }
 
 .header .button.first, .header .button:first-child {
@@ -71,23 +85,28 @@ h2 {
     font-size: 100%;
     padding: 3px 20px 3px 6px;
     border: 1px solid #313131;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
     border-radius: 6px;
-    -moz-box-shadow: 0 1px 2px rgba(255,255,255,0.7), inset 0 1px 2px rgba(0,0,0,0.6);
-    -webkit-box-shadow: 0 1px 2px rgba(255,255,255,0.7), inset 0 1px 2px rgba(0,0,0,0.6);
     box-shadow: 0 1px 2px rgba(255,255,255,0.7), inset 0 1px 2px rgba(0,0,0,0.6);
+    z-index: 9;
 }
 
 .header #search input {
-    float: right;
+    position: absolute;
+    right: 0;
     margin: 0 40px 0 20px;
-    width: 120px;
+    width: 8%;
     background: white url(/img/search-icon.png) right 1px no-repeat;
+    -webkit-transition: 0.3s;
+    -moz-transition: 0.3s;
+    transition: 0.3s;
 }
 
 .header #search input:focus {
     outline: none;
+    width: 15%;
+    -webkit-transition: 0.3s;
+    -moz-transition: 0.3s;
+    transition: 0.3s;
 }
 
 .header .button:active {
@@ -239,7 +258,7 @@ h2 {
     bottom: 20px;
 }
 
-#photo-wrapper .title {
+#photo-wrapper .title-wrapper .title {
     position: relative;
     left: -50%;
     z-index: 777;
@@ -391,38 +410,60 @@ h2 {
     border: 1px solid #666;
     background-color: #666;
     background-color: rgba(128, 128, 128, 0.75);
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
     border-radius: 5px;
     color: #fff;
     font-weight: bold;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
     background-image: -webkit-gradient(linear, 0% 0%, 0% 90%, from(rgba(4, 4, 4, 10.9)), to(rgba(92, 92, 92, 1)));
     background-image: -moz-linear-gradient(top, rgba(4, 4, 4, 0.9), rgba(92, 92, 92, 1));
-    -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 4px, rgba(0, 0, 0, 0.6) 0px -2px 6px;
-    -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 4px, rgba(0, 0, 0, 0.6) 0px -2px 6px;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 4px, rgba(0, 0, 0, 0.6) 0px -2px 6px;
+    background-image: linear-gradient(to bottom, rgba(4, 4, 4, 0.9), rgba(92, 92, 92, 1));
+    box-shadow: rgba(0, 0, 0, 0.3) 0 3px 4px, rgba(0, 0, 0, 0.6) 0 -2px 6px;
 }
 .button:hover {
     background-image: -webkit-gradient(linear, 0% 0%, 0% 90%, from(rgba(4, 4, 4, 10.9)), to(rgb(164, 164, 164)));
     background-image: -moz-linear-gradient(top, rgba(4, 4, 4, 0.9), rgb(164, 164, 164));
+    background-image: linear-gradient(to bottom, rgba(4, 4, 4, 0.9), rgb(164, 164, 164));
 }
 .button:active {
     box-shadow: none;
 }
-.button span {
+.button:after {
+    content: '';
     position: absolute;
     display: block;
     width: 100%;
     left: 0;
     top: 0;
     height: 50%;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
     border-radius: 4px;
     background-color: rgba(255, 255, 255, 0.25);
     background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255, 255, 255, 0.8)), to(rgba(255, 255, 255, 0)));
     background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
+}
+
+@media screen and (max-width: 900px) {
+  #photo-controls h1 {
+    position: static;
+    float: left;
+  }
+
+  #photo-controls #photo-controls-title {
+    display: none;
+  }
+
+  #photo-controls h1 small {
+    margin-left: 20px;
+  }
+
+  #photo-controls #time-remaining {
+    font-size: 10px;
+    line-height: 16px;
+  }
+
+  .header .button.first, .header .button:first-child {
+    margin-left: 20px;
+  }
 }
 
 /* only desktop */
@@ -447,17 +488,8 @@ h2 {
         width: 100px;
     }
 
-    #photo-controls {
-        display: none; /* TODO fix this for mobile devices */
-    }
-
     #photo-map, #photo-exif, #photo-comments {
         display: none !important;
-    }
-
-    #photo-controls h1 {
-        left: 0;
-        clear: both;
     }
 
     #footer {
