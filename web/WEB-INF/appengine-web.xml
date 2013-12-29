@@ -3,6 +3,7 @@
   <application>anton-photos</application>
   <version>2</version>
   <threadsafe>true</threadsafe>
+  <sessions-enabled>true</sessions-enabled>
   <static-files>
     <include path="/**.jpg"/>
     <include path="/**.png"/>
