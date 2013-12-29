@@ -7,6 +7,7 @@
     <include path="/**.jpg"/>
     <include path="/**.png"/>
     <include path="/**.gif"/>
+    <include path="/**.ico"/>
     <include path="/**.css"/>
     <include path="/**.js"/>
   </static-files>
