@@ -3,4 +3,11 @@
   <application>anton-photos</application>
   <version>2</version>
   <threadsafe>true</threadsafe>
+  <static-files>
+    <include path="/**.jpg"/>
+    <include path="/**.png"/>
+    <include path="/**.gif"/>
+    <include path="/**.css"/>
+    <include path="/**.js"/>
+  </static-files>
 </appengine-web-app>
