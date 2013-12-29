@@ -370,7 +370,7 @@ function PhotoViewer() {
                 //$('#photo-map').hover(function(){setTimeout(function(){map.panTo(photos[index].pos)}, 500)});
             }
             marker.setPosition(photo.pos);
-            if (!map.getBounds().contains(photo.pos)) map.panTo(photo.pos);
+            if (map.getBounds() && !map.getBounds().contains(photo.pos)) map.panTo(photo.pos);
             $('#photo-map').fadeIn();
         }
         else {
