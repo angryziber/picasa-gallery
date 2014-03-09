@@ -341,12 +341,6 @@ function PhotoViewer() {
         controls.find('.facebook-button').remove();
         controls.find('.header').prepend(facebookButton('http://' + location.host + stateURL(photo)));
 
-        if (wrapper.css('position') == 'fixed') {
-            var thumbPos = $('#' + photo.id).offset();
-            if (thumbPos.top + 150 > w.scrollTop() + w.height())
-                scrollTo(thumbPos.left, w.scrollTop() + 250);
-        }
-
         wrapper.find('.comment').fadeOut();
         wrapper.find('.comment.photo-' + photo.id).fadeIn();
 
@@ -374,6 +368,15 @@ function PhotoViewer() {
         }
         else {
             $('#photo-map').fadeOut();
+        }
+
+        if (wrapper.css('position') == 'fixed') {
+            var thumbPos = $('#' + photo.id).offset();
+            var scrollTop = w.scrollTop();
+            if (thumbPos.top + 150 > scrollTop + w.height())
+                scrollTo(thumbPos.left, thumbPos.top + 200 - w.height());
+            else if (thumbPos.top < scrollTop)
+                scrollTo(thumbPos.left, thumbPos.top - 100);
         }
     }
 }
