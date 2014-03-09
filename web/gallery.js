@@ -6,16 +6,15 @@ function facebookButton(href) {
 
 function loadVisibleThumbs(maxCount) {
     if (!maxCount) maxCount = 10000;
-	var visibleTop = $(window).scrollTop() - 150;
-    var visibleBottom = visibleTop + $(window).height() + 300;
+	  var visibleTop = $(window).scrollTop() - 150;
+    var visibleBottom = visibleTop + $(window).height() * 2.5;
 
     var found = false, count = 0;
     $('img.missing').each(function() {
         var img = $(this);
         var top = img.offset().top;
         if (top >= visibleTop && top <= visibleBottom) {
-            img.attr('src', img.attr('rel'));
-            img.removeClass('missing');
+            img.attr('src', img.attr('rel')).removeClass('missing');
             found = true;
         }
         else if (found) return false;
