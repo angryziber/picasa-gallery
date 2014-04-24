@@ -253,6 +253,7 @@ function PhotoViewer() {
             case 34:
             case 40:
             case 39: pub.next(); return false;
+            case 8:
             case 33:
             case 38:
             case 37: pub.prev(); return false;
