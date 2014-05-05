@@ -36,7 +36,6 @@
       text-align: right;
     }
   </style>
-  <script type="text/javascript" src="/chromecast.js"></script>
 </head>
 <body>
 <div id="img" style="background-image: url(${random.photos[0].content.uri})"></div>
@@ -45,6 +44,7 @@
   ${random.nickname}
 </div>
 </body>
+<script type="text/javascript" src="/chromecast.js"></script>
 <script type="text/javascript">
   var img = document.getElementById('img');
   img.style.display = 'none';
@@ -56,10 +56,14 @@
     photos.pop();
     var index = 1;
     new Image().src = photos[index];
+    chromecast.push(photos[0]);
+
     setInterval(function() {
-      img.style.backgroundImage = 'url(' + photos[index++] + ')';
+      var url = photos[index++];
+      img.style.backgroundImage = 'url(' + url + ')';
       if (index >= photos.length) index = 0;
       new Image().src = photos[index];
+      chromecast.push(url);
     }, ${delay != null ? delay : 5000});
   </c:if>
 </script>

@@ -1,6 +1,6 @@
-var chromecast = (function() {
-  if (navigator.userAgent.indexOf('Chrome') < 0) return;
-  document.write('<script type="text/javascript" src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js" async></script>');
+var chromecast = new (function() {
+  if (navigator.userAgent.indexOf('Chrome') >= 0)
+    document.write('<script type="text/javascript" src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js" async></script>');
 
   window['__onGCastApiAvailable'] = function(loaded, error) {
     if (loaded) init();
@@ -9,14 +9,20 @@ var chromecast = (function() {
 
   var session;
   var receiverAvailable = false;
-  var nop = function(){};
+  var nop = function() {};
+  var queue = [];
+
+  this.push = function(url) {
+    if (session) loadMedia(url);
+    else queue.push(url);
+  };
 
   function init() {
     var sessionRequest = new chrome.cast.SessionRequest(chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID);
 
     var sessionListener = function(s) {
       session = s;
-      loadMedia();
+      if (queue.length) loadMedia(queue.pop());
     };
 
     var receiverListener = function(e) {
@@ -34,8 +40,7 @@ var chromecast = (function() {
     chrome.cast.initialize(apiConfig, nop, console.log);
   }
 
-  function loadMedia() {
-    var url = document.getElementById('img').style.backgroundImage.replace(/^url\((.*)\)$/, '$1');
+  function loadMedia(url) {
     var mediaInfo = new chrome.cast.media.MediaInfo(url);
     mediaInfo.metadata = new chrome.cast.media.PhotoMediaMetadata();
     mediaInfo.metadata.metadataType = chrome.cast.media.MetadataType.PHOTO;
