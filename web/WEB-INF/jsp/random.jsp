@@ -36,6 +36,7 @@
       text-align: right;
     }
   </style>
+  <script type="text/javascript" src="/chromecast.js"></script>
 </head>
 <body>
 <div id="img" style="background-image: url(${random.photos[0].content.uri})"></div>
