@@ -8,11 +8,11 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 <link rel="stylesheet" type="text/css" href="/reset.css">
-<link rel="stylesheet" type="text/css" href="/gallery.css?v=10">
+<link rel="stylesheet" type="text/css" href="/gallery.css">
 <link rel="apple-touch-icon" href="/img/picasa-logo.png"/>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="/gallery.js?v=10"></script>
+<script type="text/javascript" src="/gallery.js"></script>
 <script type="text/javascript" src="/chromecast.js"></script>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
