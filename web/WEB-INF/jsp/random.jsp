@@ -59,6 +59,7 @@
     chromecast.send(photos[0]);
 
     setInterval(function() {
+      <c:if test="${refresh}">if (index == 0) { location.reload(); return; }</c:if>
       var url = photos[index++];
       img.style.backgroundImage = 'url(' + url + ')';
       if (index >= photos.length) index = 0;

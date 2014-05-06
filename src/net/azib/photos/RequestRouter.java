@@ -49,6 +49,7 @@ public class RequestRouter implements Filter {
 
       if (random != null) {
         request.setAttribute("delay", request.getParameter("delay"));
+        if (request.getParameter("refresh") != null) request.setAttribute("refresh", true);
         render("random", picasa.getRandomPhoto(parseInt(random.length() > 0 ? random : "1")), request, response);
       }
       else if (path == null || "/".equals(path)) {
