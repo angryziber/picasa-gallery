@@ -326,6 +326,7 @@ function PhotoViewer() {
         newImg.style.display = 'none';
         newImg.onload = imageOnLoad;
         newImg.src = photo.href;
+        if ('chromecast' in window) chromecast.send(photo.href);
 
         title.text(photo.title);
         if (photo.title) title.fadeIn(); else title.fadeOut();

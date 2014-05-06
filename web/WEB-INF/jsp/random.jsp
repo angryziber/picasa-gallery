@@ -56,14 +56,14 @@
     photos.pop();
     var index = 1;
     new Image().src = photos[index];
-    chromecast.push(photos[0]);
+    chromecast.send(photos[0]);
 
     setInterval(function() {
       var url = photos[index++];
       img.style.backgroundImage = 'url(' + url + ')';
       if (index >= photos.length) index = 0;
       new Image().src = photos[index];
-      chromecast.push(url);
+      chromecast.send(url);
     }, ${delay != null ? delay : 5000});
   </c:if>
 </script>

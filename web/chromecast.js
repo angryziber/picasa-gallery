@@ -12,7 +12,7 @@ var chromecast = new (function() {
   var nop = function() {};
   var queue = [];
 
-  this.push = function(url) {
+  this.send = function(url) {
     if (session) loadMedia(url);
     else queue.push(url);
   };
