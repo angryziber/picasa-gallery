@@ -1,7 +1,7 @@
 What is it?
 ===========
 
-A good-looking frontend for Google's Picasaweb photo galleries, with nice transitions,
+A good-looking frontend for Google's Picasaweb (now Google+) photo galleries, with nice transitions,
 mobile device support, and full-screen photo browsing with quick loading (prefetching).
 
 For all those who wish their Picasaweb gallery had black background!
