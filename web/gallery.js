@@ -333,7 +333,7 @@ function PhotoViewer() {
 
         var url = stateURL(photo);
         if (history.replaceState) history.replaceState(url, photo.title, url);
-        _gaq.push(['_trackPageview', url]);
+        if ('ga' in window) ga('send', 'pageview', url);
 
         position.text((index+1) + ' of ' + photos.length);
 
