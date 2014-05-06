@@ -34,6 +34,7 @@ Features
 - Viewing of other people's albums, just add "?by=username" parameter
 - Slideshow with adjustable delay, add "#slideshow" to the URL if you want it to start automatically
 - Showing of a single (weighted) random photo from all albums, just add "?random" parameter
+- ChromeCast support - send currently viewed photo to the TV (provided you own the ChromeCast dongle)
 
 How to use it for your own photos
 =================================
