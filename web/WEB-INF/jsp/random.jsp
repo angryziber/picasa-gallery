@@ -12,7 +12,7 @@
       height: 100%;
       background: black;
       margin: 0;
-      text-align: center;
+      font-family: sans-serif;
     }
     #img {
       width: 100%;
@@ -29,10 +29,8 @@
       bottom: 25px;
       right: 40px;
       color: white;
+      text-shadow: 0 0 10px black;
       padding: 3px 5px;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 4px;
-      font-family: sans-serif;
       text-align: right;
     }
   </style>
