@@ -42,13 +42,15 @@
   ${random.nickname}
 </div>
 </body>
-<script type="text/javascript" src="/chromecast.js"></script>
 <script type="text/javascript">
   var img = document.getElementById('img');
   img.style.display = 'none';
   window.onload = function() {
     img.style.display = 'block';
   };
+</script>
+<script type="text/javascript" src="/chromecast.js"></script>
+<script type="text/javascript">
   chromecast.send('${random.photos[0].content.uri}');
   <c:if test="${fn:length(random.photos) > 1}">
     var photos = [<c:forEach var="photo" items="${random.photos}">'${photo.content.uri}', </c:forEach>null];
