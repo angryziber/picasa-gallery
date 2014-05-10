@@ -1,5 +1,20 @@
 var chromecast = new (function() {
-  if (navigator.userAgent.indexOf('Chrome') >= 0 && navigator.userAgent.indexOf('CrKey') < 0)
+  if (navigator.userAgent.indexOf('CrKey') >= 0) {
+    // we are inside of ChromeCast :-)
+    document.write('<script type="text/javascript" src="https://www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js" async></script>');
+
+    window.addEventListener('load', function() {
+      var castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
+
+      castReceiverManager.onReady = function(event) {
+        console.log('Received Ready event: ' + JSON.stringify(event.data));
+        window.castReceiverManager.setApplicationState("Application status is ready...");
+      };
+
+      castReceiverManager.start({statusText: "Application is starting"});
+    });
+  }
+  else if (navigator.userAgent.indexOf('Chrome') >= 0 && navigator.userAgent.indexOf('CrKey') < 0)
     document.write('<script type="text/javascript" src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js" async></script>');
 
   window['__onGCastApiAvailable'] = function(loaded, error) {
