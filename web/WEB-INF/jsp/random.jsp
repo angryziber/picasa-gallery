@@ -51,12 +51,12 @@
   window.onload = function() {
     img.style.display = 'block';
   };
+  chromecast.send('${random.photos[0].content.uri}');
   <c:if test="${fn:length(random.photos) > 1}">
     var photos = [<c:forEach var="photo" items="${random.photos}">'${photo.content.uri}', </c:forEach>null];
     photos.pop();
     var index = 1;
     new Image().src = photos[index];
-    chromecast.send(photos[0]);
 
     setInterval(function() {
       <c:if test="${refresh}">if (index == 0) { location.reload(); return; }</c:if>
