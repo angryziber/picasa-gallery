@@ -65,7 +65,7 @@
       if (index >= photos.length) index = 0;
       new Image().src = photos[index];
       chromecast.send(url);
-    }, ${delay != null ? delay : 5000});
+    }, ${delay != null ? delay : 8000});
   </c:if>
 </script>
 </html>
