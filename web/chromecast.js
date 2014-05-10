@@ -27,9 +27,9 @@ var chromecast = new (function() {
   var nop = function() {};
   var queue = [];
 
-  this.send = function(url) {
-    if (session) loadMedia(url);
-    else queue.push(url);
+  this.send = function(url, callback) {
+    if (session) loadMedia(url, callback);
+    else queue.push([url, callback]);
   };
 
   function init() {
@@ -37,7 +37,7 @@ var chromecast = new (function() {
 
     var sessionListener = function(s) {
       session = s;
-      if (queue.length) loadMedia(queue.pop());
+      if (queue.length) loadMedia.apply(this, queue.pop());
     };
 
     var receiverListener = function(e) {
@@ -55,7 +55,7 @@ var chromecast = new (function() {
     chrome.cast.initialize(apiConfig, nop, console.log);
   }
 
-  function loadMedia(url) {
+  function loadMedia(url, callback) {
     var mediaInfo = new chrome.cast.media.MediaInfo(url);
     mediaInfo.metadata = new chrome.cast.media.PhotoMediaMetadata();
     mediaInfo.metadata.metadataType = chrome.cast.media.MetadataType.PHOTO;
@@ -64,6 +64,6 @@ var chromecast = new (function() {
     var request = new chrome.cast.media.LoadRequest(mediaInfo);
     request.autoplay = true;
     request.currentTime = 0;
-    session.loadMedia(request, nop, console.log);
+    session.loadMedia(request, callback ? callback : nop, console.log);
   }
 })();
