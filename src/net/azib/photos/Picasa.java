@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.security.SecureRandom;
 import java.util.*;
 
 import static java.lang.Math.min;
@@ -21,7 +22,7 @@ public class Picasa {
   static String defaultUser = config.getProperty("google.user");
   static String analytics = config.getProperty("google.analytics");
   static PicasawebService service = new PicasawebService(defaultUser);
-  static Random random = new Random(System.nanoTime() / Runtime.getRuntime().freeMemory());
+  static Random random = new SecureRandom();
 
   static Map<String, IFeed> cache = synchronizedMap(new HashMap<String, IFeed>());
   static Map<String, Long> cacheExpiration = synchronizedMap(new HashMap<String, Long>());
