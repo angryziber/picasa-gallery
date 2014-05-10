@@ -1,5 +1,5 @@
 var chromecast = new (function() {
-  if (navigator.userAgent.indexOf('Chrome') >= 0)
+  if (navigator.userAgent.indexOf('Chrome') >= 0 && navigator.userAgent.indexOf('CrKey') < 0)
     document.write('<script type="text/javascript" src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js" async></script>');
 
   window['__onGCastApiAvailable'] = function(loaded, error) {
