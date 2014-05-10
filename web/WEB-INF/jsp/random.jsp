@@ -26,8 +26,8 @@
     }
     #title {
       position: absolute;
-      bottom: 10px;
-      right: 15px;
+      bottom: 25px;
+      right: 40px;
       color: white;
       padding: 3px 5px;
       background: rgba(0, 0, 0, 0.3);
