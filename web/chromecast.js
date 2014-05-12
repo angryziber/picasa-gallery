@@ -1,6 +1,7 @@
 var chromecast = new (function() {
   var self = this;
   self.appId = undefined;
+  self.namespace = 'urn:x-cast:message';
 
   if (navigator.userAgent.indexOf('CrKey') >= 0) {
     // we are inside of ChromeCast :-)
@@ -9,12 +10,19 @@ var chromecast = new (function() {
     window.addEventListener('load', function() {
       var castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
 
-      castReceiverManager.onReady = function(event) {
-        console.log('Received Ready event: ' + JSON.stringify(event.data));
-        castReceiverManager.setApplicationState("Application status is ready...");
+      castReceiverManager.onReady = function(e) {
+        console.log('Received Ready event: ' + JSON.stringify(e.data));
+        castReceiverManager.setApplicationState("ready");
       };
 
-      castReceiverManager.start({statusText: "Application is starting"});
+      var messageBus = castReceiverManager.getCastMessageBus(self.namespace);
+      messageBus.onMessage = function(e) {
+        console.log('Incoming message: ' + JSON.stringify(e.data));
+        document.dispatchEvent(new CustomEvent('message', {detail: e.data}));
+        messageBus.send(e.senderId, e.data);
+      };
+
+      castReceiverManager.start({statusText: 'starting'});
     });
   }
   else if (navigator.userAgent.indexOf('Chrome') >= 0 && navigator.userAgent.indexOf('CrKey') < 0) {
@@ -29,6 +37,7 @@ var chromecast = new (function() {
   var session;
   var receiverAvailable = false;
   var nop = function() {};
+  var onerror = function(e) {console.log(e)};
   var queue = [];
 
   self.send = function(url, callback) {
@@ -36,11 +45,14 @@ var chromecast = new (function() {
     else queue.push([url, callback]);
   };
 
-  self.init = function(callback) {
-    self.stop();
-    var sessionRequest = new chrome.cast.SessionRequest(self.appId);
+  self.message = function(message, callback) {
+    session.sendMessage(self.namespace, message, callback || nop, onerror);
+  };
+
+  self.init = function(appId, callback) {
+    var sessionRequest = new chrome.cast.SessionRequest(appId);
     var apiConfig = new chrome.cast.ApiConfig(sessionRequest, sessionListener, receiverListener);
-    chrome.cast.initialize(apiConfig, callback || nop, console.log);
+    chrome.cast.initialize(apiConfig, callback || nop, onerror);
   };
 
   self.launch = function() {
@@ -51,7 +63,7 @@ var chromecast = new (function() {
 
   self.stop = function(callback) {
     if (session) {
-      session.stop(callback, console.log);
+      session.stop(callback, onerror);
       session = null;
     }
   };
@@ -76,6 +88,6 @@ var chromecast = new (function() {
     var request = new chrome.cast.media.LoadRequest(mediaInfo);
     request.autoplay = true;
     request.currentTime = 0;
-    session.loadMedia(request, callback || nop, console.log);
+    session.loadMedia(request, callback || nop, onerror);
   }
 })();
