@@ -16,13 +16,14 @@ var chromecast = new (function() {
       castReceiverManager.start({statusText: "Application is starting"});
     });
   }
-  else if (navigator.userAgent.indexOf('Chrome') >= 0 && navigator.userAgent.indexOf('CrKey') < 0)
+  else if (navigator.userAgent.indexOf('Chrome') >= 0 && navigator.userAgent.indexOf('CrKey') < 0) {
     document.write('<script type="text/javascript" src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js" async></script>');
 
-  window['__onGCastApiAvailable'] = function(loaded, error) {
-    if (loaded) self.run(chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID);
-    else console.log(error);
-  };
+    window['__onGCastApiAvailable'] = function(loaded, error) {
+      if (loaded) self.run(chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID);
+      else console.log(error);
+    };
+  }
 
   var session;
   var receiverAvailable = false;
