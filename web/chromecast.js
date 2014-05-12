@@ -20,7 +20,7 @@ var chromecast = new (function() {
     document.write('<script type="text/javascript" src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js" async></script>');
 
     window['__onGCastApiAvailable'] = function(loaded, error) {
-      if (loaded) self.run(chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID);
+      if (loaded) self.init(chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID);
       else console.log(error);
     };
   }
@@ -35,15 +35,24 @@ var chromecast = new (function() {
     else queue.push([url, callback]);
   };
 
-  self.run = function(appId) {
+  self.init = function(appId, callback) {
+    self.stop();
     var sessionRequest = new chrome.cast.SessionRequest(appId);
     var apiConfig = new chrome.cast.ApiConfig(sessionRequest, sessionListener, receiverListener);
-    chrome.cast.initialize(apiConfig, nop, console.log);
+    chrome.cast.initialize(apiConfig, callback || nop, console.log);
   };
 
-  self.requestSession = function() {
+  self.launch = function(appId, callback) {
+    if (appId) self.init(appId, callback);
     if (!session) {
       chrome.cast.requestSession(sessionListener);
+    }
+  };
+
+  self.stop = function(callback) {
+    if (session) {
+      session.stop(callback, console.log);
+      session = null;
     }
   };
 
@@ -67,6 +76,6 @@ var chromecast = new (function() {
     var request = new chrome.cast.media.LoadRequest(mediaInfo);
     request.autoplay = true;
     request.currentTime = 0;
-    session.loadMedia(request, callback ? callback : nop, console.log);
+    session.loadMedia(request, callback || nop, console.log);
   }
 })();
