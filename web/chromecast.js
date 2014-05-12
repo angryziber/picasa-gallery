@@ -1,4 +1,6 @@
 var chromecast = new (function() {
+  var self = this;
+
   if (navigator.userAgent.indexOf('CrKey') >= 0) {
     // we are inside of ChromeCast :-)
     document.write('<script type="text/javascript" src="https://www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js" async></script>');
@@ -18,7 +20,7 @@ var chromecast = new (function() {
     document.write('<script type="text/javascript" src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js" async></script>');
 
   window['__onGCastApiAvailable'] = function(loaded, error) {
-    if (loaded) init();
+    if (loaded) self.run(chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID);
     else console.log(error);
   };
 
@@ -27,32 +29,35 @@ var chromecast = new (function() {
   var nop = function() {};
   var queue = [];
 
-  this.send = function(url, callback) {
+  self.send = function(url, callback) {
     if (session) loadMedia(url, callback);
     else queue.push([url, callback]);
   };
 
-  function init() {
-    var sessionRequest = new chrome.cast.SessionRequest(chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID);
-
-    var sessionListener = function(s) {
-      session = s;
-      if (queue.length) loadMedia.apply(this, queue.pop());
-    };
-
-    var receiverListener = function(e) {
-      if (e === chrome.cast.ReceiverAvailability.AVAILABLE) {
-        receiverAvailable = true;
-        setTimeout(function() {
-          if (!session) {
-            chrome.cast.requestSession(sessionListener);
-          }
-        }, 1000);
-      }
-    };
-
+  self.run = function(appId) {
+    var sessionRequest = new chrome.cast.SessionRequest(appId);
     var apiConfig = new chrome.cast.ApiConfig(sessionRequest, sessionListener, receiverListener);
     chrome.cast.initialize(apiConfig, nop, console.log);
+  };
+
+  self.requestSession = function() {
+    if (!session) {
+      chrome.cast.requestSession(sessionListener);
+    }
+  };
+
+  function sessionListener(s) {
+    session = s;
+    if (queue.length) loadMedia.apply(self, queue.pop());
+  }
+
+  function receiverListener(e) {
+    if (e === chrome.cast.ReceiverAvailability.AVAILABLE) {
+      receiverAvailable = true;
+      setTimeout(function() {
+        self.requestSession();
+      }, 1000);
+    }
   }
 
   function loadMedia(url, callback) {
