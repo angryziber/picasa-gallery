@@ -55,9 +55,6 @@ var chromecast = new (function() {
   function receiverListener(e) {
     if (e === chrome.cast.ReceiverAvailability.AVAILABLE) {
       receiverAvailable = true;
-      setTimeout(function() {
-        self.requestSession();
-      }, 1000);
     }
   }
 
