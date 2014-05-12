@@ -10,7 +10,7 @@ var chromecast = new (function() {
 
       castReceiverManager.onReady = function(event) {
         console.log('Received Ready event: ' + JSON.stringify(event.data));
-        window.castReceiverManager.setApplicationState("Application status is ready...");
+        castReceiverManager.setApplicationState("Application status is ready...");
       };
 
       castReceiverManager.start({statusText: "Application is starting"});
