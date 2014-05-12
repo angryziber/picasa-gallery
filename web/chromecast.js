@@ -1,5 +1,6 @@
 var chromecast = new (function() {
   var self = this;
+  self.appId = undefined;
 
   if (navigator.userAgent.indexOf('CrKey') >= 0) {
     // we are inside of ChromeCast :-)
@@ -20,7 +21,7 @@ var chromecast = new (function() {
     document.write('<script type="text/javascript" src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js" async></script>');
 
     window['__onGCastApiAvailable'] = function(loaded, error) {
-      if (loaded) self.init(chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID);
+      if (loaded) self.init(self.appId || chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID);
       else console.log(error);
     };
   }
@@ -35,15 +36,14 @@ var chromecast = new (function() {
     else queue.push([url, callback]);
   };
 
-  self.init = function(appId, callback) {
+  self.init = function(callback) {
     self.stop();
-    var sessionRequest = new chrome.cast.SessionRequest(appId);
+    var sessionRequest = new chrome.cast.SessionRequest(self.appId);
     var apiConfig = new chrome.cast.ApiConfig(sessionRequest, sessionListener, receiverListener);
     chrome.cast.initialize(apiConfig, callback || nop, console.log);
   };
 
-  self.launch = function(appId, callback) {
-    if (appId) self.init(appId, callback);
+  self.launch = function() {
     if (!session) {
       chrome.cast.requestSession(sessionListener);
     }
