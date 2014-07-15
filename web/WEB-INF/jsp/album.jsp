@@ -146,7 +146,7 @@
       <a class="button first" onclick="viewer.close()">Close</a>
       <a class="button" id="slideshow" href="#slideshow">Slideshow</a>
       <a class="button" id="dec-interval">-</a>
-      <span class="left"><span id="interval">3</span> sec</span>
+      <span class="left"><span id="interval">5</span> sec</span>
       <a class="button" id="inc-interval">+</a>
       <span class="left" id="time-remaining"></span>
 
