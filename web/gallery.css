@@ -28,10 +28,10 @@ a {
   z-index: 10;
   top: 0;
   width: 100%;
-  padding: 10px;
+  padding: 8px 10px;
   color: white;
   text-shadow: 1px 0 black;
-  background: #313131 url(/img/header-bg.gif) top left repeat-x;
+  background: #313131;
   text-align: center;
   opacity: 0.9;
   filter: alpha(opacity=90);
@@ -49,6 +49,7 @@ h2 {
 
 .header h1 {
   position: absolute;
+  margin-top: 4px;
   left: 0;
   right: 0;
   text-align: center;
@@ -63,14 +64,14 @@ h2 {
 }
 
 .header .button {
-    padding: 4px 10px;
+    padding: 5px 10px;
     margin: 0 10px;
     float: left;
     z-index: 10;
 }
 
 .header .button.first, .header .button:first-child {
-    margin-left: 60px;
+    margin-left: 45px;
 }
 
 .header > span {
@@ -82,20 +83,20 @@ h2 {
 }
 
 .header input {
-    font-size: 100%;
+    font-size: 120%;
     padding: 3px 20px 3px 6px;
-    border: 1px solid #313131;
-    border-radius: 6px;
-    box-shadow: 0 1px 2px rgba(255,255,255,0.7), inset 0 1px 2px rgba(0,0,0,0.6);
+    border: none;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.6);
     z-index: 9;
 }
 
 .header #search input {
     position: absolute;
     right: 0;
-    margin: 0 40px 0 20px;
+    margin: 0 45px 0 20px;
     width: 8%;
-    background: white url(/img/search-icon.png) right 1px no-repeat;
+    background: white url(/img/search-icon.png) right 3px no-repeat;
     -webkit-transition: 0.3s;
     -moz-transition: 0.3s;
     transition: 0.3s;
@@ -218,7 +219,7 @@ h2 {
     overflow: hidden;
     position: absolute;
     top: 60px;
-    right: 10px
+    right: 31px
 }
 
 #photo-wrapper #facebook-button {
@@ -410,36 +411,17 @@ h2 {
     border: 1px solid #666;
     background-color: #666;
     background-color: rgba(128, 128, 128, 0.75);
-    border-radius: 5px;
+    border-radius: 4px;
     color: #fff;
     font-weight: bold;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-    background-image: -webkit-gradient(linear, 0% 0%, 0% 90%, from(rgba(4, 4, 4, 10.9)), to(rgba(92, 92, 92, 1)));
-    background-image: -moz-linear-gradient(top, rgba(4, 4, 4, 0.9), rgba(92, 92, 92, 1));
-    background-image: linear-gradient(to bottom, rgba(4, 4, 4, 0.9), rgba(92, 92, 92, 1));
-    box-shadow: rgba(0, 0, 0, 0.3) 0 3px 4px, rgba(0, 0, 0, 0.6) 0 -2px 6px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 1px;
 }
 .button:hover {
-    background-image: -webkit-gradient(linear, 0% 0%, 0% 90%, from(rgba(4, 4, 4, 10.9)), to(rgb(164, 164, 164)));
-    background-image: -moz-linear-gradient(top, rgba(4, 4, 4, 0.9), rgb(164, 164, 164));
-    background-image: linear-gradient(to bottom, rgba(4, 4, 4, 0.9), rgb(164, 164, 164));
+  background-color: rgba(128, 128, 128, 0.9);
 }
 .button:active {
     box-shadow: none;
-}
-.button:after {
-    content: '';
-    position: absolute;
-    display: block;
-    width: 100%;
-    left: 0;
-    top: 0;
-    height: 50%;
-    border-radius: 4px;
-    background-color: rgba(255, 255, 255, 0.25);
-    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255, 255, 255, 0.8)), to(rgba(255, 255, 255, 0)));
-    background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
 }
 
 @media screen and (max-width: 900px) {
