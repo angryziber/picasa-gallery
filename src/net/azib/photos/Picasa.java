@@ -56,7 +56,8 @@ public class Picasa {
   }
 
   public AlbumFeed getAlbum(String name) throws IOException, ServiceException {
-    return fixPhotoDescriptions(cachedFeed("/album/" + urlEncode(name) + "?imgmax=1600&thumbsize=144c", AlbumFeed.class));
+    String url = name.matches("\\d+") ? "/albumid/" + name : "/album/" + urlEncode(name);
+    return fixPhotoDescriptions(cachedFeed(url + "?imgmax=1600&thumbsize=144c", AlbumFeed.class));
   }
 
   private AlbumFeed fixPhotoDescriptions(AlbumFeed album) {
