@@ -5,17 +5,17 @@ var chromecast = new (function() {
 
   if (navigator.userAgent.indexOf('CrKey') >= 0) {
     // we are inside of ChromeCast :-)
-    document.write('<script type="text/javascript" src="https://www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js" async></script>');
+    document.write('<script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js" async></script>');
 
     window.addEventListener('load', function() {
       var castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
 
       castReceiverManager.onReady = function(e) {
         console.log('Received Ready event: ' + JSON.stringify(e.data));
-        castReceiverManager.setApplicationState("ready");
+        castReceiverManager.setApplicationState('ready');
       };
 
-      var messageBus = castReceiverManager.getCastMessageBus(self.namespace);
+      var messageBus = castReceiverManager.getCastMessageBus(self.namespace); // cast.receiver.CastMessageBus.MessageType.JSON
       messageBus.onMessage = function(e) {
         console.log('Incoming message: ' + JSON.stringify(e.data));
         document.dispatchEvent(new CustomEvent('message', {detail: e.data}));
@@ -26,7 +26,7 @@ var chromecast = new (function() {
     });
   }
   else if (navigator.userAgent.indexOf('Chrome') >= 0 && navigator.userAgent.indexOf('CrKey') < 0) {
-    document.write('<script type="text/javascript" src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js" async></script>');
+    document.write('<script type="text/javascript" src="//www.gstatic.com/cv/js/sender/v1/cast_sender.js" async></script>');
 
     window['__onGCastApiAvailable'] = function(loaded, error) {
       if (loaded) self.init(self.appId || chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID);
@@ -35,6 +35,7 @@ var chromecast = new (function() {
   }
 
   var session;
+  var messageCallback;
   var receiverAvailable = false;
   var nop = function() {};
   var onerror = function(e) {console.log(e)};
@@ -47,6 +48,16 @@ var chromecast = new (function() {
 
   self.message = function(message, callback) {
     session.sendMessage(self.namespace, message, callback || nop, onerror);
+  };
+
+  self.onMessage = function(callback) {
+    messageCallback = function(ns, message) {
+      callback(message);
+    };
+    if (session) {
+      session.addMessageListener(self.namespace, messageCallback);
+      messageCallback = null;
+    }
   };
 
   self.init = function(appId, callback) {
@@ -70,6 +81,7 @@ var chromecast = new (function() {
 
   function sessionListener(s) {
     session = s;
+    if (messageCallback) session.addMessageListener(self.namespace, messageCallback);
     if (queue.length) loadMedia.apply(self, queue.pop());
   }
 
