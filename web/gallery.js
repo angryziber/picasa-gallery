@@ -390,9 +390,9 @@ function createMap(selector, moreOpts) {
         mapTypeId: google.maps.MapTypeId.TERRAIN,
         styles: [{
             stylers: [
-                { saturation: -5 },
-                { gamma: 0.38 },
-                { lightness: -33 }
+                { saturation: -60 },
+                { gamma: 0.3 },
+                { lightness: -25 }
             ]
         }],
         streetViewControl: false,
