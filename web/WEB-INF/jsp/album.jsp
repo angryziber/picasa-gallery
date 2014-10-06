@@ -74,7 +74,7 @@
 <body style="background:black; color: gray">
 
 <div id="header" class="header">
-  <a href="/${picasa.urlSuffix}" class="button fade">Gallery</a>
+  <a href="/${picasa.urlSuffix}" class="button fade">More albums</a>
 
   <form id="search"><input></form>
   <h1 id="title">${album.title.plainText}
