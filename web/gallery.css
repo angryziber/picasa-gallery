@@ -158,10 +158,6 @@ h2 {
     border: 3px solid #313131;
 }
 
-.albums a {
-    height: 218px; /* for FF */
-}
-
 .albums a img {
     width: 212px;
     height: 212px;
@@ -230,7 +226,7 @@ h2 {
 #map {
     float: right;
     width: 440px;
-    height: 440px;
+    height: 444px;
     margin: 0 10px 10px 0;
     border: 3px solid #313131;
 }
