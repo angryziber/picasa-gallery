@@ -118,6 +118,7 @@ h2 {
 .header .button img {
     position: relative;
     height: 16px;
+    width: 16px;
     margin: -2px 3px -3px 0;
 }
 
