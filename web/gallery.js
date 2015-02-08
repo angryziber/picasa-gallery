@@ -267,7 +267,6 @@ function PhotoViewer() {
             wrapper.width(w.width()).css('top', w.scrollTop());
         }
         centerImage();
-        centerTitle();
     }
 
     function centerImage(img) {
@@ -287,10 +286,6 @@ function PhotoViewer() {
         }
         img.css('top', (wrapper.height()-img.height())/2);
         img.css('left', (wrapper.width()-img.width())/2);
-    }
-
-    function centerTitle() {
-        title.css('width', title.height() > title.css('line-height').replace('px', '') ? w.width()*0.95 : 'auto');
     }
 
     function imageOnLoad() {
@@ -330,7 +325,6 @@ function PhotoViewer() {
 
         title.text(photo.title);
         if (photo.title) title.fadeIn(); else title.fadeOut();
-        centerTitle();
 
         var url = stateURL(photo);
         if (history.replaceState) history.replaceState(url, photo.title, url);
