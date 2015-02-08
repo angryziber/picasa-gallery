@@ -364,14 +364,20 @@ function PhotoViewer() {
             $('#photo-map').fadeOut();
         }
 
-        if (wrapper.css('position') == 'fixed') {
+        updateScrolling(photo);
+    }
+
+    function updateScrolling(photo) {
+        if (wrapper.css('position') != 'fixed') return;
+
+        setTimeout(function() {
             var thumbPos = $('#' + photo.id).offset();
             var scrollTop = w.scrollTop();
             if (thumbPos.top + 150 > scrollTop + w.height())
                 scrollTo(thumbPos.left, thumbPos.top + 200 - w.height());
             else if (thumbPos.top < scrollTop)
                 scrollTo(thumbPos.left, thumbPos.top - 100);
-        }
+        }, 1000);
     }
 }
 
