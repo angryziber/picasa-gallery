@@ -429,12 +429,12 @@ function initMap() {
     $('.albums > a').each(function (i, link) {
         var pos = extractPos(this);
         if (!pos) return;
-        this.marker = new google.maps.Marker({position:pos, map:map, title:$(link).find('.title > .text').text()});
-        setMarkerIcon(this.marker);
+        var marker = new google.maps.Marker({position:pos, map:map, title:$(link).find('.title > .text').text()});
+        setMarkerIcon(marker);
         bounds.extend(pos);
-        google.maps.event.addListener(this.marker, 'click', function() {$(link).click();});
-        $(this).mouseover(function() {setMarkerIcon(this.marker, 'orange-dot');});
-        $(this).mouseout(function() {setMarkerIcon(this.marker);});
+        google.maps.event.addListener(marker, 'click', function() {$(link).click();});
+        $(this).mouseover(function() {setMarkerIcon(marker, 'orange-dot');});
+        $(this).mouseout(function() {setMarkerIcon(marker);});
     });
 
     if (bounds.isEmpty()) {
