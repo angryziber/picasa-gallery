@@ -3,29 +3,7 @@ var chromecast = new (function() {
   self.appId = undefined;
   self.namespace = 'urn:x-cast:message';
 
-  if (navigator.userAgent.indexOf('CrKey') >= 0) {
-    // we are inside of ChromeCast :-)
-    document.write('<script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js" async></script>');
-
-    window.addEventListener('load', function() {
-      var castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
-
-      castReceiverManager.onReady = function(e) {
-        console.log('Received Ready event: ' + JSON.stringify(e.data));
-        castReceiverManager.setApplicationState('ready');
-      };
-
-      var messageBus = castReceiverManager.getCastMessageBus(self.namespace); // cast.receiver.CastMessageBus.MessageType.JSON
-      messageBus.onMessage = function(e) {
-        console.log('Incoming message: ' + JSON.stringify(e.data));
-        document.dispatchEvent(new CustomEvent('message', {detail: e.data}));
-        messageBus.send(e.senderId, e.data);
-      };
-
-      castReceiverManager.start({statusText: 'starting'});
-    });
-  }
-  else if (navigator.userAgent.indexOf('Chrome') >= 0 && navigator.userAgent.indexOf('CrKey') < 0) {
+  if (navigator.userAgent.indexOf('Chrome') >= 0 && navigator.userAgent.indexOf('CrKey') < 0) {
     document.write('<script type="text/javascript" src="//www.gstatic.com/cv/js/sender/v1/cast_sender.js" async></script>');
 
     window['__onGCastApiAvailable'] = function(loaded, error) {
