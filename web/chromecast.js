@@ -1,69 +1,67 @@
 var chromecast = new (function() {
   var self = this;
-  self.appId = undefined;
+  self.appId = chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID;
   self.namespace = 'urn:x-cast:message';
-  self.receiverAvailable = false;
+  self.session = null;
 
   if (navigator.userAgent.indexOf('Chrome') >= 0 && navigator.userAgent.indexOf('CrKey') < 0) {
     document.write('<script type="text/javascript" src="//www.gstatic.com/cv/js/sender/v1/cast_sender.js" async></script>');
 
     window['__onGCastApiAvailable'] = function(loaded, error) {
-      if (loaded) self.init(self.appId || chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID);
+      if (loaded) self.init();
       else console.log(error);
     };
   }
 
-  var session;
   var messageCallback;
   var nop = function() {};
   var onerror = function(e) {console.log(e)};
   var queue = [];
 
-  self.init = function(appId, callback) {
-    var sessionRequest = new chrome.cast.SessionRequest(appId);
+  self.init = function() {
+    var sessionRequest = new chrome.cast.SessionRequest(self.appId);
     var apiConfig = new chrome.cast.ApiConfig(sessionRequest, sessionListener, receiverListener);
-    chrome.cast.initialize(apiConfig, callback || nop, onerror);
+    chrome.cast.initialize(apiConfig, onerror);
   };
 
   self.launch = function() {
-    if (!session) chrome.cast.requestSession(sessionListener);
+    if (!self.session) chrome.cast.requestSession(sessionListener);
   };
 
   self.stop = function(callback) {
-    if (session) {
-      session.stop(callback, onerror);
-      session = null;
+    if (self.session) {
+      self.session.stop(callback, onerror);
+      self.session = null;
     }
   };
 
   self.send = function(url, callback) {
-    if (session) loadMedia(url, callback);
+    if (self.session) loadMedia(url, callback);
     else queue.push([url, callback]);
   };
 
   self.message = function(message, callback) {
-    session.sendMessage(self.namespace, message, callback || nop, onerror);
+    self.session.sendMessage(self.namespace, message, callback || nop, onerror);
   };
 
   self.onMessage = function(callback) {
     messageCallback = function(ns, message) {
       callback(message);
     };
-    if (session) {
-      sessionListener(session);
+    if (self.session) {
+      sessionListener(self.session);
       messageCallback = null;
     }
   };
 
-  function sessionListener(s) {
-    session = s;
-    if (messageCallback) session.addMessageListener(self.namespace, messageCallback);
+  function sessionListener(session) {
+    self.session = session;
+    if (messageCallback) self.session.addMessageListener(self.namespace, messageCallback);
     if (queue.length) loadMedia.apply(self, queue.pop());
   }
 
   function receiverListener(e) {
-    if (e === chrome.cast.ReceiverAvailability.AVAILABLE)
-      self.receiverAvailable = true;
+    if (e === chrome.cast.ReceiverAvailability.AVAILABLE) self.launch();
   }
 
   function loadMedia(url, callback) {
@@ -75,6 +73,6 @@ var chromecast = new (function() {
     var request = new chrome.cast.media.LoadRequest(mediaInfo);
     request.autoplay = true;
     request.currentTime = 0;
-    session.loadMedia(request, callback || nop, onerror);
+    self.session.loadMedia(request, callback || nop, onerror);
   }
 })();
