@@ -2,6 +2,7 @@ var chromecast = new (function() {
   var self = this;
   self.appId = undefined;
   self.namespace = 'urn:x-cast:message';
+  self.receiverAvailable = false;
 
   if (navigator.userAgent.indexOf('Chrome') >= 0 && navigator.userAgent.indexOf('CrKey') < 0) {
     document.write('<script type="text/javascript" src="//www.gstatic.com/cv/js/sender/v1/cast_sender.js" async></script>');
@@ -14,10 +15,26 @@ var chromecast = new (function() {
 
   var session;
   var messageCallback;
-  var receiverAvailable = false;
   var nop = function() {};
   var onerror = function(e) {console.log(e)};
   var queue = [];
+
+  self.init = function(appId, callback) {
+    var sessionRequest = new chrome.cast.SessionRequest(appId);
+    var apiConfig = new chrome.cast.ApiConfig(sessionRequest, sessionListener, receiverListener);
+    chrome.cast.initialize(apiConfig, callback || nop, onerror);
+  };
+
+  self.launch = function() {
+    if (!session) chrome.cast.requestSession(sessionListener);
+  };
+
+  self.stop = function(callback) {
+    if (session) {
+      session.stop(callback, onerror);
+      session = null;
+    }
+  };
 
   self.send = function(url, callback) {
     if (session) loadMedia(url, callback);
@@ -33,27 +50,8 @@ var chromecast = new (function() {
       callback(message);
     };
     if (session) {
-      session.addMessageListener(self.namespace, messageCallback);
+      sessionListener(session);
       messageCallback = null;
-    }
-  };
-
-  self.init = function(appId, callback) {
-    var sessionRequest = new chrome.cast.SessionRequest(appId);
-    var apiConfig = new chrome.cast.ApiConfig(sessionRequest, sessionListener, receiverListener);
-    chrome.cast.initialize(apiConfig, callback || nop, onerror);
-  };
-
-  self.launch = function() {
-    if (!session) {
-      chrome.cast.requestSession(sessionListener);
-    }
-  };
-
-  self.stop = function(callback) {
-    if (session) {
-      session.stop(callback, onerror);
-      session = null;
     }
   };
 
@@ -64,9 +62,8 @@ var chromecast = new (function() {
   }
 
   function receiverListener(e) {
-    if (e === chrome.cast.ReceiverAvailability.AVAILABLE) {
-      receiverAvailable = true;
-    }
+    if (e === chrome.cast.ReceiverAvailability.AVAILABLE)
+      self.receiverAvailable = true;
   }
 
   function loadMedia(url, callback) {
