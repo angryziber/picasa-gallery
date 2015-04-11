@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href="/gallery.css">
 <link rel="apple-touch-icon" href="/img/picasa-logo.png"/>
 
+<script type="text/javascript" src="/prefixfree.min.js"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 <script type="text/javascript" src="/gallery.js"></script>
 <script type="text/javascript" src="/chromecast.js"></script>
