@@ -1,16 +1,10 @@
-var chromecast = new (function() {
-  var self = this;
-  self.appId = chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID;
-  self.namespace = 'urn:x-cast:message';
-  self.session = null;
-
+var chromecast = (function(self) {
   if (navigator.userAgent.indexOf('Chrome') >= 0 && navigator.userAgent.indexOf('CrKey') < 0) {
-    document.write('<script type="text/javascript" src="//www.gstatic.com/cv/js/sender/v1/cast_sender.js" async></script>');
-
     window['__onGCastApiAvailable'] = function(loaded, error) {
       if (loaded) self.init();
-      else console.log(error);
+      else onerror(error);
     };
+    document.write('<script type="text/javascript" src="//www.gstatic.com/cv/js/sender/v1/cast_sender.js" async></script>');
   }
 
   var messageCallback;
@@ -19,6 +13,8 @@ var chromecast = new (function() {
   var queue = [];
 
   self.init = function() {
+    self.appId = self.appId || chrome.cast.media.DEFAULT_MEDIA_RECEIVER_APP_ID;
+    self.namespace = self.namespace || 'urn:x-cast:message';
     var sessionRequest = new chrome.cast.SessionRequest(self.appId);
     var apiConfig = new chrome.cast.ApiConfig(sessionRequest, sessionListener, receiverListener);
     chrome.cast.initialize(apiConfig, onerror);
@@ -75,4 +71,6 @@ var chromecast = new (function() {
     request.currentTime = 0;
     self.session.loadMedia(request, callback || nop, onerror);
   }
-})();
+
+  return self;
+})(chromecast || {});
