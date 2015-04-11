@@ -27,6 +27,12 @@ function changeUsername(username) {
     if (username) fadeTo('/?by=' + username);
 }
 
+function requestFullScreen() {
+    var el = document.documentElement;
+    var rfs = (el.requestFullscreen || el.mozRequestFullScreen || el.webkitRequestFullscreen || el.msRequestFullscreen);
+    if (rfs) rfs.call(el);
+}
+
 function PhotoViewer() {
     var pub = this;
     var w = $(window);
@@ -81,6 +87,7 @@ function PhotoViewer() {
         setTimeout(function() {
             controls.removeClass('visible');
         }, 2000);
+        requestFullScreen();
 
         onHashChange();
         $(window).bind('hashchange', onHashChange);
