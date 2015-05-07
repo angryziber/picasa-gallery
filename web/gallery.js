@@ -27,12 +27,6 @@ function changeUsername(username) {
     if (username) fadeTo('/?by=' + username);
 }
 
-function requestFullScreen() {
-    var el = document.documentElement;
-    var rfs = (el.requestFullscreen || el.mozRequestFullScreen || el.webkitRequestFullscreen || el.msRequestFullscreen);
-    if (rfs) rfs.call(el);
-}
-
 function PhotoViewer() {
     var pub = this;
     var w = $(window);
@@ -145,6 +139,18 @@ function PhotoViewer() {
         return false;
     };
 
+    function requestFullScreen() {
+        var el = document.documentElement;
+        var rfs = (el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen);
+        if (rfs) rfs.call(el);
+
+        var fschange = 'fullscreenchange webkitfullscreenchange mozfullscreenchange msfullscreenchange';
+        $(document).off(fschange).on(fschange, function() {
+            var fs = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+            if (!fs) pub.close();
+        });
+    }
+
     function onHashChange() {
         var hash = location.hash.substring(1);
         if (hash == 'slideshow') startSlideshow();
@@ -238,6 +244,7 @@ function PhotoViewer() {
     function onTouchStart(e) {
         touchStartX = e.touches[0].pageX;
     }
+
     function onTouchMove(e) {
         if (!touchStartX) return false;
         var dx = e.touches[0].pageX - touchStartX;
