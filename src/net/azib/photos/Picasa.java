@@ -75,7 +75,7 @@ public class Picasa {
     return cachedFeed("/album/" + urlEncode(albumName) + "?kind=comment", PhotoFeed.class).getCommentEntries();
   }
 
-  public RandomPhotos getRandomPhoto(int numNext) throws IOException, ServiceException {
+  public RandomPhotos getRandomPhotos(int numNext) throws IOException, ServiceException {
     List<AlbumEntry> albums = getGallery().getAlbumEntries();
     AlbumEntry album = weightedRandom(albums);
     List<GphotoEntry> photos = cachedFeed("/album/" + urlEncode(album.getName()) + "?kind=photo&imgmax=1600&max-results=1000&fields=entry(content)", AlbumFeed.class).getEntries();
