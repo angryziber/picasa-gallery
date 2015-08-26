@@ -2,6 +2,7 @@ package net.azib.photos;
 
 import com.google.gdata.client.photos.PicasawebService;
 import com.google.gdata.data.IFeed;
+import com.google.gdata.data.MediaContent;
 import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.photos.*;
 import com.google.gdata.util.ServiceException;
@@ -160,6 +161,11 @@ public class Picasa {
       this.photos = photos;
       this.nickname = nickname;
       this.album = album;
+
+      for (GphotoEntry photo : photos) {
+        MediaContent content = (MediaContent) photo.getContent();
+        content.setUri(content.getUri().replace("/s1600/", "/s1920/"));
+      }
     }
 
     public List<GphotoEntry> getPhotos() {
