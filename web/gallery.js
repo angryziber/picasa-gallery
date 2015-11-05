@@ -140,6 +140,8 @@ function PhotoViewer() {
     };
 
     function requestFullScreen() {
+        if ($('meta[name=viewport]').length) return; // fullscreen breaks viewport on mobile devices
+
         var el = document.documentElement;
         var rfs = (el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen);
         if (rfs) rfs.call(el);
