@@ -1,10 +1,8 @@
 What is it?
 ===========
 
-A good-looking frontend for Google's Picasaweb (now Google+) photo galleries, with nice transitions,
+A good-looking frontend for Google Photos (aka Google+ or Picasa web) galleries, with nice transitions,
 mobile device support, and full-screen photo browsing with quick loading (prefetching).
-
-For all those who wish their Picasaweb gallery had black background!
 
 Example gallery: [Anton Keks Photos](http://photos.azib.net/) - use the link at the bottom to try it with your own gallery!
 
@@ -43,7 +41,7 @@ How to use it for your own photos
 - Specify your Picasaweb username in src/config.properties
 - Specify your AppEngine application ID in web/WEB-INF/appengine-web.xml
 - Download AppEngine SDK from Google
-- If you don't use any IDE, use ant to compile by this command (use Java 7 or above):
+- If you don't use any IDE, use ant to compile by this command (use Java 7):
   
   	    $ ant -Dsdk.dir=path/to/appengine-java-sdk compile
 
