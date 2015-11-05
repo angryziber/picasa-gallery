@@ -15,7 +15,7 @@
 <head>
   <title>${album.title.plainText} by ${album.nickname} - Photos</title>
   <c:if test="${mobile}">
-    <meta name="viewport" content="width=650, user-scalable=no">
+    <meta name="viewport" content="width=650, user-scalable=no, minimal-ui">
   </c:if>
   <meta name="description" content="${album.description.plainText}">
   <meta name="keywords" content="${album.nickname},photos,${fn:replace(album.title.plainText, " ", ",")},${fn:replace(album.description.plainText, " ", ",")}">
@@ -77,7 +77,7 @@
   <a href="/${picasa.urlSuffix}" class="button fade">More albums</a>
 
   <form id="search"><input></form>
-  <h1 id="title">${album.title.plainText}
+  <h1 id="title" onclick="document.documentElement.webkitRequestFullScreen()">${album.title.plainText}
     <small>by ${album.nickname}</small>
   </h1>
 </div>
