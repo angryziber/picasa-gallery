@@ -57,7 +57,7 @@ var chromecast = (function(self) {
   }
 
   function receiverListener(e) {
-    if (e === chrome.cast.ReceiverAvailability.AVAILABLE) self.launch();
+    //if (e === chrome.cast.ReceiverAvailability.AVAILABLE) self.launch();
   }
 
   function loadMedia(url, callback) {
