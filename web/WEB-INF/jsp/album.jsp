@@ -18,7 +18,7 @@
     <meta name="viewport" content="width=650, user-scalable=no, minimal-ui">
   </c:if>
   <meta name="description" content="${album.description.plainText}">
-  <meta name="keywords" content="${album.nickname},photos,${fn:replace(album.title.plainText, " ", ",")},${fn:replace(album.description.plainText, " ", ",")}">
+  <meta name="keywords" content="${album.nickname},photos,${fn:replace(album.title.plainText, " ", ",")},${fn:replace(fn:replace(album.description.plainText, ", ", " "), " ", ",")}">
 
   <c:if test="${photo == null}">
     <meta name="medium" content="image">
