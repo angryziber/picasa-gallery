@@ -435,7 +435,7 @@ function extractExif(element) {
 }
 
 function setMarkerIcon(marker, name) {
-    marker.setIcon('http://google.com/mapfiles/ms/micons/' + (name || 'red-dot') + '.png');
+    marker.setIcon('http://maps.google.com/mapfiles/' + (name || 'marker') + '.png');
     marker.setZIndex(1000);
 }
 
@@ -449,7 +449,7 @@ function initMap() {
         setMarkerIcon(marker);
         bounds.extend(pos);
         google.maps.event.addListener(marker, 'click', function() {$(link).click();});
-        $(this).mouseover(function() {setMarkerIcon(marker, 'orange-dot');});
+        $(this).mouseover(function() {setMarkerIcon(marker, 'marker_orange');});
         $(this).mouseout(function() {setMarkerIcon(marker);});
     });
 
