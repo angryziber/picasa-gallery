@@ -96,7 +96,8 @@
   <div class="thumbs clear">
     <c:forEach var="photo" items="${album.photoEntries}">
       <c:set var="media" value="${photo.mediaContents[0]}"/>
-      <a id="${photo.gphotoId}" href="${media.url}" class="photo"
+      <a id="${photo.gphotoId}" href="/${album.name}/${photo.gphotoId}${picasa.urlSuffix}" class="photo"
+         data-url="${media.url}"
          title="${photo.description.plainText}"
          rel="${media.width}x${media.height}"
          onclick="return false;"

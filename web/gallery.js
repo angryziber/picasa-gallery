@@ -39,7 +39,7 @@ function PhotoViewer() {
     pub.setup = function() {
         photos = [];
         $('a.photo').click(pub.open).each(function() {
-            photos.push({href: this.href, title: this.title, id: this.id, pos: extractPos(this), exif: extractExif(this), time: $(this).data('time')});
+            photos.push({href: this.getAttribute('data-url'), title: this.title, id: this.id, pos: extractPos(this), exif: extractExif(this), time: $(this).data('time')});
         });
 
         wrapper = $('#photo-wrapper');
