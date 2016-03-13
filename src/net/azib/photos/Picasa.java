@@ -79,7 +79,7 @@ public class Picasa {
   public RandomPhotos getRandomPhotos(int numNext) throws IOException, ServiceException {
     List<AlbumEntry> albums = getGallery().getAlbumEntries();
     AlbumEntry album = weightedRandom(albums);
-    List<GphotoEntry> photos = cachedFeed("/album/" + urlEncode(album.getName()) + "?kind=photo&imgmax=1600&max-results=1000&fields=entry(content)", AlbumFeed.class).getEntries();
+    List<GphotoEntry> photos = cachedFeed("/album/" + urlEncode(album.getName()) + "?kind=photo&imgmax=1600&max-results=1000&fields=entry(content,summary)", AlbumFeed.class).getEntries();
     int index = random(photos.size());
     return new RandomPhotos(photos.subList(index, min(index + numNext, photos.size())), album.getNickname(), album.getTitle().getPlainText());
   }
