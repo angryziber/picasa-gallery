@@ -94,13 +94,12 @@
       <c:set var="media" value="${photo.mediaContents[0]}"/>
       <a id="${photo.gphotoId}" href="/${album.name}/${photo.gphotoId}${picasa.urlSuffix}" class="photo"
          data-url="${media.url}"
-         title="${photo.description.plainText}"
          rel="${media.width}x${media.height}"
          onclick="return false;"
          data-time="<fmt:formatDate value="${photo.timestamp}" pattern="yyyy-MM-dd HH:mm"/>"
          <c:if test="${photo.geoLocation != null}">data-coords="${photo.geoLocation.latitude}:${photo.geoLocation.longitude}"</c:if>
          <c:if test="${photo.exifTags != null}">data-exif="${photo.exifTags.apetureFNumber}:${photo.exifTags.exposureTime}:${photo.exifTags.isoEquivalent}:${photo.exifTags.focalLength}"</c:if>>
-        <img src="/img/empty.png" class="missing" rel="${photo.mediaThumbnails[0].url}">
+        <img src="${photo.mediaThumbnails[0].url}" title="${photo.description.plainText}">
         <span class="description">${photo.description.plainText}</span>
       </a>
     </c:forEach>

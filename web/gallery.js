@@ -4,24 +4,6 @@ function facebookButton(href) {
     return $('.facebook-button')[0].outerHTML.replace(/href=.*?"$/, 'href=' + href);
 }
 
-function loadVisibleThumbs(maxCount) {
-    if (!maxCount) maxCount = 10000;
-	  var visibleTop = $(window).scrollTop() - 150;
-    var visibleBottom = visibleTop + $(window).height() * 2.5;
-
-    var found = false, count = 0;
-    $('img.missing').each(function() {
-        var img = $(this);
-        var top = img.offset().top;
-        if (top >= visibleTop && top <= visibleBottom) {
-            img.attr('src', img.attr('rel')).removeClass('missing');
-            found = true;
-        }
-        else if (found) return false;
-        if (++count > maxCount) return false;
-    });
-}
-
 function changeUsername(username) {
     username = prompt('Show photos by Google/Picasaweb user:', username);
     if (username) fadeTo('/?by=' + username);
@@ -480,9 +462,7 @@ function initAlbumFilter() {
 function updateLayout() {
     var photoWidth = ($('.albums').length ? 218 : 150) + 10;
     var photosInRow = Math.floor($(window).width() / photoWidth);
-    var photosInColumn = Math.ceil($(window).height() / photoWidth);
     $('#content').width(photosInRow * photoWidth);
-    loadVisibleThumbs(photosInRow * (photosInColumn * 2));
 }
 
 function fadeTo(href) {
@@ -507,6 +487,5 @@ $(function() {
     });
 
     $(window).resize(updateLayout);
-    $(window).scroll(loadVisibleThumbs);
     $('a#m').attr('href', 'm' + 'ail' + 'to:' + $('a#m').attr('href') + String.fromCharCode(64) + 'gmail.com');
 });
