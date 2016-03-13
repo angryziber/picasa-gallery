@@ -106,6 +106,7 @@
          <c:if test="${photo.geoLocation != null}">data-coords="${photo.geoLocation.latitude}:${photo.geoLocation.longitude}"</c:if>
          <c:if test="${photo.exifTags != null}">data-exif="${photo.exifTags.apetureFNumber}:${photo.exifTags.exposureTime}:${photo.exifTags.isoEquivalent}:${photo.exifTags.focalLength}"</c:if>>
         <img src="/img/empty.png" class="missing" rel="${photo.mediaThumbnails[0].url}">
+        <span class="description">${photo.description.plainText}</span>
       </a>
     </c:forEach>
   </div>

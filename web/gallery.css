@@ -170,6 +170,10 @@ h2 {
     border-color: #616161;
 }
 
+.thumbs a .description {
+    display: none;
+}
+
 .albums a .title {
     position: absolute;
     bottom: 3px;
