@@ -53,11 +53,6 @@
   <script type="text/javascript">
     var viewer = new PhotoViewer();
     $(function() {
-      if ($(window).width() > 1550) {
-        $('a.photo').each(function (i, link) {
-          link.href = link.href.replace('/s1024/', '/s1600/');
-        });
-      }
       viewer.setup();
       <c:choose>
         <c:when test="${photo != null}">
