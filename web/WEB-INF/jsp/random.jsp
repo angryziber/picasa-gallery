@@ -36,8 +36,9 @@
 <body>
 <div id="img" style="background-image: url(${random.photos[0].content.uri})"></div>
 <div id="title">
-  <b>${random.album}</b><br>
-  ${random.nickname}
+  <b>${random.album}</b>
+  <div id="description">${random.photos[0].description.plainText}</div>
+  <div>${random.nickname}</div>
 </div>
 </body>
 <script type="text/javascript">
@@ -51,18 +52,20 @@
 <script type="text/javascript">
   chromecast.send('${random.photos[0].content.uri}');
   <c:if test="${fn:length(random.photos) > 1}">
-    var photos = [<c:forEach var="photo" items="${random.photos}">'${photo.content.uri}', </c:forEach>null];
+    var photos = [<c:forEach var="photo" items="${random.photos}">{url:'${photo.content.uri}', description:'${photo.description.plainText}'},</c:forEach>null];
     photos.pop();
     var index = 1;
-    new Image().src = photos[index];
+    new Image().src = photos[index].url;
+    var desc = document.getElementById('description');
 
     setInterval(function() {
       <c:if test="${refresh}">if (index == 0) { location.reload(); return; }</c:if>
-      var url = photos[index++];
+      var url = photos[index].url;
       img.style.backgroundImage = 'url(' + url + ')';
-      if (index >= photos.length) index = 0;
-      new Image().src = photos[index];
       chromecast.send(url);
+      desc.textContent = photos[index].description;
+      if (++index >= photos.length) index = 0;
+      new Image().src = photos[index].url;
     }, ${delay != null ? delay : 8000});
   </c:if>
 </script>
