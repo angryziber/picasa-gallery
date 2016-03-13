@@ -77,7 +77,8 @@
   <a href="/${picasa.urlSuffix}" class="button fade">More albums</a>
 
   <form id="search"><input></form>
-  <h1 id="title" onclick="document.documentElement.webkitRequestFullScreen()">${album.title.plainText}
+  <h1 id="title">
+    ${album.title.plainText}
     <small>by ${album.nickname}</small>
   </h1>
 </div>
