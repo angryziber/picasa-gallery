@@ -20,8 +20,6 @@
       background-position: center center;
       background-repeat: no-repeat;
       background-size: contain;
-      -webkit-transition: background-image 0.5s;
-      -moz-transition: background-image 0.5s;
       transition: background-image 0.5s;
     }
     #title {
