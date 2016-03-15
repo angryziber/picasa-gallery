@@ -8,12 +8,12 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 <link rel="stylesheet" type="text/css" href="/reset.css">
-<link rel="stylesheet" type="text/css" href="/gallery.css">
+<link rel="stylesheet" type="text/css" href="/gallery.css?124">
 <link rel="apple-touch-icon" href="/img/picasa-logo.png"/>
 
 <script type="text/javascript" src="/prefixfree.min.js"></script>
 <script type="text/javascript" src="//code.jquery.com/jquery-1.12.1.min.js"></script>
-<script type="text/javascript" src="/gallery.js?123"></script>
+<script type="text/javascript" src="/gallery.js?124"></script>
 <script type="text/javascript" src="/chromecast.js"></script>
 
 <script type="text/javascript">
