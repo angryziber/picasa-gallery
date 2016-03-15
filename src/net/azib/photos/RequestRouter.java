@@ -16,8 +16,8 @@ import java.io.IOException;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
-import static javax.servlet.http.HttpServletResponse.SC_FORBIDDEN;
 import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+import static javax.servlet.http.HttpServletResponse.SC_MOVED_PERMANENTLY;
 import static javax.servlet.http.HttpServletResponse.SC_NOT_FOUND;
 import static javax.xml.bind.DatatypeConverter.parseInt;
 
@@ -38,7 +38,8 @@ public class RequestRouter implements Filter {
     String userAgent = request.getHeader("User-Agent");
     boolean bot = isBot(userAgent);
     if (bot && (by != null || random != null)) {
-      response.sendError(SC_FORBIDDEN);
+      response.sendRedirect("/");
+      response.setStatus(SC_MOVED_PERMANENTLY);
       return;
     }
 
