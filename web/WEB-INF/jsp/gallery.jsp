@@ -43,7 +43,7 @@
           <div class="title">
             <span class="info">${album.photosUsed}</span>
             <span class="text">${album.title.plainText}</span>
-            <span class="description hidden">${album.description.plainText}</span>
+            <span class="description">${album.description.plainText}</span>
           </div>
         </a>
       </c:if>
