@@ -36,7 +36,8 @@ public class RequestRouter implements Filter {
     String by = request.getParameter("by");
     String random = request.getParameter("random");
     String userAgent = request.getHeader("User-Agent");
-    if (isBot(userAgent) && (by != null || random != null)) {
+    boolean bot = isBot(userAgent);
+    if (bot && (by != null || random != null)) {
       response.sendError(SC_FORBIDDEN);
       return;
     }
@@ -45,6 +46,7 @@ public class RequestRouter implements Filter {
       Picasa picasa = new Picasa(by, request.getParameter("authkey"));
       request.setAttribute("picasa", picasa);
       request.setAttribute("host", request.getHeader("host"));
+      request.setAttribute("bot", bot);
       request.setAttribute("mobile", userAgent.contains("Mobile") && !userAgent.contains("iPad") && !userAgent.contains("Tab"));
 
       if (random != null) {

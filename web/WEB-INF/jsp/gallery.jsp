@@ -58,6 +58,12 @@
   </div>
 </div>
 
-<h2 class="hidden">${gallery.nickname} <b>photos</b> and pictures</h2>
+<c:if test="${bot}">
+  <h2>${gallery.nickname} <b>photos</b> and pictures</h2>
+  <c:forEach var="album" items="${gallery.albumEntries}">
+    <h3>${album.title.plainText} by ${gallery.nickname}</h3>
+    <p>${album.description.plainText}</p>
+  </c:forEach>
+</c:if>
 </body>
 </html>
