@@ -149,18 +149,22 @@ h2 {
     float: left;
     margin: 0 10px 10px 0;
     position: relative;
+    overflow: hidden;
 }
 
 .albums a img, .thumbs a img {
     border: 3px solid #313131;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
 }
 
-.albums a img {
+.albums a {
     width: 212px;
     height: 212px;
 }
 
-.thumbs a img {
+.thumbs a {
     width: 144px;
     height: 144px;
     text-align: center;
@@ -168,10 +172,6 @@ h2 {
 
 .albums a:hover img, .thumbs a:hover img {
     border-color: #616161;
-}
-
-.thumbs a .description {
-    display: none;
 }
 
 .albums a .title {
@@ -201,10 +201,6 @@ h2 {
     display: none;
 }
 
-.albums a .title > .description {
-    display: none; /* this is for search engines */
-}
-
 .facebook-button {
     width: 90px;
     height: 20px;
@@ -224,10 +220,11 @@ h2 {
 
 #map {
     float: right;
-    width: 440px;
-    height: 444px;
+    width: 434px;
+    height: 434px;
     margin: 0 10px 10px 0;
     border: 3px solid #313131;
+    box-sizing: border-box;
 }
 
 #photo-wrapper {
