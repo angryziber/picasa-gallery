@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=700, user-scalable=no">
   </c:if>
   <meta name="description" content="${gallery.nickname} photo albums from around the World">
-  <meta name="keywords" content="${gallery.nickname},photos,picasa,picasaweb,gallery,albums,travel,photography,<c:forEach var="album" items="${gallery.albumEntries}">${album.title.plainText},</c:forEach>">
+  <meta name="keywords" content="${fn:replace(gallery.nickname, ' ', ',')},photos,picasa,picasaweb,gallery,albums,travel,photography,<c:forEach var="album" items="${gallery.albumEntries}">${fn:replace(fn:replace(album.title.plainText,', ', ' '),' ',',')},</c:forEach>">
   <meta property="og:title" content="${gallery.nickname} Photography">
   <meta property="og:type" content="website">
   <meta property="og:image" content="${gallery.albumEntries[0].mediaThumbnails[0].url}">
