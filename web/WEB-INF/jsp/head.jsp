@@ -15,7 +15,6 @@
 <script type="text/javascript" src="//code.jquery.com/jquery-1.12.1.min.js"></script>
 <script type="text/javascript" src="/gallery.js?123"></script>
 <script type="text/javascript" src="/chromecast.js"></script>
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
 <script type="text/javascript">
   <c:if test="${picasa.analytics != null}">
