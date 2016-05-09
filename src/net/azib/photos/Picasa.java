@@ -12,11 +12,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static java.lang.Math.min;
-import static java.lang.System.currentTimeMillis;
-import static java.util.Collections.synchronizedMap;
 
 public class Picasa {
   static Properties config = loadConfig();
@@ -25,9 +27,7 @@ public class Picasa {
   static PicasawebService service = new PicasawebService(defaultUser);
   static Random random = new SecureRandom();
 
-  static Map<String, IFeed> cache = synchronizedMap(new HashMap<String, IFeed>());
-  static Map<String, Long> cacheExpiration = synchronizedMap(new HashMap<String, Long>());
-  static final long CACHE_EXPIRATION = 30 * 60 * 1000; // 30 min
+  static Map<String, IFeed> cache = new ConcurrentHashMap<>();
 
   String user = defaultUser;
   String authkey;
@@ -111,24 +111,29 @@ public class Picasa {
 
   @SuppressWarnings({"unchecked", "SynchronizationOnLocalVariableOrMethodParameter"})
   private <T extends IFeed> T cachedFeed(String url, Class<T> type) throws IOException, ServiceException {
-    final String key = (user + url).intern();
-    synchronized (key) {
-      Long expiration = cacheExpiration.get(key);
-      if (expiration != null && expiration > currentTimeMillis()) {
-        return (T) cache.get(key);
+    url = toFullUrl(url).intern();
+    synchronized (url) {
+      T feed = (T) cache.get(url);
+      if (feed == null) {
+        feed = load(url, type);
+        cache.put(url, feed);
       }
-      else {
-        T feed = feed(url, type);
-        cache.put(key, feed);
-        cacheExpiration.put(key, currentTimeMillis() + CACHE_EXPIRATION);
-        return feed;
-      }
+      return feed;
     }
   }
 
   private <T extends IFeed> T feed(String url, Class<T> type) throws IOException, ServiceException {
+    url = toFullUrl(url);
+    return load(url, type);
+  }
+
+  private String toFullUrl(String url) {
     url = "http://picasaweb.google.com/data/feed/api/user/" + urlEncode(user) + url;
     if (authkey != null) url += (url.contains("?") ? "&" : "?") + "authkey=" + authkey;
+    return url;
+  }
+
+  static <T extends IFeed> T load(String url, Class<T> type) throws IOException, ServiceException {
     return service.getFeed(new URL(url), type);
   }
 

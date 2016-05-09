@@ -1,5 +1,6 @@
 package net.azib.photos;
 
+import com.google.appengine.api.ThreadManager;
 import com.google.gdata.data.BaseFeed;
 import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.Source;
@@ -26,6 +27,7 @@ public class RequestRouter implements Filter {
 
   public void init(FilterConfig config) throws ServletException {
     this.context = config.getServletContext();
+    ThreadManager.backgroundThreadFactory().newThread(new CacheReloader()).start();
   }
 
   public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
