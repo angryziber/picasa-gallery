@@ -1,6 +1,5 @@
 package net.azib.photos;
 
-import com.google.appengine.api.ThreadManager;
 import com.google.gdata.data.BaseFeed;
 import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.Source;
@@ -17,9 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
-import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
-import static javax.servlet.http.HttpServletResponse.SC_MOVED_PERMANENTLY;
-import static javax.servlet.http.HttpServletResponse.SC_NOT_FOUND;
+import static javax.servlet.http.HttpServletResponse.*;
 import static javax.xml.bind.DatatypeConverter.parseInt;
 
 public class RequestRouter implements Filter {
@@ -27,7 +24,8 @@ public class RequestRouter implements Filter {
 
   public void init(FilterConfig config) throws ServletException {
     this.context = config.getServletContext();
-    ThreadManager.backgroundThreadFactory().newThread(new CacheReloader()).start();
+    // TODO: this doesn't work on AppEngine (would only work in backend)
+    // ThreadManager.createBackgroundThread(new CacheReloader()).start();
   }
 
   public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
