@@ -1,1 +1,1 @@
-mvn jetty:run
+web:sh mvn jetty:run
