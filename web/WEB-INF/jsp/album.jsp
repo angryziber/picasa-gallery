@@ -131,9 +131,11 @@
         <c:set var="author" value="${comment.authors[0]}"/>
         <img src="<%=((Person)pageContext.getAttribute("author")).getExtension(GphotoThumbnail.class).getValue()%>">
         <%String username = ((Person) pageContext.getAttribute("author")).getExtension(GphotoUsername.class).getValue();%>
-        <a target="_blank" href="/<%=((AlbumFeed)request.getAttribute("album")).getUsername().equals(username) ? "" : "?by=" + username%>">
-            ${author.name}
-        </a>
+        <c:if test="!bot">
+          <a target="_blank" href="/<%=((AlbumFeed)request.getAttribute("album")).getUsername().equals(username) ? "" : "?by=" + username%>">
+              ${author.name}
+          </a>
+        </c:if>
         <br>${comment.textContent.content.plainText}
       </div>
     </c:forEach>
