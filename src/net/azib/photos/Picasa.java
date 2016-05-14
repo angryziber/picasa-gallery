@@ -58,7 +58,9 @@ public class Picasa {
 
   public AlbumFeed getAlbum(String name) throws IOException, ServiceException {
     String url = name.matches("\\d+") ? "/albumid/" + name : "/album/" + urlEncode(name);
-    return fixPhotoDescriptions(cachedFeed(url + "?imgmax=1600&thumbsize=144c", AlbumFeed.class));
+    url += "?imgmax=1600&thumbsize=144c";
+    url += "&fields=id,updated,title,subtitle,gphoto:*,entry(title,summary,category,gphoto:id,gphoto:width,gphoto:height,gphoto:commentCount,exif:*,media:*)";
+    return fixPhotoDescriptions(cachedFeed(url, AlbumFeed.class));
   }
 
   private AlbumFeed fixPhotoDescriptions(AlbumFeed album) {
@@ -130,6 +132,7 @@ public class Picasa {
   private String toFullUrl(String url) {
     url = "http://picasaweb.google.com/data/feed/api/user/" + urlEncode(user) + url;
     if (authkey != null) url += (url.contains("?") ? "&" : "?") + "authkey=" + authkey;
+    System.out.println(url);
     return url;
   }
 
