@@ -53,7 +53,9 @@ public class Picasa {
   }
 
   public UserFeed getGallery() throws IOException, ServiceException {
-    return cachedFeed("?kind=album&thumbsize=212c", UserFeed.class);
+    String url = "?kind=album&thumbsize=212c";
+    url += "&fields=id,updated,gphoto:*,entry(title,summary,content,category,gphoto:*,media:*,georss:*)";
+    return cachedFeed(url, UserFeed.class);
   }
 
   public AlbumFeed getAlbum(String name) throws IOException, ServiceException {
@@ -72,10 +74,6 @@ public class Picasa {
       }
     }
     return album;
-  }
-
-  public List<CommentEntry> getAlbumComments(String albumName) throws IOException, ServiceException {
-    return cachedFeed("/album/" + urlEncode(albumName) + "?kind=comment", PhotoFeed.class).getCommentEntries();
   }
 
   public RandomPhotos getRandomPhotos(int numNext) throws IOException, ServiceException {
@@ -132,7 +130,6 @@ public class Picasa {
   private String toFullUrl(String url) {
     url = "http://picasaweb.google.com/data/feed/api/user/" + urlEncode(user) + url;
     if (authkey != null) url += (url.contains("?") ? "&" : "?") + "authkey=" + authkey;
-    System.out.println(url);
     return url;
   }
 
