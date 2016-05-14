@@ -1,6 +1,5 @@
 package net.azib.photos;
 
-import com.google.gdata.data.BaseFeed;
 import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.Source;
 import com.google.gdata.data.photos.AlbumFeed;
@@ -105,8 +104,6 @@ public class RequestRouter implements Filter {
     response.setContentType("text/html; charset=utf8");
     if (source instanceof Source)
       response.addDateHeader("Last-Modified", ((Source) source).getUpdated().getValue());
-    if (source instanceof BaseFeed)
-      response.addHeader("ETag", ((BaseFeed) source).getEtag());
 
     request.getRequestDispatcher("/WEB-INF/jsp/" + template + ".jsp").include(request, response);
   }
