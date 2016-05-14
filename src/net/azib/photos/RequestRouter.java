@@ -67,7 +67,7 @@ public class RequestRouter implements Filter {
         List<CommentEntry> comments = emptyList();
         try {
           album = picasa.getAlbum(parts[1]);
-          comments = picasa.getAlbumComments(parts[1]);
+          comments = album.getEntries(CommentEntry.class);
         }
         catch (ResourceNotFoundException e) {
           album = picasa.search(parts[1]);
