@@ -1,10 +1,12 @@
 var chromecast = (function(self) {
   if (navigator.userAgent.indexOf('Chrome') >= 0 && navigator.userAgent.indexOf('CrKey') < 0) {
-    window['__onGCastApiAvailable'] = function(loaded, error) {
+    window.__onGCastApiAvailable = function(loaded, error) {
       if (loaded) self.init();
       else onerror(error);
     };
-    document.write('<script type="text/javascript" src="//www.gstatic.com/cv/js/sender/v1/cast_sender.js" async></script>');
+    var s = document.createElement('script');
+    s.src = '//www.gstatic.com/cv/js/sender/v1/cast_sender.js'; s.async = true;
+    document.body.appendChild(s);
   }
 
   var messageCallback;

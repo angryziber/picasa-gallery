@@ -17,11 +17,8 @@
   <meta property="og:image" content="${gallery.albumEntries[0].mediaThumbnails[0].url}">
   <meta property="og:site_name" content="${gallery.nickname} Photography">
   <%@include file="head.jsp" %>
-  <script type="text/javascript" src="//maps.google.com/maps/api/js"></script>
-  <script type="text/javascript">
-    $(initMap);
-    $(initAlbumFilter);
-  </script>
+  <script defer async src="//maps.google.com/maps/api/js" onload="$(initMap)"></script>
+  <script defer>$(initAlbumFilter);</script>
 </head>
 
 <body style="background:black; color: gray">
