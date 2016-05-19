@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+  <cron>
+    <url>/</url>
+    <description>Keep instance warm</description>
+    <schedule>every 1 minute</schedule>
+  </cron>
+  <cron>
+    <url>/?reload</url>
+    <description>Reload cache</description>
+    <schedule>every 30 minutes</schedule>
+  </cron>
+</cronentries>

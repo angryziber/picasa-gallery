@@ -25,13 +25,9 @@ public class RequestRouter implements Filter {
 
   public void init(FilterConfig config) throws ServletException {
     this.context = config.getServletContext();
-    // TODO: this doesn't work on AppEngine (would only work in backend)
-    // ThreadManager.createBackgroundThread(new CacheReloader()).start();
   }
 
   public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
-    long start = System.currentTimeMillis();
-
     HttpServletRequest request = (HttpServletRequest) req;
     HttpServletResponse response = (HttpServletResponse) resp;
     String path = request.getServletPath();
@@ -59,6 +55,9 @@ public class RequestRouter implements Filter {
         render("random", picasa.getRandomPhotos(parseInt(random.length() > 0 ? random : "1")), request, response);
       }
       else if (path == null || "/".equals(path)) {
+        if (request.getParameter("reload") != null)
+          new CacheReloader().reload();
+
         render("gallery", picasa.getGallery(), request, response);
       }
       else if (path.lastIndexOf('.') >= path.length() - 4) {
