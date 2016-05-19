@@ -3,7 +3,7 @@
   <cron>
     <url>/</url>
     <description>Keep instance warm</description>
-    <schedule>every 1 minute</schedule>
+    <schedule>every 1 minutes</schedule>
   </cron>
   <cron>
     <url>/?reload</url>
