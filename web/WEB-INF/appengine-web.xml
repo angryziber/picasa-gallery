@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
   <application>anton-photos</application>
-  <version>2</version>
+  <version>3</version>
   <threadsafe>true</threadsafe>
-  <sessions-enabled>true</sessions-enabled>
+  <sessions-enabled>false</sessions-enabled>
   <system-properties>
     <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
   </system-properties>
