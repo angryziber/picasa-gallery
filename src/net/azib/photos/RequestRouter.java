@@ -47,7 +47,7 @@ public class RequestRouter implements Filter {
       request.setAttribute("picasa", picasa);
       request.setAttribute("host", request.getHeader("host"));
       request.setAttribute("bot", bot);
-      request.setAttribute("mobile", userAgent.contains("Mobile") && !userAgent.contains("iPad") && !userAgent.contains("Tab"));
+      request.setAttribute("mobile", userAgent != null && userAgent.contains("Mobile") && !userAgent.contains("iPad") && !userAgent.contains("Tab"));
 
       if (random != null) {
         request.setAttribute("delay", request.getParameter("delay"));
