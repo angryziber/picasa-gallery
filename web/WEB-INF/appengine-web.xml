@@ -4,6 +4,9 @@
   <version>2</version>
   <threadsafe>true</threadsafe>
   <sessions-enabled>true</sessions-enabled>
+  <system-properties>
+    <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
+  </system-properties>
   <static-files>
     <include path="/**.jpg"/>
     <include path="/**.png"/>

@@ -13,12 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static java.util.Collections.emptyList;
 import static javax.servlet.http.HttpServletResponse.*;
 import static javax.xml.bind.DatatypeConverter.parseInt;
 
 public class RequestRouter implements Filter {
+  private static final Logger logger = Logger.getLogger(RequestRouter.class.getName());
   private ServletContext context;
 
   public void init(FilterConfig config) throws ServletException {
@@ -28,6 +30,8 @@ public class RequestRouter implements Filter {
   }
 
   public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
+    long start = System.currentTimeMillis();
+
     HttpServletRequest request = (HttpServletRequest) req;
     HttpServletResponse response = (HttpServletResponse) resp;
     String path = request.getServletPath();
@@ -99,6 +103,8 @@ public class RequestRouter implements Filter {
   }
 
   void render(String template, Object source, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    long start = System.currentTimeMillis();
+
     request.setAttribute(template, source);
 
     response.setContentType("text/html; charset=utf8");
@@ -106,6 +112,8 @@ public class RequestRouter implements Filter {
       response.addDateHeader("Last-Modified", ((Source) source).getUpdated().getValue());
 
     request.getRequestDispatcher("/WEB-INF/jsp/" + template + ".jsp").include(request, response);
+
+    logger.info("Rendered in " + (System.currentTimeMillis() - start) + " ms");
   }
 
   public void destroy() {
