@@ -107,7 +107,7 @@ public class RequestRouter implements Filter {
     return userAgent == null || userAgent.toLowerCase().contains("bot/") || userAgent.contains("spider/");
   }
 
-  void render(String template, Object source, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+  static void render(String template, Object source, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
     long start = System.currentTimeMillis();
 
     request.setAttribute(template, source);

@@ -54,7 +54,7 @@ public class Picasa {
 
   public UserFeed getGallery() throws IOException, ServiceException {
     String url = "?kind=album&thumbsize=212c";
-    url += "&fields=id,updated,gphoto:*,entry(title,summary,content,category,gphoto:*,media:*,georss:*)";
+    url += "&fields=id,updated,gphoto:*,entry(title,summary,updated,content,category,gphoto:*,media:*,georss:*)";
     return cachedFeed(url, UserFeed.class);
   }
 
