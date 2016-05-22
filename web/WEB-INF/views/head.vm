@@ -1,7 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="picasa" scope="request" type="net.azib.photos.Picasa"/>
-
-<meta property="og:url" content="http://${host}${pageContext.request.servletPath}">
+<meta property="og:url" content="http://${host}${servletPath}">
 <meta property="fb:admins" content="${picasa.user}"/>
 
 <meta name="mobile-web-app-capable" content="yes">
@@ -18,7 +15,7 @@
 <script defer src="/prefixfree.min.js"></script>
 
 <script type="text/javascript">
-  <c:if test="${picasa.analytics != null}">
+  #if($picasa.analytics)
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
             m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -26,5 +23,5 @@
 
     ga('create', '${picasa.analytics}', 'auto');
     ga('send', 'pageview');
-  </c:if>
+  #end
 </script>

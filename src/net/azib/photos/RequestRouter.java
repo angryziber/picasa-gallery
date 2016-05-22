@@ -7,11 +7,15 @@ import com.google.gdata.data.photos.CommentEntry;
 import com.google.gdata.data.photos.GphotoEntry;
 import com.google.gdata.util.ResourceNotFoundException;
 import com.google.gdata.util.ServiceException;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.Velocity;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -46,6 +50,7 @@ public class RequestRouter implements Filter {
       Picasa picasa = new Picasa(by, request.getParameter("authkey"));
       request.setAttribute("picasa", picasa);
       request.setAttribute("host", request.getHeader("host"));
+      request.setAttribute("servletPath", request.getServletPath());
       request.setAttribute("bot", bot);
       request.setAttribute("mobile", userAgent != null && userAgent.contains("Mobile") && !userAgent.contains("iPad") && !userAgent.contains("Tab"));
 
@@ -110,7 +115,14 @@ public class RequestRouter implements Filter {
     if (source instanceof Source)
       response.addDateHeader("Last-Modified", ((Source) source).getUpdated().getValue());
 
-    request.getRequestDispatcher("/WEB-INF/jsp/" + template + ".jsp").include(request, response);
+    VelocityContext ctx = new VelocityContext();
+    Enumeration<String> attrs = request.getAttributeNames();
+    while (attrs.hasMoreElements()) {
+      String name =  attrs.nextElement();
+      ctx.put(name, request.getAttribute(name));
+    }
+    Template tmpl = Velocity.getTemplate("WEB-INF/views/" + template + ".vm");
+    tmpl.merge(ctx, response.getWriter());
 
     logger.info("Rendered in " + (System.currentTimeMillis() - start) + " ms");
   }
