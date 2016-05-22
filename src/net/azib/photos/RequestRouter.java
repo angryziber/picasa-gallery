@@ -2,9 +2,7 @@ package net.azib.photos;
 
 import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.Source;
-import com.google.gdata.data.photos.AlbumFeed;
-import com.google.gdata.data.photos.CommentEntry;
-import com.google.gdata.data.photos.GphotoEntry;
+import com.google.gdata.data.photos.*;
 import com.google.gdata.util.ResourceNotFoundException;
 import com.google.gdata.util.ServiceException;
 import org.apache.velocity.Template;
@@ -15,6 +13,9 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Logger;
@@ -116,6 +117,7 @@ public class RequestRouter implements Filter {
       response.addDateHeader("Last-Modified", ((Source) source).getUpdated().getValue());
 
     VelocityContext ctx = new VelocityContext();
+    ctx.put("helper", new VelocityHelper());
     Enumeration<String> attrs = request.getAttributeNames();
     while (attrs.hasMoreElements()) {
       String name =  attrs.nextElement();
@@ -128,5 +130,21 @@ public class RequestRouter implements Filter {
   }
 
   public void destroy() {
+  }
+
+  public static class VelocityHelper {
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+    public String formatDateTime(Date time) {
+      return dateFormat.format(time);
+    }
+
+    public String getCommentThumbnail(CommentAuthor author) {
+      return author.getExtension(GphotoThumbnail.class).getValue();
+    }
+
+    public String getCommentUsername(CommentAuthor author) {
+      return author.getExtension(GphotoUsername.class).getValue();
+    }
   }
 }
