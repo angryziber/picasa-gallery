@@ -61,7 +61,7 @@ public class Picasa {
   public AlbumFeed getAlbum(String name) throws IOException, ServiceException {
     String url = name.matches("\\d+") ? "/albumid/" + name : "/album/" + urlEncode(name);
     url += "?kind=photo,comment&imgmax=1600&thumbsize=144c";
-    url += "&fields=id,updated,title,subtitle,gphoto:*,entry(title,summary,content,author,category,gphoto:id,gphoto:photoid,gphoto:width,gphoto:height,gphoto:commentCount,exif:*,media:*)";
+    url += "&fields=id,updated,title,subtitle,icon,gphoto:*,entry(title,summary,content,author,category,gphoto:id,gphoto:photoid,gphoto:width,gphoto:height,gphoto:commentCount,gphoto:timestamp,exif:*,media:*)";
     return fixPhotoDescriptions(cachedFeed(url, AlbumFeed.class));
   }
 
