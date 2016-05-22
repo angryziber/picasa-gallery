@@ -35,7 +35,7 @@
   <meta property="og:description" content="${album.description.plainText}">
   <meta property="og:site_name" content="${album.nickname} Photography">
 
-  #parse('WEB-INF/views/head.vm')
+  #parse('head.vm')
   <script type="text/javascript">
     var viewer = new PhotoViewer();
     $(function() {

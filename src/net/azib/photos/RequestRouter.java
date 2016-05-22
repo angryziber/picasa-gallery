@@ -7,7 +7,7 @@ import com.google.gdata.util.ResourceNotFoundException;
 import com.google.gdata.util.ServiceException;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
+import org.apache.velocity.app.VelocityEngine;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Logger;
 
 import static java.util.Collections.emptyList;
@@ -27,9 +28,16 @@ import static javax.xml.bind.DatatypeConverter.parseInt;
 public class RequestRouter implements Filter {
   private static final Logger logger = Logger.getLogger(RequestRouter.class.getName());
   private ServletContext context;
+  private static VelocityEngine velocity;
 
   public void init(FilterConfig config) throws ServletException {
     this.context = config.getServletContext();
+    Properties velocityProps = new Properties();
+    velocityProps.setProperty("file.resource.loader.path", context.getRealPath("/WEB-INF/views"));
+    velocityProps.setProperty("file.resource.loader.cache", "true");
+    velocity = new VelocityEngine(velocityProps);
+    velocity.setApplicationAttribute("javax.servlet.ServletContext", context);
+    velocity.init();
   }
 
   public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
@@ -123,7 +131,7 @@ public class RequestRouter implements Filter {
       String name =  attrs.nextElement();
       ctx.put(name, request.getAttribute(name));
     }
-    Template tmpl = Velocity.getTemplate("WEB-INF/views/" + template + ".vm");
+    Template tmpl = velocity.getTemplate(template + ".vm");
     tmpl.merge(ctx, response.getWriter());
 
     logger.info("Rendered in " + (System.currentTimeMillis() - start) + " ms");
