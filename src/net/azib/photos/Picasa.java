@@ -61,10 +61,10 @@ public class Picasa {
   public Album getAlbum(String name) throws IOException, ServiceException {
     String url = name.matches("\\d+") ? "/albumid/" + name : "/album/" + urlEncode(name);
     url += "?kind=photo,comment&imgmax=1600&thumbsize=144c";
-    url += "&fields=id,updated,title,subtitle,icon,gphoto:*,entry(title,summary,content,author,category,gphoto:id,gphoto:photoid,gphoto:width,gphoto:height,gphoto:commentCount,gphoto:timestamp,exif:*,media:*)";
+    url += "&fields=id,updated,title,subtitle,icon,gphoto:*,georss:where(gml:Point),entry(title,summary,content,author,category,gphoto:id,gphoto:photoid,gphoto:width,gphoto:height,gphoto:commentCount,gphoto:timestamp,exif:*,media:*,georss:where(gml:Point))";
     url = toFullUrl(url);
     try (InputStream in = new URL(url).openStream()) {
-      return new XMLParser<Album>(new GDataAlbumListener()).parse(in);
+      return new XMLParser<>(new GDataAlbumListener()).parse(in);
     }
     //return fixPhotoDescriptions(cachedFeed(url, AlbumFeed.class));
   }

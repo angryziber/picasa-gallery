@@ -1,39 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>${album.title.plainText} by ${album.nickname} - Photos</title>
+  <title>${album.title} by ${album.author} - Photos</title>
   #if($mobile)
     <meta name="viewport" content="width=650, user-scalable=no, minimal-ui">
   #end
-  <meta name="description" content="${album.title.plainText} by ${album.nickname}: ${album.description.plainText}">
-  <meta name="keywords" content="${album.nickname.replace(' ', ',')},photos,${album.title.plainText.replace(' ', ',')},${album.description.plainText.replace(', ', ' ').replace(' ', ',')}">
+  <meta name="description" content="${album.title} by ${album.nickname}: ${album.description}">
+  <meta name="keywords" content="${album.nickname.replace(' ', ',')},photos,${album.title.replace(' ', ',')},${album.description.replace(', ', ' ').replace(' ', ',')}">
 
   #if(!$photo)
     <meta name="medium" content="image">
     <meta property="og:type" content="photos:album">
-    <meta property="og:title" content="${album.title.plainText} by ${album.nickname}">
-    <meta property="og:image" content="${album.icon}">
+    <meta property="og:title" content="${album.title} by ${album.nickname}">
+    <meta property="og:image" content="${album.iconUrl}">
     <link rel="image_src" href="${album.icon}">
-    #if($album.geoLocation)
-      <meta property="og:latitude" content="${album.geoLocation.latitude}">
-      <meta property="og:longitude" content="${album.geoLocation.longitude}">
+    #if($album.geo)
+      <meta property="og:latitude" content="${album.geo.lat}">
+      <meta property="og:longitude" content="${album.geo.lon}">
     #end
   #else
     <meta name="medium" content="image">
     <meta property="og:type" content="photos:photo">
-    #if($photo.description.plainText.length() > 0)
-      <meta property="og:title" content="${photo.description.plainText}">
+    #if($photo.description.length() > 0)
+      <meta property="og:title" content="${photo.description}">
     #else
-      <meta property="og:title" content="${album.title.plainText}">
+      <meta property="og:title" content="${album.title}">
     #end
-    <meta property="og:image" content="${photo.mediaThumbnails[0].url}">
-    #if($photo.geoLocation)
-      <meta property="og:latitude" content="${photo.geoLocation.latitude}">
-      <meta property="og:longitude" content="${photo.geoLocation.longitude}">
+    <meta property="og:image" content="${photo.thumbUrl}">
+    #if($photo.geo)
+      <meta property="og:latitude" content="${photo.geo.lat}">
+      <meta property="og:longitude" content="${photo.geo.lon}">
     #end
   #end
-  <meta property="og:description" content="${album.description.plainText}">
-  <meta property="og:site_name" content="${album.nickname} Photography">
+  <meta property="og:description" content="${album.description}">
+  <meta property="og:site_name" content="${album.author} Photography">
 
   #parse('head.vm')
   <script type="text/javascript">
@@ -56,16 +56,16 @@
 
   <form id="search"><input></form>
   <h1 id="title">
-    ${album.title.plainText}
-    <small>by ${album.nickname}</small>
+    ${album.title}
+    <small>by ${album.author}</small>
   </h1>
 </div>
 
 <div id="content">
-  <h1>${album.title.plainText}</h1>
+  <h1>${album.title}</h1>
 
-  <h2>${album.description.plainText}</h2>
-  #if($album.access != 'private')
+  <h2>${album.description}</h2>
+  #if($album.isPublic)
     <iframe class="facebook-button" scrolling="no" frameborder="0" allowtransparency="true"
             src="http://www.facebook.com/plugins/like.php?layout=button_count&action=like&width=90&height=20&colorscheme=dark&href=http://${host}/${album.name}${picasa.urlSuffix}">
     </iframe>
@@ -73,17 +73,16 @@
   <br>
 
   <div class="thumbs clear">
-    #foreach($photo in $album.photoEntries)
-      #set($media = ${photo.mediaContents[0]})
-      <a id="${photo.gphotoId}" href="${media.url}" class="photo"
-         data-href="/${album.name}/${photo.gphotoId}${picasa.urlSuffix}"
-         rel="${media.width}x${media.height}"
+    #foreach($photo in $album.photos)
+      <a id="${photo.id}" href="${photo.url}" class="photo"
+         data-href="/${album.name}/${photo.id}${picasa.urlSuffix}"
+         rel="${photo.width}x${photo.height}"
          onclick="return false;"
          #if($photo.timestamp)data-time="${helper.formatDateTime($photo.timestamp)}"#end
-         #if($photo.geoLocation)data-coords="${photo.geoLocation.latitude}:${photo.geoLocation.longitude}"#end
-         #if($photo.exifTags.exifTags.size() > 1)data-exif="${photo.exifTags.apetureFNumber}:${photo.exifTags.exposureTime}:${photo.exifTags.isoEquivalent}:${photo.exifTags.focalLength}"#end>
-        <img src="${photo.mediaThumbnails[0].url}" title="${photo.description.plainText}">
-        <span class="description">${photo.description.plainText}</span>
+         #if($photo.geo)data-coords="${photo.geo.lat}:${photo.geo.lon}"#end
+         #if($photo.exif.fstop)data-exif="${photo.exif.fstop}:${photo.exif.exposure}:${photo.exif.iso}:${photo.exif.focal}"#end>
+        <img src="${photo.thumbUrl}" title="${photo.description}">
+        <span class="description">${photo.description}</span>
       </a>
     #end
   </div>
@@ -119,7 +118,7 @@
               ${author.name}
           </a>
         #end
-        <br>${comment.textContent.content.plainText}
+        <br>${comment.textContent.content}
       </div>
     #end
   </div>
@@ -132,7 +131,7 @@
       <a class="button" id="inc-interval">+</a>
       <span class="left" id="time-remaining"></span>
 
-      <h1><span id="photo-controls-title">${album.title.plainText}</span>
+      <h1><span id="photo-controls-title">${album.title}</span>
         <small id="position"></small>
       </h1>
     </div>

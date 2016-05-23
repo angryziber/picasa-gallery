@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<feed xmlns='http://www.w3.org/2005/Atom' xmlns:gphoto='http://schemas.google.com/photos/2007' xmlns:exif='http://schemas.google.com/photos/exif/2007' xmlns:media='http://search.yahoo.com/mrss/'>
+<feed xmlns='http://www.w3.org/2005/Atom' xmlns:gphoto='http://schemas.google.com/photos/2007' xmlns:exif='http://schemas.google.com/photos/exif/2007' xmlns:media='http://search.yahoo.com/mrss/' xmlns:georss='http://www.georss.org/georss' xmlns:gml='http://www.opengis.net/gml'>
   <id>http://picasaweb.google.com/data/feed/api/user/anton.keks/album/Morocco</id>
   <updated>2016-05-22T08:08:22.958Z</updated>
   <title type='text'>Morocco</title>
@@ -17,6 +17,11 @@
   <gphoto:nickname>Anton Keks</gphoto:nickname>
   <gphoto:allowPrints>true</gphoto:allowPrints>
   <gphoto:allowDownloads>true</gphoto:allowDownloads>
+  <georss:where>
+    <gml:Point>
+      <gml:pos>31.791702 -7.09262</gml:pos>
+    </gml:Point>
+  </georss:where>
   <entry>
     <category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/photos/2007#photo'/>
     <title type='text'>20150511_090348</title>
@@ -46,5 +51,10 @@
       <media:thumbnail url='https://lh3.googleusercontent.com/-zBnTKPsUg38/VtyhNN_QL4I/AAAAAAABMHg/mK1UCQcRPycGbfAzWgHRoGGZCwUBbBcpgCHM/s144-c/20150511_090348' height='144' width='144'/>
       <media:title type='plain'>20150511_090348</media:title>
     </media:group>
+    <georss:where>
+      <gml:Point>
+        <gml:pos>31.791702 -7.09262</gml:pos>
+      </gml:Point>
+    </georss:where>
   </entry>
 </feed>

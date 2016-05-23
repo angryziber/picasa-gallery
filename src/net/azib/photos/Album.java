@@ -3,12 +3,9 @@ package net.azib.photos;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Album {
-  public String title;
-  public String description;
+public class Album extends Entity {
   public String author;
-  public String iconUrl;
-  public Long timestamp;
+  public boolean isPublic;
 
   public List<Photo> photos = new ArrayList<>();
 }

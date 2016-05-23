@@ -1,13 +1,9 @@
 package net.azib.photos;
 
-public class Photo {
+public class Photo extends Entity {
   public String id;
-  public String title;
-  public String description;
-  public Long timestamp;
   public Integer width;
   public Integer height;
   public String url;
-  public String thumbUrl;
   public Exif exif = new Exif();
 }

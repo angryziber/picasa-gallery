@@ -27,10 +27,12 @@ public class GDataAlbumListener implements XMLListener<Album> {
     switch (path) {
       case "title": album.title = value; break;
       case "subtitle": album.description = value; break;
-      case "icon": album.iconUrl = value; break;
+      case "icon": album.thumbUrl = value; break;
       case "timestamp": album.timestamp = parseLong(value); break;
       case "nickname": album.author = value; break;
+      case "access": album.isPublic = "public".equals(value); break;
       case "numphotos": album.photos = new ArrayList<>(parseInt(value)); break;
+      case "where/Point/pos": album.geo = new GeoLocation(value); break;
 
       case "entry/id": photo.id = value; break;
       case "entry/title": photo.title = value; break;
@@ -45,6 +47,7 @@ public class GDataAlbumListener implements XMLListener<Album> {
       case "entry/tags/focallength": photo.exif.focal = parseFloat(value); break;
       case "entry/tags/iso": photo.exif.iso = value; break;
       case "entry/tags/model": photo.exif.camera = value; break;
+      case "entry/where/Point/pos": photo.geo = new GeoLocation(value); break;
     }
   }
 
