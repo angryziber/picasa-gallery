@@ -4,5 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Album {
+  public String title;
+  public String description;
+  public String iconUrl;
+  public Long timestamp;
+
   public List<Photo> photos = new ArrayList<>();
 }

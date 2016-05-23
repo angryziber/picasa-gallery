@@ -24,7 +24,7 @@ public class XMLParser<T> {
   private boolean rootFound;
   private final XMLListener<T> listener;
 
-  public XMLParser(XMLListener listener) {
+  public XMLParser(XMLListener<T> listener) {
     this.listener = listener;
   }
 
@@ -113,9 +113,5 @@ public class XMLParser<T> {
       listener.rootElementEnd(endElement.getName().getLocalPart());
     }
     path.pollLast();
-  }
-
-  public static void parse(InputStream in, XMLListener listener) {
-    new XMLParser(listener).parse(in);
   }
 }
