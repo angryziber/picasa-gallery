@@ -2,6 +2,7 @@ package net.azib.photos;
 
 import java.util.ArrayList;
 
+import static java.lang.Float.parseFloat;
 import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
 
@@ -28,6 +29,7 @@ public class GDataAlbumListener implements XMLListener<Album> {
       case "subtitle": album.description = value; break;
       case "icon": album.iconUrl = value; break;
       case "timestamp": album.timestamp = parseLong(value); break;
+      case "nickname": album.author = value; break;
       case "numphotos": album.photos = new ArrayList<>(parseInt(value)); break;
 
       case "entry/id": photo.id = value; break;
@@ -38,6 +40,11 @@ public class GDataAlbumListener implements XMLListener<Album> {
       case "entry/height": photo.height = parseInt(value); break;
       case "entry/group/content@url": photo.url = value; break;
       case "entry/group/thumbnail@url": photo.thumbUrl = value; break;
+      case "entry/tags/fstop": photo.exif.fstop = parseFloat(value); break;
+      case "entry/tags/exposure": photo.exif.exposure = parseFloat(value); break;
+      case "entry/tags/focallength": photo.exif.focal = parseFloat(value); break;
+      case "entry/tags/iso": photo.exif.iso = value; break;
+      case "entry/tags/model": photo.exif.camera = value; break;
     }
   }
 

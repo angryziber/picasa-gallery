@@ -6,6 +6,7 @@ import java.util.List;
 public class Album {
   public String title;
   public String description;
+  public String author;
   public String iconUrl;
   public Long timestamp;
 

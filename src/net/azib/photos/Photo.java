@@ -9,4 +9,5 @@ public class Photo {
   public Integer height;
   public String url;
   public String thumbUrl;
+  public Exif exif = new Exif();
 }
