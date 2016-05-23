@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Album extends Entity {
+  public String name;
   public String author;
   public boolean isPublic;
 

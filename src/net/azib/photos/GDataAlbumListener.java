@@ -25,6 +25,7 @@ public class GDataAlbumListener implements XMLListener<Album> {
   @Override
   public void value(String path, String value) throws StopParse {
     switch (path) {
+      case "name": album.name = value; break;
       case "title": album.title = value; break;
       case "subtitle": album.description = value; break;
       case "icon": album.thumbUrl = value; break;

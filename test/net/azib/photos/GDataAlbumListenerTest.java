@@ -9,6 +9,7 @@ public class GDataAlbumListenerTest {
   @Test
   public void parse() throws Exception {
     Album album = new XMLParser<>(new GDataAlbumListener()).parse(getClass().getResourceAsStream("album.xml"));
+    assertThat(album.name, is("Morocco"));
     assertThat(album.title, is("Morocco"));
     assertThat(album.description, is("Morocco round trip: Fes, Chefchaouen, Casablanca, Marrakech, Merzouga"));
     assertThat(album.author, is("Anton Keks"));
