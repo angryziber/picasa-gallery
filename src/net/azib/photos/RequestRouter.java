@@ -1,8 +1,9 @@
 package net.azib.photos;
 
-import com.google.gdata.data.PlainTextConstruct;
-import com.google.gdata.data.Source;
-import com.google.gdata.data.photos.*;
+import com.google.gdata.data.photos.CommentAuthor;
+import com.google.gdata.data.photos.CommentEntry;
+import com.google.gdata.data.photos.GphotoThumbnail;
+import com.google.gdata.data.photos.GphotoUsername;
 import com.google.gdata.util.ResourceNotFoundException;
 import com.google.gdata.util.ServiceException;
 import org.apache.velocity.Template;
@@ -83,16 +84,17 @@ public class RequestRouter implements Filter {
         List<CommentEntry> comments = emptyList();
         try {
           album = picasa.getAlbum(parts[1]);
-          comments = album.getEntries(CommentEntry.class);
+//          comments = album.getEntries(CommentEntry.class);
         }
         catch (ResourceNotFoundException e) {
-          album = picasa.search(parts[1]);
-          album.setTitle(new PlainTextConstruct("Photos matching '" + parts[1] + "'"));
+          album = null;
+//          album = picasa.search(parts[1]);
+//          album.setTitle(new PlainTextConstruct("Photos matching '" + parts[1] + "'"));
         }
 
         if (parts.length > 2) {
-          for (GphotoEntry photo : album.getPhotoEntries()) {
-            if (photo.getGphotoId().equals(parts[2])) {
+          for (Photo photo : album.photos) {
+            if (photo.id.equals(parts[2])) {
               request.setAttribute("photo", photo);
               break;
             }
@@ -121,8 +123,8 @@ public class RequestRouter implements Filter {
     request.setAttribute(template, source);
 
     response.setContentType("text/html; charset=utf8");
-    if (source instanceof Source)
-      response.addDateHeader("Last-Modified", ((Source) source).getUpdated().getValue());
+    if (source instanceof Entity)
+      response.addDateHeader("Last-Modified", ((Entity) source).timestamp);
 
     VelocityContext ctx = new VelocityContext();
     ctx.put("helper", new VelocityHelper());

@@ -16,8 +16,8 @@ public class GDataAlbumListenerTest {
     assertThat(album.isPublic, is(true));
     assertThat(album.thumbUrl, is("https://lh3.googleusercontent.com/-ooqeMhFMze0/VtyhMoYRIKE/AAAAAAABNJQ/DruDrN8NmjEw-QT-28mIrn0OPW4sqwXPgCHM/s160-c/Morocco"));
     assertThat(album.timestamp, is(1431327600000L));
-    assertThat(album.geo.lat, is(31.791702f));
-    assertThat(album.geo.lon, is(-7.09262f));
+    assertThat(album.geo.getLat(), is(31.791702f));
+    assertThat(album.geo.getLon(), is(-7.09262f));
 
     Photo photo = album.photos.get(0);
     assertThat(photo.id, is("6259054830603480962"));
@@ -33,7 +33,9 @@ public class GDataAlbumListenerTest {
     assertThat(photo.exif.exposure, is(0.04f));
     assertThat(photo.exif.focal, is(80.0f));
     assertThat(photo.exif.iso, is("100"));
-    assertThat(photo.geo.lat, is(31.791702f));
-    assertThat(photo.geo.lon, is(-7.09262f));
+    assertThat(photo.geo.getLat(), is(31.791702f));
+    assertThat(photo.geo.getLon(), is(-7.09262f));
+
+    // TODO: comments
   }
 }
