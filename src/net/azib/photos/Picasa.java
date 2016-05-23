@@ -7,6 +7,7 @@ import com.google.gdata.data.photos.*;
 import com.google.gdata.util.ServiceException;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -57,11 +58,15 @@ public class Picasa {
     return cachedFeed(url, UserFeed.class);
   }
 
-  public AlbumFeed getAlbum(String name) throws IOException, ServiceException {
+  public Album getAlbum(String name) throws IOException, ServiceException {
     String url = name.matches("\\d+") ? "/albumid/" + name : "/album/" + urlEncode(name);
     url += "?kind=photo,comment&imgmax=1600&thumbsize=144c";
     url += "&fields=id,updated,title,subtitle,icon,gphoto:*,entry(title,summary,content,author,category,gphoto:id,gphoto:photoid,gphoto:width,gphoto:height,gphoto:commentCount,gphoto:timestamp,exif:*,media:*)";
-    return fixPhotoDescriptions(cachedFeed(url, AlbumFeed.class));
+    url = toFullUrl(url);
+    try (InputStream in = new URL(url).openStream()) {
+      return new XMLParser<Album>(new GDataAlbumListener()).parse(in);
+    }
+    //return fixPhotoDescriptions(cachedFeed(url, AlbumFeed.class));
   }
 
   private AlbumFeed fixPhotoDescriptions(AlbumFeed album) {

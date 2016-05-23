@@ -79,7 +79,7 @@ public class RequestRouter implements Filter {
       }
       else {
         String[] parts = path.split("/");
-        AlbumFeed album;
+        Album album;
         List<CommentEntry> comments = emptyList();
         try {
           album = picasa.getAlbum(parts[1]);
