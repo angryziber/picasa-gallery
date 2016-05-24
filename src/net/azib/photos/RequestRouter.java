@@ -4,7 +4,6 @@ import com.google.gdata.data.photos.CommentAuthor;
 import com.google.gdata.data.photos.CommentEntry;
 import com.google.gdata.data.photos.GphotoThumbnail;
 import com.google.gdata.data.photos.GphotoUsername;
-import com.google.gdata.util.ResourceNotFoundException;
 import com.google.gdata.util.ServiceException;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -16,10 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 import java.util.logging.Logger;
 
 import static java.util.Collections.emptyList;
@@ -86,10 +82,10 @@ public class RequestRouter implements Filter {
           album = picasa.getAlbum(parts[1]);
 //          comments = album.getEntries(CommentEntry.class);
         }
-        catch (ResourceNotFoundException e) {
-          album = null;
-//          album = picasa.search(parts[1]);
-//          album.setTitle(new PlainTextConstruct("Photos matching '" + parts[1] + "'"));
+        catch (MissingResourceException e) {
+          album = picasa.search(parts[1]);
+          album.title = "Photos matching '" + parts[1] + "'";
+          // TODO: no longer works for non-logged-in requests
         }
 
         if (parts.length > 2) {
@@ -104,8 +100,8 @@ public class RequestRouter implements Filter {
         render("album", album, request, response);
       }
     }
-    catch (ResourceNotFoundException e) {
-      response.sendError(SC_NOT_FOUND, e.getResponseBody());
+    catch (MissingResourceException e) {
+      response.sendError(SC_NOT_FOUND);
     }
     catch (ServiceException e) {
       context.log("GData", e);
@@ -123,7 +119,7 @@ public class RequestRouter implements Filter {
     request.setAttribute(template, source);
 
     response.setContentType("text/html; charset=utf8");
-    if (source instanceof Entity)
+    if (source instanceof Entity && ((Entity) source).timestamp != null)
       response.addDateHeader("Last-Modified", ((Entity) source).timestamp);
 
     VelocityContext ctx = new VelocityContext();

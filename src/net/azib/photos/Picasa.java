@@ -2,20 +2,20 @@ package net.azib.photos;
 
 import com.google.gdata.client.photos.PicasawebService;
 import com.google.gdata.data.IFeed;
-import com.google.gdata.data.PlainTextConstruct;
-import com.google.gdata.data.photos.*;
+import com.google.gdata.data.photos.AlbumEntry;
+import com.google.gdata.data.photos.AlbumFeed;
+import com.google.gdata.data.photos.GphotoEntry;
+import com.google.gdata.data.photos.UserFeed;
 import com.google.gdata.util.ServiceException;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static java.lang.Math.min;
@@ -62,19 +62,24 @@ public class Picasa {
     String url = name.matches("\\d+") ? "/albumid/" + name : "/album/" + urlEncode(name);
     url += "?kind=photo,comment&imgmax=1600&thumbsize=144c";
     url += "&fields=id,updated,title,subtitle,icon,gphoto:*,georss:where(gml:Point),entry(title,summary,content,author,category,gphoto:id,gphoto:photoid,gphoto:width,gphoto:height,gphoto:commentCount,gphoto:timestamp,exif:*,media:*,georss:where(gml:Point))";
-    url = toFullUrl(url);
-    try (InputStream in = new URL(url).openStream()) {
-      return new XMLParser<>(new GDataAlbumListener()).parse(in);
-    }
-    //return fixPhotoDescriptions(cachedFeed(url, AlbumFeed.class));
+    return fixPhotoDescriptions(loadAndParse(url, new GDataAlbumListener()));
   }
 
-  private AlbumFeed fixPhotoDescriptions(AlbumFeed album) {
-    for (PhotoEntry photo : album.getPhotoEntries()) {
+  private <T> T loadAndParse(String url, XMLListener<T> listener) throws IOException {
+    url = toFullUrl(url);
+    HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+    if (conn.getResponseCode() != 200) throw new MissingResourceException(url, null, null);
+    try (InputStream in = conn.getInputStream()) {
+      return new XMLParser<>(listener).parse(in);
+    }
+  }
+
+  private Album fixPhotoDescriptions(Album album) {
+    for (Photo photo : album.photos) {
       // remove filename-like descriptions that don't make any sense
-      String desc = photo.getDescription().getPlainText();
+      String desc = photo.description;
       if (desc != null && desc.matches("(IMG|DSC)?[0-9-_.]+")) {
-        photo.setDescription(new PlainTextConstruct());
+        photo.description = null;
       }
     }
     return album;
@@ -109,8 +114,8 @@ public class Picasa {
     return max == 0 ? 0 : random.nextInt(max);
   }
 
-  public AlbumFeed search(String query) throws IOException, ServiceException {
-    return fixPhotoDescriptions(feed("?kind=photo&q=" + urlEncode(query) + "&imgmax=1024&thumbsize=144c", AlbumFeed.class));
+  public Album search(String query) throws IOException, ServiceException {
+    return fixPhotoDescriptions(loadAndParse("?kind=photo&q=" + urlEncode(query) + "&imgmax=1024&thumbsize=144c", new GDataAlbumListener()));
   }
 
   @SuppressWarnings({"unchecked", "SynchronizationOnLocalVariableOrMethodParameter"})
