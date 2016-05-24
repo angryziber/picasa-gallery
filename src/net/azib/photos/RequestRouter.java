@@ -1,6 +1,5 @@
 package net.azib.photos;
 
-import com.google.gdata.data.photos.CommentEntry;
 import com.google.gdata.util.ServiceException;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -11,12 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Enumeration;
-import java.util.List;
 import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-import static java.util.Collections.emptyList;
 import static javax.servlet.http.HttpServletResponse.*;
 import static javax.xml.bind.DatatypeConverter.parseInt;
 
@@ -75,10 +72,8 @@ public class RequestRouter implements Filter {
       else {
         String[] parts = path.split("/");
         Album album;
-        List<CommentEntry> comments = emptyList();
         try {
           album = picasa.getAlbum(parts[1]);
-//          comments = album.getEntries(CommentEntry.class);
         }
         catch (MissingResourceException e) {
           album = picasa.search(parts[1]);
@@ -94,7 +89,6 @@ public class RequestRouter implements Filter {
             }
           }
         }
-        request.setAttribute("comments", comments);
         render("album", album, request, response);
       }
     }

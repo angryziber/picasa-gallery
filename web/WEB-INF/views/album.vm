@@ -108,17 +108,15 @@
     </tr>
   </table>
   <div id="photo-comments">
-    #foreach($comment in $comments)
+    #foreach($comment in $album.comments)
       <div class="comment photo-${comment.photoId} hidden">
-        #set($author = $comment.authors[0])
-        <img src="${helper.getCommentThumbnail($author)}">
-        #set($username = $helper.getCommentUsername($author))
+        <img src="${comment.avatarUrl}">
         #if(!$bot)
-          <a target="_blank" href="/#if($album.username != $username)?by=${username}#end">
-              ${author.name}
+          <a target="_blank" href="/#if($album.authorId != $comment.authorId)?by=${comment.authorId}#end">
+              ${comment.author}
           </a>
         #end
-        <br>${comment.textContent.content}
+        <br>${comment.text}
       </div>
     #end
   </div>

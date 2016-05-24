@@ -57,4 +57,18 @@
       </gml:Point>
     </georss:where>
   </entry>
+  <entry>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/photos/2007#comment'/>
+    <title type='text'>Roman Fjodorov</title>
+    <content type='text'>Отлично снято :)</content>
+    <author>
+      <name>Roman Fjodorov</name>
+      <uri>https://picasaweb.google.com/117865951136784338179</uri>
+      <gphoto:nickname>Roman Fjodorov</gphoto:nickname>
+      <gphoto:thumbnail>https://lh3.googleusercontent.com/-0nl2Qc_XT0I/AAAAAAAAAAI/AAAAAAAAAAA/l91Lk4HVZgo/s48-c/117865951136784338179.jpg</gphoto:thumbnail>
+      <gphoto:user>117865951136784338179</gphoto:user>
+    </author>
+    <gphoto:id>5464903527888061236</gphoto:id>
+    <gphoto:photoid>5464172735550834786</gphoto:photoid>
+  </entry>
 </feed>

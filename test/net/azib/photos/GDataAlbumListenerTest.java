@@ -13,11 +13,14 @@ public class GDataAlbumListenerTest {
     assertThat(album.title, is("Morocco"));
     assertThat(album.description, is("Morocco round trip: Fes, Chefchaouen, Casablanca, Marrakech, Merzouga"));
     assertThat(album.author, is("Anton Keks"));
+    assertThat(album.authorId, is("117440562642491680332"));
     assertThat(album.isPublic, is(true));
     assertThat(album.thumbUrl, is("https://lh3.googleusercontent.com/-ooqeMhFMze0/VtyhMoYRIKE/AAAAAAABNJQ/DruDrN8NmjEw-QT-28mIrn0OPW4sqwXPgCHM/s160-c/Morocco"));
     assertThat(album.timestamp, is(1431327600000L));
     assertThat(album.geo.getLat(), is(31.791702f));
     assertThat(album.geo.getLon(), is(-7.09262f));
+    assertThat(album.photos.size(), is(1));
+    assertThat(album.comments.size(), is(1));
 
     Photo photo = album.photos.get(0);
     assertThat(photo.id, is("6259054830603480962"));
@@ -36,6 +39,11 @@ public class GDataAlbumListenerTest {
     assertThat(photo.geo.getLat(), is(31.791702f));
     assertThat(photo.geo.getLon(), is(-7.09262f));
 
-    // TODO: comments
+    Comment comment = album.comments.get(0);
+    assertThat(comment.author, is("Roman Fjodorov"));
+    assertThat(comment.authorId, is("117865951136784338179"));
+    assertThat(comment.avatarUrl, is("https://lh3.googleusercontent.com/-0nl2Qc_XT0I/AAAAAAAAAAI/AAAAAAAAAAA/l91Lk4HVZgo/s48-c/117865951136784338179.jpg"));
+    assertThat(comment.text, is("Отлично снято :)"));
+    assertThat(comment.photoId, is("5464172735550834786"));
   }
 }
