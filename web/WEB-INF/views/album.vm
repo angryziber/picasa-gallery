@@ -41,7 +41,7 @@
     $(function() {
       viewer.setup();
       #if($photo)
-        $('a#${photo.gphotoId}').click();
+        $('a#${photo.id}').click();
       #else
         if (location.hash == '#slideshow') $('a.photo').eq(0).click();
       #end
