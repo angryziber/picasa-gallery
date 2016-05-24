@@ -1,5 +1,8 @@
 package net.azib.photos;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
 
@@ -24,6 +27,7 @@ public class GDataGalleryListener implements XMLListener<Gallery> {
   public void value(String path, String value) throws StopParse {
     switch (path) {
       case "nickname": gallery.author = value; break;
+      case "updated": gallery.timestamp = parseTimestamp(value); break;
 
       case "entry/name": album.name = value; break;
       case "entry/title": album.title = value; break;
@@ -34,6 +38,15 @@ public class GDataGalleryListener implements XMLListener<Gallery> {
       case "entry/group/thumbnail@url": album.thumbUrl = value; break;
       case "entry/where/Point/pos": album.geo = new GeoLocation(value); break;
       case "entry/numphotos": album.size = parseInt(value); break;
+    }
+  }
+
+  private long parseTimestamp(String value) {
+    try {
+      return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(value).getTime();
+    }
+    catch (ParseException e) {
+      throw new RuntimeException(e);
     }
   }
 

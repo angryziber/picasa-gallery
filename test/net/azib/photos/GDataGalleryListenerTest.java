@@ -2,6 +2,7 @@ package net.azib.photos;
 
 import org.junit.Test;
 
+import static javafx.scene.input.KeyCode.L;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -10,6 +11,7 @@ public class GDataGalleryListenerTest {
   public void parse() throws Exception {
     Gallery gallery = new XMLParser<>(new GDataGalleryListener()).parse(getClass().getResourceAsStream("gallery.xml"));
     assertThat(gallery.author, is("Anton Keks"));
+    assertThat(gallery.timestamp, is(1464106391641L));
     assertThat(gallery.albums.size(), is(1));
 
     Album album = gallery.albums.get(0);
