@@ -1,9 +1,5 @@
 package net.azib.photos;
 
-import com.google.gdata.client.photos.PicasawebService;
-import com.google.gdata.data.IFeed;
-import com.google.gdata.util.ServiceException;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -20,10 +16,9 @@ public class Picasa {
   static Properties config = loadConfig();
   static String defaultUser = config.getProperty("google.user");
   static String analytics = config.getProperty("google.analytics");
-  static PicasawebService service = new PicasawebService(defaultUser);
   static Random random = new SecureRandom();
 
-  static Map<String, IFeed> cache = new ConcurrentHashMap<>();
+  static Map<String, Entity> cache = new ConcurrentHashMap<>();
 
   String user = defaultUser;
   String authkey;
@@ -48,23 +43,22 @@ public class Picasa {
     return analytics;
   }
 
-  public Gallery getGallery() throws IOException, ServiceException {
+  public Gallery getGallery() throws IOException {
     String url = "?kind=album&thumbsize=212c";
     url += "&fields=id,updated,gphoto:*,entry(title,summary,updated,content,category,gphoto:*,media:*,georss:*)";
-    return loadAndParse(url, new GDataGalleryListener());
+    return cachedFeed(url, new GDataGalleryListener());
   }
 
-  public Album getAlbum(String name) throws IOException, ServiceException {
+  public Album getAlbum(String name) throws IOException {
     String url = name.matches("\\d+") ? "/albumid/" + name : "/album/" + urlEncode(name);
     url += "?kind=photo,comment&imgmax=1600&thumbsize=144c";
     url += "&fields=id,updated,title,subtitle,icon,gphoto:*,georss:where(gml:Point),entry(title,summary,content,author,category,gphoto:id,gphoto:photoid,gphoto:width,gphoto:height,gphoto:commentCount,gphoto:timestamp,exif:*,media:*,georss:where(gml:Point))";
-    return fixPhotoDescriptions(loadAndParse(url, new GDataAlbumListener()));
+    return fixPhotoDescriptions(cachedFeed(url, new GDataAlbumListener()));
   }
 
-  private <T> T loadAndParse(String url, XMLListener<T> listener) throws IOException {
-    url = toFullUrl(url);
-    HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
-    if (conn.getResponseCode() != 200) throw new MissingResourceException(url, null, null);
+  private <T> T loadAndParse(String fullUrl, XMLListener<T> listener) throws IOException {
+    HttpURLConnection conn = (HttpURLConnection) new URL(fullUrl).openConnection();
+    if (conn.getResponseCode() != 200) throw new MissingResourceException(fullUrl, null, null);
     try (InputStream in = conn.getInputStream()) {
       return new XMLParser<>(listener).parse(in);
     }
@@ -81,10 +75,10 @@ public class Picasa {
     return album;
   }
 
-  public RandomPhotos getRandomPhotos(int numNext) throws IOException, ServiceException {
+  public RandomPhotos getRandomPhotos(int numNext) throws IOException {
     List<Album> albums = getGallery().albums;
     Album album = weightedRandom(albums);
-    List<Photo> photos = fixPhotoDescriptions(loadAndParse("/album/" + urlEncode(album.name) + "?kind=photo&imgmax=1600&max-results=1000&fields=entry(category,content,summary)", new GDataAlbumListener())).photos;
+    List<Photo> photos = fixPhotoDescriptions(cachedFeed("/album/" + urlEncode(album.name) + "?kind=photo&imgmax=1600&max-results=1000&fields=entry(category,content,summary)", new GDataAlbumListener())).photos;
     int index = random(photos.size());
     return new RandomPhotos(photos.subList(index, min(index + numNext, photos.size())), album.author, album.title);
   }
@@ -110,36 +104,26 @@ public class Picasa {
     return max == 0 ? 0 : random.nextInt(max);
   }
 
-  public Album search(String query) throws IOException, ServiceException {
-    return fixPhotoDescriptions(loadAndParse("?kind=photo&q=" + urlEncode(query) + "&imgmax=1024&thumbsize=144c", new GDataAlbumListener()));
+  public Album search(String query) throws IOException {
+    return fixPhotoDescriptions(cachedFeed("?kind=photo&q=" + urlEncode(query) + "&imgmax=1024&thumbsize=144c", new GDataAlbumListener()));
   }
 
-  @SuppressWarnings({"unchecked", "SynchronizationOnLocalVariableOrMethodParameter"})
-  private <T extends IFeed> T cachedFeed(String url, Class<T> type) throws IOException, ServiceException {
+  private <T extends Entity> T cachedFeed(String url, XMLListener<T> listener) throws IOException {
     url = toFullUrl(url).intern();
     synchronized (url) {
       T feed = (T) cache.get(url);
       if (feed == null) {
-        feed = load(url, type);
+        feed = loadAndParse(url, listener);
         cache.put(url, feed);
       }
       return feed;
     }
   }
 
-  private <T extends IFeed> T feed(String url, Class<T> type) throws IOException, ServiceException {
-    url = toFullUrl(url);
-    return load(url, type);
-  }
-
   private String toFullUrl(String url) {
     url = "http://picasaweb.google.com/data/feed/api/user/" + urlEncode(user) + url;
     if (authkey != null) url += (url.contains("?") ? "&" : "?") + "authkey=" + authkey;
     return url;
-  }
-
-  static <T extends IFeed> T load(String url, Class<T> type) throws IOException, ServiceException {
-    return service.getFeed(new URL(url), type);
   }
 
   static String urlEncode(String name) {

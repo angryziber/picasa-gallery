@@ -1,6 +1,5 @@
 package net.azib.photos;
 
-import com.google.gdata.util.ServiceException;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -14,7 +13,8 @@ import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-import static javax.servlet.http.HttpServletResponse.*;
+import static javax.servlet.http.HttpServletResponse.SC_MOVED_PERMANENTLY;
+import static javax.servlet.http.HttpServletResponse.SC_NOT_FOUND;
 import static javax.xml.bind.DatatypeConverter.parseInt;
 
 public class RequestRouter implements Filter {
@@ -94,10 +94,6 @@ public class RequestRouter implements Filter {
     }
     catch (MissingResourceException e) {
       response.sendError(SC_NOT_FOUND);
-    }
-    catch (ServiceException e) {
-      context.log("GData", e);
-      response.sendError(SC_INTERNAL_SERVER_ERROR, e.getResponseBody());
     }
   }
 

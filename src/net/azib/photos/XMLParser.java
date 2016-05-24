@@ -1,7 +1,5 @@
 package net.azib.photos;
 
-import com.google.common.base.Joiner;
-
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -14,13 +12,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Deque;
 import java.util.Iterator;
+import java.util.LinkedList;
 
-import static com.google.common.collect.Lists.newLinkedList;
 import static javax.xml.stream.XMLStreamConstants.*;
+import static org.apache.commons.lang.StringUtils.join;
 
 public class XMLParser<T> {
   private String characters = "";
-  private final Deque<String> path = newLinkedList();
+  private final Deque<String> path = new LinkedList<>();
   private boolean rootFound;
   private final XMLListener<T> listener;
 
@@ -82,7 +81,7 @@ public class XMLParser<T> {
       return;
     }
     path.addLast(name);
-    String prefix = Joiner.on("/").join(path);
+    String prefix = join(path, '/');
     listener.start(prefix);
     parseAttributes(startElement, prefix);
   }
@@ -101,7 +100,7 @@ public class XMLParser<T> {
   private void endElement(XMLEvent event) throws XMLListener.StopParse {
     characters = characters.trim();
     if (!path.isEmpty()) {
-      String p = Joiner.on("/").join(path);
+      String p = join(path, '/');
       if (!characters.isEmpty()) {
         listener.value(p, characters);
         characters = "";
