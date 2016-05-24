@@ -1,9 +1,29 @@
 package net.azib.photos;
 
 public class Exif {
-  public Float fstop;
-  public Float exposure;
-  public Float focal;
-  public String iso;
-  public String camera;
+  Float fstop;
+  Float exposure;
+  Float focal;
+  String iso;
+  String camera;
+
+  public Float getFstop() {
+    return fstop;
+  }
+
+  public Float getExposure() {
+    return exposure;
+  }
+
+  public Float getFocal() {
+    return focal;
+  }
+
+  public String getIso() {
+    return iso;
+  }
+
+  public String getCamera() {
+    return camera;
+  }
 }

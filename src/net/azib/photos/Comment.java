@@ -1,13 +1,29 @@
 package net.azib.photos;
 
 public class Comment {
-  public String author;
-  public String avatarUrl;
-  public String authorId;
-  public String text;
-  public String photoId;
+  String author;
+  String avatarUrl;
+  String authorId;
+  String text;
+  String photoId;
 
-  public Object get(String name) throws NoSuchFieldException, IllegalAccessException {
-    return getClass().getField(name).get(this);
+  public String getAuthor() {
+    return author;
+  }
+
+  public String getAvatarUrl() {
+    return avatarUrl;
+  }
+
+  public String getAuthorId() {
+    return authorId;
+  }
+
+  public String getText() {
+    return text;
+  }
+
+  public String getPhotoId() {
+    return photoId;
   }
 }

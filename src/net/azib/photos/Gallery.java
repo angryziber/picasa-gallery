@@ -7,4 +7,12 @@ public class Gallery extends Entity {
   public String author;
 
   public List<Album> albums = new ArrayList<>(64);
+
+  public String getAuthor() {
+    return author;
+  }
+
+  public List<Album> getAlbums() {
+    return albums;
+  }
 }
