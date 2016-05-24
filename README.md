@@ -11,22 +11,21 @@ How does it work?
 
 It's a small Java application made to be hosted for free on Google App Engine.
 It uses Google Data API to fetch and display your albums and photos, so whenever you change anything
-on Picasaweb, it will become visible in this gallery.
+on Google Photos/Picasaweb, it will become visible in this gallery.
 
 Features
 ========
 
 - Dark theme that emphasizes photos
-- Shows your exising Picasaweb albums, no additional storage needed
+- Shows your exising public albums, no additional storage needed
 - Search within the gallery (by tags, keywords, descriptions, etc)
 - Nice bookmarkable URLs for albums, individual photos, search results
-- Gallery map if albums are geotagged, album map coming soon
+- Gallery map if albums are geotagged
 - Full-screen photo viewer
 - Fast: minimum number of requests, optimized caching, preloading of next photos
-- No pagination (but only visible thumbnails are loaded)
 - Keyboard navigation
 - Mobile device support, eg iPhone, iPad, Android (including touch events)
-- Facebook like buttons for albums and individual photos
+- Facebook Like buttons for albums and individual photos
 - Opengraph metadata (for FB sharing, etc)
 - Google analytics support
 - Viewing of other people's albums, just add "?by=username" parameter
@@ -38,7 +37,7 @@ How to use it for your own photos
 =================================
 
 - Clone this repository as described on Github
-- Specify your Picasaweb username in src/config.properties
+- Specify your Google username in src/config.properties
 - Specify your AppEngine application ID in web/WEB-INF/appengine-web.xml
 - Download AppEngine SDK from Google
 - If you don't use any IDE, use ant to compile by this command:
