@@ -18,12 +18,7 @@ public class Picasa {
   static String analytics = config.getProperty("google.analytics");
   static Random random = new SecureRandom();
 
-  static Map<String, CacheEntry> cache = new ConcurrentHashMap<>();
-
-  static class CacheEntry {
-    Entity data;
-    XMLListener loader;
-  }
+  static Map<String, XMLListener> cache = new ConcurrentHashMap<>();
 
   String user = defaultUser;
   String authkey;
@@ -116,14 +111,12 @@ public class Picasa {
   private <T extends Entity> T cachedFeed(String url, XMLListener<T> loader) throws IOException {
     url = toFullUrl(url).intern();
     synchronized (url) {
-      CacheEntry entry = cache.get(url);
-      if (entry == null) {
-        entry = new CacheEntry();
-        entry.loader = loader;
-        entry.data = loadAndParse(url, loader);
-        cache.put(url, entry);
+      XMLListener<T> cached = cache.get(url);
+      if (cached == null) {
+        loadAndParse(url, loader);
+        cache.put(url, cached = loader);
       }
-      return (T) entry.data;
+      return cached.getResult();
     }
   }
 
