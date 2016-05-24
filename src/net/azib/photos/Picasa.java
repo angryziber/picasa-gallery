@@ -18,7 +18,12 @@ public class Picasa {
   static String analytics = config.getProperty("google.analytics");
   static Random random = new SecureRandom();
 
-  static Map<String, Entity> cache = new ConcurrentHashMap<>();
+  static Map<String, CacheEntry> cache = new ConcurrentHashMap<>();
+
+  static class CacheEntry {
+    Entity data;
+    XMLListener listener;
+  }
 
   String user = defaultUser;
   String authkey;
@@ -56,7 +61,7 @@ public class Picasa {
     return fixPhotoDescriptions(cachedFeed(url, new GDataAlbumListener()));
   }
 
-  private <T> T loadAndParse(String fullUrl, XMLListener<T> listener) throws IOException {
+  static <T> T loadAndParse(String fullUrl, XMLListener<T> listener) throws IOException {
     HttpURLConnection conn = (HttpURLConnection) new URL(fullUrl).openConnection();
     if (conn.getResponseCode() != 200) throw new MissingResourceException(fullUrl, null, null);
     try (InputStream in = conn.getInputStream()) {
@@ -111,12 +116,14 @@ public class Picasa {
   private <T extends Entity> T cachedFeed(String url, XMLListener<T> listener) throws IOException {
     url = toFullUrl(url).intern();
     synchronized (url) {
-      T feed = (T) cache.get(url);
-      if (feed == null) {
-        feed = loadAndParse(url, listener);
-        cache.put(url, feed);
+      CacheEntry entry = cache.get(url);
+      if (entry == null) {
+        entry = new CacheEntry();
+        entry.listener = listener;
+        entry.data = loadAndParse(url, listener);
+        cache.put(url, entry);
       }
-      return feed;
+      return (T) entry.data;
     }
   }
 
