@@ -110,7 +110,8 @@ public class RequestRouter implements Filter {
 
     request.setAttribute(template, source);
 
-    response.setContentType("text/html; charset=utf8");
+    if (response.getContentType() == null)
+      response.setContentType("text/html; charset=utf8");
     if (source instanceof Entity && ((Entity) source).timestamp != null)
       response.addDateHeader("Last-Modified", ((Entity) source).timestamp);
 
