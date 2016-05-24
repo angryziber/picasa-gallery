@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Random photo by ${random.nickname} from ${random.album}</title>
+  <title>Random photo by ${random.author} from ${random.album}</title>
   <style type="text/css">
     html, body {
       height: 100%;
@@ -29,11 +29,11 @@
   </style>
 </head>
 <body>
-<div id="img" style="background-image: url(${random.photos[0].content.uri})"></div>
+<div id="img" style="background-image: url(${random.photos[0].url})"></div>
 <div id="title">
   <b>${random.album}</b>
-  <div id="description">${random.photos[0].description.plainText}</div>
-  <div>${random.nickname}</div>
+  <div id="description">${random.photos[0].description}</div>
+  <div>${random.author}</div>
 </div>
 </body>
 <script type="text/javascript">
@@ -45,9 +45,9 @@
 </script>
 <script type="text/javascript" src="/chromecast.js"></script>
 <script type="text/javascript">
-  chromecast.send('${random.photos[0].content.uri}');
+  chromecast.send('${random.photos[0].url}');
   #if($random.photos.size() > 1)
-    var photos = [#foreach($photo in $random.photos){url:'${photo.content.uri}', description:'${photo.description.plainText}'},#end null];
+    var photos = [#foreach($photo in $random.photos){url:'${photo.url}', description:'${photo.description.replace("'", "\\'")}'},#end null];
     photos.pop();
     var index = 1;
     new Image().src = photos[index].url;

@@ -3,8 +3,6 @@ package net.azib.photos;
 import com.google.gdata.client.photos.PicasawebService;
 import com.google.gdata.data.IFeed;
 import com.google.gdata.data.photos.AlbumEntry;
-import com.google.gdata.data.photos.AlbumFeed;
-import com.google.gdata.data.photos.GphotoEntry;
 import com.google.gdata.data.photos.UserFeed;
 import com.google.gdata.util.ServiceException;
 
@@ -88,7 +86,7 @@ public class Picasa {
   public RandomPhotos getRandomPhotos(int numNext) throws IOException, ServiceException {
     List<AlbumEntry> albums = getGallery().getAlbumEntries();
     AlbumEntry album = weightedRandom(albums);
-    List<GphotoEntry> photos = cachedFeed("/album/" + urlEncode(album.getName()) + "?kind=photo&imgmax=1600&max-results=1000&fields=entry(content,summary)", AlbumFeed.class).getEntries();
+    List<Photo> photos = fixPhotoDescriptions(loadAndParse("/album/" + urlEncode(album.getName()) + "?kind=photo&imgmax=1600&max-results=1000&fields=entry(content,summary)", new GDataAlbumListener())).photos;
     int index = random(photos.size());
     return new RandomPhotos(photos.subList(index, min(index + numNext, photos.size())), album.getNickname(), album.getTitle().getPlainText());
   }

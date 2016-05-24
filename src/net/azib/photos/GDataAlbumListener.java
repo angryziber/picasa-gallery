@@ -41,7 +41,7 @@ public class GDataAlbumListener implements XMLListener<Album> {
       case "entry/timestamp": photo.timestamp = parseLong(value); break;
       case "entry/width": photo.width = parseInt(value); break;
       case "entry/height": photo.height = parseInt(value); break;
-      case "entry/group/content@url": photo.url = value; break;
+      case "entry/content@src": photo.url = value; break;
       case "entry/group/thumbnail@url": photo.thumbUrl = value; break;
       case "entry/tags/fstop": photo.exif.fstop = parseFloat(value); break;
       case "entry/tags/exposure": photo.exif.exposure = parseFloat(value); break;

@@ -1,32 +1,28 @@
 package net.azib.photos;
 
-import com.google.gdata.data.MediaContent;
-import com.google.gdata.data.photos.GphotoEntry;
-
 import java.util.List;
 
 public class RandomPhotos {
-  private final List<GphotoEntry> photos;
-  private final String nickname;
+  private final List<Photo> photos;
+  private final String author;
   private final String album;
 
-  public RandomPhotos(List<GphotoEntry> photos, String nickname, String album) {
+  public RandomPhotos(List<Photo> photos, String author, String album) {
     this.photos = photos;
-    this.nickname = nickname;
+    this.author = author;
     this.album = album;
 
-    for (GphotoEntry photo : photos) {
-      MediaContent content = (MediaContent) photo.getContent();
-      content.setUri(content.getUri().replace("/s1600/", "/s1920/"));
+    for (Photo photo : photos) {
+      photo.url = photo.url.replace("/s1600/", "/s1920/");
     }
   }
 
-  public List<GphotoEntry> getPhotos() {
+  public List<Photo> getPhotos() {
     return photos;
   }
 
-  public String getNickname() {
-    return nickname;
+  public String getAuthor() {
+    return author;
   }
 
   public String getAlbum() {
