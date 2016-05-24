@@ -6,8 +6,8 @@ import java.text.SimpleDateFormat;
 import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
 
-public class GDataGalleryListener implements XMLListener<Gallery> {
-  private Gallery gallery = new Gallery();
+public class GalleryLoader implements XMLListener<Gallery> {
+  private Gallery gallery;
   private Album album;
 
   @Override
@@ -17,6 +17,7 @@ public class GDataGalleryListener implements XMLListener<Gallery> {
 
   @Override
   public void rootElement(String name) {
+    gallery = new Gallery();
   }
 
   @Override

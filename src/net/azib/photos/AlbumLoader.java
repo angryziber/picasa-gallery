@@ -6,8 +6,8 @@ import static java.lang.Float.parseFloat;
 import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
 
-public class GDataAlbumListener implements XMLListener<Album> {
-  private Album album = new Album();
+public class AlbumLoader implements XMLListener<Album> {
+  private Album album;
   private Photo photo;
   private Comment comment;
 
@@ -17,6 +17,9 @@ public class GDataAlbumListener implements XMLListener<Album> {
 
   @Override
   public void rootElement(String name) {
+    album = new Album();
+    photo = null;
+    comment = null;
   }
 
   @Override

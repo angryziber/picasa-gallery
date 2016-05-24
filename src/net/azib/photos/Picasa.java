@@ -22,7 +22,7 @@ public class Picasa {
 
   static class CacheEntry {
     Entity data;
-    XMLListener listener;
+    XMLListener loader;
   }
 
   String user = defaultUser;
@@ -51,21 +51,21 @@ public class Picasa {
   public Gallery getGallery() throws IOException {
     String url = "?kind=album&thumbsize=212c";
     url += "&fields=id,updated,gphoto:*,entry(title,summary,updated,content,category,gphoto:*,media:*,georss:*)";
-    return cachedFeed(url, new GDataGalleryListener());
+    return cachedFeed(url, new GalleryLoader());
   }
 
   public Album getAlbum(String name) throws IOException {
     String url = name.matches("\\d+") ? "/albumid/" + name : "/album/" + urlEncode(name);
     url += "?kind=photo,comment&imgmax=1600&thumbsize=144c";
     url += "&fields=id,updated,title,subtitle,icon,gphoto:*,georss:where(gml:Point),entry(title,summary,content,author,category,gphoto:id,gphoto:photoid,gphoto:width,gphoto:height,gphoto:commentCount,gphoto:timestamp,exif:*,media:*,georss:where(gml:Point))";
-    return fixPhotoDescriptions(cachedFeed(url, new GDataAlbumListener()));
+    return fixPhotoDescriptions(cachedFeed(url, new AlbumLoader()));
   }
 
-  static <T> T loadAndParse(String fullUrl, XMLListener<T> listener) throws IOException {
+  static <T> T loadAndParse(String fullUrl, XMLListener<T> loader) throws IOException {
     HttpURLConnection conn = (HttpURLConnection) new URL(fullUrl).openConnection();
     if (conn.getResponseCode() != 200) throw new MissingResourceException(fullUrl, null, null);
     try (InputStream in = conn.getInputStream()) {
-      return new XMLParser<>(listener).parse(in);
+      return new XMLParser<>(loader).parse(in);
     }
   }
 
@@ -83,7 +83,7 @@ public class Picasa {
   public RandomPhotos getRandomPhotos(int numNext) throws IOException {
     List<Album> albums = getGallery().albums;
     Album album = weightedRandom(albums);
-    List<Photo> photos = fixPhotoDescriptions(cachedFeed("/album/" + urlEncode(album.name) + "?kind=photo&imgmax=1600&max-results=1000&fields=entry(category,content,summary)", new GDataAlbumListener())).photos;
+    List<Photo> photos = fixPhotoDescriptions(cachedFeed("/album/" + urlEncode(album.name) + "?kind=photo&imgmax=1600&max-results=1000&fields=entry(category,content,summary)", new AlbumLoader())).photos;
     int index = random(photos.size());
     return new RandomPhotos(photos.subList(index, min(index + numNext, photos.size())), album.author, album.title);
   }
@@ -110,17 +110,17 @@ public class Picasa {
   }
 
   public Album search(String query) throws IOException {
-    return fixPhotoDescriptions(cachedFeed("?kind=photo&q=" + urlEncode(query) + "&imgmax=1024&thumbsize=144c", new GDataAlbumListener()));
+    return fixPhotoDescriptions(cachedFeed("?kind=photo&q=" + urlEncode(query) + "&imgmax=1024&thumbsize=144c", new AlbumLoader()));
   }
 
-  private <T extends Entity> T cachedFeed(String url, XMLListener<T> listener) throws IOException {
+  private <T extends Entity> T cachedFeed(String url, XMLListener<T> loader) throws IOException {
     url = toFullUrl(url).intern();
     synchronized (url) {
       CacheEntry entry = cache.get(url);
       if (entry == null) {
         entry = new CacheEntry();
-        entry.listener = listener;
-        entry.data = loadAndParse(url, listener);
+        entry.loader = loader;
+        entry.data = loadAndParse(url, loader);
         cache.put(url, entry);
       }
       return (T) entry.data;
