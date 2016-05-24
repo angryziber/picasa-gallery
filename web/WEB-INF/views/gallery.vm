@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>${gallery.nickname} Photography</title>
+  <title>${gallery.author} Photography</title>
   #if($mobile)
     <meta name="viewport" content="width=700, user-scalable=no">
   #end
-  <meta name="description" content="${gallery.nickname} photo albums from around the World">
-  <meta property="og:title" content="${gallery.nickname} Photography">
+  <meta name="description" content="${gallery.author} photo albums from around the World">
+  <meta property="og:title" content="${gallery.author} Photography">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="${gallery.albumEntries[0].mediaThumbnails[0].url}">
-  <meta property="og:site_name" content="${gallery.nickname} Photography">
-  <meta name="keywords" content="${gallery.nickname.replace(' ', ',')},photos,picasa,picasaweb,gallery,albums,travel,photography,#foreach($album in $gallery.albumEntries)${album.title.plainText.replace(', ', ' ').replace(' ', ',')},#end">
+  <meta property="og:image" content="${gallery.albums[0].thumbUrl}">
+  <meta property="og:site_name" content="${gallery.author} Photography">
+  <meta name="keywords" content="${gallery.author.replace(' ', ',')},photos,picasa,picasaweb,gallery,albums,travel,photography,#foreach($album in $gallery.albums)${album.title.replace(', ', ' ').replace(' ', ',')},#end">
   #parse('head.vm')
   <script defer async src="//maps.google.com/maps/api/js" onload="$(initMap)"></script>
   <script defer>$(initAlbumFilter);</script>
@@ -19,32 +19,32 @@
 <body style="background:black; color: gray">
 
 <div id="header" class="header">
-  <a href="http://picasaweb.google.com/${gallery.username}" class="button" title="View the gallery in Picasaweb/Google+"><img src="/img/picasa-logo.png">Picasaweb</a>
+  <a href="http://picasaweb.google.com/${picasa.user}" class="button" title="View the gallery in Picasaweb/Google+"><img src="/img/picasa-logo.png">Picasaweb</a>
   <form id="search"><input type="text" placeholder="Filter or Search" title="Type to filter albums or press enter to search for individual photos"></form>
-  <h1 id="title">${gallery.nickname} Photography</h1>
+  <h1 id="title">${gallery.author} Photography</h1>
 </div>
 
 <div id="content">
   <div id="map"></div>
   <div class="albums">
-    #foreach($album in $gallery.albumEntries)
-      #if(${album.photosUsed} > 1)
-        <a id="${album.gphotoId}" class="fade" href="/${album.name}${picasa.urlSuffix}"
-           #if(${album.geoLocation})data-coords="${album.geoLocation.latitude}:${album.geoLocation.longitude}"#end>
-          <img src="${album.mediaThumbnails[0].url}" alt="${album.title.plainText} photos" title="${album.description.plainText}">
+    #foreach($album in $gallery.albums)
+      #if(${album.size()} > 1)
+        <a id="${album.name}" class="fade" href="/${album.name}${picasa.urlSuffix}"
+           #if(${album.geo})data-coords="${album.geo.lat}:${album.geo.lon}"#end>
+          <img src="${album.thumbUrl}" alt="${album.title} photos" title="${album.description}">
 
           <div class="title">
-            <span class="info">${album.photosUsed}</span>
-            <span class="text">${album.title.plainText}</span>
+            <span class="info">${album.size()}</span>
+            <span class="text">${album.title}</span>
           </div>
-          <div class="description">${album.description.plainText}</div>
+          <div class="description">${album.description}</div>
         </a>
       #end
     #end
   </div>
 
   <div id="footer">
-    Photos by <a id="m" href="${picasa.user}">${gallery.nickname}</a>. All rights reserved. <a href="?random${picasa.urlSuffix.replace('?', '&')}">Random photo</a>.
+    Photos by <a id="m" href="${picasa.user}">${gallery.author}</a>. All rights reserved. <a href="?random${picasa.urlSuffix.replace('?', '&')}">Random photo</a>.
     <br>
     Rendered by <a href="http://github.com/angryziber/picasa-gallery">Picasa Gallery</a>.
     View your <a href="javascript:changeUsername('${picasa.user}')">own gallery</a>.
@@ -52,10 +52,10 @@
 </div>
 
 #if(${bot})
-  <h2>${gallery.nickname} <b>photos</b> and pictures</h2>
-  #foreach($album in $gallery.albumEntries)
-    <h3>${album.title.plainText} by ${gallery.nickname}</h3>
-    <p>${album.description.plainText}</p>
+  <h2>${gallery.author} <b>photos</b> and pictures</h2>
+  #foreach($album in $gallery.albums)
+    <h3>${album.title} by ${gallery.author}</h3>
+    <p>${album.description}</p>
   #end
 #end
 </body>

@@ -1,6 +1,5 @@
 package net.azib.photos;
 
-import com.google.gdata.data.photos.AlbumEntry;
 import org.junit.Test;
 
 import java.util.List;
@@ -14,14 +13,14 @@ public class PicasaTest {
 
   @Test
   public void weightedRandomDistributesAccordingToTheSizeOfAlbum() throws Exception {
-    AlbumEntry album1 = mock(AlbumEntry.class, "album1");
-    when(album1.getPhotosUsed()).thenReturn(10);
-    AlbumEntry album2 = mock(AlbumEntry.class, "album2");
-    when(album2.getPhotosUsed()).thenReturn(20);
-    AlbumEntry album3 = mock(AlbumEntry.class, "album3");
-    when(album3.getPhotosUsed()).thenReturn(30);
+    Album album1 = mock(Album.class, "album1");
+    when(album1.size()).thenReturn(10);
+    Album album2 = mock(Album.class, "album2");
+    when(album2.size()).thenReturn(20);
+    Album album3 = mock(Album.class, "album3");
+    when(album3.size()).thenReturn(30);
 
-    List<AlbumEntry> albums = asList(album1, album2, album3);
+    List<Album> albums = asList(album1, album2, album3);
     picasa = spy(picasa);
 
     doReturn(0).when(picasa).random(41);

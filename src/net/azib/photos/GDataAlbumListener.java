@@ -34,7 +34,7 @@ public class GDataAlbumListener implements XMLListener<Album> {
       case "nickname": album.author = value; return;
       case "user": album.authorId = value; return;
       case "access": album.isPublic = "public".equals(value); return;
-      case "numphotos": album.photos = new ArrayList<>(parseInt(value)); return;
+      case "numphotos": album.photos = new ArrayList<>(album.size = parseInt(value)); return;
       case "where/Point/pos": album.geo = new GeoLocation(value); return;
 
       case "entry/category@term":

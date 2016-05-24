@@ -2,8 +2,6 @@ package net.azib.photos;
 
 import com.google.gdata.client.photos.PicasawebService;
 import com.google.gdata.data.IFeed;
-import com.google.gdata.data.photos.AlbumEntry;
-import com.google.gdata.data.photos.UserFeed;
 import com.google.gdata.util.ServiceException;
 
 import java.io.IOException;
@@ -50,10 +48,10 @@ public class Picasa {
     return analytics;
   }
 
-  public UserFeed getGallery() throws IOException, ServiceException {
+  public Gallery getGallery() throws IOException, ServiceException {
     String url = "?kind=album&thumbsize=212c";
     url += "&fields=id,updated,gphoto:*,entry(title,summary,updated,content,category,gphoto:*,media:*,georss:*)";
-    return cachedFeed(url, UserFeed.class);
+    return loadAndParse(url, new GDataGalleryListener());
   }
 
   public Album getAlbum(String name) throws IOException, ServiceException {
@@ -84,21 +82,21 @@ public class Picasa {
   }
 
   public RandomPhotos getRandomPhotos(int numNext) throws IOException, ServiceException {
-    List<AlbumEntry> albums = getGallery().getAlbumEntries();
-    AlbumEntry album = weightedRandom(albums);
-    List<Photo> photos = fixPhotoDescriptions(loadAndParse("/album/" + urlEncode(album.getName()) + "?kind=photo&imgmax=1600&max-results=1000&fields=entry(content,summary)", new GDataAlbumListener())).photos;
+    List<Album> albums = getGallery().albums;
+    Album album = weightedRandom(albums);
+    List<Photo> photos = fixPhotoDescriptions(loadAndParse("/album/" + urlEncode(album.name) + "?kind=photo&imgmax=1600&max-results=1000&fields=entry(category,content,summary)", new GDataAlbumListener())).photos;
     int index = random(photos.size());
-    return new RandomPhotos(photos.subList(index, min(index + numNext, photos.size())), album.getNickname(), album.getTitle().getPlainText());
+    return new RandomPhotos(photos.subList(index, min(index + numNext, photos.size())), album.author, album.title);
   }
 
-  AlbumEntry weightedRandom(List<AlbumEntry> albums) {
+  Album weightedRandom(List<Album> albums) {
     int sum = 0;
-    for (AlbumEntry album : albums) sum += transform(album.getPhotosUsed());
+    for (Album album : albums) sum += transform(album.size());
     int index = random(sum);
 
     sum = 0;
-    for (AlbumEntry album : albums) {
-      sum += transform(album.getPhotosUsed());
+    for (Album album : albums) {
+      sum += transform(album.size());
       if (sum > index) return album;
     }
     return albums.get(0);

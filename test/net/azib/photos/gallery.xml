@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns='http://www.w3.org/2005/Atom' xmlns:gphoto='http://schemas.google.com/photos/2007' xmlns:media='http://search.yahoo.com/mrss/' xmlns:georss='http://www.georss.org/georss' xmlns:gml='http://www.opengis.net/gml'>
+  <id>http://picasaweb.google.com/data/feed/api/user/anton.keks</id>
+  <updated>2016-05-24T19:13:11.641Z</updated>
+  <gphoto:user>117440562642491680332</gphoto:user>
+  <gphoto:nickname>Anton Keks</gphoto:nickname>
+  <gphoto:thumbnail>https://lh3.googleusercontent.com/-wc1P3DhF9pM/AAAAAAAAAAI/AAAAAAAAmFw/RQJSjwc5rpo/s64-c/117440562642491680332.jpg</gphoto:thumbnail>
+  <gphoto:quotalimit>22548578304</gphoto:quotalimit>
+  <gphoto:quotacurrent>9844773468</gphoto:quotacurrent>
+  <gphoto:maxPhotosPerAlbum>2000</gphoto:maxPhotosPerAlbum>
+  <entry>
+    <updated>2015-11-05T21:37:39.445Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/photos/2007#album'/>
+    <title type='text'>Chernobyl</title>
+    <summary type='text'>Apocalyptic experience in Chernobyl and Pripyat, a soviet city abandoned in 1986 after the nuclear disaster. Current radiation levels are compatible with life :-)</summary>
+    <gphoto:id>6212669462372660321</gphoto:id>
+    <gphoto:name>Chernobyl</gphoto:name>
+    <gphoto:location>Chernobyl, Ukraine</gphoto:location>
+    <gphoto:access>public</gphoto:access>
+    <gphoto:timestamp>1432450800000</gphoto:timestamp>
+    <gphoto:numphotos>159</gphoto:numphotos>
+    <gphoto:numphotosremaining>1841</gphoto:numphotosremaining>
+    <gphoto:bytesUsed>419573240</gphoto:bytesUsed>
+    <gphoto:user>117440562642491680332</gphoto:user>
+    <gphoto:nickname>Anton Keks</gphoto:nickname>
+    <media:group>
+      <media:content url='https://lh3.googleusercontent.com/-EfV7Xxjk3gk/VjfV9bujtGE/AAAAAAABKUY/gQBUlooE9lsYdyZ1O7ciOiGo-5pch3_DQCHM/Chernobyl' type='image/jpeg' medium='image'/>
+      <media:credit>Anton Keks</media:credit>
+      <media:description type='plain'>Apocalyptic experience in Chernobyl and Pripyat, a soviet city abandoned in 1986 after the nuclear disaster. Current radiation levels are compatible with life :-)</media:description>
+      <media:keywords/>
+      <media:thumbnail url='https://lh3.googleusercontent.com/-EfV7Xxjk3gk/VjfV9bujtGE/AAAAAAABKUY/gQBUlooE9lsYdyZ1O7ciOiGo-5pch3_DQCHM/s212-c/Chernobyl' height='212' width='212'/>
+      <media:title type='plain'>Chernobyl</media:title>
+    </media:group>
+    <georss:where>
+      <gml:Envelope>
+        <gml:lowerCorner>51.249456 30.1460246</gml:lowerCorner>
+        <gml:upperCorner>51.3031499 30.2977733</gml:upperCorner>
+      </gml:Envelope>
+      <gml:Point>
+        <gml:pos>51.276303 30.221899</gml:pos>
+      </gml:Point>
+    </georss:where>
+  </entry>
+</feed>
