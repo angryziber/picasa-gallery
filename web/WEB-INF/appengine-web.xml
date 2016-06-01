@@ -8,11 +8,15 @@
     <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
   </system-properties>
   <static-files>
-    <include path="/**.jpg"/>
-    <include path="/**.png"/>
-    <include path="/**.gif"/>
-    <include path="/**.ico"/>
-    <include path="/**.css"/>
-    <include path="/**.js"/>
+    <include path="/**.jpg" expiration="30d"/>
+    <include path="/**.png" expiration="30d"/>
+    <include path="/**.gif" expiration="30d"/>
+    <include path="/**.ico" expiration="30d"/>
+    <include path="/**.css" expiration="7d">
+      <http-header name="Vary" value="Accept-Encoding"/>
+    </include>
+    <include path="/**.js" expiration="7d">
+      <http-header name="Vary" value="Accept-Encoding"/>
+    </include>
   </static-files>
 </appengine-web-app>
