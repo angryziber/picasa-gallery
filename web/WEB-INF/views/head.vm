@@ -11,8 +11,8 @@
 
 <script src="//code.jquery.com/jquery-1.12.1.min.js"></script>
 <script src="/gallery.js"></script>
-<script defer src="/chromecast.js"></script>
-<script defer src="/prefixfree.min.js"></script>
+<script src="/prefixfree.min.js"></script>
+#if(!$bot)<script defer src="/chromecast.js"></script>#end
 
 <script type="text/javascript">
   #if($picasa.analytics)
