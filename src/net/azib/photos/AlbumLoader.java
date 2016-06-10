@@ -57,21 +57,21 @@ public class AlbumLoader implements XMLListener<Album> {
         case "entry/height": photo.setHeight(parseInt(value)); break;
         case "entry/content@src": photo.setUrl(value); break;
         case "entry/group/thumbnail@url": photo.setThumbUrl(value); break;
-        case "entry/tags/fstop": photo.getExif().fstop = parseFloat(value); break;
-        case "entry/tags/exposure": photo.getExif().exposure = parseFloat(value); break;
-        case "entry/tags/focallength": photo.getExif().focal = parseFloat(value); break;
-        case "entry/tags/iso": photo.getExif().iso = value; break;
-        case "entry/tags/model": photo.getExif().camera = value; break;
+        case "entry/tags/fstop": photo.getExif().setFstop(parseFloat(value)); break;
+        case "entry/tags/exposure": photo.getExif().setExposure(parseFloat(value)); break;
+        case "entry/tags/focallength": photo.getExif().setFocal(parseFloat(value)); break;
+        case "entry/tags/iso": photo.getExif().setIso(value); break;
+        case "entry/tags/model": photo.getExif().setCamera(value); break;
         case "entry/where/Point/pos": photo.setGeo(new GeoLocation(value)); break;
       }
     }
     else if (comment != null) {
       switch (path) {
-        case "entry/content": comment.text = value; break;
-        case "entry/author/name": comment.author = value; break;
-        case "entry/author/thumbnail": comment.avatarUrl = value; break;
-        case "entry/author/user": comment.authorId = value; break;
-        case "entry/photoid": comment.photoId = value; break;
+        case "entry/content": comment.setText(value); break;
+        case "entry/author/name": comment.setAuthor(value); break;
+        case "entry/author/thumbnail": comment.setAvatarUrl(value); break;
+        case "entry/author/user": comment.setAuthorId(value); break;
+        case "entry/photoid": comment.setPhotoId(value); break;
       }
     }
   }
