@@ -34,14 +34,16 @@ class AlbumLoader : XMLListener<Album> {
           photos = ArrayList(size)
         }
         "where/Point/pos" -> geo = GeoLocation(value)
-        "entry/category@term" ->
-          if (value.endsWith("photo")) {
+        "entry/category@term" -> when {
+          value.endsWith("photo") -> {
             photo = Photo()
             photos.add(photo!!)
-          } else if (value.endsWith("comment")) {
+          }
+          value.endsWith("comment") -> {
             comment = Comment()
             comments.add(comment!!)
           }
+        }
       }
     }
 
