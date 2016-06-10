@@ -1,8 +1,5 @@
 package net.azib.photos
 
-import java.lang.Float.parseFloat
-import java.lang.Integer.parseInt
-import java.lang.Long.parseLong
 import java.util.*
 
 class AlbumLoader : XMLListener<Album> {
@@ -27,16 +24,16 @@ class AlbumLoader : XMLListener<Album> {
       "title" -> album.title = value
       "subtitle" -> album.description = value
       "icon" -> album.thumbUrl = value
-      "timestamp" -> album.timestamp = parseLong(value)
+      "timestamp" -> album.timestamp = value.toLong()
       "nickname" -> album.author = value
       "user" -> album.authorId = value
       "access" -> album.isPublic = "public" == value
       "numphotos" -> {
-        album.size = parseInt(value)
-        album.photos = ArrayList<Photo>(album.size)
+        album.size = value.toInt()
+        album.photos = ArrayList(album.size)
       }
       "where/Point/pos" -> album.geo = GeoLocation(value)
-      "entry/category@term" -> {
+      "entry/category@term" ->
         if (value.endsWith("photo")) {
           photo = Photo()
           album.photos.add(photo!!)
@@ -45,7 +42,6 @@ class AlbumLoader : XMLListener<Album> {
           comment = Comment()
           album.comments.add(comment!!)
         }
-      }
     }
 
     photo?.let { photo ->
@@ -53,14 +49,14 @@ class AlbumLoader : XMLListener<Album> {
         "entry/id" -> photo.id = value
         "entry/title" -> photo.title = value
         "entry/summary" -> photo.description = value
-        "entry/timestamp" -> photo.timestamp = parseLong(value)
-        "entry/width" -> photo.width = parseInt(value)
-        "entry/height" -> photo.height = parseInt(value)
+        "entry/timestamp" -> photo.timestamp = value.toLong()
+        "entry/width" -> photo.width = value.toInt()
+        "entry/height" -> photo.height = value.toInt()
         "entry/content@src" -> photo.url = value
         "entry/group/thumbnail@url" -> photo.thumbUrl = value
-        "entry/tags/fstop" -> photo.exif.fstop = parseFloat(value)
-        "entry/tags/exposure" -> photo.exif.exposure = parseFloat(value)
-        "entry/tags/focallength" -> photo.exif.focal = parseFloat(value)
+        "entry/tags/fstop" -> photo.exif.fstop = value.toFloat()
+        "entry/tags/exposure" -> photo.exif.exposure = value.toFloat()
+        "entry/tags/focallength" -> photo.exif.focal = value.toFloat()
         "entry/tags/iso" -> photo.exif.iso = value
         "entry/tags/model" -> photo.exif.camera = value
         "entry/where/Point/pos" -> photo.geo = GeoLocation(value)
