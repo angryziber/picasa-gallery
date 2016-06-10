@@ -14,7 +14,7 @@ public class AlbumLoaderTest {
     assertThat(album.getDescription(), is("Morocco round trip: Fes, Chefchaouen, Casablanca, Marrakech, Merzouga"));
     assertThat(album.getAuthor(), is("Anton Keks"));
     assertThat(album.getAuthorId(), is("117440562642491680332"));
-    assertThat(album.getIsPublic(), is(true));
+    assertThat(album.isPublic(), is(true));
     assertThat(album.getThumbUrl(), is("https://lh3.googleusercontent.com/-ooqeMhFMze0/VtyhMoYRIKE/AAAAAAABNJQ/DruDrN8NmjEw-QT-28mIrn0OPW4sqwXPgCHM/s160-c/Morocco"));
     assertThat(album.getTimestamp(), is(1431327600000L));
     assertThat(album.getGeo().getLat(), is(31.791702f));

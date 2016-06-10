@@ -2,7 +2,7 @@ package net.azib.photos
 
 import java.util.*
 
-class Album : Entity() {
+open class Album : Entity() {
   var name: String? = null
   var author: String? = null
   var authorId: String? = null
@@ -12,5 +12,5 @@ class Album : Entity() {
   var photos: List<Photo> = ArrayList()
   var comments: List<Comment> = ArrayList()
 
-  fun size() = size
+  open fun size() = size
 }
