@@ -1,6 +1,4 @@
-*.iml
-.idea
-out
+/.idea
+/out
+/build
 .DS_Store
-bin/
-war/

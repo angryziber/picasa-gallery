@@ -40,11 +40,8 @@ How to use it for your own photos
 - Specify your Google username in src/config.properties
 - Specify your AppEngine application ID in web/WEB-INF/appengine-web.xml
 - Download AppEngine SDK from Google
-- If you don't use any IDE, use ant to compile by this command:
-  
-  	    $ ant -Dsdk.dir=path/to/appengine-java-sdk compile
-
-- Use AppEngine SDK / Eclipse / IntelliJ IDEA to upload your application.
-  Details here: <https://developers.google.com/appengine/docs/java/gettingstarted/uploading>
+- If you don't use any IDE:
+  * `gradle war` - will build the war file (web application archive)
+  * `gradle appengineUpdate` - will upload the app to Google AppEngine
 
 P.S. the app is a standard Java Servlet-based application, so it will work without AppEngine as well.
