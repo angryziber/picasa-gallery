@@ -19,57 +19,58 @@ class AlbumLoader : XMLListener<Album> {
   }
 
   override fun value(path: String, value: String) {
-    when (path) {
-      "name" -> album.name = value
-      "title" -> album.title = value
-      "subtitle" -> album.description = value
-      "icon" -> album.thumbUrl = value
-      "timestamp" -> album.timestamp = value.toLong()
-      "nickname" -> album.author = value
-      "user" -> album.authorId = value
-      "access" -> album.isPublic = "public" == value
-      "numphotos" -> {
-        album.size = value.toInt()
-        album.photos = ArrayList(album.size)
+    album.apply {
+      when (path) {
+        "name" -> name = value
+        "title" -> title = value
+        "subtitle" -> description = value
+        "icon" -> thumbUrl = value
+        "timestamp" -> timestamp = value.toLong()
+        "nickname" -> author = value
+        "user" -> authorId = value
+        "access" -> isPublic = "public" == value
+        "numphotos" -> {
+          size = value.toInt()
+          photos = ArrayList(size)
+        }
+        "where/Point/pos" -> geo = GeoLocation(value)
+        "entry/category@term" ->
+          if (value.endsWith("photo")) {
+            photo = Photo()
+            photos.add(photo!!)
+          } else if (value.endsWith("comment")) {
+            comment = Comment()
+            comments.add(comment!!)
+          }
       }
-      "where/Point/pos" -> album.geo = GeoLocation(value)
-      "entry/category@term" ->
-        if (value.endsWith("photo")) {
-          photo = Photo()
-          album.photos.add(photo!!)
-        }
-        else if (value.endsWith("comment")) {
-          comment = Comment()
-          album.comments.add(comment!!)
-        }
     }
 
-    photo?.let { photo ->
+    photo?.apply { 
       when (path) {
-        "entry/id" -> photo.id = value
-        "entry/title" -> photo.title = value
-        "entry/summary" -> photo.description = value
-        "entry/timestamp" -> photo.timestamp = value.toLong()
-        "entry/width" -> photo.width = value.toInt()
-        "entry/height" -> photo.height = value.toInt()
-        "entry/content@src" -> photo.url = value
-        "entry/group/thumbnail@url" -> photo.thumbUrl = value
-        "entry/tags/fstop" -> photo.exif.fstop = value.toFloat()
-        "entry/tags/exposure" -> photo.exif.exposure = value.toFloat()
-        "entry/tags/focallength" -> photo.exif.focal = value.toFloat()
-        "entry/tags/iso" -> photo.exif.iso = value
-        "entry/tags/model" -> photo.exif.camera = value
-        "entry/where/Point/pos" -> photo.geo = GeoLocation(value)
+        "entry/id" -> id = value
+        "entry/title" -> title = value
+        "entry/summary" -> description = value
+        "entry/timestamp" -> timestamp = value.toLong()
+        "entry/width" -> width = value.toInt()
+        "entry/height" -> height = value.toInt()
+        "entry/content@src" -> url = value
+        "entry/group/thumbnail@url" -> thumbUrl = value
+        "entry/tags/fstop" -> exif.fstop = value.toFloat()
+        "entry/tags/exposure" -> exif.exposure = value.toFloat()
+        "entry/tags/focallength" -> exif.focal = value.toFloat()
+        "entry/tags/iso" -> exif.iso = value
+        "entry/tags/model" -> exif.camera = value
+        "entry/where/Point/pos" -> geo = GeoLocation(value)
       }
     }
     
-    comment?.let { comment ->
+    comment?.apply {
       when (path) {
-        "entry/content" -> comment.text = value
-        "entry/author/name" -> comment.author = value
-        "entry/author/thumbnail" -> comment.avatarUrl = value
-        "entry/author/user" -> comment.authorId = value
-        "entry/photoid" -> comment.photoId = value
+        "entry/content" -> text = value
+        "entry/author/name" -> author = value
+        "entry/author/thumbnail" -> avatarUrl = value
+        "entry/author/user" -> authorId = value
+        "entry/photoid" -> photoId = value
       }
     }
   }
