@@ -13,7 +13,7 @@ public class RandomPhotos {
     this.album = album;
 
     for (Photo photo : photos) {
-      photo.url = photo.url.replace("/s1600/", "/s1920/");
+      photo.setUrl(photo.getUrl().replace("/s1600/", "/s1920/"));
     }
   }
 

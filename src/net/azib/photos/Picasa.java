@@ -66,22 +66,22 @@ public class Picasa {
   }
 
   private Album fixPhotoDescriptions(Album album) {
-    for (Photo photo : album.photos) {
+    for (Photo photo : album.getPhotos()) {
       // remove filename-like descriptions that don't make any sense
-      String desc = photo.description;
+      String desc = photo.getDescription();
       if (desc != null && desc.matches("(IMG|DSC)?[0-9-_.]+")) {
-        photo.description = null;
+        photo.setDescription(null);
       }
     }
     return album;
   }
 
   public RandomPhotos getRandomPhotos(int numNext) throws IOException {
-    List<Album> albums = getGallery().albums;
+    List<Album> albums = getGallery().getAlbums();
     Album album = weightedRandom(albums);
-    List<Photo> photos = getAlbum(album.name).photos;
+    List<Photo> photos = getAlbum(album.getName()).getPhotos();
     int index = random(photos.size());
-    return new RandomPhotos(photos.subList(index, min(index + numNext, photos.size())), album.author, album.title);
+    return new RandomPhotos(photos.subList(index, min(index + numNext, photos.size())), album.getAuthor(), album.getTitle());
   }
 
   Album weightedRandom(List<Album> albums) {

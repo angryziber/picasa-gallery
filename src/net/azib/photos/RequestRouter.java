@@ -77,13 +77,13 @@ public class RequestRouter implements Filter {
         }
         catch (MissingResourceException e) {
           album = picasa.search(parts[1]);
-          album.title = "Photos matching '" + parts[1] + "'";
+          album.setTitle("Photos matching '" + parts[1] + "'");
           // TODO: no longer works for non-logged-in requests
         }
 
         if (parts.length > 2) {
-          for (Photo photo : album.photos) {
-            if (photo.id.equals(parts[2])) {
+          for (Photo photo : album.getPhotos()) {
+            if (photo.getId().equals(parts[2])) {
               request.setAttribute("photo", photo);
               break;
             }
@@ -108,8 +108,8 @@ public class RequestRouter implements Filter {
 
     if (response.getContentType() == null)
       response.setContentType("text/html; charset=utf8");
-    if (source instanceof Entity && ((Entity) source).timestamp != null)
-      response.addDateHeader("Last-Modified", ((Entity) source).timestamp);
+    if (source instanceof Entity && ((Entity) source).getTimestamp() != null)
+      response.addDateHeader("Last-Modified", ((Entity) source).getTimestamp());
 
     VelocityContext ctx = new VelocityContext();
     Enumeration<String> attrs = request.getAttributeNames();

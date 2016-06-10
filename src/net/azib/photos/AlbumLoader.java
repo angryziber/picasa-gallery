@@ -29,39 +29,40 @@ public class AlbumLoader implements XMLListener<Album> {
   @Override
   public void value(String path, String value) throws StopParse {
     switch (path) {
-      case "name": album.name = value; return;
-      case "title": album.title = value; return;
-      case "subtitle": album.description = value; return;
-      case "icon": album.thumbUrl = value; return;
-      case "timestamp": album.timestamp = parseLong(value); return;
-      case "nickname": album.author = value; return;
-      case "user": album.authorId = value; return;
-      case "access": album.isPublic = "public".equals(value); return;
-      case "numphotos": album.photos = new ArrayList<>(album.size = parseInt(value)); return;
-      case "where/Point/pos": album.geo = new GeoLocation(value); return;
+      case "name": album.setName(value); return;
+      case "title": album.setTitle(value); return;
+      case "subtitle": album.setDescription(value); return;
+      case "icon": album.setThumbUrl(value); return;
+      case "timestamp": album.setTimestamp(parseLong(value)); return;
+      case "nickname": album.setAuthor(value); return;
+      case "user": album.setAuthorId(value); return;
+      case "access": album.setPublic("public".equals(value)); return;
+      case "numphotos": album.setSize(parseInt(value));
+                        album.setPhotos(new ArrayList<Photo>(album.getSize())); return;
+      case "where/Point/pos": album.setGeo(new GeoLocation(value)); return;
 
       case "entry/category@term":
-        if (value.endsWith("photo")) album.photos.add(photo = new Photo());
-        else if (value.endsWith("comment")) album.comments.add(comment = new Comment());
+        if (value.endsWith("photo")) album.getPhotos().add(photo = new Photo());
+        else if (value.endsWith("comment")) album.getComments().add(comment = new Comment());
         return;
     }
 
     if (photo != null) {
       switch (path) {
-        case "entry/id": photo.id = value; break;
-        case "entry/title": photo.title = value; break;
-        case "entry/summary": photo.description = value; break;
-        case "entry/timestamp": photo.timestamp = parseLong(value); break;
-        case "entry/width": photo.width = parseInt(value); break;
-        case "entry/height": photo.height = parseInt(value); break;
-        case "entry/content@src": photo.url = value; break;
-        case "entry/group/thumbnail@url": photo.thumbUrl = value; break;
-        case "entry/tags/fstop": photo.exif.fstop = parseFloat(value); break;
-        case "entry/tags/exposure": photo.exif.exposure = parseFloat(value); break;
-        case "entry/tags/focallength": photo.exif.focal = parseFloat(value); break;
-        case "entry/tags/iso": photo.exif.iso = value; break;
-        case "entry/tags/model": photo.exif.camera = value; break;
-        case "entry/where/Point/pos": photo.geo = new GeoLocation(value); break;
+        case "entry/id": photo.setId(value); break;
+        case "entry/title": photo.setTitle(value); break;
+        case "entry/summary": photo.setDescription(value); break;
+        case "entry/timestamp": photo.setTimestamp(parseLong(value)); break;
+        case "entry/width": photo.setWidth(parseInt(value)); break;
+        case "entry/height": photo.setHeight(parseInt(value)); break;
+        case "entry/content@src": photo.setUrl(value); break;
+        case "entry/group/thumbnail@url": photo.setThumbUrl(value); break;
+        case "entry/tags/fstop": photo.getExif().fstop = parseFloat(value); break;
+        case "entry/tags/exposure": photo.getExif().exposure = parseFloat(value); break;
+        case "entry/tags/focallength": photo.getExif().focal = parseFloat(value); break;
+        case "entry/tags/iso": photo.getExif().iso = value; break;
+        case "entry/tags/model": photo.getExif().camera = value; break;
+        case "entry/where/Point/pos": photo.setGeo(new GeoLocation(value)); break;
       }
     }
     else if (comment != null) {

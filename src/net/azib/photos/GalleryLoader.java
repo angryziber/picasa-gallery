@@ -27,18 +27,18 @@ public class GalleryLoader implements XMLListener<Gallery> {
   @Override
   public void value(String path, String value) throws StopParse {
     switch (path) {
-      case "nickname": gallery.author = value; break;
-      case "updated": gallery.timestamp = parseTimestamp(value); break;
+      case "nickname": gallery.setAuthor(value); break;
+      case "updated": gallery.setTimestamp(parseTimestamp(value)); break;
 
-      case "entry/name": album.name = value; break;
-      case "entry/title": album.title = value; break;
-      case "entry/summary": album.description = value; break;
-      case "entry/nickname": album.author = value; break;
-      case "entry/access": album.isPublic = "public".equals(value); break;
-      case "entry/timestamp": album.timestamp = parseLong(value); break;
-      case "entry/group/thumbnail@url": album.thumbUrl = value; break;
-      case "entry/where/Point/pos": album.geo = new GeoLocation(value); break;
-      case "entry/numphotos": album.size = parseInt(value); break;
+      case "entry/name": album.setName(value); break;
+      case "entry/title": album.setTitle(value); break;
+      case "entry/summary": album.setDescription(value); break;
+      case "entry/nickname": album.setAuthor(value); break;
+      case "entry/access": album.setPublic("public".equals(value)); break;
+      case "entry/timestamp": album.setTimestamp(parseLong(value)); break;
+      case "entry/group/thumbnail@url": album.setThumbUrl(value); break;
+      case "entry/where/Point/pos": album.setGeo(new GeoLocation(value)); break;
+      case "entry/numphotos": album.setSize(parseInt(value)); break;
     }
   }
 
@@ -53,7 +53,7 @@ public class GalleryLoader implements XMLListener<Gallery> {
 
   @Override
   public void start(String path) throws StopParse {
-    if ("entry".equals(path)) gallery.albums.add(album = new Album());
+    if ("entry".equals(path)) gallery.getAlbums().add(album = new Album());
   }
 
   @Override
