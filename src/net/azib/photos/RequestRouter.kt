@@ -99,7 +99,7 @@ class RequestRouter : Filter {
       return userAgent == null || userAgent.toLowerCase().contains("bot/") || userAgent.contains("spider/")
     }
 
-    internal fun render(template: String, source: Any, request: HttpServletRequest, response: HttpServletResponse) {
+    internal fun render(template: String, source: Any?, request: HttpServletRequest, response: HttpServletResponse) {
       val start = System.currentTimeMillis()
 
       request.setAttribute(template, source)
