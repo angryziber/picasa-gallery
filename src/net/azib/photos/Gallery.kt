@@ -4,5 +4,5 @@ import java.util.*
 
 class Gallery : Entity() {
   var author: String? = null
-  var albums: List<Album> = ArrayList(64)
+  var albums: MutableList<Album> = ArrayList(64)
 }
