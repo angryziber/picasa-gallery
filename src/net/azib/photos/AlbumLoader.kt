@@ -3,18 +3,12 @@ package net.azib.photos
 import java.util.*
 
 class AlbumLoader : XMLListener<Album> {
-  private lateinit var album: Album
+  private var album = Album()
   private var photo: Photo? = null
   private var comment: Comment? = null
 
   override val result: Album
     get() = album
-
-  override fun rootElement(name: String) {
-    album = Album()
-    photo = null
-    comment = null
-  }
 
   override fun value(path: String, value: String) {
     album.apply {
