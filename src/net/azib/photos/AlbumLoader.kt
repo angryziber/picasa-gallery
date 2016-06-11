@@ -7,15 +7,13 @@ class AlbumLoader : XMLListener<Album> {
   private var photo: Photo? = null
   private var comment: Comment? = null
 
-  override fun getResult() = album
+  override val result: Album
+    get() = album
 
   override fun rootElement(name: String) {
     album = Album()
     photo = null
     comment = null
-  }
-
-  override fun rootElementEnd(name: String) {
   }
 
   override fun value(path: String, value: String) {
@@ -75,9 +73,6 @@ class AlbumLoader : XMLListener<Album> {
         "entry/photoid" -> photoId = value
       }
     }
-  }
-
-  override fun start(path: String) {
   }
 
   override fun end(path: String) {
