@@ -9,7 +9,7 @@ Example gallery: [Anton Keks Photos](http://photos.azib.net/) - use the link at 
 How does it work?
 =================
 
-It's a small Java application made to be hosted for free on Google App Engine.
+It's a small app made to be hosted for free on Google App Engine.
 It uses Google Data API to fetch and display your albums and photos, so whenever you change anything
 on Google Photos/Picasaweb, it will become visible in this gallery.
 
