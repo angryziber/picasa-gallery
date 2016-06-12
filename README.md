@@ -39,9 +39,9 @@ How to use it for your own photos
 - Clone this repository as described on Github
 - Specify your Google username in src/config.properties
 - Specify your AppEngine application ID in web/WEB-INF/appengine-web.xml
-- Use Intellij IDEA or from command-line:
-  * `./gradlew war` - will build the war file (web application archive)
-  * `./gradlew appengineRun` - will run the app locally on port 8080
+- Uploading and testing
   * `./gradlew appengineUpdate` - will upload the app to Google AppEngine
-
-P.S. the app is a standard Java Servlet-based application, so it will work without AppEngine as well.
+  * `./gradlew appengineRun` - will run the app locally on port 8080
+- Or, the app is a standard Java Servlet-based application, so it will work with any other Servlet Container  
+  * `./gradlew war` - will build the war file (web application archive)
+  
