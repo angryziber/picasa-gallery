@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap
 
 class Picasa {
   var user = defaultUser
-  internal var authkey: String? = null
+  private var authkey: String? = null
 
   constructor() {
   }
@@ -104,6 +104,10 @@ class Picasa {
     return url
   }
 
+  private fun urlEncode(name: String): String {
+    return URLEncoder.encode(name, "UTF-8")
+  }
+
   companion object {
     internal var config = loadConfig()
     internal var defaultUser = config.getProperty("google.user")
@@ -115,10 +119,6 @@ class Picasa {
       val conn = URL(fullUrl).openConnection() as HttpURLConnection
       if (conn.responseCode != 200) throw MissingResourceException(fullUrl, null, null)
       conn.inputStream.use { return XMLParser(loader).parse(it) }
-    }
-
-    internal fun urlEncode(name: String): String {
-      return URLEncoder.encode(name, "UTF-8")
     }
 
     private fun loadConfig(): Properties {
