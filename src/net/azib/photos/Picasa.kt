@@ -23,7 +23,8 @@ class Picasa {
   val urlSuffix: String
     get() = if (user != defaultUser) "?by=" + user else ""
 
-  fun getAnalytics() = analytics
+  val analytics: String?
+    get() = config.getProperty("google.analytics")
 
   val gallery: Gallery
     get() {
@@ -106,7 +107,6 @@ class Picasa {
   companion object {
     internal var config = loadConfig()
     internal var defaultUser = config.getProperty("google.user")
-    internal var analytics = config.getProperty("google.analytics")
     internal var random: Random = SecureRandom()
 
     internal var cache: MutableMap<String, XMLListener<Any>> = ConcurrentHashMap()
