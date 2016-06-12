@@ -8,7 +8,9 @@ import java.security.SecureRandom
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
-class Picasa(val user: String = defaultUser, private val authKey: String? = null) {
+class Picasa(user: String? = null, private val authKey: String? = null) {
+  val user: String = user ?: defaultUser
+
   val urlSuffix: String
     get() = if (user != defaultUser) "?by=" + user else ""
 
@@ -27,18 +29,7 @@ class Picasa(val user: String = defaultUser, private val authKey: String? = null
     var url = if (name.matches("\\d+".toRegex())) "/albumid/" + name else "/album/" + urlEncode(name)
     url += "?kind=photo,comment&imgmax=1600&thumbsize=144c"
     url += "&fields=id,updated,title,subtitle,icon,gphoto:*,georss:where(gml:Point),entry(title,summary,content,author,category,gphoto:id,gphoto:photoid,gphoto:width,gphoto:height,gphoto:commentCount,gphoto:timestamp,exif:*,media:*,georss:where(gml:Point))"
-    return fixPhotoDescriptions(cachedFeed(url, AlbumLoader()))
-  }
-
-  private fun fixPhotoDescriptions(album: Album): Album {
-    for (photo in album.photos) {
-      // remove filename-like descriptions that don't make any sense
-      val desc = photo.description
-      if (desc != null && desc.matches("(IMG|DSC)?[0-9-_.]+".toRegex())) {
-        photo.description = null
-      }
-    }
-    return album
+    return cachedFeed(url, AlbumLoader())
   }
 
   fun getRandomPhotos(numNext: Int): RandomPhotos {
@@ -71,7 +62,7 @@ class Picasa(val user: String = defaultUser, private val authKey: String? = null
   }
 
   fun search(query: String): Album {
-    return fixPhotoDescriptions(cachedFeed("?kind=photo&q=" + urlEncode(query) + "&imgmax=1024&thumbsize=144c", AlbumLoader()))
+    return cachedFeed("?kind=photo&q=" + urlEncode(query) + "&imgmax=1024&thumbsize=144c", AlbumLoader())
   }
 
   private fun <T : Entity> cachedFeed(query: String, loader: XMLListener<T>): T {

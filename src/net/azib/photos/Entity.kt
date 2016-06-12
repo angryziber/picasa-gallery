@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat
 
 open class Entity {
   var title: String? = null
-  var description: String? = null
+  open var description: String? = null
     get() = field ?: ""
 
   var thumbUrl: String? = null
