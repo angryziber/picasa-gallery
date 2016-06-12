@@ -41,8 +41,8 @@ How to use it for your own photos
 - Specify your AppEngine application ID in web/WEB-INF/appengine-web.xml
 - Download AppEngine SDK from Google
 - If you don't use any IDE:
-  * `gradle war` - will build the war file (web application archive)
-  * `gradle appengineRun` - will run the app locally on port 8080
-  * `gradle appengineUpdate` - will upload the app to Google AppEngine
+  * `./gradlew war` - will build the war file (web application archive)
+  * `./gradlew appengineRun` - will run the app locally on port 8080
+  * `./gradlew appengineUpdate` - will upload the app to Google AppEngine
 
 P.S. the app is a standard Java Servlet-based application, so it will work without AppEngine as well.
