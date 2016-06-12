@@ -39,8 +39,7 @@ How to use it for your own photos
 - Clone this repository as described on Github
 - Specify your Google username in src/config.properties
 - Specify your AppEngine application ID in web/WEB-INF/appengine-web.xml
-- Download AppEngine SDK from Google
-- If you don't use any IDE:
+- Use Intellij IDEA or from command-line:
   * `./gradlew war` - will build the war file (web application archive)
   * `./gradlew appengineRun` - will run the app locally on port 8080
   * `./gradlew appengineUpdate` - will upload the app to Google AppEngine
