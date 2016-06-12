@@ -8,18 +8,7 @@ import java.security.SecureRandom
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
-class Picasa {
-  var user = defaultUser
-  private var authkey: String? = null
-
-  constructor() {
-  }
-
-  constructor(user: String?, authkey: String?) {
-    if (user != null) this.user = user
-    this.authkey = authkey
-  }
-
+class Picasa(val user: String = defaultUser, private val authKey: String? = null) {
   val urlSuffix: String
     get() = if (user != defaultUser) "?by=" + user else ""
 
@@ -100,7 +89,7 @@ class Picasa {
 
   private fun toFullUrl(query: String): String {
     var url = "http://picasaweb.google.com/data/feed/api/user/" + urlEncode(user) + query
-    if (authkey != null) url += (if (url.contains("?")) "&" else "?") + "authkey=" + authkey
+    if (authKey != null) url += (if (url.contains("?")) "&" else "?") + "authkey=" + authKey
     return url
   }
 
