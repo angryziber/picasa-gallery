@@ -7,7 +7,7 @@ import java.util.logging.Logger
 import javax.servlet.ServletContext
 import javax.servlet.http.HttpServletResponse
 
-class Renderer(servletContext: ServletContext) {
+open class Renderer(servletContext: ServletContext) {
   private val logger = Logger.getLogger(RequestRouter::class.java.name)
   private lateinit var velocity: VelocityEngine
 
@@ -20,7 +20,7 @@ class Renderer(servletContext: ServletContext) {
     velocity.init()
   }
 
-  operator fun invoke(template: String, source: Any?, attrs: MutableMap<String, Any?>, response: HttpServletResponse) {
+  open operator fun invoke(template: String, source: Any?, attrs: MutableMap<String, Any?>, response: HttpServletResponse) {
     val start = System.currentTimeMillis()
 
     if (response.contentType == null)
