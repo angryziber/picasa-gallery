@@ -26,9 +26,8 @@ class RequestRouterTest: Spek({
     it("redirects to / in case of other user's request") {
       whenever(req.getParameter("by")).thenReturn("other.user")
       whenever(req.getHeader("User-Agent")).thenReturn("Googlebot/2")
-      val router = RequestRouter(req, res, mock(), mock())
 
-      router.invoke()
+      RequestRouter(req, res, mock(), mock()).invoke()
 
       verify(res).sendRedirect("/")
     }
