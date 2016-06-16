@@ -1,6 +1,6 @@
 package net.azib.photos
 
-class CacheReloader {
+object CacheReloader {
   fun reload() = Picasa.cache.entries.forEach {
     Picasa.loadAndParse(it.key, it.value)
   }

@@ -40,7 +40,7 @@ class RequestRouter : Filter {
       req.setAttribute("host", req.getHeader("host"))
       req.setAttribute("servletPath", req.servletPath)
 
-      if (req.getParameter("reload") != null) CacheReloader().reload()
+      if (req.getParameter("reload") != null) CacheReloader.reload()
 
       when {
         random != null -> renderRandom(picasa, random, req, res)
