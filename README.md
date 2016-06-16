@@ -44,4 +44,5 @@ How to use it for your own photos [![Build Status](https://travis-ci.org/angryzi
   * `./gradlew appengineRun` - will run the app locally on port 8080
 - Or, the app is a standard Java Servlet-based application, so it will work with any other Servlet Container  
   * `./gradlew war` - will build the war file (web application archive)
-  
+
+- If you use Intellij IDEA, you can import `build.gradle` and run all the actions from an IDE. 
