@@ -1,10 +1,18 @@
 package net.azib.photos
 
 import java.text.SimpleDateFormat
+import java.util.*
 
 class GalleryLoader : XMLListener<Gallery> {
   override var result = Gallery()
   private var album: Album? = null
+  val timestampFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+
+  init {
+    timestampFormat.timeZone = TimeZone.getTimeZone("UTC")
+  }
+
+  private fun parseTimestamp(value: String) = timestampFormat.parse(value).time
 
   override fun value(path: String, value: String) {
     when (path) {
@@ -22,9 +30,6 @@ class GalleryLoader : XMLListener<Gallery> {
       "entry/numphotos" -> album?.size = value.toInt()
     }
   }
-
-  private fun parseTimestamp(value: String) =
-    SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(value).time
 
   override fun start(path: String) {
     if ("entry" == path) {

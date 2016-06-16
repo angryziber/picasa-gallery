@@ -8,7 +8,7 @@ class GalleryLoaderTest {
   @Test fun parse() {
     val gallery = XMLParser(GalleryLoader()).parse(javaClass.getResourceAsStream("gallery.xml"))
     assertThat(gallery.author, `is`("Anton Keks"))
-    assertThat(gallery.timestamp, `is`(1464106391641L))
+    assertThat(gallery.timestampISO, `is`("2016-05-24T19:13:11Z"))
     assertThat(gallery.albums.size, `is`(1))
 
     val album = gallery.albums[0]
@@ -18,7 +18,7 @@ class GalleryLoaderTest {
     assertThat(album.author, `is`("Anton Keks"))
     assertThat(album.isPublic, `is`(true))
     assertThat(album.thumbUrl, `is`("https://lh3.googleusercontent.com/-EfV7Xxjk3gk/VjfV9bujtGE/AAAAAAABKUY/gQBUlooE9lsYdyZ1O7ciOiGo-5pch3_DQCHM/s212-c/Chernobyl"))
-    assertThat(album.timestamp, `is`(1446752259445L))
+    assertThat(album.timestampISO, `is`("2015-11-05T21:37:39Z"))
     assertThat(album.geo!!.lat, `is`(51.276303f))
     assertThat(album.geo!!.lon, `is`(30.221899f))
     assertThat(album.size(), `is`(159))
