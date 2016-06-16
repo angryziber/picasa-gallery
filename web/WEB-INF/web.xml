@@ -5,7 +5,7 @@
 
     <filter>
         <filter-name>router</filter-name>
-        <filter-class>net.azib.photos.RequestRouter</filter-class>
+        <filter-class>net.azib.photos.RequestFilter</filter-class>
     </filter>
 
     <filter-mapping>

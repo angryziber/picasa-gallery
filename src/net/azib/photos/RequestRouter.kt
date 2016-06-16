@@ -1,45 +1,36 @@
 package net.azib.photos
 
 import java.util.*
-import javax.servlet.*
+import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpServletResponse.SC_MOVED_PERMANENTLY
 import javax.servlet.http.HttpServletResponse.SC_NOT_FOUND
-import javax.xml.bind.DatatypeConverter
 
-class RequestRouter : Filter {
-  private lateinit var render: Renderer
+class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, val chain: FilterChain, val render: Renderer) {
+  val attrs: MutableMap<String, Any?> = HashMap()
+  val userAgent = req.getHeader("User-Agent")
+  val path = req.servletPath
+  val by = req["by"]
+  val random = req["random"]
+  val picasa = Picasa(by, req["authkey"])
 
-  override fun init(config: FilterConfig) {
-    this.render = Renderer(config.servletContext)
-  }
-
-  override fun doFilter(req: ServletRequest, res: ServletResponse, chain: FilterChain) {
-    req as HttpServletRequest
-    res as HttpServletResponse
-    val path = req.servletPath
-
-    val attrs = HashMap<String, Any?>()
-
+  operator fun invoke() {
     try {
-      val by = req["by"]
-      val random = req["random"]
-      detectMobile(req, attrs)
-      detectBot(by, random, req, attrs)
+      detectMobile()
+      detectBot()
 
-      val picasa = Picasa(by, req["authkey"])
       attrs["picasa"] = picasa
       attrs["host"] = req.getHeader("host")
       attrs["servletPath"] = path
 
-      if (req["reload"] != null) CacheReloader.reload()
+      req["reload"] ?: CacheReloader.reload()
 
       when {
-        random != null -> renderRandom(picasa, random, attrs, req, res)
+        random != null -> renderRandom()
         path == null || "/" == path -> render("gallery", picasa.gallery, attrs, res)
         path.lastIndexOf('.') >= path.length - 4 -> chain.doFilter(req, res)
-        else -> renderAlbum(path, picasa, attrs, res)
+        else -> renderAlbum()
       }
     }
     catch (e: Redirect) {
@@ -51,7 +42,7 @@ class RequestRouter : Filter {
     }
   }
 
-  private fun renderAlbum(path: String, picasa: Picasa, attrs: MutableMap<String, Any?>, response: HttpServletResponse) {
+  private fun renderAlbum() {
     val parts = path.split("/")
     val album: Album
     try {
@@ -71,22 +62,21 @@ class RequestRouter : Filter {
         }
       }
     }
-    render("album", album, attrs, response)
+    render("album", album, attrs, res)
   }
 
-  private fun renderRandom(picasa: Picasa, random: String, attrs: MutableMap<String, Any?>, request: HttpServletRequest, response: HttpServletResponse) {
-    attrs["delay"] = request["delay"]
-    if (request["refresh"] != null) attrs["refresh"] = true
-    render("random", picasa.getRandomPhotos(DatatypeConverter.parseInt(if (random.length > 0) random else "1")), attrs, response)
+  private fun renderRandom() {
+    attrs["delay"] = req["delay"]
+    attrs["refresh"] = req["refresh"] != null
+    val numRandom = (if (random.isNotEmpty()) random else "1").toInt()
+    render("random", picasa.getRandomPhotos(numRandom), attrs, res)
   }
 
-  private fun detectMobile(request: HttpServletRequest, attrs: MutableMap<String, Any?>) {
-    val userAgent = request.getHeader("User-Agent")
+  private fun detectMobile() {
     attrs["mobile"] = userAgent != null && userAgent.contains("Mobile") && !userAgent.contains("iPad") && !userAgent.contains("Tab")
   }
 
-  private fun detectBot(by: String?, random: String?, request: HttpServletRequest, attrs: MutableMap<String, Any?>) {
-    val userAgent = request.getHeader("User-Agent")
+  private fun detectBot() {
     val bot = isBot(userAgent)
     if (bot && (by != null || random != null)) {
       throw Redirect("/")
@@ -100,7 +90,5 @@ class RequestRouter : Filter {
 
   private operator fun HttpServletRequest.get(param: String) = getParameter(param)
 
-  override fun destroy() { }
+  class Redirect(val path: String): Exception()
 }
-
-class Redirect(val path: String): Exception()
