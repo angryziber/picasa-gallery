@@ -1,12 +1,12 @@
 package net.azib.photos
 
 import org.hamcrest.CoreMatchers.`is`
+import org.jetbrains.spek.api.Spek
 import org.junit.Assert.assertThat
-import org.junit.Test
 
-class AlbumLoaderTest {
-  @Test fun parse() {
-    val album = XMLParser(AlbumLoader()).parse(javaClass.getResourceAsStream("album.xml"))
+class AlbumLoaderTest: Spek({
+  it("parses album.xml") {
+    val album = XMLParser(AlbumLoader()).parse(Album::class.java.getResourceAsStream("album.xml"))
     assertThat(album.name, `is`("Morocco"))
     assertThat(album.title, `is`("Morocco"))
     assertThat(album.description, `is`("Morocco round trip: Fes, Chefchaouen, Casablanca, Marrakech, Merzouga"))
@@ -44,4 +44,4 @@ class AlbumLoaderTest {
     assertThat(comment.text, `is`("Отлично снято :)"))
     assertThat(comment.photoId, `is`("5464172735550834786"))
   }
-}
+})

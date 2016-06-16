@@ -1,23 +1,24 @@
 package net.azib.photos
 
+import org.jetbrains.spek.api.Spek
 import org.junit.Assert.assertEquals
-import org.junit.Test
 
-class PhotoTest {
+class PhotoTest: Spek({
   val photo = Photo()
 
-  @Test
-  fun descriptionIsNeverNullForVelocity() {
-    assertEquals("", photo.description)
-  }
+  describe("description") {
+    it("is never null for Velocity") {
+      assertEquals("", photo.description)
+    }
 
-  @Test fun leaveNormalDescriptionsIntact() {
-    photo.description = "Hello"
-    assertEquals("Hello", photo.description)
-  }
+    it("leaves normal descriptions intact") {
+      photo.description = "Hello"
+      assertEquals("Hello", photo.description)
+    }
 
-  @Test fun removeFilenameLikeDescriptions() {
-    photo.description = "20130320_133707"
-    assertEquals("", photo.description)
+    it("removes filename-like descriptions") {
+      photo.description = "20130320_133707"
+      assertEquals("", photo.description)
+    }
   }
-}
+})

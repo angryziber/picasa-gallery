@@ -4,14 +4,14 @@ import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.spy
 import com.nhaarman.mockito_kotlin.whenever
+import org.jetbrains.spek.api.Spek
 import org.junit.Assert.assertSame
-import org.junit.Test
 import java.util.Arrays.asList
 
-class PicasaTest {
+class PicasaTest: Spek({
   var picasa = Picasa()
 
-  @Test fun weightedRandomDistributesAccordingToTheSizeOfAlbum() {
+  it("distributes weighted random according to the size of album") {
     val album1 = mock<Album>()
     whenever(album1.size()).thenReturn(10)
     val album2 = mock<Album>()
@@ -34,4 +34,4 @@ class PicasaTest {
     doReturn(40).whenever(picasa).random(41)
     assertSame(album3, picasa.weightedRandom(albums))
   }
-}
+})
