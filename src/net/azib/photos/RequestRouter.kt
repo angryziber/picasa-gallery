@@ -29,7 +29,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
       when {
         random != null -> renderRandom()
         path == null || "/" == path -> render("gallery", picasa.gallery, attrs, res)
-        path.lastIndexOf('.') >= path.length - 4 -> chain.doFilter(req, res)
+        path.isResource() -> chain.doFilter(req, res)
         else -> renderAlbumOrSearch()
       }
     }
@@ -41,6 +41,8 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
       res.sendError(SC_NOT_FOUND)
     }
   }
+
+  fun String.isResource() = lastIndexOf('.') >= length - 4
 
   private fun renderAlbumOrSearch() {
     val parts = path.split("/")
