@@ -30,17 +30,17 @@ class RequestRouter : Filter {
     val path = req.servletPath
 
     try {
-      val by = req.getParameter("by")
-      val random = req.getParameter("random")
+      val by = req["by"]
+      val random = req["random"]
       detectMobile(req)
-      detectBot(by, random, req, res)
+      detectBot(by, random, req)
 
-      val picasa = Picasa(by, req.getParameter("authkey"))
+      val picasa = Picasa(by, req["authkey"])
       req.setAttribute("picasa", picasa)
       req.setAttribute("host", req.getHeader("host"))
       req.setAttribute("servletPath", req.servletPath)
 
-      if (req.getParameter("reload") != null) CacheReloader.reload()
+      if (req["reload"] != null) CacheReloader.reload()
 
       when {
         random != null -> renderRandom(picasa, random, req, res)
@@ -82,8 +82,8 @@ class RequestRouter : Filter {
   }
 
   private fun renderRandom(picasa: Picasa, random: String, request: HttpServletRequest, response: HttpServletResponse) {
-    request.setAttribute("delay", request.getParameter("delay"))
-    if (request.getParameter("refresh") != null) request.setAttribute("refresh", true)
+    request.setAttribute("delay", request["delay"])
+    if (request["refresh"] != null) request.setAttribute("refresh", true)
     render("random", picasa.getRandomPhotos(DatatypeConverter.parseInt(if (random.length > 0) random else "1")), request, response)
   }
 
@@ -92,7 +92,7 @@ class RequestRouter : Filter {
     request.setAttribute("mobile", userAgent != null && userAgent.contains("Mobile") && !userAgent.contains("iPad") && !userAgent.contains("Tab"))
   }
 
-  private fun detectBot(by: String?, random: String?, request: HttpServletRequest, response: HttpServletResponse) {
+  private fun detectBot(by: String?, random: String?, request: HttpServletRequest) {
     val userAgent = request.getHeader("User-Agent")
     val bot = isBot(userAgent)
     if (bot && (by != null || random != null)) {
@@ -100,6 +100,8 @@ class RequestRouter : Filter {
     }
     request.setAttribute("bot", bot)
   }
+  
+  private operator fun HttpServletRequest.get(param: String) = getParameter(param)
 
   override fun destroy() { }
 
