@@ -55,7 +55,7 @@ class RequestRouter : Filter {
           chain.doFilter(req, resp)
         }
         else -> {
-          val parts = path.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+          val parts = path.split("/")
           val album: Album
           try {
             album = picasa.getAlbum(parts[1])
