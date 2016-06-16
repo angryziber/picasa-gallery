@@ -40,42 +40,13 @@ class RequestRouter : Filter {
       request.setAttribute("host", request.getHeader("host"))
       request.setAttribute("servletPath", request.servletPath)
 
+      if (request.getParameter("reload") != null) CacheReloader().reload()
+
       when {
-        random != null -> {
-          request.setAttribute("delay", request.getParameter("delay"))
-          if (request.getParameter("refresh") != null) request.setAttribute("refresh", true)
-          render("random", picasa.getRandomPhotos(DatatypeConverter.parseInt(if (random.length > 0) random else "1")), request, response)
-        }
-        path == null || "/" == path -> {
-          if (request.getParameter("reload") != null) CacheReloader().reload()
-
-          render("gallery", picasa.gallery, request, response)
-        }
-        path.lastIndexOf('.') >= path.length - 4 -> {
-          chain.doFilter(req, resp)
-        }
-        else -> {
-          val parts = path.split("/")
-          val album: Album
-          try {
-            album = picasa.getAlbum(parts[1])
-          }
-          catch (e: MissingResourceException) {
-            album = picasa.search(parts[1])
-            album.title = "Photos matching '" + parts[1] + "'"
-            // TODO: no longer works for non-logged-in requests
-          }
-
-          if (parts.size > 2) {
-            for (photo in album.photos) {
-              if (photo.id == parts[2]) {
-                request.setAttribute("photo", photo)
-                break
-              }
-            }
-          }
-          render("album", album, request, response)
-        }
+        random != null -> renderRandom(picasa, random, request, response)
+        path == null || "/" == path -> render("gallery", picasa.gallery, request, response)
+        path.lastIndexOf('.') >= path.length - 4 -> chain.doFilter(req, resp)
+        else -> renderAlbum(path, picasa, request, response)
       }
     }
     catch (e: Redirect) {
@@ -85,6 +56,35 @@ class RequestRouter : Filter {
     catch (e: MissingResourceException) {
       response.sendError(SC_NOT_FOUND)
     }
+  }
+
+  private fun renderAlbum(path: String, picasa: Picasa, request: HttpServletRequest, response: HttpServletResponse) {
+    val parts = path.split("/")
+    val album: Album
+    try {
+      album = picasa.getAlbum(parts[1])
+    }
+    catch (e: MissingResourceException) {
+      album = picasa.search(parts[1])
+      album.title = "Photos matching '" + parts[1] + "'"
+      // TODO: no longer works for non-logged-in requests
+    }
+
+    if (parts.size > 2) {
+      for (photo in album.photos) {
+        if (photo.id == parts[2]) {
+          request.setAttribute("photo", photo)
+          break
+        }
+      }
+    }
+    render("album", album, request, response)
+  }
+
+  private fun renderRandom(picasa: Picasa, random: String, request: HttpServletRequest, response: HttpServletResponse) {
+    request.setAttribute("delay", request.getParameter("delay"))
+    if (request.getParameter("refresh") != null) request.setAttribute("refresh", true)
+    render("random", picasa.getRandomPhotos(DatatypeConverter.parseInt(if (random.length > 0) random else "1")), request, response)
   }
 
   private fun detectMobile(request: HttpServletRequest) {
