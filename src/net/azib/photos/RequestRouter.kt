@@ -33,7 +33,7 @@ class RequestRouter : Filter {
       val by = request.getParameter("by")
       val random = request.getParameter("random")
       detectMobile(request)
-      if (detectBot(by, random, request, response)) return
+      detectBot(by, random, request, response)
 
       val picasa = Picasa(by, request.getParameter("authkey"))
       request.setAttribute("picasa", picasa)
@@ -77,6 +77,10 @@ class RequestRouter : Filter {
         render("album", album, request, response)
       }
     }
+    catch (e: Redirect) {
+      response.sendRedirect(e.path)
+      response.status = SC_MOVED_PERMANENTLY
+    }
     catch (e: MissingResourceException) {
       response.sendError(SC_NOT_FOUND)
     }
@@ -87,16 +91,13 @@ class RequestRouter : Filter {
     request.setAttribute("mobile", userAgent != null && userAgent.contains("Mobile") && !userAgent.contains("iPad") && !userAgent.contains("Tab"))
   }
 
-  private fun detectBot(by: String?, random: String?, request: HttpServletRequest, response: HttpServletResponse): Boolean {
+  private fun detectBot(by: String?, random: String?, request: HttpServletRequest, response: HttpServletResponse) {
     val userAgent = request.getHeader("User-Agent")
     val bot = isBot(userAgent)
     if (bot && (by != null || random != null)) {
-      response.sendRedirect("/")
-      response.status = SC_MOVED_PERMANENTLY
-      return true
+      throw Redirect("/")
     }
     request.setAttribute("bot", bot)
-    return false
   }
 
   override fun destroy() { }
@@ -132,3 +133,5 @@ class RequestRouter : Filter {
     }
   }
 }
+
+class Redirect(val path: String): Exception()
