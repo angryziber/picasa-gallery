@@ -1,9 +1,6 @@
 package net.azib.photos
 
-import org.apache.velocity.VelocityContext
-import org.apache.velocity.app.VelocityEngine
 import java.util.*
-import java.util.logging.Logger
 import javax.servlet.*
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -12,16 +9,10 @@ import javax.servlet.http.HttpServletResponse.SC_NOT_FOUND
 import javax.xml.bind.DatatypeConverter
 
 class RequestRouter : Filter {
-  private lateinit var context: ServletContext
+  private lateinit var render: Renderer
 
   override fun init(config: FilterConfig) {
-    this.context = config.servletContext
-    val velocityProps = Properties()
-    velocityProps.setProperty("file.resource.loader.path", context.getRealPath("/WEB-INF/views"))
-    velocityProps.setProperty("file.resource.loader.cache", "true")
-    velocity = VelocityEngine(velocityProps)
-    velocity.setApplicationAttribute("javax.servlet.ServletContext", context)
-    velocity.init()
+    this.render = Renderer(config.servletContext)
   }
 
   override fun doFilter(req: ServletRequest, res: ServletResponse, chain: FilterChain) {
@@ -102,35 +93,14 @@ class RequestRouter : Filter {
     }
     attrs["bot"] = bot
   }
-  
+
+  internal fun isBot(userAgent: String?): Boolean {
+    return userAgent == null || userAgent.toLowerCase().contains("bot/") || userAgent.contains("spider/")
+  }
+
   private operator fun HttpServletRequest.get(param: String) = getParameter(param)
 
   override fun destroy() { }
-
-  companion object {
-    private val logger = Logger.getLogger(RequestRouter::class.java.name)
-    private lateinit var velocity: VelocityEngine
-
-    internal fun isBot(userAgent: String?): Boolean {
-      return userAgent == null || userAgent.toLowerCase().contains("bot/") || userAgent.contains("spider/")
-    }
-
-    internal fun render(template: String, source: Any?, attrs: MutableMap<String, Any?>, response: HttpServletResponse) {
-      val start = System.currentTimeMillis()
-
-      if (response.contentType == null)
-        response.contentType = "text/html; charset=utf8"
-      if (source is Entity && source.timestamp != null)
-        response.addDateHeader("Last-Modified", source.timestamp!!)
-
-      attrs[template] = source
-      val ctx = VelocityContext(attrs)
-      val tmpl = velocity.getTemplate(template + ".vm")
-      tmpl.merge(ctx, response.writer)
-
-      logger.info("Rendered in " + (System.currentTimeMillis() - start) + " ms")
-    }
-  }
 }
 
 class Redirect(val path: String): Exception()
