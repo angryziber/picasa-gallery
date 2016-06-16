@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse.SC_NOT_FOUND
 
 class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, val chain: FilterChain, val render: Renderer) {
   val attrs: MutableMap<String, Any?> = HashMap()
-  val userAgent = req.getHeader("User-Agent")
+  val userAgent: String? = req.getHeader("User-Agent")
   val path = req.servletPath
   val by = req["by"]
   val random = req["random"]
@@ -85,7 +85,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   }
 
   internal fun isBot(userAgent: String?): Boolean {
-    return userAgent == null || userAgent.toLowerCase().contains("bot/") || userAgent.contains("spider/")
+    return userAgent == null || userAgent.contains("bot/", true) || userAgent.contains("spider/", true)
   }
 
   private operator fun HttpServletRequest.get(param: String) = getParameter(param)
