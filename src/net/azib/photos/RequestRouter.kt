@@ -29,23 +29,16 @@ class RequestRouter : Filter {
     val response = resp as HttpServletResponse
     val path = request.servletPath
 
-    val by = request.getParameter("by")
-    val random = request.getParameter("random")
-    val userAgent = request.getHeader("User-Agent")
-    val bot = isBot(userAgent)
-    if (bot && (by != null || random != null)) {
-      response.sendRedirect("/")
-      response.status = SC_MOVED_PERMANENTLY
-      return
-    }
-
     try {
+      val by = request.getParameter("by")
+      val random = request.getParameter("random")
+      detectMobile(request)
+      if (detectBot(by, random, request, response)) return
+
       val picasa = Picasa(by, request.getParameter("authkey"))
       request.setAttribute("picasa", picasa)
       request.setAttribute("host", request.getHeader("host"))
       request.setAttribute("servletPath", request.servletPath)
-      request.setAttribute("bot", bot)
-      request.setAttribute("mobile", userAgent != null && userAgent.contains("Mobile") && !userAgent.contains("iPad") && !userAgent.contains("Tab"))
 
       if (random != null) {
         request.setAttribute("delay", request.getParameter("delay"))
@@ -87,6 +80,23 @@ class RequestRouter : Filter {
     catch (e: MissingResourceException) {
       response.sendError(SC_NOT_FOUND)
     }
+  }
+
+  private fun detectMobile(request: HttpServletRequest) {
+    val userAgent = request.getHeader("User-Agent")
+    request.setAttribute("mobile", userAgent != null && userAgent.contains("Mobile") && !userAgent.contains("iPad") && !userAgent.contains("Tab"))
+  }
+
+  private fun detectBot(by: String?, random: String?, request: HttpServletRequest, response: HttpServletResponse): Boolean {
+    val userAgent = request.getHeader("User-Agent")
+    val bot = isBot(userAgent)
+    if (bot && (by != null || random != null)) {
+      response.sendRedirect("/")
+      response.status = SC_MOVED_PERMANENTLY
+      return true
+    }
+    request.setAttribute("bot", bot)
+    return false
   }
 
   override fun destroy() { }
