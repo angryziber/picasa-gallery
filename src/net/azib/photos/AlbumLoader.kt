@@ -1,7 +1,5 @@
 package net.azib.photos
 
-import java.util.*
-
 class AlbumLoader : XMLListener<Album> {
   private var album = Album()
   private var photo: Photo? = null
@@ -23,7 +21,7 @@ class AlbumLoader : XMLListener<Album> {
         "access" -> isPublic = "public" == value
         "numphotos" -> {
           size = value.toInt()
-          photos = ArrayList(size)
+          photos.ensureCapacity(size)
         }
         "where/Point/pos" -> geo = GeoLocation(value)
         "entry/category@term" -> when {

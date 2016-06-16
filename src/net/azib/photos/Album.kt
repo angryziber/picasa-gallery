@@ -9,8 +9,8 @@ open class Album : Entity() {
   var isPublic = false
   var size = 0
 
-  var photos: MutableList<Photo> = ArrayList()
-  var comments: MutableList<Comment> = ArrayList()
+  var photos = ArrayList<Photo>()
+  var comments = ArrayList<Comment>()
 
   open fun size() = size
 }
