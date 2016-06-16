@@ -18,7 +18,7 @@ class GalleryLoaderTest {
     assertThat(album.author, `is`("Anton Keks"))
     assertThat(album.isPublic, `is`(true))
     assertThat(album.thumbUrl, `is`("https://lh3.googleusercontent.com/-EfV7Xxjk3gk/VjfV9bujtGE/AAAAAAABKUY/gQBUlooE9lsYdyZ1O7ciOiGo-5pch3_DQCHM/s212-c/Chernobyl"))
-    assertThat(album.timestamp, `is`(1432450800000L))
+    assertThat(album.timestamp, `is`(1446752259445L))
     assertThat(album.geo!!.lat, `is`(51.276303f))
     assertThat(album.geo!!.lon, `is`(30.221899f))
     assertThat(album.size(), `is`(159))

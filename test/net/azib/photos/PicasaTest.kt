@@ -1,6 +1,9 @@
 package net.azib.photos
 
-import com.nhaarman.mockito_kotlin.*
+import com.nhaarman.mockito_kotlin.doReturn
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.spy
+import com.nhaarman.mockito_kotlin.whenever
 import org.junit.Assert.assertSame
 import org.junit.Test
 import java.util.Arrays.asList
