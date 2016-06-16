@@ -12,7 +12,7 @@ class RequestFilter : Filter {
   }
 
   override fun doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
-    RequestRouter(request as HttpServletRequest, response as HttpServletResponse, chain, render).invoke()
+    RequestRouter(request as HttpServletRequest, response as HttpServletResponse, render, chain).invoke()
   }
 
   override fun destroy() { }

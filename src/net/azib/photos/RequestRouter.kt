@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpServletResponse.SC_MOVED_PERMANENTLY
 import javax.servlet.http.HttpServletResponse.SC_NOT_FOUND
 
-class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, val chain: FilterChain, val render: Renderer) {
+class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, val render: Renderer, val chain: FilterChain) {
   val attrs: MutableMap<String, Any?> = HashMap()
   val userAgent: String? = req.getHeader("User-Agent")
   val path = req.servletPath
