@@ -8,7 +8,7 @@ import java.security.SecureRandom
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
-class Picasa(user: String? = null, private val authKey: String? = null) {
+open class Picasa(user: String? = null, private val authKey: String? = null) {
   val user: String = user ?: defaultUser
 
   val urlSuffix: String
@@ -40,7 +40,7 @@ class Picasa(user: String? = null, private val authKey: String? = null) {
     return RandomPhotos(photos.subList(index, min(index + numNext, photos.size)), album.author!!, album.title!!)
   }
 
-  internal fun weightedRandom(albums: List<Album>): Album {
+  open fun weightedRandom(albums: List<Album>): Album {
     var sum = 0
     for (album in albums) sum += transform(album.size().toDouble())
     val index = random(sum)
@@ -53,11 +53,11 @@ class Picasa(user: String? = null, private val authKey: String? = null) {
     return albums[0]
   }
 
-  internal fun transform(n: Double): Int {
+  private fun transform(n: Double): Int {
     return (100.0 * Math.log10(1 + n / 50.0)).toInt()
   }
 
-  internal fun random(max: Int): Int {
+  internal open fun random(max: Int): Int {
     return if (max == 0) 0 else random.nextInt(max)
   }
 

@@ -34,13 +34,17 @@ sourceSets {
   }
 }
 
+repositories {
+  jcenter()
+}
+
 dependencies {
   appengineSdk 'com.google.appengine:appengine-java-sdk:1.9.34'
   compile 'org.apache.velocity:velocity:1.7'
   compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
   providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
   testCompile 'junit:junit:4.12'
-  testCompile 'org.mockito:mockito-all:1.10.19'
+  testCompile "com.nhaarman:mockito-kotlin:0.5.0"
 }
 
 appengine {
