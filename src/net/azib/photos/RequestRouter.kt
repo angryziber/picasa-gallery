@@ -30,7 +30,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
         random != null -> renderRandom()
         path == null || "/" == path -> render("gallery", picasa.gallery, attrs, res)
         path.lastIndexOf('.') >= path.length - 4 -> chain.doFilter(req, res)
-        else -> renderAlbum()
+        else -> renderAlbumOrSearch()
       }
     }
     catch (e: Redirect) {
@@ -42,7 +42,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
     }
   }
 
-  private fun renderAlbum() {
+  private fun renderAlbumOrSearch() {
     val parts = path.split("/")
     val album: Album
     try {
