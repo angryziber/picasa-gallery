@@ -30,8 +30,7 @@ open class Picasa(user: String? = null, private val authKey: String? = null) {
     url += "&fields=id,updated,title,subtitle,icon,gphoto:*,georss:where(gml:Point),entry(title,summary,content,author,category,gphoto:id,gphoto:photoid,gphoto:width,gphoto:height,gphoto:commentCount,gphoto:timestamp,exif:*,media:*,georss:where(gml:Point))"
     val loader = AlbumLoader()
     val album = cachedFeed(url, loader)
-    if (album.size > album.photos.size)
-        cachedFeed(url + "&start-index=${album.photos.size+1}", loader)
+    while (album.size > album.photos.size) cachedFeed(url + "&start-index=${album.photos.size+1}", loader)
     return album
   }
 
