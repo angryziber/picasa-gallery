@@ -39,7 +39,7 @@ open class Picasa(user: String? = null, private val authKey: String? = null) {
     val album = weightedRandom(albums)
     val photos = getAlbum(album.name!!).photos
     val index = random(photos.size)
-    return RandomPhotos(photos.subList(index, min(index + numNext, photos.size)), album.author!!, album.title!!)
+    return RandomPhotos(photos.subList(index, min(index + numNext, photos.size)), album.author, album.title)
   }
 
   open fun weightedRandom(albums: List<Album>): Album {
