@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpServletResponse.SC_MOVED_PERMANENTLY
 import javax.servlet.http.HttpServletResponse.SC_NOT_FOUND
-import javax.xml.bind.DatatypeConverter.parseInt
+import javax.xml.bind.DatatypeConverter
 
 class RequestRouter : Filter {
   private lateinit var context: ServletContext
@@ -40,41 +40,42 @@ class RequestRouter : Filter {
       request.setAttribute("host", request.getHeader("host"))
       request.setAttribute("servletPath", request.servletPath)
 
-      if (random != null) {
-        request.setAttribute("delay", request.getParameter("delay"))
-        if (request.getParameter("refresh") != null) request.setAttribute("refresh", true)
-        render("random", picasa.getRandomPhotos(parseInt(if (random.length > 0) random else "1")), request, response)
-      }
-      else if (path == null || "/" == path) {
-        if (request.getParameter("reload") != null)
-          CacheReloader().reload()
-
-        render("gallery", picasa.gallery, request, response)
-      }
-      else if (path.lastIndexOf('.') >= path.length - 4) {
-        chain.doFilter(req, resp)
-      }
-      else {
-        val parts = path.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        val album: Album
-        try {
-          album = picasa.getAlbum(parts[1])
+      when {
+        random != null -> {
+          request.setAttribute("delay", request.getParameter("delay"))
+          if (request.getParameter("refresh") != null) request.setAttribute("refresh", true)
+          render("random", picasa.getRandomPhotos(DatatypeConverter.parseInt(if (random.length > 0) random else "1")), request, response)
         }
-        catch (e: MissingResourceException) {
-          album = picasa.search(parts[1])
-          album.title = "Photos matching '" + parts[1] + "'"
-          // TODO: no longer works for non-logged-in requests
-        }
+        path == null || "/" == path -> {
+          if (request.getParameter("reload") != null) CacheReloader().reload()
 
-        if (parts.size > 2) {
-          for (photo in album.photos) {
-            if (photo.id == parts[2]) {
-              request.setAttribute("photo", photo)
-              break
+          render("gallery", picasa.gallery, request, response)
+        }
+        path.lastIndexOf('.') >= path.length - 4 -> {
+          chain.doFilter(req, resp)
+        }
+        else -> {
+          val parts = path.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+          val album: Album
+          try {
+            album = picasa.getAlbum(parts[1])
+          }
+          catch (e: MissingResourceException) {
+            album = picasa.search(parts[1])
+            album.title = "Photos matching '" + parts[1] + "'"
+            // TODO: no longer works for non-logged-in requests
+          }
+
+          if (parts.size > 2) {
+            for (photo in album.photos) {
+              if (photo.id == parts[2]) {
+                request.setAttribute("photo", photo)
+                break
+              }
             }
           }
+          render("album", album, request, response)
         }
-        render("album", album, request, response)
       }
     }
     catch (e: Redirect) {
