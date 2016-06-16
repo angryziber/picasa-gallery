@@ -29,24 +29,26 @@ class RequestRouter : Filter {
     res as HttpServletResponse
     val path = req.servletPath
 
+    val attrs = HashMap<String, Any?>()
+
     try {
       val by = req["by"]
       val random = req["random"]
-      detectMobile(req)
-      detectBot(by, random, req)
+      detectMobile(req, attrs)
+      detectBot(by, random, req, attrs)
 
       val picasa = Picasa(by, req["authkey"])
-      req.setAttribute("picasa", picasa)
-      req.setAttribute("host", req.getHeader("host"))
-      req.setAttribute("servletPath", req.servletPath)
+      attrs["picasa"] = picasa
+      attrs["host"] = req.getHeader("host")
+      attrs["servletPath"] = path
 
       if (req["reload"] != null) CacheReloader.reload()
 
       when {
-        random != null -> renderRandom(picasa, random, req, res)
-        path == null || "/" == path -> render("gallery", picasa.gallery, req, res)
+        random != null -> renderRandom(picasa, random, attrs, req, res)
+        path == null || "/" == path -> render("gallery", picasa.gallery, attrs, res)
         path.lastIndexOf('.') >= path.length - 4 -> chain.doFilter(req, res)
-        else -> renderAlbum(path, picasa, req, res)
+        else -> renderAlbum(path, picasa, attrs, res)
       }
     }
     catch (e: Redirect) {
@@ -58,7 +60,7 @@ class RequestRouter : Filter {
     }
   }
 
-  private fun renderAlbum(path: String, picasa: Picasa, request: HttpServletRequest, response: HttpServletResponse) {
+  private fun renderAlbum(path: String, picasa: Picasa, attrs: MutableMap<String, Any?>, response: HttpServletResponse) {
     val parts = path.split("/")
     val album: Album
     try {
@@ -73,32 +75,32 @@ class RequestRouter : Filter {
     if (parts.size > 2) {
       for (photo in album.photos) {
         if (photo.id == parts[2]) {
-          request.setAttribute("photo", photo)
+          attrs["photo"] = photo
           break
         }
       }
     }
-    render("album", album, request, response)
+    render("album", album, attrs, response)
   }
 
-  private fun renderRandom(picasa: Picasa, random: String, request: HttpServletRequest, response: HttpServletResponse) {
-    request.setAttribute("delay", request["delay"])
-    if (request["refresh"] != null) request.setAttribute("refresh", true)
-    render("random", picasa.getRandomPhotos(DatatypeConverter.parseInt(if (random.length > 0) random else "1")), request, response)
+  private fun renderRandom(picasa: Picasa, random: String, attrs: MutableMap<String, Any?>, request: HttpServletRequest, response: HttpServletResponse) {
+    attrs["delay"] = request["delay"]
+    if (request["refresh"] != null) attrs["refresh"] = true
+    render("random", picasa.getRandomPhotos(DatatypeConverter.parseInt(if (random.length > 0) random else "1")), attrs, response)
   }
 
-  private fun detectMobile(request: HttpServletRequest) {
+  private fun detectMobile(request: HttpServletRequest, attrs: MutableMap<String, Any?>) {
     val userAgent = request.getHeader("User-Agent")
-    request.setAttribute("mobile", userAgent != null && userAgent.contains("Mobile") && !userAgent.contains("iPad") && !userAgent.contains("Tab"))
+    attrs["mobile"] = userAgent != null && userAgent.contains("Mobile") && !userAgent.contains("iPad") && !userAgent.contains("Tab")
   }
 
-  private fun detectBot(by: String?, random: String?, request: HttpServletRequest) {
+  private fun detectBot(by: String?, random: String?, request: HttpServletRequest, attrs: MutableMap<String, Any?>) {
     val userAgent = request.getHeader("User-Agent")
     val bot = isBot(userAgent)
     if (bot && (by != null || random != null)) {
       throw Redirect("/")
     }
-    request.setAttribute("bot", bot)
+    attrs["bot"] = bot
   }
   
   private operator fun HttpServletRequest.get(param: String) = getParameter(param)
@@ -113,22 +115,16 @@ class RequestRouter : Filter {
       return userAgent == null || userAgent.toLowerCase().contains("bot/") || userAgent.contains("spider/")
     }
 
-    internal fun render(template: String, source: Any?, request: HttpServletRequest, response: HttpServletResponse) {
+    internal fun render(template: String, source: Any?, attrs: MutableMap<String, Any?>, response: HttpServletResponse) {
       val start = System.currentTimeMillis()
-
-      request.setAttribute(template, source)
 
       if (response.contentType == null)
         response.contentType = "text/html; charset=utf8"
       if (source is Entity && source.timestamp != null)
         response.addDateHeader("Last-Modified", source.timestamp!!)
 
-      val ctx = VelocityContext()
-      val attrs = request.attributeNames
-      while (attrs.hasMoreElements()) {
-        val name = attrs.nextElement()
-        ctx.put(name, request.getAttribute(name))
-      }
+      attrs[template] = source
+      val ctx = VelocityContext(attrs)
       val tmpl = velocity.getTemplate(template + ".vm")
       tmpl.merge(ctx, response.writer)
 
