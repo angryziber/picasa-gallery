@@ -24,37 +24,37 @@ class RequestRouter : Filter {
     velocity.init()
   }
 
-  override fun doFilter(req: ServletRequest, resp: ServletResponse, chain: FilterChain) {
-    val request = req as HttpServletRequest
-    val response = resp as HttpServletResponse
-    val path = request.servletPath
+  override fun doFilter(req: ServletRequest, res: ServletResponse, chain: FilterChain) {
+    req as HttpServletRequest
+    res as HttpServletResponse
+    val path = req.servletPath
 
     try {
-      val by = request.getParameter("by")
-      val random = request.getParameter("random")
-      detectMobile(request)
-      detectBot(by, random, request, response)
+      val by = req.getParameter("by")
+      val random = req.getParameter("random")
+      detectMobile(req)
+      detectBot(by, random, req, res)
 
-      val picasa = Picasa(by, request.getParameter("authkey"))
-      request.setAttribute("picasa", picasa)
-      request.setAttribute("host", request.getHeader("host"))
-      request.setAttribute("servletPath", request.servletPath)
+      val picasa = Picasa(by, req.getParameter("authkey"))
+      req.setAttribute("picasa", picasa)
+      req.setAttribute("host", req.getHeader("host"))
+      req.setAttribute("servletPath", req.servletPath)
 
-      if (request.getParameter("reload") != null) CacheReloader().reload()
+      if (req.getParameter("reload") != null) CacheReloader().reload()
 
       when {
-        random != null -> renderRandom(picasa, random, request, response)
-        path == null || "/" == path -> render("gallery", picasa.gallery, request, response)
-        path.lastIndexOf('.') >= path.length - 4 -> chain.doFilter(req, resp)
-        else -> renderAlbum(path, picasa, request, response)
+        random != null -> renderRandom(picasa, random, req, res)
+        path == null || "/" == path -> render("gallery", picasa.gallery, req, res)
+        path.lastIndexOf('.') >= path.length - 4 -> chain.doFilter(req, res)
+        else -> renderAlbum(path, picasa, req, res)
       }
     }
     catch (e: Redirect) {
-      response.sendRedirect(e.path)
-      response.status = SC_MOVED_PERMANENTLY
+      res.sendRedirect(e.path)
+      res.status = SC_MOVED_PERMANENTLY
     }
     catch (e: MissingResourceException) {
-      response.sendError(SC_NOT_FOUND)
+      res.sendError(SC_NOT_FOUND)
     }
   }
 
