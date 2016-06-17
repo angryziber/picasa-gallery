@@ -15,6 +15,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   var requestedUser = req["by"]
   val random = req["random"]
   val picasa = Picasa(requestedUser, req["authkey"])
+  var bot = false
 
   operator fun invoke() {
     try {
@@ -47,6 +48,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
 
   private fun renderAlbumOrSearch() {
     val album: Album
+
     try {
       album = picasa.getAlbum(pathParts[1])
     }
@@ -79,9 +81,15 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   }
 
   private fun detectBot() {
-    val bot = isBot(userAgent)
-    if (bot && (requestedUser != null || random != null)) {
-      throw Redirect("/")
+    bot = isBot(userAgent)
+    if (bot) {
+      if (requestedUser != null || random != null) {
+        throw Redirect("/")
+      }
+      if (pathParts.size > 2) {
+        val lastSlashPos = path.lastIndexOf('/');
+        throw Redirect(path.replaceRange(lastSlashPos, lastSlashPos+1, "#"))
+      }
     }
     attrs["bot"] = bot
   }
