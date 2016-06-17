@@ -22,7 +22,7 @@ function PhotoViewer() {
         photos = [];
         $('a.photo').click(pub.open).each(function() {
             photos.push({
-                href: this.href,
+                url: this.href,
                 title: $('img', this).attr('title'),
                 id: this.id,
                 pos: extractPos(this),
@@ -311,7 +311,7 @@ function PhotoViewer() {
         if (index < photos.length-1)
             setTimeout(function() {
                 var tmp = new Image();
-                tmp.src = photos[index+1].href;
+                tmp.src = photos[index+1].url;
             }, 100);
     }
 
@@ -326,8 +326,8 @@ function PhotoViewer() {
         newImg.className = 'photo';
         newImg.style.display = 'none';
         newImg.onload = imageOnLoad;
-        newImg.src = photo.href;
-        if ('chromecast' in window) chromecast.send(photo.href);
+        newImg.src = photo.url;
+        if ('chromecast' in window) chromecast.send(photo.url);
 
         title.text(photo.title);
         if (photo.title) title.fadeIn(); else title.fadeOut();
