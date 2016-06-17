@@ -11,9 +11,10 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   val attrs: MutableMap<String, Any?> = HashMap()
   val userAgent: String? = req.getHeader("User-Agent")
   val path = req.servletPath
-  val by = req["by"]
+  val pathParts = path.split("/")
+  var requestedUser = req["by"]
   val random = req["random"]
-  val picasa = Picasa(by, req["authkey"])
+  val picasa = Picasa(requestedUser, req["authkey"])
 
   operator fun invoke() {
     try {
@@ -24,7 +25,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
       attrs["host"] = req.getHeader("host")
       attrs["servletPath"] = path
 
-      req["reload"] ?: CacheReloader.reload()
+      req["reload"] ?: URLLoader.reload()
 
       when {
         random != null -> renderRandom()
@@ -45,20 +46,19 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   fun String.isResource() = lastIndexOf('.') >= length - 4
 
   private fun renderAlbumOrSearch() {
-    val parts = path.split("/")
     val album: Album
     try {
-      album = picasa.getAlbum(parts[1])
+      album = picasa.getAlbum(pathParts[1])
     }
     catch (e: MissingResourceException) {
-      album = picasa.search(parts[1])
-      album.title = "Photos matching '" + parts[1] + "'"
+      album = picasa.search(pathParts[1])
+      album.title = "Photos matching '" + pathParts[1] + "'"
       // TODO: no longer works for non-logged-in requests
     }
 
-    if (parts.size > 2) {
+    if (pathParts.size > 2) {
       for (photo in album.photos) {
-        if (photo.id == parts[2]) {
+        if (photo.id == pathParts[2]) {
           attrs["photo"] = photo
           break
         }
@@ -80,7 +80,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
 
   private fun detectBot() {
     val bot = isBot(userAgent)
-    if (bot && (by != null || random != null)) {
+    if (bot && (requestedUser != null || random != null)) {
       throw Redirect("/")
     }
     attrs["bot"] = bot
