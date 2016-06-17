@@ -70,13 +70,11 @@ open class Picasa(user: String? = null, private val authKey: String? = null) {
   private fun <T : Entity> cachedFeed(query: String, loader: XMLListener<T>): T {
     val url = toFullUrl(query).intern()
     synchronized (url) {
-      var cached = cache[url] as XMLListener<T>?
-      if (cached == null) {
+      cache.getOrPut(url) {
         loadAndParse(url, loader)
-        cached = loader
-        cache[url] = cached as XMLListener<Any>
+        loader
       }
-      return cached.result
+      return loader.result
     }
   }
 
@@ -95,7 +93,7 @@ open class Picasa(user: String? = null, private val authKey: String? = null) {
     internal var defaultUser = config.getProperty("google.user")
     internal var random: Random = SecureRandom()
 
-    internal var cache: MutableMap<String, XMLListener<Any>> = ConcurrentHashMap()
+    internal var cache: MutableMap<String, XMLListener<out Entity>> = ConcurrentHashMap()
 
     internal fun <T> loadAndParse(fullUrl: String, loader: XMLListener<T>): T {
       val conn = URL(fullUrl).openConnection() as HttpURLConnection
