@@ -1,12 +1,9 @@
 package net.azib.photos
 
 import java.lang.Math.min
-import java.net.HttpURLConnection
-import java.net.URL
 import java.net.URLEncoder
 import java.security.SecureRandom
 import java.util.*
-import java.util.concurrent.ConcurrentHashMap
 
 open class Picasa(user: String? = null, private val authKey: String? = null) {
   val user: String = user ?: defaultUser
@@ -21,7 +18,7 @@ open class Picasa(user: String? = null, private val authKey: String? = null) {
     get() {
       var url = "?kind=album&thumbsize=212c"
       url += "&fields=id,updated,gphoto:*,entry(title,summary,updated,content,category,gphoto:*,media:*,georss:*)"
-      return cachedFeed(url, GalleryLoader())
+      return load(url, GalleryLoader())
     }
 
   fun getAlbum(name: String): Album {
@@ -29,8 +26,8 @@ open class Picasa(user: String? = null, private val authKey: String? = null) {
     url += "?kind=photo,comment&imgmax=1600&thumbsize=144c&max-results=500"
     url += "&fields=id,updated,title,subtitle,icon,gphoto:*,georss:where(gml:Point),entry(title,summary,content,author,category,gphoto:id,gphoto:photoid,gphoto:width,gphoto:height,gphoto:commentCount,gphoto:timestamp,exif:*,media:*,georss:where(gml:Point))"
     val loader = AlbumLoader()
-    val album = cachedFeed(url, loader)
-    while (album.size > album.photos.size) cachedFeed(url + "&start-index=${album.photos.size+1}", loader)
+    val album = load(url, loader)
+    while (album.size > album.photos.size) load(url + "&start-index=${album.photos.size+1}", loader)
     return album
   }
 
@@ -63,20 +60,10 @@ open class Picasa(user: String? = null, private val authKey: String? = null) {
     return if (max == 0) 0 else random.nextInt(max)
   }
 
-  fun search(query: String): Album {
-    return cachedFeed("?kind=photo&q=" + urlEncode(query) + "&imgmax=1024&thumbsize=144c", AlbumLoader())
-  }
+  fun search(query: String) = load("?kind=photo&q=" + urlEncode(query) + "&imgmax=1024&thumbsize=144c", AlbumLoader())
 
-  private fun <T : Entity> cachedFeed(query: String, loader: XMLListener<T>): T {
-    val url = toFullUrl(query).intern()
-    synchronized (url) {
-      cache.getOrPut(url) {
-        loadAndParse(url, loader)
-        loader
-      }
-      return loader.result
-    }
-  }
+  private fun <T: Entity> load(query: String, loader: XMLListener<T>)
+      = URLLoader.load(toFullUrl(query), loader)
 
   private fun toFullUrl(query: String): String {
     var url = "http://picasaweb.google.com/data/feed/api/user/" + urlEncode(user) + query
@@ -92,14 +79,6 @@ open class Picasa(user: String? = null, private val authKey: String? = null) {
     internal var config = loadConfig()
     internal var defaultUser = config.getProperty("google.user")
     internal var random: Random = SecureRandom()
-
-    internal var cache: MutableMap<String, XMLListener<out Entity>> = ConcurrentHashMap()
-
-    internal fun <T> loadAndParse(fullUrl: String, loader: XMLListener<T>): T {
-      val conn = URL(fullUrl).openConnection() as HttpURLConnection
-      if (conn.responseCode != 200) throw MissingResourceException(fullUrl, null, null)
-      conn.inputStream.use { return XMLParser(loader).parse(it) }
-    }
 
     private fun loadConfig(): Properties {
       val config = Properties()
