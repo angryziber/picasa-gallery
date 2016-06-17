@@ -21,7 +21,14 @@ function PhotoViewer() {
     pub.setup = function() {
         photos = [];
         $('a.photo').click(pub.open).each(function() {
-            photos.push({href: this.href, title: $('img', this).attr('title'), id: this.id, pos: extractPos(this), exif: extractExif(this), time: $(this).data('time')});
+            photos.push({
+                href: this.href,
+                title: $('img', this).attr('title'),
+                id: this.id,
+                pos: extractPos(this),
+                exif: extractExif(this),
+                time: this.getAttribute('data-time')
+            });
             this.href = this.getAttribute('data-href');
         });
 
