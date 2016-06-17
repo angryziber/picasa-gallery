@@ -1,6 +1,6 @@
 package net.azib.photos
 
-interface XMLListener<T> {
+interface XMLListener<out T> {
   class StopParse : Exception()
 
   val result: T

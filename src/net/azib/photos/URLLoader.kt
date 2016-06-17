@@ -6,12 +6,13 @@ import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
 object URLLoader {
-  private val cache: MutableMap<String, XMLListener<out Entity>> = ConcurrentHashMap()
+  private val cache: MutableMap<String, XMLListener<Entity>> = ConcurrentHashMap()
 
   fun reload() = cache.entries.forEach {
     loadAndParse(it.key, it.value.javaClass.newInstance())
   }
 
+  @Suppress("UNCHECKED_CAST")
   fun <T : Entity> load(url: String, loader: XMLListener<T>): T {
     synchronized (url.intern()) {
       return cache.getOrPut(url) { loadAndParse(url, loader) }.result as T
