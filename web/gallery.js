@@ -21,17 +21,15 @@ function PhotoViewer() {
     pub.setup = function() {
         photos = [];
         $('a.photo').click(pub.open).each(function() {
-            var photo = {
+            photos.push({
                 url: this.href,
-                href: this.getAttribute('data-href'),
                 title: $('img', this).attr('title'),
                 id: this.id,
                 pos: extractPos(this),
                 exif: extractExif(this),
                 time: this.getAttribute('data-time')
-            };
-            photos.push(photo);
-            this.href = photo.href;
+            });
+            this.href = this.getAttribute('data-href');
         });
 
         wrapper = $('#photo-wrapper');
@@ -152,9 +150,7 @@ function PhotoViewer() {
     }
 
     function stateURL(photo) {
-        if (photo) return photo.href;
-        var album = location.pathname.split('/')[1];
-        return '/' + album + location.search + (slideshow ? '#slideshow' : '');
+        return photo ? '#' + photo.id : slideshow ? '#slidehow' : location.href.replace(/#.*/, '');
     }
 
     function showTimeRemaining() {
@@ -335,14 +331,13 @@ function PhotoViewer() {
         title.text(photo.title);
         if (photo.title) title.fadeIn(); else title.fadeOut();
 
-        var url = stateURL(photo);
-        if (history.replaceState) history.replaceState(url, photo.title, url);
-        if ('ga' in window) ga('send', 'pageview', url);
+        if (history.replaceState) history.replaceState(stateURL(photo), photo.title, stateURL(photo));
+        if ('ga' in window) ga('send', 'pageview', location.href);
 
         position.text((index+1) + ' of ' + photos.length);
 
         controls.find('.facebook-button').remove();
-        controls.find('.header').prepend(facebookButton('http://' + location.host + stateURL(photo)));
+        controls.find('.header').prepend(facebookButton(location.href));
 
         wrapper.find('.comment').fadeOut();
         wrapper.find('.comment.photo-' + photo.id).fadeIn();
