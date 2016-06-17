@@ -25,7 +25,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
       attrs["host"] = req.getHeader("host")
       attrs["servletPath"] = path
 
-      req["reload"] ?: URLLoader.reload()
+      if (req["reload"] != null) URLLoader.reload()
 
       when {
         random != null -> renderRandom()
