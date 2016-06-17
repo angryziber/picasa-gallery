@@ -21,15 +21,17 @@ function PhotoViewer() {
     pub.setup = function() {
         photos = [];
         $('a.photo').click(pub.open).each(function() {
-            photos.push({
+            var photo = {
                 url: this.href,
+                href: this.getAttribute('data-href'),
                 title: $('img', this).attr('title'),
                 id: this.id,
                 pos: extractPos(this),
                 exif: extractExif(this),
                 time: this.getAttribute('data-time')
-            });
-            this.href = this.getAttribute('data-href');
+            };
+            photos.push(photo);
+            this.href = photo.href;
         });
 
         wrapper = $('#photo-wrapper');
@@ -150,8 +152,9 @@ function PhotoViewer() {
     }
 
     function stateURL(photo) {
+        if (photo) return photo.href;
         var album = location.pathname.split('/')[1];
-        return '/' + album + location.search + (slideshow ? '#slideshow' : photo ? '#' + photo.id : '');
+        return '/' + album + location.search + (slideshow ? '#slideshow' : '');
     }
 
     function showTimeRemaining() {
