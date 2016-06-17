@@ -47,8 +47,12 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   fun String.isResource() = lastIndexOf('.') >= length - 4
 
   private fun renderAlbumOrSearch() {
-    val album: Album
+    if (pathParts.size > 2) {
+      val lastSlashPos = path.lastIndexOf('/');
+      throw Redirect(path.replaceRange(lastSlashPos, lastSlashPos+1, "#"))
+    }
 
+    val album: Album
     try {
       album = picasa.getAlbum(pathParts[1])
     }
@@ -58,14 +62,6 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
       // TODO: no longer works for non-logged-in requests
     }
 
-    if (pathParts.size > 2) {
-      for (photo in album.photos) {
-        if (photo.id == pathParts[2]) {
-          attrs["photo"] = photo
-          break
-        }
-      }
-    }
     render("album", album, attrs, res)
   }
 
@@ -85,10 +81,6 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
     if (bot) {
       if (requestedUser != null || random != null) {
         throw Redirect("/")
-      }
-      if (pathParts.size > 2) {
-        val lastSlashPos = path.lastIndexOf('/');
-        throw Redirect(path.replaceRange(lastSlashPos, lastSlashPos+1, "#"))
       }
     }
     attrs["bot"] = bot

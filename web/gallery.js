@@ -144,7 +144,7 @@ function PhotoViewer() {
 
     function stateURL(photo) {
         var album = location.pathname.split('/')[1];
-        return '/' + album + (photo ? '/' + photo.id : '') + location.search + (slideshow ? '#slideshow' : '');
+        return '/' + album + location.search + (slideshow ? '#slideshow' : photo ? '#' + photo.id : '');
     }
 
     function showTimeRemaining() {
