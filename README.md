@@ -1,7 +1,7 @@
 What is it?
 ===========
 
-A good-looking frontend for Google Photos (former Google+ or Picasa web) galleries, with nice transitions,
+A good-looking frontend for public albums stored in Google Photos (former Google+ or Picasa web), with nice transitions,
 mobile device support, and full-screen photo browsing with quick loading (prefetching).
 
 Perfect for those who still want to have a gallery of public albums after transition to Google Photos, which has no public
