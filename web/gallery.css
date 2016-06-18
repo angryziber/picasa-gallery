@@ -25,6 +25,7 @@ a {
 
 .header {
   position: fixed;
+  min-height: 26px;
   z-index: 10;
   top: 0;
   width: 100%;

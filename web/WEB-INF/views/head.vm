@@ -6,11 +6,12 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 <link rel="stylesheet" type="text/css" href="/reset.css">
-<link rel="stylesheet" type="text/css" href="/gallery.css">
+<link rel="stylesheet" type="text/css" href="/gallery.css?v2">
+<link rel="shortcut icon" href="/img/picasa-logo.png">
 <link rel="apple-touch-icon" href="/img/picasa-logo.png"/>
 
 <script src="//code.jquery.com/jquery-1.12.1.min.js"></script>
-<script src="/gallery.js"></script>
+<script src="/gallery.js?v2"></script>
 <script src="/prefixfree.min.js"></script>
 #if(!$bot)<script defer src="/chromecast.js"></script>#end
 
