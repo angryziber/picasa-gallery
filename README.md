@@ -13,7 +13,7 @@ How does it work?
 =================
 
 It's a small app made to be hosted for free on Google App Engine.
-It uses Google Data API to fetch and display your albums and photos, so whenever you change anything
+It uses [Google Web Albums Data API](https://developers.google.com/picasa-web) to fetch and display your albums and photos, so whenever you change anything
 on Google Photos/Picasaweb, it will become visible in this gallery.
 
 Features
@@ -21,7 +21,7 @@ Features
 
 - Dark theme that emphasizes photos
 - Shows your exising public albums, no additional storage needed
-- Search within the gallery (by tags, keywords, descriptions, etc)
+- Search within the gallery (by tags, keywords, descriptions, etc) - *currently not working because Google removed this feature from the API*
 - Nice bookmarkable URLs for albums, individual photos, search results
 - Gallery map if albums are geotagged
 - Full-screen photo viewer
