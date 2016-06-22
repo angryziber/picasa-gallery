@@ -12,8 +12,8 @@
   <meta property="og:site_name" content="${gallery.author} Photography">
   <meta name="keywords" content="${gallery.author.replace(' ', ',')},photos,picasa,picasaweb,gallery,albums,travel,photography,#foreach($album in $gallery.albums)${album.title.replace(', ', ' ').replace(' ', ',')},#end">
   #parse('head.vm')
-  #if(!$bot)<script defer async src="//maps.google.com/maps/api/js" onload="$(initMap)"></script>#end
   <script defer>$(initAlbumFilter);</script>
+  #if(!$bot)<script defer>$(initMap)</script>#end
 </head>
 
 <body style="background:black; color: gray">

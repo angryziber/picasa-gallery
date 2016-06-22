@@ -386,7 +386,7 @@ function PhotoViewer() {
 }
 
 function latLng(lat, lon) {
-    return new google.maps.LatLng(lat, lon);
+    return window.google ? new google.maps.LatLng(lat, lon) : null;
 }
 
 function createMap(selector, moreOpts) {
