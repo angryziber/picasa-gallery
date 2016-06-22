@@ -428,6 +428,7 @@ function setMarkerIcon(marker, name) {
 }
 
 function initMap() {
+    if (!window.google) return;
     var bounds = new google.maps.LatLngBounds();
     var map = createMap('#map');
     $('.albums > a').each(function (i, link) {
