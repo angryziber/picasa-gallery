@@ -45,8 +45,8 @@ class AlbumLoader : XMLListener<Album> {
         "entry/timestamp" -> timestamp = value.toLong()
         "entry/width" -> width = value.toInt()
         "entry/height" -> height = value.toInt()
-        "entry/content@src" -> url = value
-        "entry/group/thumbnail@url" -> thumbUrl = value
+        "entry/content@src" -> url = replaceUrlSuffix(value)
+        "entry/group/thumbnail@url" -> thumbUrl = replaceUrlSuffix(value)
         "entry/tags/fstop" -> exif.fstop = value.toFloat()
         "entry/tags/exposure" -> exif.exposure = value.toFloat()
         "entry/tags/focallength" -> exif.focal = value.toFloat()
@@ -66,6 +66,9 @@ class AlbumLoader : XMLListener<Album> {
       }
     }
   }
+
+  private fun replaceUrlSuffix(url: String) =
+      url.substring(0, url.lastIndexOf('/') + 1) + album.name + "-" + album.photos.size + ".jpg"
 
   override fun end(path: String) {
     if ("entry" == path) {
