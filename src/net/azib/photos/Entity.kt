@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 open class Entity {
+  var id: String? = null
   var title: String? = null
   open var description: String? = null
     get() = field ?: ""

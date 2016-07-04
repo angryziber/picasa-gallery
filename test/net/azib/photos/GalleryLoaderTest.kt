@@ -12,6 +12,7 @@ class GalleryLoaderTest: Spek({
     assertThat(gallery.albums.size, equalTo(1))
 
     val album = gallery.albums[0]
+    assertThat(album.id, equalTo("6212669462372660321"))
     assertThat(album.name, equalTo("Chernobyl"))
     assertThat(album.title, equalTo("Chernobyl"))
     assertThat(album.description, equalTo("Apocalyptic experience in Chernobyl and Pripyat, a soviet city abandoned in 1986 after the nuclear disaster. Current radiation levels are compatible with life :-)"))

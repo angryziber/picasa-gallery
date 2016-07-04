@@ -19,6 +19,7 @@ class GalleryLoader : XMLListener<Gallery> {
       "nickname" -> result.author = value
       "updated" -> result.timestamp = parseTimestamp(value)
 
+      "entry/id" -> album?.id = value
       "entry/name" -> album?.name = value
       "entry/title" -> album?.title = value
       "entry/summary" -> album?.description = value
