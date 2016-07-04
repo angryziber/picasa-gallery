@@ -32,14 +32,13 @@ open class Picasa(user: String? = null, private val authKey: String? = null) {
   }
 
   fun getRandomPhotos(numNext: Int): RandomPhotos {
-    val albums = gallery.albums
-    val album = weightedRandom(albums)
+    val album = weightedRandom(gallery.albums.values)
     val photos = getAlbum(album.name!!).photos
     val index = random(photos.size)
     return RandomPhotos(photos.subList(index, min(index + numNext, photos.size)), album.author, album.title)
   }
 
-  open fun weightedRandom(albums: List<Album>): Album {
+  open fun weightedRandom(albums: Collection<Album>): Album {
     var sum = 0
     for (album in albums) sum += transform(album.size().toDouble())
     val index = random(sum)
@@ -49,7 +48,7 @@ open class Picasa(user: String? = null, private val authKey: String? = null) {
       sum += transform(album.size().toDouble())
       if (sum > index) return album
     }
-    return albums[0]
+    return albums.first()
   }
 
   private fun transform(n: Double): Int {

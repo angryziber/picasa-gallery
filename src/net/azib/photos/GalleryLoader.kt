@@ -33,9 +33,10 @@ class GalleryLoader : XMLListener<Gallery> {
   }
 
   override fun start(path: String) {
-    if ("entry" == path) {
-      album = Album()
-      result.albums.add(album!!)
-    }
+    if ("entry" == path) album = Album()
+  }
+
+  override fun end(path: String) {
+    if ("entry" == path) result += album!!
   }
 }

@@ -4,5 +4,9 @@ import java.util.*
 
 class Gallery : Entity() {
   var author: String? = null
-  var albums: MutableList<Album> = ArrayList(64)
+  var albums: MutableMap<String, Album> = LinkedHashMap(64)
+
+  infix operator fun plusAssign(album: Album) {
+    albums[album.name!!] = album
+  }
 }

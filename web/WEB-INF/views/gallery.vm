@@ -26,7 +26,7 @@
 <div id="content">
   <div id="map"></div>
   <div class="albums">
-    #foreach($album in $gallery.albums)
+    #foreach($album in $gallery.albums.values())
       #if(${album.size()} > 1)
         <a id="${album.name}" class="fade" href="/${album.name}${picasa.urlSuffix}"
            #if(${album.geo})data-coords="${album.geo.lat}:${album.geo.lon}"#end>

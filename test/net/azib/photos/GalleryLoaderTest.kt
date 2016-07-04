@@ -11,7 +11,7 @@ class GalleryLoaderTest: Spek({
     assertThat(gallery.timestampISO, equalTo("2016-05-24T19:13:11Z"))
     assertThat(gallery.albums.size, equalTo(1))
 
-    val album = gallery.albums[0]
+    val album = gallery.albums.values.first()
     assertThat(album.id, equalTo("6212669462372660321"))
     assertThat(album.name, equalTo("Chernobyl"))
     assertThat(album.title, equalTo("Chernobyl"))
