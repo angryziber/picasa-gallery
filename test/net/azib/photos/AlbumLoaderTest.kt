@@ -13,7 +13,7 @@ class AlbumLoaderTest: Spek({
     assertThat(album.author, equalTo("Anton Keks"))
     assertThat(album.authorId, equalTo("117440562642491680332"))
     assertThat(album.isPublic, equalTo(true))
-    assertThat(album.thumbUrl, equalTo("https://lh3.googleusercontent.com/-ooqeMhFMze0/VtyhMoYRIKE/AAAAAAABNJQ/DruDrN8NmjEw-QT-28mIrn0OPW4sqwXPgCHM/s160-c/Morocco"))
+    assertThat(album.thumbUrl, equalTo("https://lh3.googleusercontent.com/-ooqeMhFMze0/VtyhMoYRIKE/AAAAAAABNJQ/DruDrN8NmjEw-QT-28mIrn0OPW4sqwXPgCHM/s160-c/Morocco.jpg"))
     assertThat(album.timestamp, equalTo(1431327600000L))
     assertThat(album.geo!!.lat, equalTo(31.791702f))
     assertThat(album.geo!!.lon, equalTo(-7.09262f))

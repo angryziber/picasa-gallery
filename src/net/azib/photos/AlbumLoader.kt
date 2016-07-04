@@ -14,7 +14,7 @@ class AlbumLoader : XMLListener<Album> {
         "name" -> name = value
         "title" -> title = value
         "subtitle" -> description = value
-        "icon" -> thumbUrl = value
+        "icon" -> thumbUrl = value + ".jpg"
         "timestamp" -> timestamp = value.toLong()
         "nickname" -> author = value
         "user" -> authorId = value
