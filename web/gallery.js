@@ -139,7 +139,8 @@ function PhotoViewer() {
         var fschange = 'fullscreenchange webkitfullscreenchange mozfullscreenchange msfullscreenchange';
         $(document).off(fschange).on(fschange, function() {
             var fs = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
-            if (!fs) pub.close();
+            if (!fs && !slideshow && !(chromecast || {}).session)
+                pub.close();
         });
     }
 
