@@ -7,6 +7,7 @@ import org.junit.Assert.assertThat
 class AlbumLoaderTest: Spek({
   it("parses album feed") {
     val album = XMLParser(AlbumLoader()).parse(Album::class.java.getResourceAsStream("album.xml"))
+    assertThat(album.id, equalTo("6259054820507852961"))
     assertThat(album.name, equalTo("Morocco"))
     assertThat(album.title, equalTo("Morocco"))
     assertThat(album.description, equalTo("Morocco round trip: Fes, Chefchaouen, Casablanca, Marrakech, Merzouga"))

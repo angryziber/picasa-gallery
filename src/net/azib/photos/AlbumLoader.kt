@@ -11,6 +11,7 @@ class AlbumLoader : XMLListener<Album> {
   override fun value(path: String, value: String) {
     album.apply {
       when (path) {
+        "id" -> id = value
         "name" -> name = value
         "title" -> title = value
         "subtitle" -> description = value
