@@ -13,5 +13,8 @@ open class Album : Entity() {
   var photos = ArrayList<Photo>()
   var comments = ArrayList<Comment>()
 
+  val thumbUrlLarge: String?
+    get() = thumbUrl?.replace("/s160-c/", "/s1024/")
+
   open fun size() = size
 }

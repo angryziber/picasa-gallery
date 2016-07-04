@@ -10,9 +10,9 @@
 
   <meta name="medium" content="image">
   <meta property="og:type" content="photos:album">
-  <meta property="og:title" content="${album.title} by ${album.author}">
-  <meta property="og:image" content="${album.thumbUrl}">
-  <link rel="image_src" href="${album.thumbUrl}">
+  <meta property="og:title" content="${album.title} photos by ${album.author}">
+  <meta property="og:image" content="${album.thumbUrlLarge}">
+  <link rel="image_src" href="${album.thumbUrlLarge}">
   #if($album.geo)
     <meta property="og:latitude" content="${album.geo.lat}">
     <meta property="og:longitude" content="${album.geo.lon}">
