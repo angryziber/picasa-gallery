@@ -54,7 +54,7 @@
   <h2>${gallery.author} <b>photos</b> and pictures</h2>
   #foreach($album in $gallery.albums)
     <h3>${album.title} by ${gallery.author}</h3>
-    <p>${album.description}</p>
+    <p><a href="/${album.name}">${album.description}</a></p>
   #end
 #end
 </body>
