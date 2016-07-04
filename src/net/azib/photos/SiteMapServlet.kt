@@ -25,7 +25,7 @@ class SiteMapServlet : HttpServlet() {
         "/sitemap.xml" -> {
           resp.contentType = "text/xml"
           val picasa = Picasa()
-          render("sitemap", null, mutableMapOf("gallery" to picasa.gallery), resp)
+          render("sitemap", null, mutableMapOf("gallery" to picasa.gallery, "host" to req.getHeader("Host")), resp)
         }
         else -> resp.sendError(SC_NOT_FOUND)
       }
