@@ -22,7 +22,8 @@ open class Picasa(user: String? = null, private val authKey: String? = null) {
     }
 
   fun getAlbum(name: String): Album {
-    var url = if (name.matches("\\d+".toRegex())) "/albumid/" + name else "/album/" + urlEncode(name)
+    val id = gallery.albums[name]?.id ?: name
+    var url = if (id.matches("\\d+".toRegex())) "/albumid/" + id else "/album/" + urlEncode(name)
     url += "?kind=photo,comment&imgmax=1600&thumbsize=144c&max-results=500"
     url += "&fields=id,updated,title,subtitle,icon,gphoto:*,georss:where(gml:Point),entry(title,summary,content,author,category,gphoto:id,gphoto:photoid,gphoto:width,gphoto:height,gphoto:commentCount,gphoto:timestamp,exif:*,media:*,georss:where(gml:Point))"
     val loader = AlbumLoader()
