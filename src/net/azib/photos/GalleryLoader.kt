@@ -26,7 +26,7 @@ class GalleryLoader : XMLListener<Gallery> {
       "entry/nickname" -> album?.author = value
       "entry/access" -> album?.isPublic = "public" == value
       "entry/updated" -> album?.timestamp = parseTimestamp(value)
-      "entry/group/thumbnail@url" -> album?.thumbUrl = value
+      "entry/group/thumbnail@url" -> album?.thumbUrl = value + ".jpg"
       "entry/where/Point/pos" -> album?.geo = GeoLocation(value)
       "entry/numphotos" -> album?.size = value.toInt()
     }
