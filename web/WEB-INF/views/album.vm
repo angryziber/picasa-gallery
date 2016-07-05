@@ -3,7 +3,6 @@
 <head>
   <title>${album.title} by ${album.author} - Photos</title>
   <meta name="description" content="${album.title} photos by ${album.author}: ${album.description}">
-  <meta name="keywords" content="${album.author.replace(' ', ',')},photos,${album.title.replace(' ', ',')},${album.description.replace(', ', ' ').replace(' ', ',')}">
 
   #if($mobile)
     <meta name="viewport" content="width=650, user-scalable=no, minimal-ui">

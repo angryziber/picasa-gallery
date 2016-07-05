@@ -10,7 +10,6 @@
   <meta property="og:type" content="website">
   <meta property="og:image" content="${gallery.albums.values().iterator().next().thumbUrlLarge}">
   <meta property="og:site_name" content="${gallery.author} Photography">
-  <meta name="keywords" content="${gallery.author.replace(' ', ',')},photos,picasa,picasaweb,gallery,albums,travel,photography,#foreach($album in $gallery.albums)${album.title.replace(', ', ' ').replace(' ', ',')},#end">
   #parse('head.vm')
   <script defer>$(initAlbumFilter);</script>
   #if(!$bot)<script defer>$(initMap)</script>#end
