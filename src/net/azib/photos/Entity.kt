@@ -3,7 +3,7 @@ package net.azib.photos
 import java.text.SimpleDateFormat
 import java.util.*
 
-open class Entity {
+open class Entity() {
   var id: String? = null
   open var title: String? = null
   open var description: String? = null

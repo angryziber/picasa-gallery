@@ -72,11 +72,8 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
         throw Redirect("/${album.name}${picasa.urlSuffix}")
     }
     catch (e: MissingResourceException) {
-      album = Album()
-      album.title = pathParts[1]
-      album.description = "No such album"
-      album.author = picasa.gallery.author
-      res.status = 404
+      album = Album(title=pathParts[1], description="No such album", author=picasa.gallery.author)
+      res.status = SC_NOT_FOUND
     }
 
     render("album", album, attrs, res)

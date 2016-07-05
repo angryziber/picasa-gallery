@@ -42,10 +42,7 @@ class RequestRouterTest: Spek({
 
       val router = RequestRouter(req, res, mock(), mock())
       router.picasa = spy(router.picasa)
-      val album = Album()
-      album.id = "123123123"
-      album.name = "Hello"
-      doReturn(album).whenever(router.picasa).getAlbum("123123123")
+      doReturn(Album(id="123123123", name="Hello")).whenever(router.picasa).getAlbum("123123123")
 
       router.invoke()
 

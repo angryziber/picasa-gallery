@@ -2,7 +2,7 @@ package net.azib.photos
 
 import java.util.*
 
-open class Album : Entity() {
+open class Album() : Entity() {
   var author: String? = null
   var authorId: String? = null
   var isPublic = false
@@ -10,6 +10,14 @@ open class Album : Entity() {
 
   var name: String? = null
     set(value) { if (value != id) field = value }
+
+  constructor(id: String? = null, name: String? = null, title: String? = null, description: String? = null, author: String? = null) : this() {
+    this.id = id
+    this.name = name
+    this.title = title
+    this.description = description
+    this.author = author
+  }
 
   override var title: String?
     get() = super.title
