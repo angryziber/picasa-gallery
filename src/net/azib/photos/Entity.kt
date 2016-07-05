@@ -7,7 +7,6 @@ open class Entity {
   var id: String? = null
   open var title: String? = null
   open var description: String? = null
-    get() = field ?: ""
 
   var thumbUrl: String? = null
   var timestamp: Long? = null
