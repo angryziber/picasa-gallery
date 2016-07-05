@@ -241,11 +241,11 @@ function PhotoViewer() {
         if (!touchStartX) return false;
         var dx = e.touches[0].pageX - touchStartX;
         if (dx > 20) {
-            pub.next();
+            pub.prev();
             touchStartX = null;
         }
         else if (dx < -20) {
-            pub.prev();
+            pub.next();
             touchStartX = null;
         }
         return false;
