@@ -14,6 +14,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   val pathParts = path.split("/")
   var requestedUser = req["by"]
   val random = req["random"]
+  val searchQuery = req["q"]
   val picasa = Picasa(requestedUser, req["authkey"])
   var bot = false
 
@@ -30,9 +31,10 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
 
       when {
         random != null -> renderRandom()
-        path == null || "/" == path -> render("gallery", picasa.gallery, attrs, res)
+        searchQuery != null -> renderSearch(searchQuery)
+        path == null || "/" == path -> renderGallery()
         path.isResource() -> chain.doFilter(req, res)
-        else -> renderAlbumOrSearch()
+        else -> renderAlbum()
       }
     }
     catch (e: Redirect) {
@@ -46,7 +48,18 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
 
   fun String.isResource() = lastIndexOf('.') >= length - 4
 
-  private fun renderAlbumOrSearch() {
+  private fun renderGallery() {
+    render("gallery", picasa.gallery, attrs, res)
+  }
+
+  private fun renderSearch(q: String) {
+    // TODO: no longer works for non-logged-in requests
+    val album = picasa.search(q)
+    album.title = "Photos matching '$q'"
+    render("album", album, attrs, res)
+  }
+
+  private fun renderAlbum() {
     if (pathParts.size > 2) {
       val lastSlashPos = path.lastIndexOf('/');
       throw Redirect(path.replaceRange(lastSlashPos, lastSlashPos+1, "#"))
@@ -57,9 +70,11 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
       album = picasa.getAlbum(pathParts[1])
     }
     catch (e: MissingResourceException) {
-      album = picasa.search(pathParts[1])
-      album.title = "Photos matching '" + pathParts[1] + "'"
-      // TODO: no longer works for non-logged-in requests
+      album = Album()
+      album.title = pathParts[1]
+      album.description = "No such album"
+      album.author = picasa.gallery.author
+      res.status = 404
     }
 
     render("album", album, attrs, res)

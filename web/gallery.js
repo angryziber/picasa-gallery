@@ -490,7 +490,7 @@ $(function() {
     });
 
     $('form#search').submit(function() {
-        fadeTo('/' + $(this).find('input').val() + location.search);
+        fadeTo('/?q=' + $(this).find('input').val() + location.search.replace(/\?q=.*?(&|$)/, '&'));
         return false;
     });
 
