@@ -1,8 +1,6 @@
 package net.azib.photos
 
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import com.nhaarman.mockito_kotlin.*
 import org.jetbrains.spek.api.Spek
 import org.junit.Assert.assertTrue
 import javax.servlet.http.HttpServletRequest
@@ -11,7 +9,11 @@ import javax.servlet.http.HttpServletResponse
 class RequestRouterTest: Spek({
   val req = mock<HttpServletRequest>()
   val res = mock<HttpServletResponse>()
-  whenever(req.servletPath).thenReturn("/")
+
+  beforeEach {
+    reset(req, res)
+    whenever(req.servletPath).thenReturn("/")
+  }
 
   describe("bots") {
     it("detects") {
@@ -30,6 +32,24 @@ class RequestRouterTest: Spek({
       RequestRouter(req, res, mock(), mock()).invoke()
 
       verify(res).sendRedirect("/")
+    }
+  }
+
+  describe("album") {
+    it("redirects id urls to names") {
+      whenever(req.servletPath).thenReturn("/123123123")
+      whenever(req.getHeader("User-Agent")).thenReturn("Normal Browser")
+
+      val router = RequestRouter(req, res, mock(), mock())
+      router.picasa = spy(router.picasa)
+      val album = Album()
+      album.id = "123123123"
+      album.name = "Hello"
+      doReturn(album).whenever(router.picasa).getAlbum("123123123")
+
+      router.invoke()
+
+      verify(res).sendRedirect("/Hello")
     }
   }
 })

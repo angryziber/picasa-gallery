@@ -21,7 +21,7 @@ open class Picasa(user: String? = null, private val authKey: String? = null) {
       return load(url, GalleryLoader())
     }
 
-  fun getAlbum(name: String): Album {
+  open fun getAlbum(name: String): Album {
     val id = gallery.albums[name]?.id ?: name
     var url = if (id.matches("\\d+".toRegex())) "/albumid/" + id else "/album/" + urlEncode(name)
     url += "?kind=photo,comment&imgmax=1600&thumbsize=144c&max-results=500"

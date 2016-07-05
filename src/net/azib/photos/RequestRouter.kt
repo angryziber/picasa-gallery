@@ -15,7 +15,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   var requestedUser = req["by"]
   val random = req["random"]
   val searchQuery = req["q"]
-  val picasa = Picasa(requestedUser, req["authkey"])
+  var picasa = Picasa(requestedUser, req["authkey"])
   var bot = false
 
   operator fun invoke() {
@@ -68,6 +68,8 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
     val album: Album
     try {
       album = picasa.getAlbum(pathParts[1])
+      if (album.id == pathParts[1] && album.id != album.name)
+        throw Redirect("/${album.name}${picasa.urlSuffix}")
     }
     catch (e: MissingResourceException) {
       album = Album()
