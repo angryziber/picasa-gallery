@@ -333,7 +333,7 @@ function PhotoViewer() {
         if (photo.title) title.fadeIn(); else title.fadeOut();
 
         if (history.replaceState) history.replaceState(stateURL(photo), photo.title, stateURL(photo));
-        if ('ga' in window) ga('send', 'pageview', location.pathname + location.hash);
+        if ('ga' in window) ga('send', 'event', location.pathname, location.hash);
 
         position.text((index+1) + ' of ' + photos.length);
 
