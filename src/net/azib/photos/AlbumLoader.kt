@@ -69,9 +69,11 @@ class AlbumLoader : XMLListener<Album> {
   }
 
   private val invalidUrlChars = "[?&!%.,:;+*/()'\"]".toRegex()
-  private fun replaceUrlSuffix(url: String) =
-      url.substring(0, url.lastIndexOf('/') + 1) + album.name + "-" +
-          (photo?.description?.take(30)?.replace(invalidUrlChars, "")?.replace(' ', '-') ?: album.photos.size) + ".jpg"
+  private fun replaceUrlSuffix(url: String): String {
+    var desc = photo?.description?.take(30)?.replace(invalidUrlChars, "")?.replace(' ', '-')
+    if (desc?.isEmpty() ?: false) desc = album.photos.size.toString()
+    return url.substring(0, url.lastIndexOf('/') + 1) + album.name + "-${desc}.jpg"
+  }
 
   override fun end(path: String) {
     if ("entry" == path) {

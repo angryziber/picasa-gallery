@@ -18,10 +18,11 @@ class AlbumLoaderTest: Spek({
     assertThat(album.timestamp, equalTo(1431327600000L))
     assertThat(album.geo!!.lat, equalTo(31.791702f))
     assertThat(album.geo!!.lon, equalTo(-7.09262f))
-    assertThat(album.photos.size, equalTo(1))
+
+    assertThat(album.photos.size, equalTo(2))
     assertThat(album.comments.size, equalTo(1))
 
-    val photo = album.photos[0]
+    var photo = album.photos[0]
     assertThat(photo.id, equalTo("6259054830603480962"))
     assertThat(photo.title, equalTo("20150511_090348"))
     assertThat(photo.description, equalTo("Satellite dishes of Fes Medina are the only thing that reminds us it is not 1700s anymore"))
@@ -37,6 +38,9 @@ class AlbumLoaderTest: Spek({
     assertThat(photo.exif.iso, equalTo("100"))
     assertThat(photo.geo!!.lat, equalTo(31.791702f))
     assertThat(photo.geo!!.lon, equalTo(-7.09262f))
+
+    photo = album.photos[1]
+    assertThat(photo.url, equalTo("https://lh3.googleusercontent.com/-zBnTKPsUg38/VtyhNN_QL4I/AAAAAAABMHg/mK1UCQcRPycGbfAzWgHRoGGZCwUBbBcpgCHM/s1600/Morocco-2.jpg"))
 
     val comment = album.comments[0]
     assertThat(comment.author, equalTo("Roman Fjodorov"))
