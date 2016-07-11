@@ -1,9 +1,3 @@
-function facebookButton(href) {
-    if (!$('.facebook-button').length) return '';
-    if (!href) href = location.href;
-    return $('.facebook-button')[0].outerHTML.replace(/href=.*?"$/, 'href=' + href);
-}
-
 function changeUsername(username) {
     username = prompt('Show photos by Google/Picasaweb user:', username);
     if (username) fadeTo('/?by=' + username);
@@ -338,10 +332,7 @@ function PhotoViewer() {
         if ('ga' in window) ga('send', 'event', location.pathname, location.hash);
 
         position.text((index+1) + ' of ' + photos.length);
-
-        controls.find('.facebook-button').remove();
-        controls.find('.header').prepend(facebookButton(location.href));
-
+        
         wrapper.find('.comment').fadeOut();
         wrapper.find('.comment.photo-' + photo.id).fadeIn();
 
