@@ -232,19 +232,21 @@ function PhotoViewer() {
         return false;
     }
 
-    var touchStartX;
+    var touchStartX, touchStartY;
     function onTouchStart(e) {
         touchStartX = e.touches[0].pageX;
+        touchStartY = e.touches[0].pageY;
     }
 
     function onTouchMove(e) {
         if (!touchStartX) return false;
         var dx = e.touches[0].pageX - touchStartX;
-        if (dx > 20) {
+        var dy = e.touches[0].pageY - touchStartY;
+        if (dx > 20 || dy > 20) {
             pub.prev();
             touchStartX = null;
         }
-        else if (dx < -20) {
+        else if (dx < -20 || dy < -20) {
             pub.next();
             touchStartX = null;
         }
