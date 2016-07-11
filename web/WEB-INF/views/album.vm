@@ -50,7 +50,7 @@
   <h1>${album.title}</h1>
   #if(!$album.description.empty)<h2>${album.description}</h2>#end
 
-  #if($album.isPublic)
+  #if($album.public)
     <iframe class="facebook-button" scrolling="no" frameborder="0" allowtransparency="true"
             src="http://www.facebook.com/plugins/like.php?layout=button_count&action=like&width=90&height=20&colorscheme=dark&href=http://${host}/${album.name}${picasa.urlSuffix}">
     </iframe>
