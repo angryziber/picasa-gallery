@@ -40,7 +40,7 @@ How to use it for your own photos [![Build Status](https://travis-ci.org/angryzi
 =================================
 
 - Clone this repository as described on Github
-- Specify your Google username in src/config.properties
+- Specify your Google username, Google Maps key, etc in `src/config.properties`
 - Specify your AppEngine application ID in web/WEB-INF/appengine-web.xml
 - Uploading and testing
   * `./gradlew appengineUpdate` - will upload the app to Google AppEngine
