@@ -14,6 +14,9 @@ open class Picasa(user: String? = null, private val authKey: String? = null) {
   val analytics: String?
     get() = config.getProperty("google.analytics")
 
+  val mapsKey: String?
+    get() = config.getProperty("google.maps.key")
+
   val gallery: Gallery
     get() {
       var url = "?kind=album&thumbsize=212c"
