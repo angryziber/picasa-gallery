@@ -428,12 +428,21 @@ function initMap() {
     $('.albums > a').each(function (i, link) {
         var pos = extractPos(this);
         if (!pos) return;
+
+        var markerbg = new google.maps.Marker({position:pos, map:map});
+        markerbg.setIcon({url: '/img/markerbg.png', scaledSize: new google.maps.Size(57, 57), anchor: new google.maps.Point(28, 28)});
+        markerbg.setZIndex(99 + i);
+        markerbg.setOpacity(0.5);
+
         var marker = new google.maps.Marker({position:pos, map:map, title:$(link).find('.title > .text').text()});
-        setMarkerIcon(marker);
+        marker.setIcon({url: $(link).find('img').attr('src'), scaledSize: new google.maps.Size(53, 53), anchor: new google.maps.Point(26, 26)});
+        marker.setZIndex(100 + i);
+        marker.setOpacity(0.5);
+
         bounds.extend(pos);
         google.maps.event.addListener(marker, 'click', function() {$(link).click();});
-        $(this).mouseover(function() {setMarkerIcon(marker, 'marker_orange');});
-        $(this).mouseout(function() {setMarkerIcon(marker);});
+        $(this).mouseover(function() {marker.setOpacity(1); marker.setZIndex(1000);});
+        $(this).mouseout(function() {marker.setOpacity(0.5);});
     });
 
     if (bounds.isEmpty()) {
@@ -441,8 +450,10 @@ function initMap() {
         map.setZoom(1);
     } else {
         map.fitBounds(bounds);
-        map.panBy(0, 15);
+        map.setZoom(1.5);
+        map.panBy(0, -15);
     }
+    window.gmap = map;
 }
 
 function initAlbumFilter() {
