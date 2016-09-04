@@ -61,7 +61,6 @@
     #foreach($photo in $album.photos)
       <a id="${photo.id}" href="${photo.url}" class="photo"
          data-href="/${album.name}${picasa.urlSuffix}#${photo.id}"
-         rel="${photo.width}x${photo.height}"
          #if($photo.timestamp)data-time="${photo.dateTime}"#end
          #if($photo.geo)data-coords="${photo.geo.lat}:${photo.geo.lon}"#end
          #if($photo.exif.fstop)data-exif="${photo.exif.fstop}:${photo.exif.exposure}:${photo.exif.iso}:${photo.exif.focal}"#end>
