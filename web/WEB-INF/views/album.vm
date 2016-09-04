@@ -124,5 +124,9 @@
   </div>
 </div>
 
+#if($album.public && !$bot)
+  #parse('sharing.vm')
+#end
+
 </body>
 </html>

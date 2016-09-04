@@ -1,0 +1,18 @@
+<div id="sharing">
+  <a href="https://www.facebook.com/sharer/sharer.php?u=" title="Share on Facebook" class="facebook"></a>
+  <a href="https://twitter.com/home?status=" title="Share on Twitter" class="twitter"></a>
+  <a href="https://plus.google.com/share?url=" title="Share on Google+" class="g-plus"></a>
+  <a href="https://pinterest.com/pin/create/button/?media=&description=&url=" title="Share on Pinterest" class="pinterest"></a>
+</div>
+
+<script>
+  $('#sharing > a').each(function() {
+    this.href += encodeURIComponent(location.href);
+  }).on('click', function() {
+    var w = 700, h = 500;
+    var left = (screen.width/2)-(w/2);
+    var top = (screen.height/2)-(h/2);
+    window.open(this.href, this.className, 'toolbar=no,status=no,width=' + w + ',height=' + h + ',left=' + left + ',top=' + top);
+    return false;
+  });
+</script>
