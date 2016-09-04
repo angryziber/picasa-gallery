@@ -35,7 +35,6 @@
             <span class="info">${album.size()}</span>
             <span class="text">${album.title}</span>
           </div>
-          <div class="description">${album.description}</div>
         </a>
       #end
     #end
