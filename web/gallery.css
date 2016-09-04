@@ -202,23 +202,6 @@ h2 {
     display: none;
 }
 
-.facebook-button {
-    width: 90px;
-    height: 20px;
-}
-
-#content .facebook-button {
-    overflow: hidden;
-    position: absolute;
-    top: 60px;
-    right: 31px
-}
-
-#photo-wrapper #facebook-button {
-    top: 10px;
-    right: 10px
-}
-
 #map {
     float: right;
     width: 434px;
@@ -368,10 +351,6 @@ h2 {
 #photo-controls:hover, #photo-controls.visible {
     top: 0;
     transition: top 0.5s;
-}
-
-#photo-controls .facebook-button {
-    float: right;
 }
 
 #photo-controls h1 {
