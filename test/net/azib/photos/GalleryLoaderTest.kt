@@ -7,6 +7,7 @@ import org.junit.Assert.assertThat
 class GalleryLoaderTest: Spek({
   it("parses gallery feed") {
     val gallery = XMLParser(GalleryLoader()).parse(Gallery::class.java.getResourceAsStream("gallery.xml"))
+    assertThat(gallery.authorId, equalTo("117440562642491680332"))
     assertThat(gallery.author, equalTo("Anton Keks"))
     assertThat(gallery.timestampISO, equalTo("2016-05-24T19:13:11Z"))
     assertThat(gallery.albums.size, equalTo(1))

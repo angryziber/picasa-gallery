@@ -16,6 +16,7 @@ class GalleryLoader : XMLListener<Gallery> {
 
   override fun value(path: String, value: String) {
     when (path) {
+      "user" -> result.authorId = value
       "nickname" -> result.author = value
       "updated" -> result.timestamp = parseTimestamp(value)
 

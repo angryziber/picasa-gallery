@@ -488,5 +488,4 @@ $(function() {
     });
 
     $(window).resize(updateLayout);
-    $('a#m').attr('href', 'm' + 'ail' + 'to:' + $('a#m').attr('href') + String.fromCharCode(64) + 'gmail.com');
 });
