@@ -92,11 +92,9 @@
     #foreach($comment in $album.comments)
       <div class="comment photo-${comment.photoId} hidden">
         <img src="${comment.avatarUrl}">
-        #if(!$bot)
-          <a target="_blank" href="/#if($album.authorId != $comment.authorId)?by=${comment.authorId}#end">
-              ${comment.author}
-          </a>
-        #end
+        <a target="_blank" href="/#if($album.authorId != $comment.authorId)?by=${comment.authorId}#end" rel="nofollow">
+            ${comment.author}
+        </a>
         <br>${comment.text}
       </div>
     #end
@@ -117,7 +115,7 @@
   </div>
 </div>
 
-#if($album.public && !$bot)
+#if($album.public)
   #parse('sharing.vm')
 #end
 
