@@ -12,7 +12,7 @@
   <meta property="og:site_name" content="${gallery.author} Photography">
   #parse('head.vm')
   <script defer>$(initAlbumFilter);</script>
-  #if(!$bot)<script defer>$(initMap)</script>#end
+  <script defer>$(initMap)</script>
 </head>
 
 <body style="background:black; color: gray">
