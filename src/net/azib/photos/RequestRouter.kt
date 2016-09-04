@@ -61,7 +61,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
 
   private fun renderAlbum() {
     if (pathParts.size > 2) {
-      val lastSlashPos = path.lastIndexOf('/');
+      val lastSlashPos = path.lastIndexOf('/')
       if (bot) throw MissingResourceException(path, "", "")
       else throw Redirect(path.replaceRange(lastSlashPos, lastSlashPos+1, "#"))
     }
