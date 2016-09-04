@@ -94,7 +94,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   private fun detectBot() {
     bot = isBot(userAgent)
     if (bot) {
-      if (requestedUser != null || random != null) {
+      if (requestedUser != null) {
         throw Redirect("/")
       }
     }
