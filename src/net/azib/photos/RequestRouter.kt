@@ -38,8 +38,8 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
       }
     }
     catch (e: Redirect) {
-      res.sendRedirect(e.path)
       res.status = SC_MOVED_PERMANENTLY
+      res.setHeader("Location", e.path)
     }
     catch (e: MissingResourceException) {
       res.sendError(SC_NOT_FOUND)
