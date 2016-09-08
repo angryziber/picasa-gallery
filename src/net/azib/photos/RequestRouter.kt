@@ -11,7 +11,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   val attrs: MutableMap<String, Any?> = HashMap()
   val userAgent: String? = req.getHeader("User-Agent")
   val path = req.servletPath
-  val pathParts = path.split("/")
+  val pathParts = path.substring(1).split("/")
   var requestedUser = req["by"]
   val random = req["random"]
   val searchQuery = req["q"]
@@ -32,8 +32,8 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
       when {
         random != null -> renderRandom()
         searchQuery != null -> renderSearch(searchQuery)
-        path == null || "/" == path -> throw Redirect("/${picasa.user}")
-        "/${picasa.user}" == path -> renderGallery()
+        path == null || "/" == path -> throw Redirect(picasa.urlPrefix)
+        picasa.urlPrefix == path -> renderGallery()
         path.isResource() -> chain.doFilter(req, res)
         else -> renderAlbum()
       }
@@ -61,7 +61,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   }
 
   private fun renderAlbum() {
-    if (pathParts.size > 2) {
+    if (pathParts.size >= 2) {
       val lastSlashPos = path.lastIndexOf('/')
       if (bot) throw MissingResourceException(path, "", "")
       else throw Redirect(path.replaceRange(lastSlashPos, lastSlashPos+1, "#"))
@@ -69,12 +69,12 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
 
     val album: Album
     try {
-      album = picasa.getAlbum(pathParts[1])
-      if (album.id == pathParts[1] && album.id != album.name)
+      album = picasa.getAlbum(pathParts[0])
+      if (album.id == pathParts[0] && album.id != album.name)
         throw Redirect("/${album.name}${picasa.urlSuffix}")
     }
     catch (e: MissingResourceException) {
-      album = Album(title=pathParts[1], description="No such album", author=picasa.gallery.author)
+      album = Album(title=pathParts[0], description="No such album", author=picasa.gallery.author)
       res.status = SC_NOT_FOUND
     }
 

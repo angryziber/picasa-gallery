@@ -8,8 +8,11 @@ import java.util.*
 open class Picasa(user: String? = null, private val authKey: String? = null) {
   val user: String = user ?: defaultUser
 
+  val urlPrefix: String
+    get() = "/${user}"
+
   val urlSuffix: String
-    get() = if (user != defaultUser) "?by=" + user else ""
+    get() = if (user != defaultUser) "?by=${user}" else ""
 
   val analytics: String?
     get() = config.getProperty("google.analytics")
