@@ -32,7 +32,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
       when {
         random != null -> renderRandom()
         searchQuery != null -> renderSearch(searchQuery)
-        path == null || "/" == path -> renderGallery()
+        path == null || "/" == path || "/${picasa.user}" == path -> renderGallery()
         path.isResource() -> chain.doFilter(req, res)
         else -> renderAlbum()
       }
