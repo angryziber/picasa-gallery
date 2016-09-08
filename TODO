@@ -1,0 +1,10 @@
+* have username in url before the album
+* separate sitemap page with text links (visible to users if they want)
+* About page
+* image sitemap using sitemapindex: http://www.sitemaps.org/protocol.html#index
+* images from other domains, how to register a CDN?
+* schema.org ImageObject: https://schema.org/ImageGallery and http://schema.org/ImageObject: https://search.google.com/structured-data/testing-tool/u/0/
+* Twitter card tags?
+* Page per each image
+* Keywords from google vision
+* More text content
