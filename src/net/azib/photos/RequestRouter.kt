@@ -35,6 +35,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
         path == null || "/" == path -> throw Redirect(picasa.urlPrefix)
         picasa.urlPrefix == path -> renderGallery()
         path.isResource() -> chain.doFilter(req, res)
+        pathParts.size == 2 && pathParts[1].matches("\\d+".toRegex()) -> redirectOldPhotoUrl()
         else -> renderAlbum()
       }
     }
@@ -60,13 +61,13 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
     render("album", album, attrs, res)
   }
 
-  private fun renderAlbum() {
-    if (pathParts.size >= 2) {
-      val lastSlashPos = path.lastIndexOf('/')
-      if (bot) throw MissingResourceException(path, "", "")
-      else throw Redirect(path.replaceRange(lastSlashPos, lastSlashPos+1, "#"))
-    }
+  private fun redirectOldPhotoUrl() {
+    val lastSlashPos = path.lastIndexOf('/')
+    if (bot) throw MissingResourceException(path, "", "")
+    else throw Redirect(path.replaceRange(lastSlashPos, lastSlashPos+1, "#"))
+  }
 
+  private fun renderAlbum() {
     val album: Album
     try {
       album = picasa.getAlbum(pathParts[0])
