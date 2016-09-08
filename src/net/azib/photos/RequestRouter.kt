@@ -32,8 +32,8 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
       when {
         random != null -> renderRandom()
         searchQuery != null -> renderSearch(searchQuery)
-        path == null || "/" == path -> throw Redirect(picasa.urlPrefix)
-        picasa.urlPrefix == path -> renderGallery()
+        (path == null || "/" == path) && requestedUser == null -> throw Redirect(picasa.urlPrefix)
+        picasa.urlPrefix == path || "/" == path -> renderGallery()
         path.isResource() -> chain.doFilter(req, res)
         // pathParts.size == 1 -> throw Redirect(picasa.urlPrefix + path)
         pathParts.size == 2 && pathParts[1].matches("\\d+".toRegex()) -> redirectOldPhotoUrl()
