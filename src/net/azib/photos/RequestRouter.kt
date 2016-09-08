@@ -35,8 +35,9 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
         path == null || "/" == path -> throw Redirect(picasa.urlPrefix)
         picasa.urlPrefix == path -> renderGallery()
         path.isResource() -> chain.doFilter(req, res)
+        // pathParts.size == 1 -> throw Redirect(picasa.urlPrefix + path)
         pathParts.size == 2 && pathParts[1].matches("\\d+".toRegex()) -> redirectOldPhotoUrl()
-        else -> renderAlbum()
+        else -> renderAlbum(pathParts.last())
       }
     }
     catch (e: Redirect) {
@@ -67,11 +68,11 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
     else throw Redirect(path.replaceRange(lastSlashPos, lastSlashPos+1, "#"))
   }
 
-  private fun renderAlbum() {
+  private fun renderAlbum(name: String) {
     val album: Album
     try {
-      album = picasa.getAlbum(pathParts[0])
-      if (album.id == pathParts[0] && album.id != album.name)
+      album = picasa.getAlbum(name)
+      if (album.id == name && album.id != album.name)
         throw Redirect("/${album.name}${picasa.urlSuffix}")
     }
     catch (e: MissingResourceException) {
