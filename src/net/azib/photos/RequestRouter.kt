@@ -97,7 +97,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   private fun detectBot() {
     bot = isBot(userAgent)
     if (bot && requestedUser != null) {
-      throw Redirect("/${Picasa.defaultUser}}")
+      throw Redirect("/${Picasa.defaultUser}")
     }
     attrs["bot"] = bot
   }

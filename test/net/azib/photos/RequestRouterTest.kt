@@ -5,6 +5,7 @@ import org.jetbrains.spek.api.Spek
 import org.junit.Assert.assertTrue
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+import javax.servlet.http.HttpServletResponse.SC_MOVED_PERMANENTLY
 
 class RequestRouterTest: Spek({
   val req = mock<HttpServletRequest>()
@@ -25,13 +26,14 @@ class RequestRouterTest: Spek({
       assertTrue(router.isBot("Sogou web spider/4.0(+http://www.sogou.com/docs/help/webmasters.htm#07)"))
     }
 
-    it("redirects to / in case of other user's request") {
+    it("redirects to default user in case of other user's request") {
       whenever(req.getParameter("by")).thenReturn("other.user")
       whenever(req.getHeader("User-Agent")).thenReturn("Googlebot/2")
 
       RequestRouter(req, res, mock(), mock()).invoke()
 
-      verify(res).sendRedirect("/")
+      verify(res).status = SC_MOVED_PERMANENTLY
+      verify(res).setHeader("Location", "/${Picasa.defaultUser}")
     }
   }
 
@@ -46,7 +48,8 @@ class RequestRouterTest: Spek({
 
       router.invoke()
 
-      verify(res).sendRedirect("/Hello")
+      verify(res).status = SC_MOVED_PERMANENTLY
+      verify(res).setHeader("Location", "/Hello")
     }
   }
 })
