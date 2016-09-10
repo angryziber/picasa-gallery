@@ -28,6 +28,8 @@ open class Renderer(servletContext: ServletContext) {
     if (source is Entity && source.timestamp != null)
       response.addDateHeader("Last-Modified", source.timestamp!!)
 
+    response.setHeader("Cache-Control", "public")
+
     attrs[template] = source
     val ctx = VelocityContext(attrs)
     val tmpl = velocity.getTemplate(template + ".vm")
