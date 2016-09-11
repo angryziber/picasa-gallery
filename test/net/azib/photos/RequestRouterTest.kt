@@ -32,8 +32,19 @@ class RequestRouterTest: Spek({
 
       RequestRouter(req, res, mock(), mock()).invoke()
 
-      verify(res).status = SC_MOVED_PERMANENTLY
-      verify(res).setHeader("Location", "/${Picasa.defaultUser}")
+      res.verifyRedirectTo("/${Picasa.defaultUser}")
+    }
+  }
+
+  describe("backwards compatibility") {
+    it("redirects old photo urls to hashes") {
+      whenever(req.getHeader("User-Agent")).thenReturn("Normal Browser")
+      whenever(req.servletPath).thenReturn("/Orlova/5347257660284808946")
+      whenever(req["by"]).thenReturn("106730404715258343901")
+
+      RequestRouter(req, res, mock(), mock()).invoke()
+
+      res.verifyRedirectTo("/Orlova?by=106730404715258343901#5347257660284808946")
     }
   }
 
@@ -48,8 +59,12 @@ class RequestRouterTest: Spek({
 
       router.invoke()
 
-      verify(res).status = SC_MOVED_PERMANENTLY
-      verify(res).setHeader("Location", "/Hello")
+      res.verifyRedirectTo("/Hello")
     }
   }
 })
+
+private fun HttpServletResponse.verifyRedirectTo(url: String) {
+  verify(this).status = SC_MOVED_PERMANENTLY
+  verify(this).setHeader("Location", url)
+}

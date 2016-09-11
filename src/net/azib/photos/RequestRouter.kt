@@ -65,7 +65,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   private fun redirectOldPhotoUrl() {
     val lastSlashPos = path.lastIndexOf('/')
     if (bot) throw MissingResourceException(path, "", "")
-    else throw Redirect(path.replaceRange(lastSlashPos, lastSlashPos+1, "#"))
+    else throw Redirect(path.replaceRange(lastSlashPos, lastSlashPos+1, picasa.urlSuffix + "#"))
   }
 
   private fun renderAlbum(name: String) {
@@ -106,7 +106,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
     return userAgent == null || userAgent.contains("bot/", true) || userAgent.contains("spider/", true)
   }
 
-  private operator fun HttpServletRequest.get(param: String) = getParameter(param)
-
   class Redirect(val path: String): Exception()
 }
+
+operator fun HttpServletRequest.get(param: String) = getParameter(param)
