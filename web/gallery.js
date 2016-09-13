@@ -419,7 +419,7 @@ function extractExif(element) {
 }
 
 function setMarkerIcon(marker, name) {
-    marker.setIcon('http://maps.google.com/mapfiles/' + (name || 'marker') + '.png');
+    marker.setIcon('https://maps.google.com/mapfiles/' + (name || 'marker') + '.png');
     marker.setZIndex(1000);
 }
 
