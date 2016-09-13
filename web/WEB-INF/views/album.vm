@@ -68,7 +68,7 @@
   <div id="footer">
     Photos by <a href="https://plus.google.com/${album.authorId}/about" rel="author" target="_blank">${album.author}</a>. All rights reserved.
     <br>
-    Rendered by <a href="http://github.com/angryziber/picasa-gallery">Picasa Gallery</a>.
+    Rendered by <a href="https://github.com/angryziber/picasa-gallery">Picasa Gallery</a>.
   </div>
 </div>
 

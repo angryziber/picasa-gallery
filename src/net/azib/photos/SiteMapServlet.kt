@@ -18,7 +18,7 @@ class SiteMapServlet : HttpServlet() {
       when (req.servletPath) {
         "/robots.txt" -> {
           resp.contentType = "text/plain"
-          out.write("Sitemap: http://${req.getHeader("Host")}/sitemap.xml\n" +
+          out.write("Sitemap: https://${req.getHeader("Host")}/sitemap.xml\n" +
               "User-Agent: *\n" +
               "Allow: /\n")
         }

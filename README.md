@@ -7,7 +7,7 @@ mobile device support, and full-screen photo browsing with quick loading (prefet
 Perfect for those who still want to have a gallery of public albums after transition to Google Photos, which has no public
 gallery of it's own anymore.
 
-Example gallery: [Anton Keks Photos](http://photos.azib.net/) - use the link at the bottom to try it with your own gallery!
+Example gallery: [Anton Keks Photos](https://photos.azib.net/) - use the link at the bottom to try it with your own gallery!
 
 How does it work?
 =================
