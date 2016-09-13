@@ -24,7 +24,7 @@
   <meta property="og:site_name" content="${album.author} Photography">
 
   #parse('head.vm')
-  <script type="text/javascript">
+  <script>
     var viewer = new PhotoViewer();
     $(function() {
       viewer.setup();

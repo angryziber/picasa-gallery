@@ -36,15 +36,15 @@
   <div>${random.author}</div>
 </div>
 </body>
-<script type="text/javascript">
+<script>
   var img = document.getElementById('img');
   img.style.display = 'none';
   window.onload = function() {
     img.style.display = 'block';
   };
 </script>
-<script type="text/javascript" src="/chromecast.js"></script>
-<script type="text/javascript">
+<script src="/chromecast.js"></script>
+<script>
   chromecast.send('${random.photos[0].url}');
   #if($random.photos.size() > 1)
     var photos = [#foreach($photo in $random.photos){url:'${photo.url}', description:'${photo.description.replace("'", "\\'")}'},#end null];
