@@ -14,7 +14,7 @@
 <link rel="shortcut icon" href="/img/picasa-logo.png">
 <link rel="apple-touch-icon" href="/img/picasa-logo.png"/>
 
-<script src="//code.jquery.com/jquery-1.12.1.min.js"></script>
+<script src="/jquery.min.js"></script>
 <script src="/gallery.js?v4"></script>
 <script src="/prefixfree.min.js"></script>
 #if(!$bot)
