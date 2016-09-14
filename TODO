@@ -9,3 +9,4 @@
 * Page per each image
 * Keywords from google vision
 * More text content
+* Use appengine provided location headers to display user on the map
