@@ -69,7 +69,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   }
 
   private fun renderAlbum(name: String) {
-    val album: Album
+    var album: Album
     try {
       album = picasa.getAlbum(name)
       if (album.id == name && album.id != album.name)
