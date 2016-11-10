@@ -41,7 +41,7 @@ dependencies {
   compile "org.apache.velocity:velocity:1.7"
   compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
   providedCompile "javax.servlet:javax.servlet-api:3.1.0"
-  testCompile 'org.jetbrains.spek:spek:1.0.89'
+  testCompile 'org.jetbrains.spek:spek:1.0.25'
   testCompile "com.nhaarman:mockito-kotlin:0.11.0"
 }
 
