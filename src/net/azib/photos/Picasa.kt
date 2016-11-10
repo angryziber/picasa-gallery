@@ -5,7 +5,7 @@ import java.net.URLEncoder
 import java.security.SecureRandom
 import java.util.*
 
-open class Picasa(user: String? = null, private val authKey: String? = null) {
+class Picasa(user: String? = null, private val authKey: String? = null) {
   val user: String = user ?: defaultUser
 
   val urlPrefix: String
@@ -27,7 +27,7 @@ open class Picasa(user: String? = null, private val authKey: String? = null) {
       return load(url, GalleryLoader())
     }
 
-  open fun getAlbum(name: String): Album {
+  fun getAlbum(name: String): Album {
     val id = gallery.albums[name]?.id ?: name
     var url = if (id.matches("\\d+".toRegex())) "/albumid/" + id else "/album/" + urlEncode(name)
     url += "?kind=photo,comment&imgmax=1600&thumbsize=144c&max-results=500"
@@ -45,7 +45,7 @@ open class Picasa(user: String? = null, private val authKey: String? = null) {
     return RandomPhotos(photos.subList(index, min(index + numNext, photos.size)), album.author, album.title)
   }
 
-  open fun weightedRandom(albums: Collection<Album>): Album {
+  fun weightedRandom(albums: Collection<Album>): Album {
     var sum = 0
     for (album in albums) sum += transform(album.size().toDouble())
     val index = random(sum)
@@ -62,7 +62,7 @@ open class Picasa(user: String? = null, private val authKey: String? = null) {
     return (100.0 * Math.log10(1 + n / 50.0)).toInt()
   }
 
-  internal open fun random(max: Int): Int {
+  internal fun random(max: Int): Int {
     return if (max == 0) 0 else random.nextInt(max)
   }
 
