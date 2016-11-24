@@ -49,3 +49,19 @@ How to use it for your own photos [![Build Status](https://travis-ci.org/angryzi
   * `./gradlew war` - will build the war file (web application archive)
 
 - If you use Intellij IDEA, you can import `build.gradle` and run all the actions from an IDE. 
+
+## Picasaweb retirement
+
+Since the beginning of 2016, Google has started removing features from Picasaweb API, and now the
+whole Picasaweb service has been closed, being replaced by Album Archive.
+
+This gallery still works for your old *public* albums stored in the archive (or just Google Photos).
+
+However, when you upload new albums to Google Photos, there is no obvious way anymore to mark them as *public*.
+It seems that Google Photos right now is built to be mostly private photo storage service.
+
+Fortunately, there is still a way - find your newly uploaded album in your [Google+ profile](https://plus.google.com/+AntonKeks/photos), 
+press Share there and choose *Public*. After some time your album will appear in public Picasaweb API, and thus will
+become visible in this gallery. 
+
+Some uploading tools that use the API may still mark the albums as public by default.
