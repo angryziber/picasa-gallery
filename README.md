@@ -62,6 +62,8 @@ It seems that Google Photos right now is built to be mostly private photo storag
 
 Fortunately, there is still a way - find your newly uploaded album in your [Google+ profile](https://plus.google.com/+AntonKeks/photos), 
 press Share there and choose *Public*. After some time your album will appear in public Picasaweb API, and thus will
-become visible in this gallery. 
+become visible in this gallery. There is also [this tool](http://www.svenbluege.de/picasa/v1.1/). 
 
-Some uploading tools that use the API may still mark the albums as public by default.
+Some uploading tools that use the API (e.g. Picasa itself) may still mark the albums as public by default.
+More details [here](https://productforums.google.com/forum/#!topic/photos/efROUztuvys) 
+and [here](https://sites.google.com/site/picasaresources/Home/Picasa-FAQ/picasa-webalbums/album-archive).
