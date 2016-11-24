@@ -23,6 +23,10 @@ a {
     text-decoration: none;
 }
 
+p {
+  padding: 1em 0;
+}
+
 .header {
   position: fixed;
   min-height: 26px;

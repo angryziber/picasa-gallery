@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpServletResponse.SC_MOVED_PERMANENTLY
 import javax.servlet.http.HttpServletResponse.SC_NOT_FOUND
 
-class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, val render: Renderer, val chain: FilterChain) {
+class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, val render: Renderer, val contentLoader: ContentLoader, val chain: FilterChain) {
   val attrs: MutableMap<String, Any?> = HashMap()
   val userAgent: String? = req.getHeader("User-Agent")
   val path = req.servletPath
@@ -18,7 +18,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   var picasa = Picasa(requestedUser, req["authkey"])
   var bot = false
 
-  operator fun invoke() {
+  fun invoke() {
     try {
       detectMobile()
       detectBot()
@@ -71,7 +71,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   private fun renderAlbum(name: String) {
     var album: Album
     try {
-      album = picasa.getAlbum(name)
+      album = picasa.getAlbum(name).addContent()
       if (album.id == name && album.id != album.name)
         throw Redirect("/${album.name}${picasa.urlSuffix}")
     }
@@ -81,6 +81,11 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
     }
 
     render("album", album, attrs, res)
+  }
+
+  private fun Album.addContent(): Album {
+    content = contentLoader.albums[name]
+    return this
   }
 
   private fun renderRandom() {

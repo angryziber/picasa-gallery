@@ -13,6 +13,7 @@ open class Album(
 
   var isPublic = false
   var size = 0
+  var content: String? = null
 
   var name = name
     set(value) { if (value != id) field = value }
