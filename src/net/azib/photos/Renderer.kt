@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse
 
 open class Renderer(servletContext: ServletContext) {
   private val logger = Logger.getLogger(RequestRouter::class.java.name)
-  private lateinit var velocity: VelocityEngine
+  private var velocity: VelocityEngine
 
   init {
     val velocityProps = Properties()
