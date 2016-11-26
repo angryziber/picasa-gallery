@@ -48,7 +48,19 @@
 
 <div id="content">
   #if($album.content)
-    ${album.content}
+    <div id="album-long-content" class="#if(!$bot)closed#end">
+      ${album.content}
+    </div>
+    <script>
+      $('#album-long-content')
+          .on('mousedown', function(e) {
+            $(this).data('time', new Date())
+          })
+          .on('mouseup', function() {
+            if (new Date() - $(this).data('time') < 300)
+              $(this).toggleClass('closed');
+          });
+    </script>
   #elseif(!$album.description.empty)
     <h1>${album.title}</h1>
     <h2>${album.description}</h2>
