@@ -12,7 +12,7 @@ class ContentLoader(servletContext: ServletContext) {
   private val mdRenderer = HtmlRenderer.builder().build()
 
   init {
-    val contentPath = servletContext.getRealPath("/WEB-INF/content")
+    val contentPath = servletContext.getRealPath("content")
     albums = if (contentPath != null) File(contentPath)
         .listFiles { file -> file.name.endsWith(".md") }
         .map { Pair(it.name.substringBefore('.'), markdown2Html(it.readText())) }

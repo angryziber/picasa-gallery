@@ -3,3 +3,8 @@
 /build
 /classes
 .DS_Store
+/*.csr
+/*.key
+
+# This comes from another repo
+/web/content

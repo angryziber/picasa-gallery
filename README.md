@@ -20,10 +20,11 @@ Features
 ========
 
 - Dark theme that emphasizes photos
-- Shows your exising public albums, no additional storage needed
+- Shows your existing public albums, no additional storage needed
 - Search within the gallery (by tags, keywords, descriptions, etc) - *currently not working because Google removed this feature from the API*
-- Nice bookmarkable URLs for albums, individual photos, search results
+- Nice shareable URLs for albums, individual photos, search results
 - Gallery map if albums are geotagged
+- Optional content/blog in Markdown format - put it into `web/content`, see [content branch](https://github.com/angryziber/picasa-gallery/tree/content) for a sample
 - Full-screen photo viewer
 - Fast: minimum number of requests, optimized caching, preloading of next photos
 - Keyboard navigation
