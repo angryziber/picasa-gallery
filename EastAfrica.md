@@ -1,6 +1,8 @@
 # East Africa trip
 ## Oct-Nov 2016, Kenya & Tanzania
 
+Photos are coming soon!
+
 I hate organized tours with a passion, I always prefer independence when travelling. 
 While planning a trip to Kenya and Tanzania, my first option would be to rent a car and drive 
 through the national parks.
@@ -105,5 +107,3 @@ we even ate a good dinner in a staff restaurant for a 10% of Mzungu price :-)
 Anyway, in many cases I felt sorry for the packaged tourists being driven around as bags of 
 potatoes. I think their experience was really different and less authentic from what we got. 
 Doing an independent trip in East Africa is easy, adventurous and highly recommended!
-
-Thanks for reading, photos coming soon!
