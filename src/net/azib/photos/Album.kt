@@ -7,13 +7,13 @@ open class Album(
     name: String? = null,
     title: String? = null,
     description: String? = null,
+    var content: String? = null,
     var author: String? = null,
     var authorId: String? = null
 ) : Entity(id, title, description) {
 
   var isPublic = false
   var size = 0
-  var content: String? = null
 
   var name = name
     set(value) { if (value != id) field = value }

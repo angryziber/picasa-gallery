@@ -48,8 +48,11 @@
 
 <div id="content">
   <h1>${album.title}</h1>
-  #if(!$album.description.empty)<h2>${album.description}</h2>#end
-  #if($album.content)<p>${album.content}</p>#end
+  #if($album.content)
+    ${album.content}
+  #elseif(!$album.description.empty)
+    <h2>${album.description}</h2>
+  #end
   <br>
 
   <div class="thumbs clear">
