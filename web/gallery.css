@@ -132,7 +132,15 @@ h2 {
 
 #album-long-content {
   position: relative;
-  transition: height 0.4s;
+}
+
+#album-long-content:not(.closed) {
+  animation: album-long-content-open 0.3s;
+}
+
+@keyframes album-long-content-open {
+  0% {  height: 40vw;  }
+  100% {  height: 100vw;  }
 }
 
 #album-long-content.closed {
