@@ -1,5 +1,5 @@
 # Nepal
-# March 2010
+## March 2010
 
 We arrived to Nepal from India by train, and took a 8h bus to Kathmandu from across the border.
  
