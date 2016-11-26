@@ -20,7 +20,8 @@ body {
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
+  color: white;
 }
 
 p {
