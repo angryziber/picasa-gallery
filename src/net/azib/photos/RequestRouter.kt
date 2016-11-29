@@ -52,13 +52,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   fun String.isResource() = lastIndexOf('.') >= length - 4
 
   private fun renderGallery() {
-    render("gallery", picasa.gallery.addMissingAlbums(), attrs, res)
-  }
-
-  private fun Gallery.addMissingAlbums(): Gallery {
-    val missingNames = contentLoader.albums.keys - albums.keys
-    missingNames.forEach { name -> albums[name] = Album(name=name, content=contentLoader.albums[name]) }
-    return this
+    render("gallery", picasa.gallery, attrs, res)
   }
 
   private fun renderSearch(q: String) {
