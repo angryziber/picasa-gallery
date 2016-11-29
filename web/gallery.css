@@ -162,6 +162,7 @@ h2 {
   display: inline-block;
   bottom: 0.5em;
   left: 0;
+  right: 0;
 }
 
 #album-long-content.closed:before {
@@ -172,7 +173,8 @@ h2 {
   left: 0;
   right: 0;
   height: 4em;
-  background: linear-gradient(transparent, black)
+  background: linear-gradient(transparent, black);
+  cursor: pointer;
 }
 
 .left {
