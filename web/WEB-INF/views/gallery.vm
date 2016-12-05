@@ -55,5 +55,8 @@
     View your <a href="javascript:changeUsername('${picasa.user}')" rel="nofollow">own gallery</a>.
   </div>
 </div>
+
+<script>new ThumbsView(${gallery.thumbSize})</script>
+
 </body>
 </html>

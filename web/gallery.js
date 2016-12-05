@@ -462,12 +462,6 @@ function initAlbumFilter() {
     });
 }
 
-function updateLayout() {
-    var photoWidth = ($('.albums').length ? 212 : 144) + 10;
-    var photosInRow = Math.floor(($(window).width()-90) / photoWidth);
-    $('#content').width(photosInRow * photoWidth);
-}
-
 function fadeTo(href) {
     $('#content').fadeOut(function() {
         location.href = href;
@@ -476,7 +470,6 @@ function fadeTo(href) {
 
 $(function() {
     setTimeout(function() {scrollTo(0, 1)}, 10);
-    updateLayout();
     $('#content').fadeIn(1000);
 
     $('a.fade').click(function() {
@@ -488,6 +481,4 @@ $(function() {
         fadeTo('/?q=' + $(this).find('input').val() + location.search.replace(/\?q=.*?(&|$)/, '&'));
         return false;
     });
-
-    $(window).resize(updateLayout);
 });

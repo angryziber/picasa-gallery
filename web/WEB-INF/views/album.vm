@@ -137,5 +137,7 @@
   #parse('sharing.vm')
 #end
 
+<script>new ThumbsView(144)</script>
+
 </body>
 </html>
