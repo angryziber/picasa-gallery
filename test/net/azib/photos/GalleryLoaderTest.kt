@@ -5,8 +5,10 @@ import org.jetbrains.spek.api.Spek
 import org.junit.Assert.assertThat
 
 class GalleryLoaderTest: Spek({
+  val xml = Gallery::class.java.getResourceAsStream("gallery.xml")
+
   it("parses gallery feed") {
-    val gallery = XMLParser(GalleryLoader()).parse(Gallery::class.java.getResourceAsStream("gallery.xml"))
+    val gallery = XMLParser(GalleryLoader(Gallery(212))).parse(xml)
     assertThat(gallery.authorId, equalTo("117440562642491680332"))
     assertThat(gallery.author, equalTo("Anton Keks"))
     assertThat(gallery.timestampISO, equalTo("2016-05-24T19:13:11Z"))

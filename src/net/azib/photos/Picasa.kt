@@ -22,9 +22,10 @@ class Picasa(user: String? = null, private val authKey: String? = null) {
 
   val gallery: Gallery
     get() {
-      var url = "?kind=album&thumbsize=212c"
-      url += "&fields=id,updated,gphoto:*,entry(title,summary,updated,content,category,gphoto:*,media:*,georss:*)"
-      return load(url, GalleryLoader())
+      val thumbSize = 212
+      val url = "?kind=album&thumbsize=${thumbSize}c" +
+                "&fields=id,updated,gphoto:*,entry(title,summary,updated,content,category,gphoto:*,media:*,georss:*)"
+      return load(url, GalleryLoader(Gallery(thumbSize)))
     }
 
   fun getAlbum(name: String): Album {

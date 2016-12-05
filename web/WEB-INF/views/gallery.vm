@@ -26,7 +26,7 @@
   <div id="map"></div>
   <div class="albums">
     #foreach($album in $gallery.albums.values())
-      #if(${album.size()} > 1)
+      #if($album.size() > 1)
         <a id="${album.name}" class="fade" href="/${album.name}${picasa.urlSuffix}"
            #if(${album.geo})data-coords="${album.geo.lat}:${album.geo.lon}"#end>
           <img src="${album.thumbUrl}" alt="${album.title} photos" title="${album.description}">
@@ -39,6 +39,13 @@
       #end
     #end
   </div>
+
+  <script>
+    if (window.devicePixelRatio >= 2)
+      $('.albums img').each(function() {
+        this.src = this.src.replace('/s${gallery.thumbSize}-c/', '/s${gallery.thumbSizeHiDpi}-c/')
+      })
+  </script>
 
   <div id="footer">
     Photos by <a href="https://plus.google.com/${gallery.authorId}/about" rel="author" target="_blank">${gallery.author}</a>. All rights reserved.
