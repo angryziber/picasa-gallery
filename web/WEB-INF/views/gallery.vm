@@ -26,17 +26,15 @@
   <div id="map"></div>
   <div class="albums thumbs">
     #foreach($album in $gallery.albums.values())
-      #if($album.size() > 1)
-        <a id="${album.name}" class="fade" href="/${album.name}${picasa.urlSuffix}"
-           #if(${album.geo})data-coords="${album.geo.lat}:${album.geo.lon}"#end>
-          <img src="${album.thumbUrl}" alt="${album.title} photos" title="${album.description}">
+      <a id="${album.name}" class="fade" href="/${album.name}${picasa.urlSuffix}"
+         #if(${album.geo})data-coords="${album.geo.lat}:${album.geo.lon}"#end>
+        <img src="${album.thumbUrl}" alt="${album.title} photos" title="${album.description}">
 
-          <div class="title">
-            <span class="info">${album.size()}</span>
-            <span class="text">${album.title}</span>
-          </div>
-        </a>
-      #end
+        <div class="title">
+          <span class="info">${album.size()}</span>
+          <span class="text">${album.title}</span>
+        </div>
+      </a>
     #end
   </div>
 
