@@ -6,16 +6,17 @@ function ThumbsView(thumbSize, useHdpi) {
   }
 
   function isHdpi() {
-    return useHdpi && window.devicePixelRatio >= 2
+    return window.devicePixelRatio >= 2
   }
 
-  function useHdpiThumbs() {
-    $('.thumbs img').each(function () {
-      this.src = this.src.replace('/s' + thumbSize + '-c/', '/s' + (thumbSize * 2) + '-c/')
+  function loadThumbs(hdpi) {
+    document.querySelectorAll('.thumbs img').forEach(function(img) {
+      var src = img.src || img.getAttribute('data-src')
+      img.src = hdpi ? src.replace('/s' + thumbSize + '-c/', '/s' + (thumbSize * 2) + '-c/') : src
     })
   }
 
   updateLayout()
-  if (isHdpi()) useHdpiThumbs()
+  if (useHdpi) loadThumbs(isHdpi())
   $(window).on('resize', updateLayout)
 }
