@@ -46,11 +46,11 @@ p {
 }
 
 h1 {
-    font-size: 150%;
+  font-size: 150%;
 }
 
 h2 {
-    font-size: 115%;
+  font-size: 115%;
 }
 
 .header h1 {
@@ -65,69 +65,69 @@ h2 {
 }
 
 .header h1 small {
-    font-weight: normal;
-    font-size: 80%;
+  font-weight: normal;
+  font-size: 80%;
 }
 
 .header .button {
-    padding: 5px 10px;
-    margin: 0 10px;
-    float: left;
-    z-index: 10;
+  padding: 5px 10px;
+  margin: 0 10px;
+  float: left;
+  z-index: 10;
 }
 
 .header .button.first, .header .button:first-child {
-    margin-left: 45px;
+  margin-left: 45px;
 }
 
 .header > span {
-    padding: 6px 0;
+  padding: 6px 0;
 }
 
 .header .button.right {
-    float: right;
+  float: right;
 }
 
 .header input {
-    font-size: 120%;
-    padding: 3px 20px 3px 6px;
-    border: none;
-    border-radius: 4px;
-    box-shadow: inset 0 1px 1px rgba(0,0,0,0.6);
-    z-index: 9;
+  font-size: 120%;
+  padding: 3px 20px 3px 6px;
+  border: none;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.6);
+  z-index: 9;
 }
 
 .header #search input {
-    position: absolute;
-    right: 0;
-    margin: 0 45px 0 20px;
-    width: 9%;
-    background: white url(/img/search-icon.png) right 3px no-repeat;
-    transition: 0.3s;
+  position: absolute;
+  right: 0;
+  margin: 0 45px 0 20px;
+  width: 9%;
+  background: white url(/img/search-icon.png) right 3px no-repeat;
+  transition: 0.3s;
 }
 
 .header #search input:focus {
-    outline: none;
-    width: 15%;
-    transition: 0.3s;
+  outline: none;
+  width: 15%;
+  transition: 0.3s;
 }
 
 .header .button:active {
-    margin-top: 1px;
-    margin-bottom: -1px;
+  margin-top: 1px;
+  margin-bottom: -1px;
 }
 
 .header .button img {
-    position: relative;
-    height: 16px;
-    width: 16px;
-    margin: -2px 3px -3px 0;
+  position: relative;
+  height: 16px;
+  width: 16px;
+  margin: -2px 3px -3px 0;
 }
 
 #content {
-    display: none; /* will fade in */
-    width: 100%;
-    margin: 60px auto;
+  display: none; /* will fade in */
+  width: 100%;
+  margin: 60px auto;
 }
 
 #album-long-content {
@@ -178,24 +178,24 @@ h2 {
 }
 
 .left {
-    float: left;
+  float: left;
 }
 
 .clear {
-    clear: both;
+  clear: both;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 #content h1 {
-    color: white;
-    font-size: 180%;
+  color: white;
+  font-size: 180%;
 }
 
 #content h2 {
-    margin-top: 4px;
+  margin-top: 4px;
 }
 
 .thumbs a {
@@ -221,212 +221,214 @@ h2 {
 }
 
 .thumbs a:hover img {
-    border-color: #616161;
+  border-color: #616161;
 }
 
 .albums a .title {
-    position: absolute;
-    bottom: 2.5px;
-    left: 3px;
-    right: 2.5px;
-    height: 50px;
-    background: rgba(0,0,0,0.5);
-    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.9) 100%);
-    color: white;
-    text-shadow: 1px 1px black;
+  position: absolute;
+  bottom: 2.5px;
+  left: 3px;
+  right: 2.5px;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.5);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.9) 100%);
+  color: white;
+  text-shadow: 1px 1px black;
 }
 
 .albums a .title > .text {
-    position: absolute;
-    left: 5px;
-    right: 5px;
-    bottom: 8px;
+  position: absolute;
+  left: 5px;
+  right: 5px;
+  bottom: 8px;
 }
 
 .albums a .title > .info {
-    position: absolute;
-    right: 5px;
-    bottom: 7px;
-    color: gray;
-    display: none;
+  position: absolute;
+  right: 5px;
+  bottom: 7px;
+  color: gray;
+  display: none;
 }
 
 #map {
-    float: right;
-    width: 434px;
-    height: 434px;
-    margin: 0 10px 10px 0;
-    border: 3px solid #313131;
-    box-sizing: border-box;
+  float: right;
+  width: 434px;
+  height: 434px;
+  margin: 0 10px 10px 0;
+  border: 3px solid #313131;
+  box-sizing: border-box;
 }
 
 #photo-wrapper {
-    display: none;
-    background: black;
-    background: rgba(0,0,0,0.9);
-    position: absolute;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 666;
+  display: none;
+  background: black;
+  background: rgba(0, 0, 0, 0.9);
+  position: absolute;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 666;
 }
 
 #photo-wrapper img.photo {
-    position: absolute;
-    border: 2px solid #313131;
+  position: absolute;
+  border: 2px solid #313131;
 }
 
 #photo-wrapper .title-wrapper {
-    position: absolute;
-    left: 50%;
-    bottom: 20px;
+  position: absolute;
+  left: 50%;
+  bottom: 20px;
 }
 
 #photo-wrapper .title-wrapper .title {
-    position: relative;
-    left: -50%;
-    z-index: 777;
-    text-align: center;
-    padding: 5px 10px;
-    border-radius: 5px;
-    color: white;
-    text-shadow: 1px 1px 1px black;
-    background: rgba(0,0,0,0.3)
+  position: relative;
+  left: -50%;
+  z-index: 777;
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: white;
+  text-shadow: 1px 1px 1px black;
+  background: rgba(0, 0, 0, 0.3)
 }
 
 #photo-exif {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    color: #555;
-    text-shadow: 1px 1px 1px black;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  color: #555;
+  text-shadow: 1px 1px 1px black;
 }
 
 #photo-exif td {
-    padding: 2px;
+  padding: 2px;
 }
 
 #photo-comments {
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    padding: 10px;
-    border-radius: 5px;
-    transition: 0.3s;
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  padding: 10px;
+  border-radius: 5px;
+  transition: 0.3s;
 }
 
 #photo-comments:hover {
-    z-index: 1000;
-    color: white;
-    background: black;
-    background: rgba(0,0,0,0.3);
-    transition: 0.3s;
+  z-index: 1000;
+  color: white;
+  background: black;
+  background: rgba(0, 0, 0, 0.3);
+  transition: 0.3s;
 }
 
 #photo-comments .comment {
-    margin-bottom: 10px;
-    text-shadow: 1px 1px 1px black;
-    clear: both;
+  margin-bottom: 10px;
+  text-shadow: 1px 1px 1px black;
+  clear: both;
 }
 
 #photo-comments .comment img {
-    float: left;
-    height: 48px;
-    margin-right: 7px;
-    margin-bottom: 7px;
-    border-radius: 5px;
-    opacity: 0.4;
-    transition: 0.3s;
+  float: left;
+  height: 48px;
+  margin-right: 7px;
+  margin-bottom: 7px;
+  border-radius: 5px;
+  opacity: 0.4;
+  transition: 0.3s;
 }
 
 #photo-comments:hover img {
-    opacity: 1;
-    transition: 0.3s;
+  opacity: 1;
+  transition: 0.3s;
 }
 
 #photo-comments .comment a {
-    font-style: italic;
-    color: inherit;
-    margin-bottom: 5px;
+  font-style: italic;
+  color: inherit;
+  margin-bottom: 5px;
 }
 
 #photo-map {
-    position:absolute;
-    width: 140px;
-    height: 140px;
-    right: 0;
-    bottom: 0;
-    background: transparent;
-    opacity: 0.5;
-    transition: 0.3s;
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  opacity: 0.5;
+  transition: 0.3s;
 }
 
 #photo-map:hover {
-    height: 200px;
-    width: 260px;
-    z-index: 1000;
-    opacity: 1;
-    transition: 0.3s;
-    border: 2px solid #666;
+  height: 200px;
+  width: 260px;
+  z-index: 1000;
+  opacity: 1;
+  transition: 0.3s;
+  border: 2px solid #666;
 }
 
 #footer {
-    clear: both;
-    padding-top: 20px;
-    text-align: center;
-    color: #666;
+  clear: both;
+  padding-top: 20px;
+  text-align: center;
+  color: #666;
 }
 
 #footer a {
-    color: #aaa;
+  color: #aaa;
 }
 
 #photo-controls {
-    position: relative;
-    top: -50px;
-    width: 100%;
-    z-index: 1000;
-    cursor: auto;
-    padding-bottom: 50px;
-    transition: top 0.5s;
+  position: relative;
+  top: -50px;
+  width: 100%;
+  z-index: 1000;
+  cursor: auto;
+  padding-bottom: 50px;
+  transition: top 0.5s;
 }
 
 #photo-controls .header {
-    position: relative;
+  position: relative;
 }
 
 #photo-controls:hover, #photo-controls.visible {
-    top: 0;
-    transition: top 0.5s;
+  top: 0;
+  transition: top 0.5s;
 }
 
 #photo-controls h1 {
-    position: relative;
-    left: -130px;
-    z-index: -1;
+  position: relative;
+  left: -130px;
+  z-index: -1;
 }
 
 .button {
-    position: relative;
-    display: inline-block;
-    text-align: center;
-    cursor: pointer;
-    border: 1px solid #666;
-    background-color: #666;
-    background-color: rgba(128, 128, 128, 0.75);
-    border-radius: 4px;
-    color: #fff;
-    font-weight: bold;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 1px;
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid #666;
+  background-color: #666;
+  background-color: rgba(128, 128, 128, 0.75);
+  border-radius: 4px;
+  color: #fff;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  box-shadow: rgba(0, 0, 0, 0.3) 0 1px 1px;
 }
+
 .button:hover {
   background-color: rgba(128, 128, 128, 0.9);
 }
+
 .button:active {
-    box-shadow: none;
+  box-shadow: none;
 }
 
 #sharing {
@@ -508,39 +510,39 @@ h2 {
 
 /* only desktop */
 @media screen and (min-device-width: 1024px) {
-    .albums a:hover .title > .info {
-        display: block;
-    }
+  .albums a:hover .title > .info {
+    display: block;
+  }
 }
 
 /* only mobile */
 @media screen and (max-device-width: 569px) {
-    body {
-        font-size: 20px;
-    }
+  body {
+    font-size: 20px;
+  }
 
-    .header .button:first-child, .header .button.first {
-        margin-left: 30px;
-    }
+  .header .button:first-child, .header .button.first {
+    margin-left: 30px;
+  }
 
-    .header #search input {
-        margin-right: 10px;
-        width: 100px;
-    }
+  .header #search input {
+    margin-right: 10px;
+    width: 100px;
+  }
 
-    #photo-map, #photo-exif, #photo-comments {
-        display: none !important;
-    }
+  #photo-map, #photo-exif, #photo-comments {
+    display: none !important;
+  }
 
-    #footer {
-        font-size: 14px;
-    }
+  #footer {
+    font-size: 14px;
+  }
 
-    #photo-wrapper img.photo {
-        border: none;
-    }
+  #photo-wrapper img.photo {
+    border: none;
+  }
 
-    #photo-wrapper .title {
-        font-size: 12px;
-    }
+  #photo-wrapper .title {
+    font-size: 12px;
+  }
 }
