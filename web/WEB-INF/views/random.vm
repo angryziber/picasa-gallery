@@ -43,7 +43,7 @@
     img.style.display = 'block';
   };
 </script>
-<script src="/chromecast.js"></script>
+<script src="/js/chromecast.js"></script>
 <script>
   chromecast.send('${random.photos[0].url}');
   #if($random.photos.size() > 1)

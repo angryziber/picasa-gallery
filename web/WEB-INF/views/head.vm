@@ -14,12 +14,12 @@
 <link rel="shortcut icon" href="/img/picasa-logo.png">
 <link rel="apple-touch-icon" href="/img/picasa-logo.png"/>
 
-<script src="/jquery.min.js"></script>
+<script src="/js/jquery.min.js"></script>
 <script src="/js/thumbs.js"></script>
-<script src="/gallery.js?v4"></script>
-<script src="/prefixfree.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/prefixfree.min.js"></script>
 #if(!$bot)
-<script defer src="/chromecast.js"></script>
+<script defer src="/js/chromecast.js"></script>
 <script defer src="//maps.google.com/maps/api/js?key=${picasa.mapsKey}"></script>
 #end
 
