@@ -464,7 +464,7 @@ function initAlbumFilter() {
 
 function updateLayout() {
     var photoWidth = ($('.albums').length ? 212 : 144) + 10;
-    var photosInRow = Math.floor($(window).width() / photoWidth);
+    var photosInRow = Math.floor(($(window).width()-90) / photoWidth);
     $('#content').width(photosInRow * photoWidth);
 }
 
