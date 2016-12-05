@@ -198,32 +198,29 @@ h2 {
     margin-top: 4px;
 }
 
-.albums a, .thumbs a {
-    float: left;
-    margin: 0 10px 10px 0;
-    position: relative;
-    overflow: hidden;
-}
-
-.albums a img, .thumbs a img {
-    border: 3px solid #313131;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
+.thumbs a {
+  float: left;
+  margin: 0 10px 10px 0;
+  position: relative;
+  overflow: hidden;
+  width: 144px;
+  height: 144px;
+  text-align: center;
 }
 
 .albums a {
-    width: 212px;
-    height: 212px;
+  width: 212px;
+  height: 212px;
 }
 
-.thumbs a {
-    width: 144px;
-    height: 144px;
-    text-align: center;
+.thumbs a img {
+  border: 3px solid #313131;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 }
 
-.albums a:hover img, .thumbs a:hover img {
+.thumbs a:hover img {
     border-color: #616161;
 }
 
