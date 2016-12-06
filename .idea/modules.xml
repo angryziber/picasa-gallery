@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/picasa-gallery.iml" filepath="$PROJECT_DIR$/.idea/modules/picasa-gallery.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/picasa-gallery_endpointsSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/picasa-gallery_endpointsSrc.iml" group="picasa-gallery" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/picasa-gallery_functionalTest.iml" filepath="$PROJECT_DIR$/.idea/modules/picasa-gallery_functionalTest.iml" group="picasa-gallery" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/picasa-gallery_main.iml" filepath="$PROJECT_DIR$/.idea/modules/picasa-gallery_main.iml" group="picasa-gallery" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/picasa-gallery_test.iml" filepath="$PROJECT_DIR$/.idea/modules/picasa-gallery_test.iml" group="picasa-gallery" />
+    </modules>
+  </component>
+</project>
