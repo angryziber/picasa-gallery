@@ -293,7 +293,8 @@ function PhotoViewer() {
       if (ww / wh > photo.width / photo.height) {
         img.attr('height', wh)
         img.removeAttr('width')
-      } else {
+      }
+      else {
         img.attr('width', ww)
         img.removeAttr('height')
       }
@@ -338,7 +339,8 @@ function PhotoViewer() {
     if ('chromecast' in window) chromecast.send(photo.url)
 
     title.text(photo.title)
-    if (photo.title) title.fadeIn() else title.fadeOut()
+    if (photo.title) title.fadeIn()
+    else title.fadeOut()
 
     if (history.replaceState) history.replaceState(stateURL(photo), photo.title, stateURL(photo))
     if ('ga' in window) ga('send', 'event', location.pathname, location.hash)
@@ -451,7 +453,8 @@ function initMap() {
   if (bounds.isEmpty()) {
     map.setCenter(latLng(0, 0))
     map.setZoom(1)
-  } else {
+  }
+  else {
     map.fitBounds(bounds)
     map.panBy(0, 15)
   }
