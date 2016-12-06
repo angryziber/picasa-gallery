@@ -21,6 +21,7 @@ Features
 
 - Dark theme that emphasizes photos
 - Shows your existing public albums, no additional storage needed
+- HDPI/Retina screens use hi-res thumbnails
 - Search within the gallery (by tags, keywords, descriptions, etc) - *currently not working because Google removed this feature from the API*
 - Nice shareable URLs for albums, individual photos, search results
 - Gallery map if albums are geotagged
