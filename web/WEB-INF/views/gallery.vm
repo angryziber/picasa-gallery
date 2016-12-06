@@ -47,7 +47,7 @@
   </div>
 </div>
 
-<script>new ThumbsView(${gallery.thumbSize}, true)</script>
+<script>new ThumbsView(${gallery.thumbSize})</script>
 
 </body>
 </html>

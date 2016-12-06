@@ -1,4 +1,4 @@
-function ThumbsView(thumbSize, useHdpi) {
+function ThumbsView(thumbSize) {
   function updateLayout() {
     var photoWidth = thumbSize + 10
     var maxWidth = $(window).width()
@@ -22,6 +22,6 @@ function ThumbsView(thumbSize, useHdpi) {
   }
 
   updateLayout()
-  if (useHdpi) loadThumbs(isHdpi())
+  loadThumbs(isHdpi())
   $(window).on('resize', updateLayout)
 }
