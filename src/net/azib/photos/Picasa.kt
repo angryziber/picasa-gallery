@@ -29,7 +29,7 @@ class Picasa(user: String? = null, private val authKey: String? = null) {
     }
 
   fun getAlbum(name: String): Album {
-    val thumbSize = 144
+    val thumbSize = 212
     val id = gallery.albums[name]?.id ?: name
     val path = if (id.matches("\\d+".toRegex())) "/albumid/" + id else "/album/" + urlEncode(name)
     val url = path + "?kind=photo,comment&imgmax=1600&thumbsize=${thumbSize}c&max-results=500" +
@@ -70,7 +70,7 @@ class Picasa(user: String? = null, private val authKey: String? = null) {
   }
 
   fun search(query: String): Album {
-    val thumbSize = 144
+    val thumbSize = 212
     return load("?kind=photo&q=" + urlEncode(query) + "&imgmax=1024&thumbsize=${thumbSize}c", AlbumLoader(Album(thumbSize)))
   }
 

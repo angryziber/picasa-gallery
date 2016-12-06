@@ -11,6 +11,7 @@
   <meta property="og:image" content="${gallery.albums.values().iterator().next().thumbUrlLarge}">
   <meta property="og:site_name" content="${gallery.author} Photography">
   #parse('head.vm')
+  <style>.thumbs a {width: ${gallery.thumbSize}px; height: ${gallery.thumbSize}px;}</style>
   <script defer>$(initAlbumFilter);</script>
   <script defer>$(initMap)</script>
 </head>

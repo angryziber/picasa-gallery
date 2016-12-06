@@ -5,7 +5,7 @@
   <meta name="description" content="${album.title} photos by ${album.author}: ${album.description}">
 
   #if($mobile)
-    <meta name="viewport" content="width=650, user-scalable=no, minimal-ui">
+    <meta name="viewport" content="width=700, user-scalable=no, minimal-ui">
     <link rel="apple-touch-icon" href="${album.thumbUrl}">
   #end
 
@@ -24,6 +24,7 @@
   <meta property="og:site_name" content="${album.author} Photography">
 
   #parse('head.vm')
+  <style>.thumbs a {width: ${album.thumbSize}px; height: ${album.thumbSize}px;}</style>
   <script>
     var viewer = new PhotoViewer();
     $(function() {

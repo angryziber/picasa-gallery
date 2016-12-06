@@ -203,14 +203,7 @@ h2 {
   margin: 0 10px 10px 0;
   position: relative;
   overflow: hidden;
-  width: 144px;
-  height: 144px;
   text-align: center;
-}
-
-.albums a {
-  width: 212px;
-  height: 212px;
 }
 
 .thumbs a img {
