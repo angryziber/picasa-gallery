@@ -1,12 +1,12 @@
 package net.azib.photos
 
-class AlbumLoader(val album: Album) : XMLListener<Album> {
+class AlbumLoader(thumbSize: Int) : XMLListener<Album> {
   private var photo: Photo? = null
   private var comment: Comment? = null
-  override val result = album
+  override val result = Album(thumbSize)
 
   override fun value(path: String, value: String) {
-    album.apply {
+    result.apply {
       when (path) {
         "id" -> id = value
         "name" -> name = value
@@ -68,8 +68,8 @@ class AlbumLoader(val album: Album) : XMLListener<Album> {
   private val invalidUrlChars = "[?&!%.,:;+*/()'\"]".toRegex()
   private fun replaceUrlSuffix(url: String): String {
     var desc = photo?.description?.take(30)?.replace(invalidUrlChars, "")?.replace(' ', '-')
-    if (desc.isNullOrEmpty()) desc = album.photos.size.toString()
-    return url.substring(0, url.lastIndexOf('/') + 1) + "${album.name}-${desc}.jpg"
+    if (desc.isNullOrEmpty()) desc = result.photos.size.toString()
+    return url.substring(0, url.lastIndexOf('/') + 1) + "${result.name}-${desc}.jpg"
   }
 
   override fun end(path: String) {

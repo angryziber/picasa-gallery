@@ -3,8 +3,8 @@ package net.azib.photos
 import java.text.SimpleDateFormat
 import java.util.*
 
-class GalleryLoader(gallery: Gallery) : XMLListener<Gallery> {
-  override val result = gallery
+class GalleryLoader(thumbSize: Int) : XMLListener<Gallery> {
+  override val result = Gallery(thumbSize)
   private var album = Album()
   val timestampFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 

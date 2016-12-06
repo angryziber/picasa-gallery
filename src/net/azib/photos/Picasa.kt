@@ -25,8 +25,7 @@ class Picasa(user: String? = null, private val authKey: String? = null) {
       val thumbSize = 212
       val url = "?kind=album&thumbsize=${thumbSize}c" +
                 "&fields=id,updated,gphoto:*,entry(title,summary,updated,content,category,gphoto:*,media:*,georss:*)"
-      val gallery = Gallery(thumbSize)
-      return GalleryLoader(gallery).load(url)
+      return GalleryLoader(thumbSize).load(url)
     }
 
   fun getAlbum(name: String): Album {
@@ -35,9 +34,8 @@ class Picasa(user: String? = null, private val authKey: String? = null) {
     val path = if (id.matches("\\d+".toRegex())) "/albumid/" + id else "/album/" + urlEncode(name)
     val url = path + "?kind=photo,comment&imgmax=1600&thumbsize=${thumbSize}c&max-results=500" +
       "&fields=id,updated,title,subtitle,icon,gphoto:*,georss:where(gml:Point),entry(title,summary,content,author,category,gphoto:id,gphoto:photoid,gphoto:width,gphoto:height,gphoto:commentCount,gphoto:timestamp,exif:*,media:*,georss:where(gml:Point))"
-    val album = Album(thumbSize)
-    val loader = AlbumLoader(album)
-    loader.load(url)
+    val loader = AlbumLoader(thumbSize)
+    val album = loader.load(url)
     while (album.size > album.photos.size)
       loader.load(url + "&start-index=${album.photos.size+1}")
     return album
@@ -73,8 +71,7 @@ class Picasa(user: String? = null, private val authKey: String? = null) {
 
   fun search(query: String): Album {
     val thumbSize = 144
-    val album = Album(thumbSize)
-    return AlbumLoader(album).load("?kind=photo&q=" + urlEncode(query) + "&imgmax=1024&thumbsize=${thumbSize}c")
+    return AlbumLoader(thumbSize).load("?kind=photo&q=" + urlEncode(query) + "&imgmax=1024&thumbsize=${thumbSize}c")
   }
 
   private fun <T: Entity> XMLListener<T>.load(query: String)
