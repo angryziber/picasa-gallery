@@ -1,4 +1,3 @@
-* have username in url before the album
 * separate sitemap page with text links (visible to users if they want)
 * About page
 * JCache API instead of a Map
@@ -8,5 +7,4 @@
 * Twitter card tags?
 * Page per each image
 * Keywords from google vision
-* More text content
 * Use appengine provided location headers to display user on the map
