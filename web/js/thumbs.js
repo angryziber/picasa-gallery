@@ -13,8 +13,11 @@ function ThumbsView(thumbSize, useHdpi) {
 
   function loadThumbs(hdpi) {
     document.querySelectorAll('.thumbs img').forEach(function(img) {
-      var src = img.src || img.getAttribute('data-src')
-      img.src = hdpi ? src.replace('/s' + thumbSize + '-c/', '/s' + (thumbSize * 2) + '-c/') : src
+      if (!img.src) {
+        var src = img.dataset.src
+        img.src = hdpi ? src.replace('/s' + thumbSize + '-c/', '/s' + (thumbSize * 2) + '-c/') : src
+        delete img.dataset.src
+      }
     })
   }
 
