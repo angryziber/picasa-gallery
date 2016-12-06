@@ -29,12 +29,14 @@ class Picasa(user: String? = null, private val authKey: String? = null) {
     }
 
   fun getAlbum(name: String): Album {
+    val thumbSize = 144
     val id = gallery.albums[name]?.id ?: name
-    var url = if (id.matches("\\d+".toRegex())) "/albumid/" + id else "/album/" + urlEncode(name)
-    url += "?kind=photo,comment&imgmax=1600&thumbsize=144c&max-results=500"
-    url += "&fields=id,updated,title,subtitle,icon,gphoto:*,georss:where(gml:Point),entry(title,summary,content,author,category,gphoto:id,gphoto:photoid,gphoto:width,gphoto:height,gphoto:commentCount,gphoto:timestamp,exif:*,media:*,georss:where(gml:Point))"
-    val loader = AlbumLoader()
-    val album = load(url, loader)
+    val path = if (id.matches("\\d+".toRegex())) "/albumid/" + id else "/album/" + urlEncode(name)
+    val url = path + "?kind=photo,comment&imgmax=1600&thumbsize=${thumbSize}c&max-results=500" +
+      "&fields=id,updated,title,subtitle,icon,gphoto:*,georss:where(gml:Point),entry(title,summary,content,author,category,gphoto:id,gphoto:photoid,gphoto:width,gphoto:height,gphoto:commentCount,gphoto:timestamp,exif:*,media:*,georss:where(gml:Point))"
+    val album = Album(thumbSize)
+    val loader = AlbumLoader(album)
+    load(url, loader)
     while (album.size > album.photos.size) load(url + "&start-index=${album.photos.size+1}", loader)
     return album
   }
@@ -67,7 +69,10 @@ class Picasa(user: String? = null, private val authKey: String? = null) {
     return if (max == 0) 0 else random.nextInt(max)
   }
 
-  fun search(query: String) = load("?kind=photo&q=" + urlEncode(query) + "&imgmax=1024&thumbsize=144c", AlbumLoader())
+  fun search(query: String): Album {
+    val thumbSize = 144
+    return load("?kind=photo&q=" + urlEncode(query) + "&imgmax=1024&thumbsize=${thumbSize}c", AlbumLoader(Album(thumbSize)))
+  }
 
   private fun <T: Entity> load(query: String, loader: XMLListener<T>)
       = URLLoader.load(toFullUrl(query), loader)

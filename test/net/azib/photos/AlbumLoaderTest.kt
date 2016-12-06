@@ -5,8 +5,10 @@ import org.jetbrains.spek.api.Spek
 import org.junit.Assert.assertThat
 
 class AlbumLoaderTest: Spek({
+  val xml = Album::class.java.getResourceAsStream("album.xml")
+
   it("parses album feed") {
-    val album = XMLParser(AlbumLoader()).parse(Album::class.java.getResourceAsStream("album.xml"))
+    val album = XMLParser(AlbumLoader(Album(144))).parse(xml)
     assertThat(album.id, equalTo("6259054820507852961"))
     assertThat(album.name, equalTo("Morocco"))
     assertThat(album.title, equalTo("Morocco"))

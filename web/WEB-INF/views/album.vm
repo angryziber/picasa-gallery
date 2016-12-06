@@ -134,7 +134,7 @@
   #parse('sharing.vm')
 #end
 
-<script>new ThumbsView(144, true)</script>
+<script>new ThumbsView(${album.thumbSize})</script>
 
 </body>
 </html>

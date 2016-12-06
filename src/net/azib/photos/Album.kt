@@ -3,6 +3,7 @@ package net.azib.photos
 import java.util.*
 
 open class Album(
+    val thumbSize: Int? = null,
     id: String? = null,
     name: String? = null,
     title: String? = null,
