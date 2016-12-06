@@ -22,9 +22,9 @@ function PhotoViewer() {
         id: this.id,
         pos: extractPos(this),
         exif: extractExif(this),
-        time: this.getAttribute('data-time')
+        time: this.dataset.time
       })
-      this.href = this.getAttribute('data-href')
+      this.href = this.dataset.href
       if (title) this.setAttribute('title', title)
     })
 
