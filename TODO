@@ -1,3 +1,5 @@
+* thumbnail lazy loading (esp with hdpi, viewing of full images can take a lot of time initially)
+* spinner while full image is loading
 * separate sitemap page with text links (visible to users if they want)
 * About page
 * JCache API instead of a Map
