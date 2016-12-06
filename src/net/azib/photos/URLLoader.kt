@@ -8,8 +8,9 @@ import java.util.concurrent.ConcurrentHashMap
 object URLLoader {
   private val cache: MutableMap<String, XMLListener<Entity>> = ConcurrentHashMap()
 
-  fun reload() = cache.entries.forEach {
-    loadAndParse(it.key, it.value.javaClass.newInstance())
+  fun reload(picasa: Picasa) {
+    cache.clear()
+    picasa.gallery.albums.forEach { picasa.getAlbum(it.key) }
   }
 
   @Suppress("UNCHECKED_CAST")

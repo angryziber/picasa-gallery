@@ -8,6 +8,6 @@
   <cron>
     <url>/?reload</url>
     <description>Reload cache</description>
-    <schedule>every 30 minutes</schedule>
+    <schedule>every 24 hours</schedule>
   </cron>
 </cronentries>

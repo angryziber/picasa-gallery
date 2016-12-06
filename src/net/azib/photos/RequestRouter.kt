@@ -27,7 +27,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
       attrs["host"] = req.getHeader("host")
       attrs["servletPath"] = path
 
-      if (req["reload"] != null) URLLoader.reload()
+      if (req["reload"] != null) URLLoader.reload(picasa)
 
       when {
         random != null -> renderRandom()
