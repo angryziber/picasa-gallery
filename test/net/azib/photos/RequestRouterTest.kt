@@ -3,6 +3,8 @@ package net.azib.photos
 import com.nhaarman.mockito_kotlin.*
 import org.assertj.core.api.Assertions.assertThat
 import org.jetbrains.spek.api.Spek
+import org.jetbrains.spek.api.dsl.describe
+import org.jetbrains.spek.api.dsl.it
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpServletResponse.SC_MOVED_PERMANENTLY
@@ -11,7 +13,7 @@ class RequestRouterTest: Spek({
   val req = mock<HttpServletRequest>()
   val res = mock<HttpServletResponse>()
 
-  beforeEach {
+  beforeEachTest {
     reset(req, res)
     whenever(req.servletPath).thenReturn("/")
   }
