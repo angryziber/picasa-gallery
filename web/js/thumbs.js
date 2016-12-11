@@ -12,7 +12,7 @@ function ThumbsView(thumbSize) {
   }
 
   function loadThumbs(hdpi) {
-    document.querySelectorAll('.thumbs img').forEach(function(img) {
+    $('.thumbs img').each(function(i, img) {
       if (!img.src) {
         var src = img.dataset.src
         img.src = hdpi ? src.replace('/s' + thumbSize + '-c/', '/s' + (thumbSize * 2) + '-c/') : src
