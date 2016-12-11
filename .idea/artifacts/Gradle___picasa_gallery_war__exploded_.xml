@@ -22,6 +22,7 @@
           <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.0.5-2" />
           <element id="library" level="project" name="Gradle: commons-collections:commons-collections:3.2.1" />
           <element id="library" level="project" name="Gradle: commons-lang:commons-lang:2.4" />
+          <element id="library" level="project" name="Gradle: oro:oro:2.0.8" />
           <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-runtime:1.0.5-2" />
         </element>
       </element>

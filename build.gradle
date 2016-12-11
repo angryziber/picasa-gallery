@@ -42,6 +42,7 @@ sourceSets {
 dependencies {
   appengineSdk "com.google.appengine:appengine-java-sdk:$appengine_version"
   compile 'org.apache.velocity:velocity:1.7'
+  runtime 'oro:oro:2.0.8'
   compile 'com.atlassian.commonmark:commonmark:0.7.1'
   compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
   providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
