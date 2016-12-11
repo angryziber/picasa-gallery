@@ -1,14 +1,18 @@
 function ThumbsView(thumbSize) {
   function updateLayout() {
     var photoWidth = thumbSize + 10
-    var maxWidth = $(window).width()
-    if (maxWidth > 700) maxWidth -= 90
+    var maxWidth = window.innerWidth
+    if (isDesktop()) maxWidth -= 90
     var photosInRow = Math.floor(maxWidth / photoWidth)
     $('#content').width(photosInRow * photoWidth)
   }
 
+  function isDesktop() {
+    return window.innerWidth > 700
+  }
+
   function isHdpi() {
-    return window.devicePixelRatio >= 2
+    return isDesktop() && window.devicePixelRatio >= 2
   }
 
   function loadThumbs(hdpi) {
