@@ -16,7 +16,7 @@ open class Renderer(servletContext: ServletContext) {
     velocityProps.setProperty("file.resource.loader.path", servletContext.getRealPath("/WEB-INF/views"))
     velocityProps.setProperty("file.resource.loader.cache", "true")
     velocityProps.setProperty("eventhandler.referenceinsertion.class", "org.apache.velocity.app.event.implement.EscapeHtmlReference")
-    velocityProps.setProperty("eventhandler.escape.html.match", "/.*/")
+    velocityProps.setProperty("eventhandler.escape.html.match", "/.*(title|description|author|text).*/")
     println(velocityProps)
     velocity = VelocityEngine(velocityProps)
     velocity.setApplicationAttribute("javax.servlet.ServletContext", servletContext)
