@@ -460,23 +460,6 @@ h2 {
   background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20fill%3D%22%233B5998%22%20d%3D%22M0%200h32v32H0z%22%2F%3E%3Cpath%20fill%3D%22%23FFF%22%20d%3D%22M17.78%2027.5V17.008h3.522l.527-4.09h-4.05v-2.61c0-1.182.33-1.99%202.026-1.99h2.166V4.66c-.375-.05-1.66-.16-3.155-.16-3.123%200-5.26%201.905-5.26%205.405v3.016h-3.53v4.09h3.53V27.5h4.223z%22%2F%3E%3C%2Fsvg%3E');
 }
 
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: rgba(50, 50, 50, 0.6);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(50, 50, 50, 0.9);
-}
-
-::-webkit-scrollbar-track {
-  background-color: rgba(50, 50, 50, .05);
-}
-
 @media screen and (max-width: 900px) {
   #photo-controls h1 {
     position: static;

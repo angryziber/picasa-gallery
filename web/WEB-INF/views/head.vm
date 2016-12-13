@@ -9,10 +9,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-<link rel="stylesheet" type="text/css" href="/css/reset.css">
-<link rel="stylesheet" type="text/css" href="/css/gallery.css">
 <link rel="shortcut icon" href="/img/picasa-logo.png">
 <link rel="apple-touch-icon" href="/img/picasa-logo.png"/>
+
+<link rel="stylesheet" type="text/css" href="/css/reset.css">
+<link rel="stylesheet" type="text/css" href="/css/gallery.css">
+<link rel="stylesheet" type="text/css" href="/css/scrollbars.css">
+<link rel="stylesheet" type="text/css" href="/css/spinner.css">
 
 <script src="/js/jquery.min.js"></script>
 <script src="/js/thumbs.js?v2"></script>
