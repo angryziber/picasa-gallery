@@ -2,7 +2,6 @@ package net.azib.photos
 
 import org.assertj.core.api.Assertions.assertThat
 import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.it
 
 class GalleryLoaderTest: Spek({
   val xml = Gallery::class.java.getResourceAsStream("gallery.xml")
