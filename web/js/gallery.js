@@ -1,3 +1,5 @@
+'use strict'
+
 function changeUsername(username) {
   username = prompt('Show photos by Google/Picasaweb user:', username)
   if (username) fadeTo('/?by=' + username)
@@ -19,15 +21,39 @@ function Loader(wrapper) {
   }
 }
 
+function PhotoMap() {
+  var el = $('#photo-map')
+  var map, marker
+
+  this.show = function(pos) {
+    if (!map) {
+      map = createMap(el, {mapTypeControl: false})
+      map.setCenter(pos)
+      map.setZoom(12)
+      marker = new google.maps.Marker({position: pos, map: map})
+    }
+    else {
+      marker.setPosition(pos)
+      if (map.getBounds() && !map.getBounds().contains(pos))
+        map.panTo(pos)
+    }
+    el.fadeIn()
+  }
+
+  this.hide = function() {
+    el.fadeOut()
+  }
+}
+
 function PhotoViewer() {
   var pub = this
   var w = $(window)
-  var wrapper, title, map, marker, controls, position, interval, timeRemaining, exif
+  var wrapper, title, controls, position, interval, timeRemaining, exif
   var slideshow = null
   var photos = []
   var index = 0
   var isOpen = false
-  var loader
+  var loader, photoMap
 
   pub.setup = function() {
     photos = []
@@ -63,6 +89,7 @@ function PhotoViewer() {
     })
 
     loader = new Loader(wrapper)
+    photoMap = new PhotoMap()
     return this
   }
 
@@ -381,21 +408,10 @@ function PhotoViewer() {
     else
       exif.find('td').empty()
 
-    if (photo.pos) {
-      if (!map) {
-        map = createMap('#photo-map', {mapTypeControl: false})
-        map.setCenter(photo.pos)
-        map.setZoom(12)
-        marker = new google.maps.Marker({position: photo.pos, map: map})
-        //$('#photo-map').hover(function(){setTimeout(function(){map.panTo(photos[index].pos)}, 500)})
-      }
-      marker.setPosition(photo.pos)
-      if (map.getBounds() && !map.getBounds().contains(photo.pos)) map.panTo(photo.pos)
-      $('#photo-map').fadeIn()
-    }
-    else {
-      $('#photo-map').fadeOut()
-    }
+    if (photo.pos)
+      photoMap.show(photo.pos)
+    else
+      photoMap.hide()
 
     updateScrolling(photo)
   }
