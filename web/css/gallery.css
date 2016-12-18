@@ -28,6 +28,7 @@ p {
   margin: 1em 0;
   color: lightgray;
   font-size: 16px;
+  line-height: 1.25;
 }
 
 .header {
