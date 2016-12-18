@@ -8,7 +8,6 @@ function ThumbsView(thumbSize) {
     if (isDesktop()) maxWidth -= 90
     var photosInRow = Math.floor(maxWidth / photoWidth)
     $('#content').width(photosInRow * photoWidth)
-    loadVisibleThumbs()
   }
 
   function isDesktop() {
@@ -60,5 +59,5 @@ function ThumbsView(thumbSize) {
   $(loadVisibleThumbs)
 
   $(window).on('resize', updateLayout)
-           .on('scroll', loadVisibleThumbsDebounce)
+           .on('resize scroll', loadVisibleThumbsDebounce)
 }
