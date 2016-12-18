@@ -49,7 +49,7 @@ function ThumbsView(thumbSize) {
       loadVisibleThumbs.lastTimeStamp = e.timeStamp
       setTimeout(function() {
         if (loadVisibleThumbs() === false)
-          $(window).off('scroll', loadVisibleThumbsDebounce)
+          $(window).off('resize scroll', loadVisibleThumbsDebounce)
       }, 0)
     }
   }
