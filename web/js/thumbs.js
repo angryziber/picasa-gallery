@@ -1,4 +1,7 @@
+'use strict'
+
 function ThumbsView(thumbSize) {
+
   function updateLayout() {
     var photoWidth = thumbSize + 10
     var maxWidth = window.innerWidth
@@ -15,17 +18,43 @@ function ThumbsView(thumbSize) {
     return isDesktop() && window.devicePixelRatio >= 2
   }
 
-  function loadThumbs(hdpi) {
-    $('.thumbs img').each(function(i, img) {
-      if (!img.src) {
-        var src = img.dataset.src
-        img.src = hdpi ? src.replace('/s' + thumbSize + '-c/', '/s' + (thumbSize * 2) + '-c/') : src
-        delete img.dataset.src
+  function setSrc(img) {
+    if (!img.src) {
+      var src = img.dataset.src
+      img.src = hdpi ? src.replace('/s' + thumbSize + '-c/', '/s' + (thumbSize * 2) + '-c/') : src
+      delete img.dataset.src
+    }
+  }
+
+  function loadVisibleThumbs() {
+    var loadTop = window.scrollY - window.innerHeight
+    var loadBottom = window.scrollY + window.innerHeight * 2
+
+    var notLoadedThumbs = $('.thumbs img:not([src])')
+    if (!notLoadedThumbs.length)
+      $(window).off('scroll', loadVisibleThumbsDebounce)
+
+    var found = false
+    notLoadedThumbs.each(function(i, img) {
+      var top = $(img).offset().top
+      if (top >= loadTop && top <= loadBottom) {
+        setSrc(img)
+        found = true
       }
+      else if (found) return false
     })
   }
 
+  var debounceTimer
+  function loadVisibleThumbsDebounce() {
+    clearTimeout(debounceTimer)
+    debounceTimer = setTimeout(loadVisibleThumbs, 200)
+  }
+
+  var hdpi = isHdpi()
   updateLayout()
-  loadThumbs(isHdpi())
+  $(loadVisibleThumbs)
+
   $(window).on('resize', updateLayout)
+           .on('scroll', loadVisibleThumbsDebounce)
 }

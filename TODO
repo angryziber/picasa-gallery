@@ -1,4 +1,3 @@
-* thumbnail lazy loading (esp with hdpi, viewing of full images can take a lot of time initially)
 * thumbnail size depends on browser window size
 * separate sitemap page with text links (visible to users if they want)
 * About page
