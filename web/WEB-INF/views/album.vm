@@ -87,6 +87,7 @@
 </div>
 
 <div id="photo-wrapper">
+  <div class="loader"></div>
   <div class="title-wrapper">
     <div class="title"></div>
   </div>

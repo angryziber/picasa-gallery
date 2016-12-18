@@ -3,6 +3,22 @@ function changeUsername(username) {
   if (username) fadeTo('/?by=' + username)
 }
 
+function Loader(wrapper) {
+  var el = $('.loader', wrapper)
+  var timer
+
+  this.show = function() {
+    timer = setTimeout(function() {
+      el.show()
+    }, 200)
+  }
+
+  this.hide = function() {
+    clearTimeout(timer)
+    el.hide()
+  }
+}
+
 function PhotoViewer() {
   var pub = this
   var w = $(window)
@@ -11,6 +27,7 @@ function PhotoViewer() {
   var photos = []
   var index = 0
   var isOpen = false
+  var loader
 
   pub.setup = function() {
     photos = []
@@ -44,6 +61,8 @@ function PhotoViewer() {
     title.hover(function() {
       title.fadeOut()
     })
+
+    loader = new Loader(wrapper)
     return this
   }
 
@@ -304,6 +323,7 @@ function PhotoViewer() {
   }
 
   function imageOnLoad() {
+    loader.hide()
     var photo = photos[index]
     photo.width = this.width
     photo.height = this.height
@@ -325,6 +345,7 @@ function PhotoViewer() {
   }
 
   function loadPhoto() {
+    loader.show()
     wrapper.css('cursor', 'wait')
     wrapper.find('img.photo').fadeOut(function() {
       $(this).remove()
