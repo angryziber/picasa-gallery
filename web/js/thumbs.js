@@ -8,7 +8,7 @@ function ThumbsView(thumbSize) {
     if (isDesktop()) maxWidth -= 90
     var photosInRow = Math.floor(maxWidth / photoWidth)
     $('#content').width(photosInRow * photoWidth)
-    loadVisibleThumbsDebounce()
+    loadVisibleThumbs()
   }
 
   function isDesktop() {
@@ -45,14 +45,13 @@ function ThumbsView(thumbSize) {
     })
   }
 
-  function loadVisibleThumbsDebounce() {
-    var now = new Date().getTime()
-    if (now - (loadVisibleThumbs.lastRun || 0) > 200) {
-      loadVisibleThumbs.lastRun = now
+  function loadVisibleThumbsDebounce(e) {
+    if (e.timeStamp - (loadVisibleThumbs.lastTimeStamp || 0) > 200) {
+      loadVisibleThumbs.lastTimeStamp = e.timeStamp
       setTimeout(function() {
         if (loadVisibleThumbs() === false)
           $(window).off('scroll', loadVisibleThumbsDebounce)
-      })
+      }, 0)
     }
   }
 
