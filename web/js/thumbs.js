@@ -8,6 +8,7 @@ function ThumbsView(thumbSize) {
     if (isDesktop()) maxWidth -= 90
     var photosInRow = Math.floor(maxWidth / photoWidth)
     $('#content').width(photosInRow * photoWidth)
+    loadVisibleThumbsDebounce()
   }
 
   function isDesktop() {
@@ -48,8 +49,10 @@ function ThumbsView(thumbSize) {
     var now = new Date().getTime()
     if (now - (loadVisibleThumbs.lastRun || 0) > 200) {
       loadVisibleThumbs.lastRun = now
-      if (loadVisibleThumbs() === false)
-        $(window).off('scroll', loadVisibleThumbsDebounce)
+      setTimeout(function() {
+        if (loadVisibleThumbs() === false)
+          $(window).off('scroll', loadVisibleThumbsDebounce)
+      })
     }
   }
 
