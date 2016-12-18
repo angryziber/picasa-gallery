@@ -31,8 +31,7 @@ function ThumbsView(thumbSize) {
     var loadBottom = window.scrollY + window.innerHeight * 2
 
     var notLoadedThumbs = $('.thumbs img:not([src])')
-    if (!notLoadedThumbs.length)
-      $(window).off('scroll', loadVisibleThumbsDebounce)
+    if (!notLoadedThumbs.length) return false
 
     var found = false
     notLoadedThumbs.each(function(i, img) {
@@ -45,10 +44,13 @@ function ThumbsView(thumbSize) {
     })
   }
 
-  var debounceTimer
   function loadVisibleThumbsDebounce() {
-    clearTimeout(debounceTimer)
-    debounceTimer = setTimeout(loadVisibleThumbs, 200)
+    var now = new Date().getTime()
+    if (now - (loadVisibleThumbs.lastRun || 0) > 200) {
+      loadVisibleThumbs.lastRun = now
+      if (loadVisibleThumbs() === false)
+        $(window).off('scroll', loadVisibleThumbsDebounce)
+    }
   }
 
   var hdpi = isHdpi()
