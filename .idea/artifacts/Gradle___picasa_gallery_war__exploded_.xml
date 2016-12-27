@@ -19,11 +19,11 @@
         <element id="directory" name="lib">
           <element id="library" level="project" name="Gradle: org.apache.velocity:velocity:1.7" />
           <element id="library" level="project" name="Gradle: com.atlassian.commonmark:commonmark:0.7.1" />
-          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.0.5-2" />
           <element id="library" level="project" name="Gradle: commons-collections:commons-collections:3.2.1" />
           <element id="library" level="project" name="Gradle: commons-lang:commons-lang:2.4" />
           <element id="library" level="project" name="Gradle: oro:oro:2.0.8" />
-          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-runtime:1.0.5-2" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.0.6/d19acb6ed49b9c48228c0e5dff8071fce23be4b8/kotlin-stdlib-1.0.6.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-runtime/1.0.6/3562c66f648480d3bd4f76cff722488ced13445b/kotlin-runtime-1.0.6.jar" />
         </element>
       </element>
     </root>
