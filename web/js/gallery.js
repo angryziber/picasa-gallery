@@ -63,12 +63,12 @@ function PhotoViewer() {
   }
 
   pub.setup = function() {
-    var imgMaxSize = imgMaxSize()
+    var maxSize = imgMaxSize()
     photos = []
     $('a.photo').click(pub.open).each(function() {
       var title = $('img', this).attr('alt')
       photos.push({
-        url: this.href.replace('/s1920/', imgMaxSize),
+        url: this.href.replace('/s1920/', maxSize),
         title: title,
         id: this.id,
         pos: extractPos(this),
