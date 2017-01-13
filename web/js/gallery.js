@@ -55,13 +55,20 @@ function PhotoViewer() {
   var isOpen = false
   var loader, photoMap
 
+  function imgMaxSize() {
+    var isMobile = window.innerWidth <= 700
+    var imgSize = Math.max(window.innerWidth, window.innerHeight) * (window.devicePixelRatio || 1)
+    if (isMobile && imgSize > 1920) imgSize = 1920
+    return '/s' + imgSize + '/'
+  }
+
   pub.setup = function() {
-    var imgSize = '/s' + (Math.max(window.innerWidth, window.innerHeight) * (window.devicePixelRatio || 1)) + '/'
+    var imgMaxSize = imgMaxSize()
     photos = []
     $('a.photo').click(pub.open).each(function() {
       var title = $('img', this).attr('alt')
       photos.push({
-        url: this.href.replace('/s1920/', imgSize),
+        url: this.href.replace('/s1920/', imgMaxSize),
         title: title,
         id: this.id,
         pos: extractPos(this),
