@@ -281,7 +281,7 @@ h2 {
 
 #photo-wrapper img.photo {
   position: absolute;
-  border: 2px solid #313131;
+  outline: 2px solid #313131;
 }
 
 #photo-wrapper .title-wrapper {
@@ -525,10 +525,6 @@ h2 {
 
   #footer {
     font-size: 14px;
-  }
-
-  #photo-wrapper img.photo {
-    border: none;
   }
 
   #photo-wrapper .title {
