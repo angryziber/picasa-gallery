@@ -56,11 +56,12 @@ function PhotoViewer() {
   var loader, photoMap
 
   pub.setup = function() {
+    var imgSize = '/s' + (Math.max(window.innerWidth, window.innerHeight) * (window.devicePixelRatio || 1)) + '/'
     photos = []
     $('a.photo').click(pub.open).each(function() {
       var title = $('img', this).attr('alt')
       photos.push({
-        url: this.href,
+        url: this.href.replace('/s1920/', imgSize),
         title: title,
         id: this.id,
         pos: extractPos(this),
