@@ -43,7 +43,7 @@ class AlbumLoader(thumbSize: Int) : XMLListener<Album> {
         "entry/timestamp" -> timestamp = value.toLong()
         "entry/width" -> width = value.toInt()
         "entry/height" -> height = value.toInt()
-        "entry/content@src" -> url = replaceUrlSuffix(value)
+        "entry/content@src" -> url = replaceUrlSuffix(value).replace("/s1600/", "/s1920/")
         "entry/group/thumbnail@url" -> thumbUrl = replaceUrlSuffix(value)
         "entry/tags/fstop" -> exif.fstop = value.toFloat()
         "entry/tags/exposure" -> exif.exposure = value.toFloat()

@@ -30,7 +30,7 @@ class AlbumLoaderTest: Spek({
     assertThat(photo.timestamp).isEqualTo(1431324228000L)
     assertThat(photo.width).isEqualTo(4000)
     assertThat(photo.height).isEqualTo(2514)
-    assertThat(photo.url).isEqualTo("https://lh3.googleusercontent.com/-zBnTKPsUg38/VtyhNN_QL4I/AAAAAAABMHg/mK1UCQcRPycGbfAzWgHRoGGZCwUBbBcpgCHM/s1600/Morocco-Satellite-dishes-of-Fes-Medina.jpg")
+    assertThat(photo.url).isEqualTo("https://lh3.googleusercontent.com/-zBnTKPsUg38/VtyhNN_QL4I/AAAAAAABMHg/mK1UCQcRPycGbfAzWgHRoGGZCwUBbBcpgCHM/s1920/Morocco-Satellite-dishes-of-Fes-Medina.jpg")
     assertThat(photo.thumbUrl).isEqualTo("https://lh3.googleusercontent.com/-zBnTKPsUg38/VtyhNN_QL4I/AAAAAAABMHg/mK1UCQcRPycGbfAzWgHRoGGZCwUBbBcpgCHM/s144-c/Morocco-Satellite-dishes-of-Fes-Medina.jpg")
     assertThat(photo.exif.camera).isEqualTo("Canon EOS 5D Mark II")
     assertThat(photo.exif.fstop).isEqualTo(22.0f)
@@ -41,7 +41,7 @@ class AlbumLoaderTest: Spek({
     assertThat(photo.geo!!.lon).isEqualTo(-7.09262f)
 
     photo = album.photos[1]
-    assertThat(photo.url).isEqualTo("https://lh3.googleusercontent.com/-zBnTKPsUg38/VtyhNN_QL4I/AAAAAAABMHg/mK1UCQcRPycGbfAzWgHRoGGZCwUBbBcpgCHM/s1600/Morocco-2.jpg")
+    assertThat(photo.url).isEqualTo("https://lh3.googleusercontent.com/-zBnTKPsUg38/VtyhNN_QL4I/AAAAAAABMHg/mK1UCQcRPycGbfAzWgHRoGGZCwUBbBcpgCHM/s1920/Morocco-2.jpg")
 
     val comment = album.comments[0]
     assertThat(comment.author).isEqualTo("Roman Fjodorov")

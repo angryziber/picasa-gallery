@@ -7,6 +7,7 @@ import java.util.*
 
 class Picasa(user: String? = null, private val authKey: String? = null) {
   val user: String = user ?: defaultUser
+  val imgSize = 1600 // this is max that Google allows as imgmax
 
   val urlPrefix: String
     get() = "/${user}"
@@ -32,7 +33,7 @@ class Picasa(user: String? = null, private val authKey: String? = null) {
     val thumbSize = 144
     val id = gallery.albums[name]?.id ?: name
     val path = if (id.matches("\\d+".toRegex())) "/albumid/" + id else "/album/" + urlEncode(name)
-    val url = path + "?kind=photo,comment&imgmax=1600&thumbsize=${thumbSize}c&max-results=500" +
+    val url = path + "?kind=photo,comment&imgmax=${imgSize}&thumbsize=${thumbSize}c&max-results=500" +
       "&fields=id,updated,title,subtitle,icon,gphoto:*,georss:where(gml:Point),entry(title,summary,content,author,category,gphoto:id,gphoto:photoid,gphoto:width,gphoto:height,gphoto:commentCount,gphoto:timestamp,exif:*,media:*,georss:where(gml:Point))"
     val loader = AlbumLoader(thumbSize)
     val album = loader.load(url)
@@ -71,7 +72,7 @@ class Picasa(user: String? = null, private val authKey: String? = null) {
 
   fun search(query: String): Album {
     val thumbSize = 144
-    return AlbumLoader(thumbSize).load("?kind=photo&q=" + urlEncode(query) + "&imgmax=1024&thumbsize=${thumbSize}c")
+    return AlbumLoader(thumbSize).load("?kind=photo&q=" + urlEncode(query) + "&imgmax=${imgSize}&thumbsize=${thumbSize}c")
   }
 
   private fun <T: Entity> XMLListener<T>.load(query: String)
