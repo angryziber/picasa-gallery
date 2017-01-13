@@ -91,7 +91,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   private fun renderRandom() {
     attrs["delay"] = req["delay"]
     attrs["refresh"] = req["refresh"] != null
-    val numRandom = (if (random.isNotEmpty()) random else "1").toInt()
+    val numRandom = if (random.isNotEmpty()) random.toInt() else 1
     render("random", picasa.getRandomPhotos(numRandom), attrs, res)
   }
 
