@@ -1,3 +1,4 @@
+* calculate each photo's size dynamically using its dimensions vs viewport size (and probably recalculate on window resize/rotate)
 * thumbnail size depends on browser window size
 * separate sitemap page with text links (visible to users if they want)
 * About page
