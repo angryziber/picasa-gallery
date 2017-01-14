@@ -10,3 +10,4 @@
 * Page per each image
 * Keywords from google vision
 * Use appengine provided location headers to display user on the map
+* Hide google maps for those galleries, where there are no tagged albums
