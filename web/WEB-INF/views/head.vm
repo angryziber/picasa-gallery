@@ -13,13 +13,13 @@
 <link rel="apple-touch-icon" href="/img/picasa-logo.png"/>
 
 <link rel="stylesheet" type="text/css" href="/css/reset.css">
-<link rel="stylesheet" type="text/css" href="/css/gallery.css?v3">
-<link rel="stylesheet" type="text/css" href="/css/scrollbars.css">
-<link rel="stylesheet" type="text/css" href="/css/loader.css">
+<link rel="stylesheet" type="text/css" href="/css/gallery.css?${startTime}">
+<link rel="stylesheet" type="text/css" href="/css/scrollbars.css?${startTime}">
+<link rel="stylesheet" type="text/css" href="/css/loader.css?${startTime}">
 
 <script src="/js/jquery.min.js"></script>
-<script src="/js/thumbs.js"></script>
-<script src="/js/gallery.js?v4"></script>
+<script src="/js/thumbs.js?${startTime}"></script>
+<script src="/js/gallery.js?${startTime}"></script>
 <script src="/js/prefixfree.min.js"></script>
 #if(!$bot)
 <script defer src="/js/chromecast.js"></script>
