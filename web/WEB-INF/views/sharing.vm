@@ -13,10 +13,11 @@
     var left = (screen.width/2)-(w/2);
     var top = (screen.height/2)-(h/2);
     var url = this.href
-    if (location.hash) url += encodeURIComponent(location.hash)
+    var suffix = location.hash ? location.hash.replace('#', '/') : ''
+    if (suffix) url += encodeURIComponent(suffix)
     // TODO: this will exit fullscreen - disable photo close at that time
     window.open(url, this.className, 'toolbar=no,status=no,width=' + w + ',height=' + h + ',left=' + left + ',top=' + top);
-    if ('ga' in window) ga('send', 'event', 'share-' + this.className, location.pathname + (location.hash ? location.hash : ''));
+    if ('ga' in window) ga('send', 'event', 'share-' + this.className, location.pathname + suffix)
     return false;
   });
 </script>
