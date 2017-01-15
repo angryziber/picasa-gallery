@@ -30,7 +30,7 @@ open class Album(
   var comments = ArrayList<Comment>()
 
   val thumbUrlLarge: String?
-    get() = thumbUrl?.replace("/s160-c/", "/s1024/")?.replace("/s212-c/", "/s1024/")
+    get() = thumbUrl?.replace("/s\\d+-c/".toRegex(), "/s1024/")
 
   open fun size() = size
 }

@@ -12,7 +12,7 @@ class Photo : Entity() {
     get() = SimpleDateFormat("yyyy-MM-dd HH:mm").format(timestamp)
 
   val thumbUrlLarge: String?
-    get() = thumbUrl?.replace("/s160-c/", "/s1024/")?.replace("/s212-c/", "/s1024/")
+    get() = thumbUrl?.replace("/s\\d+-c/".toRegex(), "/s1024/")
 
   override var description: String?
     get() = super.description
