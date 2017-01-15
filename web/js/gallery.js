@@ -101,7 +101,7 @@ function PhotoViewer() {
     if (isOpen) return false
     isOpen = true
     onResize()
-    $(document).keydown(onKeydown)
+    $(document).on('keyup', keyHandler)
     $(window).resize(onResize)
     window.onpopstate = onPopState
     wrapper[0].ontouchstart = onTouchStart
@@ -128,9 +128,9 @@ function PhotoViewer() {
     wrapper.fadeOut(function() {
       controls.addClass('visible')
     })
-    $(document).unbind('keydown')
-    $(window).unbind('resize')
-    $(window).unbind('hashchange')
+    $(document).unbind('keyup', keyHandler)
+    $(window).unbind('resize', onResize)
+    $(window).unbind('hashchange', onHashChange)
     window.onpopstate = $.noop
 
     stopSlideshow()
@@ -182,13 +182,6 @@ function PhotoViewer() {
     var el = document.documentElement
     var rfs = (el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen)
     if (rfs) rfs.call(el)
-
-    var fschange = 'fullscreenchange webkitfullscreenchange mozfullscreenchange msfullscreenchange'
-    $(document).off(fschange).on(fschange, function() {
-      var fs = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement
-      if (!fs && !slideshow && !(chromecast || {}).session)
-        pub.close()
-    })
   }
 
   function onHashChange() {
@@ -305,7 +298,7 @@ function PhotoViewer() {
     return false
   }
 
-  function onKeydown(e) {
+  function keyHandler(e) {
     switch (e.which) {
       case 27: pub.close(); return false
       case 32:

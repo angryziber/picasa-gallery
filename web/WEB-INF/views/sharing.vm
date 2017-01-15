@@ -15,7 +15,6 @@
     var url = this.href
     var suffix = location.hash ? location.hash.replace('#', '/') : ''
     if (suffix) url += encodeURIComponent(suffix)
-    // TODO: this will exit fullscreen - disable photo close at that time
     window.open(url, this.className, 'toolbar=no,status=no,width=' + w + ',height=' + h + ',left=' + left + ',top=' + top);
     if ('ga' in window) ga('send', 'event', 'share-' + this.className, location.pathname + suffix)
     return false;
