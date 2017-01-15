@@ -55,20 +55,12 @@ function PhotoViewer() {
   var isOpen = false
   var loader, photoMap
 
-  function imgMaxSize() {
-    var isMobile = window.innerWidth <= 700
-    var imgSize = Math.round(Math.max(window.innerWidth, window.innerHeight) * (window.devicePixelRatio || 1))
-    if (isMobile && imgSize > 1920) imgSize = 1920
-    return '/s' + imgSize + '/'
-  }
-
   pub.setup = function() {
-    var maxSize = imgMaxSize()
     photos = []
     $('a.photo').click(pub.open).each(function() {
       var title = $('img', this).attr('alt')
       photos.push({
-        url: this.href.replace('/s1920/', maxSize),
+        url: this.href,
         title: title,
         id: this.id,
         pos: extractPos(this),
@@ -375,8 +367,13 @@ function PhotoViewer() {
     if (index < photos.length - 1)
       setTimeout(function() {
         var tmp = new Image()
-        tmp.src = photos[index + 1].url
+        tmp.src = photoUrl(photos[index + 1])
       }, 100)
+  }
+
+  function photoUrl(photo) {
+    var imgSize = Math.round(window.innerWidth * (window.devicePixelRatio || 1))
+    return photo.url.replace('/s1920/', '/s' + imgSize + '/')
   }
 
   function loadPhoto() {
@@ -391,7 +388,7 @@ function PhotoViewer() {
     newImg.className = 'photo'
     newImg.style.display = 'none'
     newImg.onload = imageOnLoad
-    newImg.src = photo.url
+    newImg.src = photoUrl(photo)
     if ('chromecast' in window) chromecast.send(photo.url)
 
     title.text(photo.title)

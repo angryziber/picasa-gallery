@@ -19,7 +19,7 @@
 
 <script src="/js/jquery.min.js"></script>
 <script src="/js/thumbs.js"></script>
-<script src="/js/gallery.js?v3"></script>
+<script src="/js/gallery.js?v4"></script>
 <script src="/js/prefixfree.min.js"></script>
 #if(!$bot)
 <script defer src="/js/chromecast.js"></script>
