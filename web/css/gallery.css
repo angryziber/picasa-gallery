@@ -442,6 +442,7 @@ h2 {
   left: 0;
   width: 32px;
   top: 35%;
+  z-index: 1000;
 }
 
 #sharing > a {
@@ -449,7 +450,7 @@ h2 {
   width: 32px;
   height: 32px;
   filter: grayscale(1);
-  opacity: 0.6;
+  opacity: 0.4;
 }
 
 #sharing > a:hover {
