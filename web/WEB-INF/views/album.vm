@@ -12,7 +12,6 @@
   <link rel="shortcut icon" href="${album.thumbUrl}" type="image/jpeg">
 
   <meta name="medium" content="image">
-  <meta property="og:type" content="photos:album">
   <meta property="og:title" content="${album.title} photos by ${album.author}">
   <meta property="og:image" content="${album.thumbUrlLarge}">
   <link rel="image_src" href="${album.thumbUrlLarge}">

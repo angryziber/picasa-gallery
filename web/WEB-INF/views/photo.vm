@@ -2,7 +2,6 @@
 <head>
   <title>${photo.description} by ${album.author}</title>
   <meta name="medium" content="image">
-  <meta property="og:type" content="photos:album">
   <meta property="og:title" content="${photo.description} by ${album.author}">
   <meta property="og:image" content="${photo.thumbUrlLarge}">
   <link rel="image_src" href="${photo.thumbUrlLarge}">
