@@ -57,7 +57,7 @@ function PhotoViewer() {
 
   function imgMaxSize() {
     var isMobile = window.innerWidth <= 700
-    var imgSize = Math.max(window.innerWidth, window.innerHeight) * (window.devicePixelRatio || 1)
+    var imgSize = Math.round(Math.max(window.innerWidth, window.innerHeight) * (window.devicePixelRatio || 1))
     if (isMobile && imgSize > 1920) imgSize = 1920
     return '/s' + imgSize + '/'
   }
