@@ -6,13 +6,13 @@
   <meta property="og:title" content="${photo.description} by ${album.author}">
   <meta property="og:image" content="${photo.thumbUrlLarge}">
   <link rel="image_src" href="${photo.thumbUrlLarge}">
-  <meta http-equiv="refresh" content="0,${redirectUrl}">
 </head>
 <body style="background:black; color: gray">
   <a href="${redirectUrl}">
-      <h1>Redirecting to photo in gallery...</h1>
-      <br>
-      <img src="${photo.thumbnailUrlLarge}">
+    <h1>Redirecting to photo in gallery...</h1>
+    <br>
+    <img src="${photo.thumbnailUrlLarge}">
   </a>
 </body>
+<script>location.href = '${redirectUrl}'</script>
 </html>
