@@ -36,16 +36,26 @@ class RequestRouterTest: Spek({
     }
   }
 
-  describe("backwards compatibility") {
-    it("redirects old photo urls to hashes") {
-      whenever(req.getHeader("User-Agent")).thenReturn("Normal Browser")
-      whenever(req.servletPath).thenReturn("/Orlova/5347257660284808946")
-      whenever(req["by"]).thenReturn("106730404715258343901")
+  it("serves shared photo urls that redirect to hashes") {
+    whenever(req.getHeader("User-Agent")).thenReturn("Normal Browser")
+    whenever(req.servletPath).thenReturn("/Orlova/5347257660284808946")
+    whenever(req["by"]).thenReturn("106730404715258343901")
 
-      router(req, res).invoke()
+    val render = mock<Renderer>()
+    val router = router(req, res, render)
+    val album = Album(id = "123123123", name = "Orlova")
+    val photo = Photo()
+    photo.id = "5347257660284808946"
+    album.photos.add(photo)
 
-      res.verifyRedirectTo("/Orlova?by=106730404715258343901#5347257660284808946")
-    }
+    router.picasa = spy(router.picasa)
+    doReturn(album).whenever(router.picasa).getAlbum("Orlova")
+
+    router.invoke()
+
+    verify(render).invoke("photo", photo, router.attrs, res)
+    assertThat(router.attrs["album"]).isEqualTo(album)
+    assertThat(router.attrs["redirectUrl"]).isEqualTo("/Orlova?by=106730404715258343901#5347257660284808946")
   }
 
   describe("album") {
@@ -64,7 +74,7 @@ class RequestRouterTest: Spek({
   }
 })
 
-private fun router(req: HttpServletRequest, res: HttpServletResponse) = RequestRouter(req, res, mock(), mock(), mock())
+private fun router(req: HttpServletRequest, res: HttpServletResponse, render: Renderer = mock()) = RequestRouter(req, res, render, mock(), mock())
 
 private fun HttpServletResponse.verifyRedirectTo(url: String) {
   verify(this).status = SC_MOVED_PERMANENTLY
