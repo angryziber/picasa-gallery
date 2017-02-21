@@ -78,11 +78,11 @@
     #end
   </div>
 
-  <div id="footer">
+  <p id="footer">
     Photos by <a href="https://plus.google.com/${album.authorId}/about" rel="author" target="_blank">${album.author}</a>. All rights reserved.
     <br>
     Rendered by <a href="https://github.com/angryziber/picasa-gallery">Picasa Gallery</a>.
-  </div>
+  </p>
 </div>
 
 <div id="photo-wrapper">

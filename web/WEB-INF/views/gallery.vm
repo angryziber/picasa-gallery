@@ -38,13 +38,13 @@
     #end
   </div>
 
-  <div id="footer">
+  <p id="footer">
     Photos by <a href="https://plus.google.com/${gallery.authorId}/about" rel="author" target="_blank">${gallery.author}</a>. All rights reserved.
     <a href="?random${picasa.urlSuffix.replace('?', '&')}" rel="nofollow">Random photo</a>.
     <br>
     Rendered by <a href="https://github.com/angryziber/picasa-gallery">Picasa Gallery</a>.
     View your <a href="javascript:changeUsername('${picasa.user}')" rel="nofollow">own gallery</a>.
-  </div>
+  </p>
 </div>
 
 #parse('sharing.vm')
