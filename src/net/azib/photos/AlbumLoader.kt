@@ -65,9 +65,9 @@ class AlbumLoader(thumbSize: Int) : XMLListener<Album> {
     }
   }
 
-  private val invalidUrlChars = "[^a-zA-Z0-9-]".toRegex()
+  private val invalidUrlChars = "[^a-zA-Z0-9\\s-]".toRegex()
   private fun replaceUrlSuffix(url: String): String {
-    var desc = photo?.description?.take(30)?.replace("\\s+".toRegex(), "-")?.replace(invalidUrlChars, "")
+    var desc = photo?.description?.take(30)?.replace(invalidUrlChars, "")?.replace("\\s+".toRegex(), "-")
     if (desc.isNullOrEmpty()) desc = result.photos.size.toString()
     return url.substring(0, url.lastIndexOf('/') + 1) + "${result.name}-${desc}.jpg"
   }
