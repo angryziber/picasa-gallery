@@ -44,10 +44,15 @@
   };
 </script>
 <script src="/js/chromecast.js"></script>
+#set($newline="
+")
 <script>
   chromecast.send('${random.photos[0].url}');
   #if($random.photos.size() > 1)
-    var photos = [#foreach($photo in $random.photos){url:'${photo.url}', description:'${photo.description.replace("'", "\\'")}'},#end null];
+    var photos = [
+        #foreach($photo in $random.photos)
+            {url:'${photo.url}', description:'${photo.description.replace("\r", "").replace($newline, " ")}'},
+        #end null];
     photos.pop();
     var index = 1;
     new Image().src = photos[index].url;
@@ -58,7 +63,7 @@
       var url = photos[index].url;
       img.style.backgroundImage = 'url(' + url + ')';
       chromecast.send(url);
-      desc.textContent = photos[index].description;
+      desc.innerHTML = photos[index].description;
       if (++index >= photos.length) index = 0;
       new Image().src = photos[index].url;
     }, #if($delay) ${delay} #else 8000 #end);
