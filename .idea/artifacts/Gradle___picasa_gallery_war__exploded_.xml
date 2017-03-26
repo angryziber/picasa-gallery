@@ -17,13 +17,13 @@
           <element id="dir-copy" path="$PROJECT_DIR$/build/resources/main" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="Gradle: oro:oro:2.0.8" />
-          <element id="library" level="project" name="Gradle: commons-lang:commons-lang:2.4" />
-          <element id="library" level="project" name="Gradle: commons-collections:commons-collections:3.2.1" />
-          <element id="library" level="project" name="Gradle: com.atlassian.commonmark:commonmark:0.7.1" />
+          <element id="library" level="project" name="Gradle: org.jetbrains:annotations:13.0" />
+          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.1.1" />
           <element id="library" level="project" name="Gradle: org.apache.velocity:velocity:1.7" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.1.1/98e484e67f913e934559f7f55f0c94be5593f03c/kotlin-stdlib-1.1.1.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar" />
+          <element id="library" level="project" name="Gradle: com.atlassian.commonmark:commonmark:0.7.1" />
+          <element id="library" level="project" name="Gradle: commons-collections:commons-collections:3.2.1" />
+          <element id="library" level="project" name="Gradle: commons-lang:commons-lang:2.4" />
+          <element id="library" level="project" name="Gradle: oro:oro:2.0.8" />
         </element>
       </element>
     </root>
