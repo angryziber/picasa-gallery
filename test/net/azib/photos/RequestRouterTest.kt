@@ -32,7 +32,7 @@ class RequestRouterTest: Spek({
 
       router(req, res).invoke()
 
-      res.verifyRedirectTo("/${Picasa.defaultUser}")
+      res.verifyRedirectTo("/${Config.defaultUser}")
     }
   }
 

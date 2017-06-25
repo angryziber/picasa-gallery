@@ -27,6 +27,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
       detectMobile()
       detectBot()
 
+      attrs["config"] = Config
       attrs["picasa"] = picasa
       attrs["host"] = req.getHeader("host")
       attrs["servletPath"] = path
@@ -110,7 +111,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   private fun detectBot() {
     bot = isBot(userAgent)
     if (bot && requestedUser != null) {
-      throw Redirect("/${Picasa.defaultUser}")
+      throw Redirect("/${Config.defaultUser}")
     }
     attrs["bot"] = bot
   }

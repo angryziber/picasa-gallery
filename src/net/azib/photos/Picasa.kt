@@ -6,20 +6,18 @@ import java.security.SecureRandom
 import java.util.*
 
 class Picasa(user: String? = null, private val authKey: String? = null) {
-  val user: String = user ?: defaultUser
+  companion object {
+    internal var random: Random = SecureRandom()
+  }
+
+  val user: String = user ?: Config.defaultUser
   val imgSize = 1600 // this is max that Google allows as imgmax
 
   val urlPrefix: String
     get() = "/${user}"
 
   val urlSuffix: String
-    get() = if (user != defaultUser) "?by=${user}" else ""
-
-  val analytics: String?
-    get() = config.getProperty("google.analytics")
-
-  val mapsKey: String?
-    get() = config.getProperty("google.maps.key")
+    get() = if (user != Config.defaultUser) "?by=${user}" else ""
 
   val gallery: Gallery
     get() {
@@ -86,17 +84,5 @@ class Picasa(user: String? = null, private val authKey: String? = null) {
 
   private fun urlEncode(name: String): String {
     return URLEncoder.encode(name, "UTF-8")
-  }
-
-  companion object {
-    internal var config = loadConfig()
-    internal var defaultUser = config.getProperty("google.user")
-    internal var random: Random = SecureRandom()
-
-    private fun loadConfig(): Properties {
-      val config = Properties()
-      config.load(Picasa::class.java.getResourceAsStream("/config.properties"))
-      return config
-    }
   }
 }
