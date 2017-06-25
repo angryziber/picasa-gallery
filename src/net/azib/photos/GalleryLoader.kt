@@ -7,10 +7,10 @@ class GalleryLoader(thumbSize: Int) : XMLListener<Gallery> {
   override val result = Gallery(thumbSize)
   private var album = Album()
   private var albumType = ""
-  val timestampFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 
-  init {
-    timestampFormat.timeZone = TimeZone.getTimeZone("UTC")
+  private val datePattern = "\\d{4}-\\d{2}-\\d{2}".toRegex()
+  private val timestampFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").apply {
+    timeZone = TimeZone.getTimeZone("UTC")
   }
 
   private fun parseTimestamp(value: String) = timestampFormat.parse(value).time
@@ -37,7 +37,8 @@ class GalleryLoader(thumbSize: Int) : XMLListener<Gallery> {
 
   override fun end(path: String) {
     if ("entry" == path) {
-      if (albumType.isEmpty()) // skip ProfilePhotos and Buzz (shared on Maps)
+      if (albumType.isEmpty() && // skip ProfilePhotos and Buzz (shared on Maps)
+        !(album.size == 1 && album.name?.matches(datePattern) ?: false))
         result += album
       album = Album()
       albumType = ""
