@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpServletResponse.SC_MOVED_PERMANENTLY
 import javax.servlet.http.HttpServletResponse.SC_NOT_FOUND
 
-class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, val render: Renderer, val contentLoader: ContentLoader, val chain: FilterChain) {
+class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, val render: Renderer, contentLoader: ContentLoader, val chain: FilterChain) {
   companion object {
     val startTime = System.currentTimeMillis() / 1000 % 1000000
   }
@@ -20,7 +20,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   var requestedUser = req["by"]
   val random = req["random"]
   val searchQuery = req["q"]
-  var picasa = Picasa(requestedUser, req["authkey"])
+  var picasa = Picasa(contentLoader, requestedUser, req["authkey"])
   var bot = false
 
   fun invoke() {
@@ -82,7 +82,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   private fun renderAlbum(name: String) {
     var album: Album
     try {
-      album = picasa.getAlbum(name).addContent()
+      album = picasa.getAlbum(name)
       if (album.id == name && album.id != album.name)
         throw Redirect("/${album.name}${picasa.urlSuffix}")
     }
@@ -97,11 +97,6 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   private fun handleOAuth() {
     val token = req["code"]?.let { code -> OAuth.token(code) }
     render("oauth", token, attrs, res)
-  }
-
-  private fun Album.addContent(): Album {
-    content = contentLoader.albums[name]
-    return this
   }
 
   private fun renderRandom() {

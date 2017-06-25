@@ -9,7 +9,7 @@ import org.jetbrains.spek.api.Spek
 import java.util.Arrays.asList
 
 class PicasaTest: Spek({
-  var picasa = Picasa()
+  var picasa = Picasa(ContentLoader(null))
 
   it("distributes weighted random according to the size of album") {
     val album1 = mock<Album>()

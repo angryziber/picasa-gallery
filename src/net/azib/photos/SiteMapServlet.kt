@@ -8,9 +8,11 @@ import javax.servlet.http.HttpServletResponse.SC_NOT_FOUND
 
 class SiteMapServlet : HttpServlet() {
   lateinit var render: Renderer
+  lateinit var contentLoader: ContentLoader
 
   override fun init(config: ServletConfig) {
     render = Renderer(config.servletContext)
+    contentLoader = ContentLoader(config.servletContext)
   }
 
   override fun doGet(req: HttpServletRequest, resp: HttpServletResponse) {
@@ -24,7 +26,7 @@ class SiteMapServlet : HttpServlet() {
         }
         "/sitemap.xml" -> {
           resp.contentType = "text/xml"
-          val picasa = Picasa()
+          val picasa = Picasa(contentLoader)
           render("sitemap", null, mutableMapOf("gallery" to picasa.gallery, "host" to req.getHeader("Host")), resp)
         }
         else -> resp.sendError(SC_NOT_FOUND)

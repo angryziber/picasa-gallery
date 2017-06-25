@@ -7,7 +7,7 @@ class AlbumLoaderTest: Spek({
   val xml = Album::class.java.getResourceAsStream("album.xml")
 
   it("parses album feed") {
-    val album = XMLParser(AlbumLoader(144)).parse(xml)
+    val album = XMLParser(AlbumLoader(ContentLoader(null), 144)).parse(xml)
     assertThat(album.id).isEqualTo("6259054820507852961")
     assertThat(album.name).isEqualTo("Morocco")
     assertThat(album.title).isEqualTo("Morocco")

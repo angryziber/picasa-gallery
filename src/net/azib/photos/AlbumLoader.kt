@@ -1,6 +1,6 @@
 package net.azib.photos
 
-class AlbumLoader(thumbSize: Int) : XMLListener<Album> {
+class AlbumLoader(val contentLoader: ContentLoader, thumbSize: Int) : XMLListener<Album> {
   private var photo: Photo? = null
   private var comment: Comment? = null
   override val result = Album(thumbSize)
@@ -76,6 +76,7 @@ class AlbumLoader(thumbSize: Int) : XMLListener<Album> {
     if ("entry" == path) {
       photo = null
       comment = null
+      result.content = contentLoader.albums[result.name]
     }
   }
 }

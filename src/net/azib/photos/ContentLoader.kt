@@ -5,15 +5,16 @@ import org.commonmark.renderer.html.HtmlRenderer
 import java.io.File
 import javax.servlet.ServletContext
 
-class ContentLoader(servletContext: ServletContext) {
+class ContentLoader(path: String?) {
+  constructor(servletContext: ServletContext): this(servletContext.getRealPath("content"))
+
   val albums: Map<String, String>
 
   private val mdParser = Parser.builder().build()
   private val mdRenderer = HtmlRenderer.builder().build()
 
   init {
-    val contentPath = servletContext.getRealPath("content")
-    albums = if (contentPath != null) File(contentPath)
+    albums = if (path != null) File(path)
         .listFiles { file -> file.name.endsWith(".md") }
         .map { Pair(it.name.substringBefore('.'), markdown2Html(it.readText())) }
         .toMap()
