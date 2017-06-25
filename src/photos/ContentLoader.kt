@@ -25,4 +25,6 @@ class ContentLoader(path: String?) {
     val document = mdParser.parse(source)
     return mdRenderer.render(document)
   }
+
+  fun contains(albumName: String?) = albums.contains(albumName)
 }

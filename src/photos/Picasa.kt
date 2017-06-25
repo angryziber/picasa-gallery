@@ -26,7 +26,7 @@ class Picasa(private val contentLoader: ContentLoader, user: String? = null, pri
       val thumbSize = 212
       val url = "?kind=album&thumbsize=${thumbSize}c" +
                 "&fields=id,updated,gphoto:*,entry(title,summary,updated,content,category,gphoto:*,media:*,georss:*)"
-      return GalleryLoader(thumbSize).load(url)
+      return GalleryLoader(contentLoader, thumbSize).load(url)
     }
 
   fun getAlbum(name: String): Album {

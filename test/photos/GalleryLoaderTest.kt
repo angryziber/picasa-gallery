@@ -1,5 +1,7 @@
 package photos
 
+import com.nhaarman.mockito_kotlin.doReturn
+import com.nhaarman.mockito_kotlin.mock
 import org.assertj.core.api.Assertions.assertThat
 import org.jetbrains.spek.api.Spek
 import util.XMLParser
@@ -8,7 +10,7 @@ class GalleryLoaderTest: Spek({
   val xml = Gallery::class.java.getResourceAsStream("gallery.xml")
 
   it("parses gallery feed") {
-    val gallery = XMLParser(GalleryLoader(212)).parse(xml)
+    val gallery = XMLParser(GalleryLoader(ContentLoader(null), 212)).parse(xml)
     assertThat(gallery.authorId).isEqualTo("117440562642491680332")
     assertThat(gallery.author).isEqualTo("Anton Keks")
     assertThat(gallery.timestampISO).isEqualTo("2016-05-24T19:13:11Z")
@@ -26,5 +28,15 @@ class GalleryLoaderTest: Spek({
     assertThat(album.geo!!.lat).isEqualTo(51.276303f)
     assertThat(album.geo!!.lon).isEqualTo(30.221899f)
     assertThat(album.size()).isEqualTo(159)
+  }
+
+  it("loads non-public albums which exist in content") {
+    val content = mock<ContentLoader> {
+      on {contains("blah")} doReturn true
+    }
+    val loader = GalleryLoader(content, 212)
+
+    assertThat(loader.skip(Album(name = "blah"))).isFalse()
+    assertThat(loader.skip(Album(name = "other"))).isTrue()
   }
 })
