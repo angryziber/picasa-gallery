@@ -1,10 +1,10 @@
 What is it?
 ===========
 
-A good-looking frontend for public albums stored in Google Photos (former Google+ or Picasa web), with nice transitions,
+A good-looking frontend for albums stored in Google Photos (former Google+ or Picasa web), with nice transitions,
 mobile device support, and full-screen photo browsing with quick loading (prefetching).
 
-Perfect for those who still want to have a gallery of public albums after transition to Google Photos, which has no public
+Perfect for those who still want to have a public gallery of albums after transition to Google Photos, which has no public
 gallery of it's own anymore.
 
 Example gallery: [Anton Keks Photos](https://photos.azib.net/) - use the link at the bottom to try it with your own gallery!
@@ -59,13 +59,10 @@ whole Picasaweb service has been closed, being replaced by Album Archive.
 
 This gallery still works for your old *public* albums stored in the archive (or just Google Photos).
 
-However, when you upload new albums to Google Photos, there is no obvious way anymore to mark them as *public*.
+However, when you upload new albums to Google Photos, there is no way anymore to mark them as *public*.
 It seems that Google Photos right now is built to be mostly private photo storage service.
 
-Fortunately, there is still a way - find your newly uploaded album in your [Google+ profile](https://plus.google.com/+AntonKeks/photos), 
-press Share there and choose *Public*. After some time your album will appear in public Picasaweb API, and thus will
-become visible in this gallery. There is also [this tool](http://www.svenbluege.de/picasa/v1.1/). 
-
-Some uploading tools that use the API (e.g. Picasa itself) may still mark the albums as public by default.
-More details [here](https://productforums.google.com/forum/#!topic/photos/efROUztuvys) 
-and [here](https://sites.google.com/site/picasaresources/Home/Picasa-FAQ/picasa-webalbums/album-archive).
+As previous workarounds don't work anymore, you now can still show your non-public albums by authenticating
+with this app and adding names of *protected* albums to `web/content`. Unfortunately, there is currently no
+way of telling if album is private or shared in Google Photos using the API.
+See the comments in `config.properties` on how to authenticate.
