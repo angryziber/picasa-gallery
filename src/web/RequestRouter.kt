@@ -2,7 +2,7 @@ package web
 
 import photos.Album
 import photos.Config
-import photos.ContentLoader
+import photos.LocalContent
 import photos.Picasa
 import util.OAuth
 import util.URLLoader
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpServletResponse.SC_MOVED_PERMANENTLY
 import javax.servlet.http.HttpServletResponse.SC_NOT_FOUND
 
-class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, val render: Renderer, contentLoader: ContentLoader, val chain: FilterChain) {
+class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, val render: Renderer, content: LocalContent, val chain: FilterChain) {
   companion object {
     val startTime = System.currentTimeMillis() / 1000 % 1000000
   }
@@ -26,7 +26,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   var requestedUser = req["by"]
   val random = req["random"]
   val searchQuery = req["q"]
-  var picasa = Picasa(contentLoader, requestedUser, req["authkey"])
+  var picasa = Picasa(content, requestedUser, req["authkey"])
   var bot = false
 
   fun invoke() {

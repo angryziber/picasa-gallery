@@ -1,21 +1,21 @@
 package web
 
-import photos.ContentLoader
+import photos.LocalContent
 import javax.servlet.*
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 class RequestFilter : Filter {
   private lateinit var render: Renderer
-  private lateinit var contentLoader: ContentLoader
+  private lateinit var content: LocalContent
 
   override fun init(config: FilterConfig) {
     this.render = Renderer(config.servletContext)
-    this.contentLoader = ContentLoader(config.servletContext)
+    this.content = LocalContent(config.servletContext)
   }
 
   override fun doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
-    RequestRouter(request as HttpServletRequest, response as HttpServletResponse, render, contentLoader, chain).invoke()
+    RequestRouter(request as HttpServletRequest, response as HttpServletResponse, render, content, chain).invoke()
   }
 
   override fun destroy() { }

@@ -5,7 +5,7 @@ import util.XMLListener
 import java.text.SimpleDateFormat
 import java.util.*
 
-class GalleryLoader(val contentLoader: ContentLoader, thumbSize: Int) : XMLListener<Gallery> {
+class GalleryLoader(val content: LocalContent, thumbSize: Int) : XMLListener<Gallery> {
   override val result = Gallery(thumbSize)
   private var album = Album()
   private var albumType = ""
@@ -50,7 +50,7 @@ class GalleryLoader(val contentLoader: ContentLoader, thumbSize: Int) : XMLListe
   }
 
   internal fun skip(album: Album): Boolean {
-    if (contentLoader.contains(album.name)) return false
+    if (content.contains(album.name)) return false
     return albumType.isNotEmpty() || // skip ProfilePhotos and Buzz (shared on Maps)
         album.size == 1 && album.name?.matches(datePattern) ?: false ||
         album.access != public

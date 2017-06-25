@@ -5,7 +5,7 @@ import org.commonmark.renderer.html.HtmlRenderer
 import java.io.File
 import javax.servlet.ServletContext
 
-class ContentLoader(path: String?) {
+class LocalContent(path: String?) {
   constructor(servletContext: ServletContext): this(servletContext.getRealPath("content"))
 
   private val albums: Map<String, String>

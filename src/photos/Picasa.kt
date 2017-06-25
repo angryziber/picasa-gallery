@@ -7,7 +7,7 @@ import java.net.URLEncoder
 import java.security.SecureRandom
 import java.util.*
 
-class Picasa(private val contentLoader: ContentLoader, user: String? = null, private val authKey: String? = null) {
+class Picasa(private val content: LocalContent, user: String? = null, private val authKey: String? = null) {
   companion object {
     internal var random: Random = SecureRandom()
   }
@@ -26,7 +26,7 @@ class Picasa(private val contentLoader: ContentLoader, user: String? = null, pri
       val thumbSize = 212
       val url = "?kind=album&thumbsize=${thumbSize}c" +
                 "&fields=id,updated,gphoto:*,entry(title,summary,updated,content,category,gphoto:*,media:*,georss:*)"
-      return GalleryLoader(contentLoader, thumbSize).load(url)
+      return GalleryLoader(content, thumbSize).load(url)
     }
 
   fun getAlbum(name: String): Album {
@@ -35,7 +35,7 @@ class Picasa(private val contentLoader: ContentLoader, user: String? = null, pri
     val path = if (id.matches("\\d+".toRegex())) "/albumid/" + id else "/album/" + urlEncode(name)
     val url = path + "?kind=photo,comment&imgmax=${imgSize}&thumbsize=${thumbSize}c&max-results=500" +
       "&fields=id,updated,title,subtitle,icon,gphoto:*,georss:where(gml:Point),entry(title,summary,content,author,category,gphoto:id,gphoto:photoid,gphoto:width,gphoto:height,gphoto:commentCount,gphoto:timestamp,exif:*,media:*,georss:where(gml:Point))"
-    val loader = AlbumLoader(contentLoader, thumbSize)
+    val loader = AlbumLoader(content, thumbSize)
     val album = loader.load(url)
     while (album.size > album.photos.size)
       loader.load(url + "&start-index=${album.photos.size+1}")
@@ -72,7 +72,7 @@ class Picasa(private val contentLoader: ContentLoader, user: String? = null, pri
 
   fun search(query: String): Album {
     val thumbSize = 144
-    return AlbumLoader(contentLoader, thumbSize).load("?kind=photo&q=" + urlEncode(query) + "&imgmax=${imgSize}&thumbsize=${thumbSize}c")
+    return AlbumLoader(content, thumbSize).load("?kind=photo&q=" + urlEncode(query) + "&imgmax=${imgSize}&thumbsize=${thumbSize}c")
   }
 
   private fun <T: Entity> XMLListener<T>.load(query: String)

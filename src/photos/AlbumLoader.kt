@@ -2,7 +2,7 @@ package photos
 
 import util.XMLListener
 
-class AlbumLoader(val contentLoader: ContentLoader, thumbSize: Int) : XMLListener<Album> {
+class AlbumLoader(val content: LocalContent, thumbSize: Int) : XMLListener<Album> {
   private var photo: Photo? = null
   private var comment: Comment? = null
   override val result = Album(thumbSize)
@@ -78,7 +78,7 @@ class AlbumLoader(val contentLoader: ContentLoader, thumbSize: Int) : XMLListene
     if ("entry" == path) {
       photo = null
       comment = null
-      result.content = contentLoader.forAlbum(result.name)
+      result.content = content.forAlbum(result.name)
     }
   }
 }

@@ -1,6 +1,6 @@
 package web
 
-import photos.ContentLoader
+import photos.LocalContent
 import photos.Picasa
 import javax.servlet.ServletConfig
 import javax.servlet.http.HttpServlet
@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletResponse.SC_NOT_FOUND
 
 class SiteMapServlet : HttpServlet() {
   lateinit var render: Renderer
-  lateinit var contentLoader: ContentLoader
+  lateinit var content: LocalContent
 
   override fun init(config: ServletConfig) {
     render = Renderer(config.servletContext)
-    contentLoader = ContentLoader(config.servletContext)
+    content = LocalContent(config.servletContext)
   }
 
   override fun doGet(req: HttpServletRequest, resp: HttpServletResponse) {
@@ -28,7 +28,7 @@ class SiteMapServlet : HttpServlet() {
         }
         "/sitemap.xml" -> {
           resp.contentType = "text/xml"
-          val picasa = Picasa(contentLoader)
+          val picasa = Picasa(content)
           render("sitemap", null, mutableMapOf("gallery" to picasa.gallery, "host" to req.getHeader("Host")), resp)
         }
         else -> resp.sendError(SC_NOT_FOUND)

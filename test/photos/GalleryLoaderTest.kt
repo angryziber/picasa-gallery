@@ -10,7 +10,7 @@ class GalleryLoaderTest: Spek({
   val xml = Gallery::class.java.getResourceAsStream("gallery.xml")
 
   it("parses gallery feed") {
-    val gallery = XMLParser(GalleryLoader(ContentLoader(null), 212)).parse(xml)
+    val gallery = XMLParser(GalleryLoader(LocalContent(null), 212)).parse(xml)
     assertThat(gallery.authorId).isEqualTo("117440562642491680332")
     assertThat(gallery.author).isEqualTo("Anton Keks")
     assertThat(gallery.timestampISO).isEqualTo("2016-05-24T19:13:11Z")
@@ -31,7 +31,7 @@ class GalleryLoaderTest: Spek({
   }
 
   it("loads non-public albums which exist in content") {
-    val content = mock<ContentLoader> {
+    val content = mock<LocalContent> {
       on {contains("blah")} doReturn true
     }
     val loader = GalleryLoader(content, 212)
