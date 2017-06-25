@@ -1,5 +1,6 @@
 package net.azib.photos
 
+import net.azib.photos.Album.Access.private
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -26,7 +27,7 @@ class GalleryLoader(thumbSize: Int) : XMLListener<Gallery> {
       "entry/title" -> album.title = value
       "entry/summary" -> album.description = value
       "entry/nickname" -> album.author = value
-      "entry/access" -> album.isPublic = "public" == value
+      "entry/access" -> album.access = Album.Access.valueOf(value)
       "entry/updated" -> album.timestamp = parseTimestamp(value)
       "entry/group/thumbnail@url" -> album.thumbUrl = value + ".jpg"
       "entry/where/Point/pos" -> album.geo = GeoLocation(value)
@@ -37,11 +38,14 @@ class GalleryLoader(thumbSize: Int) : XMLListener<Gallery> {
 
   override fun end(path: String) {
     if ("entry" == path) {
-      if (albumType.isEmpty() && // skip ProfilePhotos and Buzz (shared on Maps)
-        !(album.size == 1 && album.name?.matches(datePattern) ?: false))
-        result += album
+      if (!skipAlbum()) result += album
       album = Album()
       albumType = ""
     }
   }
+
+  private fun skipAlbum() =
+    albumType.isNotEmpty() || // skip ProfilePhotos and Buzz (shared on Maps)
+    album.size == 1 && album.name?.matches(datePattern) ?: false ||
+    album.access == private
 }

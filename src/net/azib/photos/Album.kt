@@ -13,8 +13,9 @@ open class Album(
     var authorId: String? = null
 ) : Entity(id, title, description) {
 
-  var isPublic = false
   var size = 0
+  var access = Access.private
+  val isPublic get() = access == Access.public
 
   var name = name
     set(value) { if (value != id) field = value }
@@ -33,4 +34,6 @@ open class Album(
     get() = thumbUrl?.replace("/s\\d+-c/".toRegex(), "/s1024/")
 
   open fun size() = size
+
+  enum class Access { public, protected, private }
 }

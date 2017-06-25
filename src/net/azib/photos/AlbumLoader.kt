@@ -16,7 +16,7 @@ class AlbumLoader(thumbSize: Int) : XMLListener<Album> {
         "timestamp" -> timestamp = value.toLong()
         "nickname" -> author = value
         "user" -> authorId = value
-        "access" -> isPublic = "public" == value
+        "access" -> access = Album.Access.valueOf(value)
         "numphotos" -> {
           size = value.toInt()
           photos.ensureCapacity(size)

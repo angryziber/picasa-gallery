@@ -19,7 +19,7 @@ class GalleryLoaderTest: Spek({
     assertThat(album.title).isEqualTo("Chernobyl")
     assertThat(album.description).isEqualTo("Apocalyptic experience in Chernobyl and Pripyat, a soviet city abandoned in 1986 after the nuclear disaster. Current radiation levels are compatible with life :-)")
     assertThat(album.author).isEqualTo("Anton Keks")
-    assertThat(album.isPublic).isEqualTo(true)
+    assertThat(album.access).isEqualTo(Album.Access.public)
     assertThat(album.thumbUrl).isEqualTo("https://lh3.googleusercontent.com/-EfV7Xxjk3gk/VjfV9bujtGE/AAAAAAABKUY/gQBUlooE9lsYdyZ1O7ciOiGo-5pch3_DQCHM/s212-c/Chernobyl.jpg")
     assertThat(album.timestampISO).isEqualTo("2015-11-05T21:37:39Z")
     assertThat(album.geo!!.lat).isEqualTo(51.276303f)
