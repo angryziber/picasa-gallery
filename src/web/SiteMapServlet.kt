@@ -1,5 +1,7 @@
-package photos
+package web
 
+import photos.ContentLoader
+import photos.Picasa
 import javax.servlet.ServletConfig
 import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest

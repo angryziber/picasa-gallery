@@ -1,5 +1,6 @@
 package photos
 
+import web.OAuth
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*

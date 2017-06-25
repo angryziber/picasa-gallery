@@ -1,5 +1,6 @@
-package photos
+package web
 
+import photos.*
 import java.util.*
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
@@ -87,7 +88,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
         throw Redirect("/${album.name}${picasa.urlSuffix}")
     }
     catch (e: MissingResourceException) {
-      album = Album(title=pathParts[0], description="No such album", author=picasa.gallery.author)
+      album = Album(title = pathParts[0], description = "No such album", author = picasa.gallery.author)
       res.status = SC_NOT_FOUND
     }
 

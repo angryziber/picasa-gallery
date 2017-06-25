@@ -1,4 +1,4 @@
-package photos
+package web
 
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever

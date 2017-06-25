@@ -1,7 +1,8 @@
-package photos
+package web
 
 import org.apache.velocity.VelocityContext
 import org.apache.velocity.app.VelocityEngine
+import photos.Entity
 import java.util.*
 import java.util.logging.Logger
 import javax.servlet.ServletContext

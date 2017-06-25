@@ -1,8 +1,11 @@
-package photos
+package web
 
 import com.nhaarman.mockito_kotlin.*
 import org.assertj.core.api.Assertions.assertThat
 import org.jetbrains.spek.api.Spek
+import photos.Album
+import photos.Config
+import photos.Photo
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpServletResponse.SC_MOVED_PERMANENTLY
@@ -65,7 +68,7 @@ class RequestRouterTest: Spek({
 
       val router = router(req, res)
       router.picasa = spy(router.picasa)
-      doReturn(Album(id="123123123", name="Hello")).whenever(router.picasa).getAlbum("123123123")
+      doReturn(Album(id = "123123123", name = "Hello")).whenever(router.picasa).getAlbum("123123123")
 
       router.invoke()
 
