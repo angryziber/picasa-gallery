@@ -6,6 +6,7 @@ import java.util.*
 class GalleryLoader(thumbSize: Int) : XMLListener<Gallery> {
   override val result = Gallery(thumbSize)
   private var album = Album()
+  private var albumType = ""
   val timestampFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 
   init {
@@ -30,14 +31,16 @@ class GalleryLoader(thumbSize: Int) : XMLListener<Gallery> {
       "entry/group/thumbnail@url" -> album.thumbUrl = value + ".jpg"
       "entry/where/Point/pos" -> album.geo = GeoLocation(value)
       "entry/numphotos" -> album.size = value.toInt()
+      "entry/albumType" -> albumType = value
     }
   }
 
   override fun end(path: String) {
     if ("entry" == path) {
-      if (album.name != "ProfilePhotos")
+      if (albumType.isEmpty()) // skip ProfilePhotos and Buzz (shared on Maps)
         result += album
       album = Album()
+      albumType = ""
     }
   }
 }

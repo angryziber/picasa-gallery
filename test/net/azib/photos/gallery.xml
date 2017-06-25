@@ -9,6 +9,29 @@
   <gphoto:quotacurrent>9844773468</gphoto:quotacurrent>
   <gphoto:maxPhotosPerAlbum>2000</gphoto:maxPhotosPerAlbum>
   <entry>
+    <updated>2017-05-12T19:25:05.043Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/photos/2007#album'/>
+    <title type='text'>2017-05-12</title>
+    <summary type='text'/>
+    <gphoto:id>6419326411879206513</gphoto:id>
+    <gphoto:name>6419326411879206513</gphoto:name>
+    <gphoto:location/>
+    <gphoto:access>public</gphoto:access>
+    <gphoto:timestamp>1494615900000</gphoto:timestamp>
+    <gphoto:numphotos>1</gphoto:numphotos>
+    <gphoto:user>117440562642491680332</gphoto:user>
+    <gphoto:nickname>Anton Keks</gphoto:nickname>
+    <gphoto:albumType>Buzz</gphoto:albumType>
+    <media:group>
+      <media:content url='https://lh3.googleusercontent.com/-0GKmyPx9RqM/WRYHXE1XznE/AAAAAAABd8A/aU-cUu98HnElX9BHSXSEnJ3dyybB2VjkgCHMYCg/6419326411879206513' type='image/jpeg' medium='image'/>
+      <media:credit>Anton Keks</media:credit>
+      <media:description type='plain'/>
+      <media:keywords/>
+      <media:thumbnail url='https://lh3.googleusercontent.com/-0GKmyPx9RqM/WRYHXE1XznE/AAAAAAABd8A/aU-cUu98HnElX9BHSXSEnJ3dyybB2VjkgCHMYCg/s212-c/6419326411879206513' height='212' width='212'/>
+      <media:title type='plain'>2017-05-12</media:title>
+    </media:group>
+  </entry>
+  <entry>
     <updated>2015-11-05T21:37:39.445Z</updated>
     <category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/photos/2007#album'/>
     <title type='text'>Chernobyl</title>
