@@ -12,12 +12,12 @@ class ContentLoaderTest(): Spek({
   it("loads content from markdown files") {
     whenever(servletContext.getRealPath("content")).thenReturn(javaClass.getResource("/test_content").path)
     val loader = ContentLoader(servletContext)
-    assertThat(loader.albums).isEqualTo(mapOf("Album" to "<p>Extra content</p>\n"))
+    assertThat(loader.forAlbum("Album")).isEqualTo("<p>Extra content</p>\n")
   }
 
   it("does't fail if no content dir") {
     whenever(servletContext.getRealPath("content")).thenReturn(null)
     val loader = ContentLoader(servletContext)
-    assertThat(loader.albums).isEmpty()
+    assertThat(loader.forAlbum("Anything")).isNull()
   }
 })

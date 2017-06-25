@@ -8,7 +8,7 @@ import javax.servlet.ServletContext
 class ContentLoader(path: String?) {
   constructor(servletContext: ServletContext): this(servletContext.getRealPath("content"))
 
-  val albums: Map<String, String>
+  private val albums: Map<String, String>
 
   private val mdParser = Parser.builder().build()
   private val mdRenderer = HtmlRenderer.builder().build()
@@ -27,4 +27,6 @@ class ContentLoader(path: String?) {
   }
 
   fun contains(albumName: String?) = albums.contains(albumName)
+
+  fun forAlbum(name: String?) = albums[name]
 }
