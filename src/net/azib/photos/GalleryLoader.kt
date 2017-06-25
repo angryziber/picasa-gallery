@@ -35,7 +35,7 @@ class GalleryLoader(thumbSize: Int) : XMLListener<Gallery> {
 
   override fun end(path: String) {
     if ("entry" == path) {
-      if (album.name != "ProfilePhotos")
+      if (album.name != "ProfilePhotos" && album.name != "2017-03-22")
         result += album
       album = Album()
     }

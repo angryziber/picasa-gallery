@@ -54,7 +54,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
     }
   }
 
-  fun String.isResource() = lastIndexOf('.') >= length - 4
+  fun String.isResource() = lastIndexOf('.') >= length - 5
 
   private fun renderGallery() {
     render("gallery", picasa.gallery, attrs, res)

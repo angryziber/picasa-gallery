@@ -22,6 +22,7 @@ object URLLoader {
 
   private fun <T> loadAndParse(fullUrl: String, loader: XMLListener<T>): XMLListener<T> {
     val conn = URL(fullUrl).openConnection() as HttpURLConnection
+    conn.setRequestProperty("Authorization", "Bearer ya29.GlsyBJpV2_ijj2Ob1CPS5DELeI7AoxDN9VzPEnRYomU-6YVzBAByx7XL9AKc0t80GmcACiT5W8FR40X_4ejDngCKO1H_fn89b4Z3pdsZuGtb4ZWDp9bh5jisuRDL")
     if (conn.responseCode != 200) throw MissingResourceException(fullUrl, null, null)
     conn.inputStream.use {
       XMLParser(loader).parse(it)

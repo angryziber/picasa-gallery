@@ -1,0 +1,41 @@
+<html>
+<head>
+  <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+  <script>
+    function start() {
+      gapi.load('auth2', function() {
+        auth2 = gapi.auth2.init({
+          client_id: '854381798570-ospd0oo53e5tajt48meuesu63glb8j0s.apps.googleusercontent.com',
+          scope: 'https://picasaweb.google.com/data/'
+        });
+      });
+    }
+
+    function signInCallback(authResult) {
+      if (!authResult.code) return;
+      console.log(authResult)
+      console.log(authResult.code)
+//          $.ajax({
+//            type: 'POST',
+//            url: 'http://example.com/storeauthcode',
+//            // Always include an `X-Requested-With` header in every AJAX request,
+//            // to protect against CSRF attacks.
+//            headers: {
+//              'X-Requested-With': 'XMLHttpRequest'
+//            },
+//            contentType: 'application/octet-stream; charset=utf-8',
+//            success: function(result) {
+//              // Handle or verify the server response.
+//            },
+//            processData: false,
+//            data: authResult['code']
+//          });
+    }
+  </script>
+</head>
+<body>
+<p>
+  <button onclick="auth2.grantOfflineAccess().then(signInCallback);">Google sign-in</button>
+</p>
+</body>
+</html>
