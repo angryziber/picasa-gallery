@@ -15,9 +15,8 @@ open class Entity(var id: String? = null, open var title: String? = null, descri
     get() = timestamp?.formatISO()
 
   companion object {
-    private val timestampFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-    init {
-      timestampFormat.timeZone = TimeZone.getTimeZone("UTC")
+    private val timestampFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").apply {
+      timeZone = TimeZone.getTimeZone("UTC")
     }
 
     private fun Long.formatISO() = synchronized(timestampFormat) {
