@@ -22,18 +22,22 @@ class GalleryLoader(thumbSize: Int) : XMLListener<Gallery> {
       "user" -> result.authorId = value
       "nickname" -> result.author = value
       "updated" -> result.timestamp = parseTimestamp(value)
+    }
 
-      "entry/id" -> album.id = value
-      "entry/name" -> album.name = value
-      "entry/title" -> album.title = value
-      "entry/summary" -> album.description = value
-      "entry/nickname" -> album.author = value
-      "entry/access" -> album.access = Album.Access.valueOf(value)
-      "entry/updated" -> album.timestamp = parseTimestamp(value)
-      "entry/group/thumbnail@url" -> album.thumbUrl = value + ".jpg"
-      "entry/where/Point/pos" -> album.geo = GeoLocation(value)
-      "entry/numphotos" -> album.size = value.toInt()
-      "entry/albumType" -> albumType = value
+    album.apply {
+      when (path) {
+        "entry/id" -> id = value
+        "entry/name" -> name = value
+        "entry/title" -> title = value
+        "entry/summary" -> description = value
+        "entry/nickname" -> author = value
+        "entry/access" -> access = Album.Access.valueOf(value)
+        "entry/updated" -> timestamp = parseTimestamp(value)
+        "entry/group/thumbnail@url" -> thumbUrl = value + ".jpg"
+        "entry/where/Point/pos" -> geo = GeoLocation(value)
+        "entry/numphotos" -> size = value.toInt()
+        "entry/albumType" -> albumType = value
+      }
     }
   }
 
