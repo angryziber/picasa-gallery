@@ -5,7 +5,7 @@
 
     <filter>
         <filter-name>router</filter-name>
-        <filter-class>net.azib.photos.RequestFilter</filter-class>
+        <filter-class>photos.RequestFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -15,7 +15,7 @@
 
     <servlet>
         <servlet-name>sitemap</servlet-name>
-        <servlet-class>net.azib.photos.SiteMapServlet</servlet-class>
+        <servlet-class>photos.SiteMapServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
