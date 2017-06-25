@@ -1,6 +1,11 @@
 package web
 
-import photos.*
+import photos.Album
+import photos.Config
+import photos.ContentLoader
+import photos.Picasa
+import util.OAuth
+import util.URLLoader
 import java.util.*
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest

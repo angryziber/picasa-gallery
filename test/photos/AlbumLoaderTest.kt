@@ -2,6 +2,7 @@ package photos
 
 import org.assertj.core.api.Assertions.assertThat
 import org.jetbrains.spek.api.Spek
+import util.XMLParser
 
 class AlbumLoaderTest: Spek({
   val xml = Album::class.java.getResourceAsStream("album.xml")

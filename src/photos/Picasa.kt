@@ -1,5 +1,7 @@
 package photos
 
+import util.URLLoader
+import util.XMLListener
 import java.lang.Math.min
 import java.net.URLEncoder
 import java.security.SecureRandom

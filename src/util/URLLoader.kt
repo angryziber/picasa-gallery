@@ -1,6 +1,7 @@
-package photos
+package util
 
-import web.OAuth
+import photos.Entity
+import photos.Picasa
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*

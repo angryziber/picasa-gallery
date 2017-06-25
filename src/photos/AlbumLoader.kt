@@ -1,5 +1,7 @@
 package photos
 
+import util.XMLListener
+
 class AlbumLoader(val contentLoader: ContentLoader, thumbSize: Int) : XMLListener<Album> {
   private var photo: Photo? = null
   private var comment: Comment? = null

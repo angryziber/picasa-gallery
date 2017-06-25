@@ -2,6 +2,7 @@ package photos
 
 import org.assertj.core.api.Assertions.assertThat
 import org.jetbrains.spek.api.Spek
+import util.XMLParser
 
 class GalleryLoaderTest: Spek({
   val xml = Gallery::class.java.getResourceAsStream("gallery.xml")

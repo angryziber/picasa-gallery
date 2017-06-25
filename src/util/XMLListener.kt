@@ -1,4 +1,4 @@
-package photos
+package util
 
 interface XMLListener<out T> {
   class StopParse : Exception()

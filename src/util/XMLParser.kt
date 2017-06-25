@@ -1,4 +1,4 @@
-package photos
+package util
 
 import java.io.InputStream
 import java.util.*

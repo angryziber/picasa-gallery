@@ -1,4 +1,4 @@
-package web
+package util
 
 import com.github.scribejava.apis.GoogleApi20
 import com.github.scribejava.core.builder.ServiceBuilder
