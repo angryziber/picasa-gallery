@@ -9,6 +9,61 @@
   <gphoto:quotacurrent>9844773468</gphoto:quotacurrent>
   <gphoto:maxPhotosPerAlbum>2000</gphoto:maxPhotosPerAlbum>
   <entry>
+    <updated>2017-05-12T19:25:05.043Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/photos/2007#album'/>
+    <title type='text'>2017-05-12</title>
+    <summary type='text'/>
+    <gphoto:id>6419326411879206513</gphoto:id>
+    <gphoto:name>6419326411879206513</gphoto:name>
+    <gphoto:location/>
+    <gphoto:access>public</gphoto:access>
+    <gphoto:timestamp>1494615900000</gphoto:timestamp>
+    <gphoto:numphotos>1</gphoto:numphotos>
+    <gphoto:user>117440562642491680332</gphoto:user>
+    <gphoto:nickname>Anton Keks</gphoto:nickname>
+    <gphoto:albumType>Buzz</gphoto:albumType>
+    <media:group>
+      <media:content url='https://lh3.googleusercontent.com/-0GKmyPx9RqM/WRYHXE1XznE/AAAAAAABd8A/aU-cUu98HnElX9BHSXSEnJ3dyybB2VjkgCHMYCg/6419326411879206513' type='image/jpeg' medium='image'/>
+      <media:credit>Anton Keks</media:credit>
+      <media:description type='plain'/>
+      <media:keywords/>
+      <media:thumbnail url='https://lh3.googleusercontent.com/-0GKmyPx9RqM/WRYHXE1XznE/AAAAAAABd8A/aU-cUu98HnElX9BHSXSEnJ3dyybB2VjkgCHMYCg/s212-c/6419326411879206513' height='212' width='212'/>
+      <media:title type='plain'>2017-05-12</media:title>
+    </media:group>
+  </entry>
+  <entry>
+    <id>http://picasaweb.google.com/data/entry/api/user/117440562642491680332/albumid/6411551035802375281</id>
+    <published>2017-04-21T20:12:34.000Z</published>
+    <updated>2017-04-21T20:33:24.611Z</updated>
+    <category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/photos/2007#album'/>
+    <title type='text'>2017-04-21</title>
+    <summary type='text'/>
+    <rights type='text'>public</rights>
+    <link rel='http://schemas.google.com/g/2005#feed' type='application/atom+xml' href='http://picasaweb.google.com/data/feed/api/user/117440562642491680332/albumid/6411551035802375281'/>
+    <link rel='alternate' type='text/html' href='https://picasaweb.google.com/117440562642491680332/6411551035802375281'/>
+    <link rel='self' type='application/atom+xml' href='http://picasaweb.google.com/data/entry/api/user/117440562642491680332/albumid/6411551035802375281'/>
+    <author>
+      <name>Anton Keks</name>
+      <uri>https://picasaweb.google.com/117440562642491680332</uri>
+    </author>
+    <gphoto:id>6411551035802375281</gphoto:id>
+    <gphoto:name>6411551035802375281</gphoto:name>
+    <gphoto:location/>
+    <gphoto:access>public</gphoto:access>
+    <gphoto:timestamp>1492805554000</gphoto:timestamp>
+    <gphoto:numphotos>1</gphoto:numphotos>
+    <gphoto:user>117440562642491680332</gphoto:user>
+    <gphoto:nickname>Anton Keks</gphoto:nickname>
+    <media:group>
+      <media:content url='https://lh3.googleusercontent.com/-q5dsSF01Ml0/WPpnsnxJ1HE/AAAAAAABdM4/dZFrOL1eRHIkF-bdCMnt1uiw1f6ff9VCwCHMYCg/6411551035802375281' type='image/jpeg' medium='image'/>
+      <media:credit>Anton Keks</media:credit>
+      <media:description type='plain'/>
+      <media:keywords/>
+      <media:thumbnail url='https://lh3.googleusercontent.com/-q5dsSF01Ml0/WPpnsnxJ1HE/AAAAAAABdM4/dZFrOL1eRHIkF-bdCMnt1uiw1f6ff9VCwCHMYCg/s212-c/6411551035802375281' height='212' width='212'/>
+      <media:title type='plain'>2017-04-21</media:title>
+    </media:group>
+  </entry>
+  <entry>
     <updated>2015-11-05T21:37:39.445Z</updated>
     <category scheme='http://schemas.google.com/g/2005#kind' term='http://schemas.google.com/photos/2007#album'/>
     <title type='text'>Chernobyl</title>

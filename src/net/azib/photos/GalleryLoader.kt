@@ -6,10 +6,11 @@ import java.util.*
 class GalleryLoader(thumbSize: Int) : XMLListener<Gallery> {
   override val result = Gallery(thumbSize)
   private var album = Album()
-  val timestampFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+  private var albumType = ""
 
-  init {
-    timestampFormat.timeZone = TimeZone.getTimeZone("UTC")
+  private val datePattern = "\\d{4}-\\d{2}-\\d{2}".toRegex()
+  private val timestampFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").apply {
+    timeZone = TimeZone.getTimeZone("UTC")
   }
 
   private fun parseTimestamp(value: String) = timestampFormat.parse(value).time
@@ -30,14 +31,17 @@ class GalleryLoader(thumbSize: Int) : XMLListener<Gallery> {
       "entry/group/thumbnail@url" -> album.thumbUrl = value + ".jpg"
       "entry/where/Point/pos" -> album.geo = GeoLocation(value)
       "entry/numphotos" -> album.size = value.toInt()
+      "entry/albumType" -> albumType = value
     }
   }
 
   override fun end(path: String) {
     if ("entry" == path) {
-      if (album.name != "ProfilePhotos" && album.name != "2017-03-22")
+      if (albumType.isEmpty() && // skip ProfilePhotos and Buzz (shared on Maps)
+        !(album.size == 1 && album.name?.matches(datePattern) ?: false))
         result += album
       album = Album()
+      albumType = ""
     }
   }
 }
