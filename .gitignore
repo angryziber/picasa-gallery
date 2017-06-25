@@ -5,5 +5,7 @@
 /*.csr
 /*.key
 
+/src/local.properties
+
 # This comes from another repo
 /web/content

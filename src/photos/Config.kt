@@ -4,7 +4,8 @@ import java.util.*
 
 object Config {
   private val props = Properties().apply {
-    Picasa::class.java.getResourceAsStream("/config.properties").use { load(it) }
+    Config.javaClass.getResourceAsStream("/config.properties").use { load(it) }
+    Config.javaClass.getResourceAsStream("/local.properties")?.use { load(it) }
   }
 
   val defaultUser = get("google.user")!!
@@ -17,5 +18,5 @@ object Config {
   val analyticsId = get("google.analytics")
   val mapsKey = get("google.maps.key")
 
-  operator fun get(key: String) = props[key] as String?
+  operator fun get(key: String) = (props[key] as String?).let { if (it == "") null else it }
 }
