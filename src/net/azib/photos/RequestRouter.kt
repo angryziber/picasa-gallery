@@ -36,6 +36,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
       if (req["reload"] != null) URLLoader.reload(picasa)
 
       when {
+        "/oauth" == path -> handleOAuth()
         random != null -> renderRandom()
         searchQuery != null -> renderSearch(searchQuery)
         (path == null || "/" == path) && requestedUser == null -> throw Redirect(picasa.urlPrefix)
@@ -92,6 +93,11 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
     render("album", album, attrs, res)
   }
 
+  private fun handleOAuth() {
+    val code = req["code"] ?: throw Redirect("/google-oauth.html")
+    render("oauth", OAuth.token(code), attrs, res)
+  }
+
   private fun Album.addContent(): Album {
     content = contentLoader.albums[name]
     return this
@@ -119,8 +125,8 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   internal fun isBot(userAgent: String?): Boolean {
     return userAgent == null || userAgent.contains("bot/", true) || userAgent.contains("spider/", true)
   }
-
-  class Redirect(val path: String): Exception()
 }
+
+class Redirect(val path: String): Exception()
 
 operator fun HttpServletRequest.get(param: String) = getParameter(param)

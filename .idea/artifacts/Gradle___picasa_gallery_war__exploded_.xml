@@ -17,15 +17,15 @@
           <element id="dir-copy" path="$PROJECT_DIR$/build/resources/main" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="Gradle: oro:oro:2.0.8" />
-          <element id="library" level="project" name="Gradle: commons-lang:commons-lang:2.4" />
-          <element id="library" level="project" name="Gradle: commons-collections:commons-collections:3.2.1" />
-          <element id="library" level="project" name="Gradle: com.atlassian.commonmark:commonmark:0.7.1" />
-          <element id="library" level="project" name="Gradle: org.apache.velocity:velocity:1.7" />
-          <element id="library" level="project" name="Gradle: org.jetbrains:annotations:13.0" />
+          <element id="library" level="project" name="Gradle: com.github.scribejava:scribejava-core:4.0.0" />
+          <element id="library" level="project" name="Gradle: com.github.scribejava:scribejava-apis:4.0.0" />
           <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.1.3" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.scribejava/scribejava-apis/4.0.0/aa7e65edd55d6188b8920ce01523417d6216c033/scribejava-apis-4.0.0.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.scribejava/scribejava-core/4.0.0/f4b14341c6fb36958ea5480986d58e313e9d6d74/scribejava-core-4.0.0.jar" />
+          <element id="library" level="project" name="Gradle: org.jetbrains:annotations:13.0" />
+          <element id="library" level="project" name="Gradle: org.apache.velocity:velocity:1.7" />
+          <element id="library" level="project" name="Gradle: com.atlassian.commonmark:commonmark:0.7.1" />
+          <element id="library" level="project" name="Gradle: commons-collections:commons-collections:3.2.1" />
+          <element id="library" level="project" name="Gradle: commons-lang:commons-lang:2.4" />
+          <element id="library" level="project" name="Gradle: oro:oro:2.0.8" />
         </element>
       </element>
     </root>

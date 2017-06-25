@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+  Paste this to <code>config.properties</code>:
+  <pre>
+  google.oauth.refreshToken=${oauth.refreshToken}
+  </pre>
+</body>
+</html>
