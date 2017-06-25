@@ -2,19 +2,23 @@ package net.azib.photos
 
 import com.github.scribejava.apis.GoogleApi20
 import com.github.scribejava.core.builder.ServiceBuilder
+import java.net.HttpURLConnection
 
 object OAuth {
-  val service = ServiceBuilder()
+  private val service = ServiceBuilder()
         .apiKey(Config.oauthClientId)
         .apiSecret(Config.oauthClientSecret)
         .callback("http://localhost:8080/oauth")
         .build(GoogleApi20.instance())
 
-  fun token(code: String) = service.getAccessToken(code)
-}
+  private var token = Config.oauthRefreshToken?.let { service.refreshAccessToken(it) }
 
-fun main(args: Array<String>) {
-//  val accessToken = service.getAccessToken("4/azWaL9_ihHxviLbgGELVjNDVAVoQZfV2JrI3Vus6h9A")
-//  println(accessToken)
-  println(OAuth.service.refreshAccessToken("1/tnlxtSq8fVkaYhSorNDC8ZTfygV6esOcAwApwi--6fc"))
+  fun token(code: String) = service.getAccessToken(code).apply {
+    token = this
+    Config.oauthRefreshToken = refreshToken
+  }
+
+  fun authorize(conn: HttpURLConnection) {
+    token?.apply { conn.setRequestProperty("Authorization", "$tokenType $accessToken") }
+  }
 }

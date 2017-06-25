@@ -77,7 +77,7 @@ class Picasa(user: String? = null, private val authKey: String? = null) {
       = URLLoader.load(toFullUrl(query), this)
 
   private fun toFullUrl(query: String): String {
-    var url = "http://picasaweb.google.com/data/feed/api/user/" + urlEncode(user) + query
+    var url = Config.oauthScope + "feed/api/user/" + urlEncode(user) + query
     if (authKey != null) url += (if (url.contains("?")) "&" else "?") + "authkey=" + authKey
     return url
   }

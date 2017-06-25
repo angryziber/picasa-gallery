@@ -5,14 +5,17 @@
 <body>
   #if($oauth)
     Paste this to <code>config.properties</code>:
+
     <pre>
     google.oauth.refreshToken=${oauth.refreshToken}
     </pre>
+
+    <a href="/">See your authorized gallery</a>
   #else
     If you want your Gallery to display non-public albums (and it is impossible anymore to mark a new album as public),
     you need to sign in and paste obtained oauth token to config.properties.
     <br><br>
-    <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=${config.oauthClientId}&response_type=code&access_type=offline&state=init&redirect_uri=http://$host/oauth&scope=https://picasaweb.google.com/data/">
+    <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=${config.oauthClientId}&response_type=code&access_type=offline&state=init&redirect_uri=http://$host/oauth&scope=${config.oauthScope}">
       <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png" border="0" alt="Google sign-in">
     </a>
   #end
