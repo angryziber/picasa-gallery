@@ -16,6 +16,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   val userAgent: String? = req.getHeader("User-Agent")
   val path = req.servletPath
   val pathParts = path.substring(1).split("/")
+  val host = req.getHeader("host")
   var requestedUser = req["by"]
   val random = req["random"]
   val searchQuery = req["q"]
@@ -29,7 +30,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
 
       attrs["config"] = Config
       attrs["picasa"] = picasa
-      attrs["host"] = req.getHeader("host")
+      attrs["host"] = host
       attrs["servletPath"] = path
       attrs["startTime"] = startTime
 
@@ -94,8 +95,8 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   }
 
   private fun handleOAuth() {
-    val code = req["code"] ?: throw Redirect("/google-oauth.html")
-    render("oauth", OAuth.token(code), attrs, res)
+    val token = req["code"]?.let { code -> OAuth.token(code) }
+    render("oauth", token, attrs, res)
   }
 
   private fun Album.addContent(): Album {

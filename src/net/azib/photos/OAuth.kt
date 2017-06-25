@@ -5,8 +5,8 @@ import com.github.scribejava.core.builder.ServiceBuilder
 
 object OAuth {
   val service = ServiceBuilder()
-        .apiKey("854381798570-ospd0oo53e5tajt48meuesu63glb8j0s.apps.googleusercontent.com")
-        .apiSecret("wPA_x7GNkF5q3gXKyc0GgkA1")
+        .apiKey(Config.oauthClientId)
+        .apiSecret(Config.oauthClientSecret)
         .callback("http://localhost:8080/oauth")
         .build(GoogleApi20.instance())
 

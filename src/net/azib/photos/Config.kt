@@ -8,6 +8,10 @@ object Config {
   }
 
   val defaultUser = get("google.user")
+
+  val oauthClientId = get("google.oauth.clientId")
+  val oauthClientSecret = get("google.oauth.clientSecret")
+
   val analyticsId = get("google.analytics")
   val mapsKey = get("google.maps.key")
 
