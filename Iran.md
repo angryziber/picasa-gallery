@@ -12,8 +12,8 @@ Make sure your travel insurance lists Iran specifically, otherwise you will have
 in another long queue.
 
 Iran proves once more that people don't like something that is enforced on them - Iranians are much less
-religious than many other more liberal muslim countries. On the contrary, Zoroastrianism, the original
-Persian religion that inspired Judaism, Christianity and Islam, is very much respected.
+religious than many other more liberal muslim countries. On the contrary, [Zoroastrianism](https://en.wikipedia.org/wiki/Zoroastrianism), 
+the original Persian religion that inspired Judaism, Christianity and Islam, is very much respected.
 
 Travelling around the country is quite cheap and convenient with buses. We did that, but also rented a car 
 in Esfahan in order to better enjoy the desert and countryside. We had a good experience with Europcar, but 
