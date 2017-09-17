@@ -24,4 +24,8 @@ As a practical warning, after visiting Iran you will also loose the ability to u
 You can still get a full US visa, which I already have without any problems. Apart from that, architecture, 
 cultural legacy and landscapes are really worth the trip.
 
+As a side note - try to avoid Nowruz, Iranian New Year held in the end of March, as Iranians have holidays 
+for two weeks following it. All the popular sights get very crowded, some interesting ones are closed,
+traffic gets more dangerous and you have to make thousands of selfies with locals who don't see foreigners too often. 
+
 As usual, the rest of the story is in the comments below.
