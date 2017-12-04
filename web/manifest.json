@@ -1,0 +1,14 @@
+{
+  "name": "Picasa Gallery",
+  "short_name": "Photos",
+  "icons": [
+    {
+      "src": "/img/picasa-logo.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    }
+  ],
+  "display": "standalone",
+  "theme_color": "#313131",
+  "background_color": "#000000"
+}
