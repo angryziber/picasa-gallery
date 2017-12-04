@@ -20,13 +20,13 @@
           <element id="library" level="project" name="Gradle: org.apache.velocity:velocity:1.7" />
           <element id="library" level="project" name="Gradle: com.atlassian.commonmark:commonmark:0.7.1" />
           <element id="library" level="project" name="Gradle: com.github.scribejava:scribejava-apis:4.0.0" />
-          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jre7:1.1.4-3" />
+          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jre7:1.2.0" />
+          <element id="library" level="project" name="Gradle: oro:oro:2.0.8" />
           <element id="library" level="project" name="Gradle: commons-collections:commons-collections:3.2.1" />
           <element id="library" level="project" name="Gradle: commons-lang:commons-lang:2.4" />
           <element id="library" level="project" name="Gradle: com.github.scribejava:scribejava-core:4.0.0" />
-          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.1.4-3" />
+          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.2.0" />
           <element id="library" level="project" name="Gradle: org.jetbrains:annotations:13.0" />
-          <element id="library" level="project" name="Gradle: oro:oro:2.0.8" />
         </element>
       </element>
     </root>
