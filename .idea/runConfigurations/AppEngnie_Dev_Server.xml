@@ -4,7 +4,9 @@
     <option name="SHOW_DIALOG_ON_UPDATE" value="false" />
     <server-settings>
       <option name="artifact" value="Gradle : picasa-gallery.war (exploded)" />
+      <option name="serverParameters" value="--address=0.0.0.0" />
       <artifact>Gradle : picasa-gallery.war (exploded)</artifact>
+      <server-parameters>--address=0.0.0.0</server-parameters>
     </server-settings>
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
     <ConfigurationWrapper VM_VAR="" RunnerId="Debug">
