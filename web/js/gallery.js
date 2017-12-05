@@ -314,9 +314,6 @@ function PhotoViewer() {
 
   function onResize() {
     if (window.innerHeight) wrapper.height(window.innerHeight) // iPhone workaround, http://bugs.jquery.com/ticket/6724, height:100% doesn't work if address bar is hidden
-    if (wrapper.css('position') == 'absolute') { // fixed not supported on eg, Android and iOS < 4
-      wrapper.width(w.width()).css('top', w.scrollTop())
-    }
     centerImage()
   }
 
@@ -413,8 +410,6 @@ function PhotoViewer() {
   }
 
   function updateScrolling(photo) {
-    if (wrapper.css('position') != 'fixed') return
-
     setTimeout(function() {
       var thumbPos = $('#' + photo.id).offset()
       var scrollTop = w.scrollTop()
