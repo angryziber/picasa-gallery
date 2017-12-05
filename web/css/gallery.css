@@ -3,7 +3,7 @@ html {
 }
 
 body {
-  font-family: luxi sans, trebuchet ms, sans-serif;
+  font-family: sans-serif;
   color: #888;
   background: #000;
   overflow-y: scroll;
@@ -198,7 +198,9 @@ h2 {
 
 .thumbs a {
   float: left;
-  margin: 0 10px 10px 0;
+  width: 212px;
+  height: 212px;
+  margin: 5px;
   position: relative;
   overflow: hidden;
   text-align: center;
@@ -246,7 +248,7 @@ h2 {
   float: right;
   width: 434px;
   height: 434px;
-  margin: 0 10px 10px 0;
+  margin: 5px;
   border: 3px solid #313131;
   box-sizing: border-box;
 }
@@ -255,7 +257,6 @@ h2 {
   display: none;
   background: black;
   background: rgba(0, 0, 0, 0.9);
-  position: absolute;
   position: fixed;
   top: 0;
   left: 0;
