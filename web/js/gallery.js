@@ -177,6 +177,8 @@ function PhotoViewer() {
   }
 
   function requestFullScreen() {
+    var fs = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+    if (fs) return;
     var el = document.documentElement
     var rfs = (el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen)
     if (rfs) rfs.call(el)
