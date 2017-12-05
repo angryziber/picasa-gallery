@@ -115,7 +115,7 @@
   </div>
   <div id="photo-controls" class="visible">
     <div class="header clearfix">
-      <a class="button first" onclick="viewer.close()">Close</a>
+      <a class="button first" id="close" onclick="viewer.close()">Close</a>
       <a class="button" id="slideshow" href="#slideshow">Slideshow</a>
       <a class="button" id="dec-interval">-</a>
       <span class="left"><span id="interval">5</span> sec</span>
