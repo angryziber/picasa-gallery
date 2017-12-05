@@ -511,7 +511,6 @@ function fadeTo(href) {
 }
 
 $(function() {
-  setTimeout(function() {scrollTo(0, 1)}, 10)
   $('#content').fadeIn(1000)
 
   $('a.fade').click(function() {
