@@ -299,6 +299,7 @@ function PhotoViewer() {
 
   function keyHandler(e) {
     switch (e.which) {
+      case 81: // q
       case 27: pub.close(); return false
       case 32:
       case 34:
