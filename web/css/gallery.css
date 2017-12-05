@@ -510,10 +510,13 @@ h2 {
   }
 
   .thumbs {
-    margin-top: 270px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+  }
+
+  .thumbs.albums {
+    margin-top: 270px;
   }
 
   .thumbs a {
@@ -548,6 +551,6 @@ h2 {
 
   #album-long-content {
     column-width: auto;
-    padding: 0 10px;
+    margin: 0 10px;
   }
 }
