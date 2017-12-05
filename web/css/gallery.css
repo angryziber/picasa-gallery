@@ -509,6 +509,10 @@ h2 {
     display: none;
   }
 
+  #content {
+    width: 100% !important;
+  }
+
   .thumbs {
     display: flex;
     flex-wrap: wrap;
