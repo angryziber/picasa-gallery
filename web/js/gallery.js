@@ -137,9 +137,8 @@ function PhotoViewer() {
     if (history.replaceState) history.replaceState(stateURL(), '', stateURL())
     var img = wrapper.find('img.photo')
     var thumb = $('#' + photos[index].id)
-    var fixed = wrapper.css('position') == 'fixed'
     img.animate({
-      top: thumb.offset().top - (fixed ? w.scrollTop() : 0),
+      top: thumb.offset().top - w.scrollTop(),
       left: thumb.offset().left,
       height: thumb.height(),
       width: thumb.width()
@@ -347,7 +346,9 @@ function PhotoViewer() {
     var img = $(this)
     wrapper.append(img)
     centerImage(img)
-    img.fadeIn()
+    img.fadeIn(function() {
+      updateScrollPosition(photo)
+    })
     wrapper.css('cursor', 'none')
 
     if (slideshow)
@@ -407,11 +408,9 @@ function PhotoViewer() {
       photoMap.show(photo.pos)
     else
       photoMap.hide()
-
-    updateScrolling(photo)
   }
 
-  function updateScrolling(photo) {
+  function updateScrollPosition(photo) {
     setTimeout(function() {
       var thumbPos = $('#' + photo.id).offset()
       var scrollTop = w.scrollTop()
@@ -419,7 +418,7 @@ function PhotoViewer() {
         scrollTo(thumbPos.left, thumbPos.top + 200 - w.height())
       else if (thumbPos.top < scrollTop)
         scrollTo(thumbPos.left, thumbPos.top - 100)
-    }, 1000)
+    }, 500)
   }
 }
 
