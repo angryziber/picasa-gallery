@@ -5,7 +5,6 @@
   <meta name="description" content="${album.title} photos by ${album.author}: ${album.description}">
 
   #if($mobile)
-    <meta name="viewport" content="width=700, user-scalable=no, minimal-ui">
     <link rel="apple-touch-icon" href="${album.thumbUrl}">
   #end
 

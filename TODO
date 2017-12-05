@@ -11,3 +11,4 @@
 * Keywords from google vision
 * Use appengine provided location headers to display user on the map
 * Hide google maps for those galleries, where there are no tagged albums
+* iOS - minimal-ui - https://stackoverflow.com/questions/24889100/ios-8-removed-minimal-ui-viewport-property-are-there-other-soft-fullscreen

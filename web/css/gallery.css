@@ -504,29 +504,45 @@ h2 {
 }
 
 /* only mobile */
-@media screen and (max-device-width: 569px) {
-  body {
-    font-size: 20px;
+@media screen and (max-device-width: 700px) {
+  #header #search input {
+    display: none;
   }
 
-  .header .button:first-child, .header .button.first {
-    margin-left: 30px;
+  .thumbs {
+    margin-top: 270px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
   }
 
-  .header #search input {
-    margin-right: 10px;
-    width: 100px;
+  .thumbs a {
+    float: none;
+    margin: 0;
+    width: 30%;
+    height: 30%;
   }
 
-  #photo-map, #photo-exif, #photo-comments {
-    display: none !important;
+  #map {
+    margin: 0;
+    position: absolute;
+    top: 43px;
+    left: 0;
+    width: 100%;
+    height: 290px;
+    border: none;
   }
 
-  #footer {
-    font-size: 14px;
+  #sharing {
+    top: initial;
+    bottom: 0;
+    height: 32px;
+    width: auto;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
-  #photo-wrapper .title {
-    font-size: 12px;
+  #sharing > a {
+    opacity: 0.8;
   }
 }
