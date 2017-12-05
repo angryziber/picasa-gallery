@@ -445,7 +445,7 @@ function createMap(selector, moreOpts) {
     streetViewControl: false,
     zoomControl: false,
     panControl: false,
-    fullscreenControl: false,
+    mapTypeControl: false,
     minZoom: 1
   }
   $.extend(options, moreOpts)
