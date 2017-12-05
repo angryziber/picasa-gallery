@@ -22,7 +22,6 @@
   <meta property="og:site_name" content="${album.author} Photography">
 
   #parse('head.vm')
-  <style>.thumbs a {width: ${album.thumbSize}px; height: ${album.thumbSize}px;}</style>
   <script>
     var viewer = new PhotoViewer();
     $(function() {

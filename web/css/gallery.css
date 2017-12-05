@@ -505,7 +505,7 @@ h2 {
 
 /* only mobile */
 @media screen and (max-device-width: 700px) {
-  #header #search input {
+  #header #search input, #header .button {
     display: none;
   }
 
@@ -519,8 +519,8 @@ h2 {
   .thumbs a {
     float: none;
     margin: 0;
-    width: 30%;
-    height: 30%;
+    width: 30vw;
+    height: 30vw;
   }
 
   #map {
@@ -544,5 +544,10 @@ h2 {
 
   #sharing > a {
     opacity: 0.8;
+  }
+
+  #album-long-content {
+    column-width: auto;
+    padding: 0 10px;
   }
 }
