@@ -13,7 +13,6 @@
 * Hide google maps for those galleries, where there are no tagged albums
 
 * Mobile: reload google maps on orientation change
-* Mobile: 18x9 phone horizontal mode
-* Mobile: sharing buttons on top of titles
+* Back button problem after viewing of several photos
 * Allow pinch to zoom (doesn't work in fullscreen on Android by default)
 * Album locations in web content
