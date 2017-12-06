@@ -1,8 +1,6 @@
 # East Africa trip
 ## Oct-Nov 2016, Kenya & Tanzania
 
-Photos are coming soon!
-
 I hate organized tours with a passion, I always prefer independence when travelling. 
 While planning a trip to Kenya and Tanzania, my first option would be to rent a car and drive 
 through the national parks.
