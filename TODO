@@ -12,8 +12,7 @@
 * Use appengine provided location headers to display user on the map
 * Hide google maps for those galleries, where there are no tagged albums
 
-* Mobile: Title in photo view on iPhone 5
-* Mobile: Longer titles on mobile screens
+* Mobile: reload google maps on orientation change
 * Mobile: 18x9 phone horizontal mode
 * Mobile: sharing buttons on top of titles
 * Allow pinch to zoom (doesn't work in fullscreen on Android by default)

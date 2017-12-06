@@ -3,9 +3,10 @@
 function ThumbsView(thumbSize) {
 
   function updateLayout() {
-    if (!isDesktop()) return;
+    if (!isDesktop()) return
     var photoWidth = thumbSize + 10
-    var maxWidth = window.innerWidth - 90
+    var maxWidth = window.innerWidth
+    if (window.innerWidth > 900) maxWidth -= 90
     var photosInRow = Math.floor(maxWidth / photoWidth)
     $('#content').width(photosInRow * photoWidth)
   }
