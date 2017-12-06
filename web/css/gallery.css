@@ -131,6 +131,7 @@ h2 {
 #content {
   width: 100%;
   margin: 60px auto;
+  box-sizing: border-box;
   opacity: 1;
   transition: opacity 1s;
 }
@@ -520,12 +521,17 @@ h2 {
 
   #content {
     width: 100% !important;
+    padding: 0 .5em;
+  }
+
+  #album-long-content {
+    column-width: auto;
   }
 
   .thumbs {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: space-between;
   }
 
   .thumbs.albums {
@@ -534,9 +540,9 @@ h2 {
 
   .thumbs a {
     float: none;
-    margin: 0;
-    width: 30vw;
-    height: 30vw;
+    margin: 0 0 2px;
+    width: 31vw;
+    height: 31vw;
   }
 
   #map {
@@ -560,11 +566,6 @@ h2 {
 
   #sharing > a {
     opacity: 0.8;
-  }
-
-  #album-long-content {
-    column-width: auto;
-    margin: 0 10px;
   }
 
   #photo-controls #close {

@@ -11,4 +11,10 @@
 * Keywords from google vision
 * Use appengine provided location headers to display user on the map
 * Hide google maps for those galleries, where there are no tagged albums
-* iOS - minimal-ui - https://stackoverflow.com/questions/24889100/ios-8-removed-minimal-ui-viewport-property-are-there-other-soft-fullscreen
+
+* Mobile: Title in photo view on iPhone 5
+* Mobile: Longer titles on mobile screens
+* Mobile: 18x9 phone horizontal mode
+* Mobile: sharing buttons on top of titles
+* Allow pinch to zoom (doesn't work in fullscreen on Android by default)
+* Album locations in web content
