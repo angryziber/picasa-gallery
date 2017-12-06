@@ -506,15 +506,21 @@ function initAlbumFilter() {
 }
 
 function fadeTo(href) {
-  $('#content').fadeOut(function() {
+  $('#content').addClass('faded')
+  setTimeout(function() {
     location.href = href
-  })
+  }, 500)
 }
 
 $(function() {
-  $('#content').fadeIn(1000)
+  $('#content').removeClass('faded')
 
-  $('a.fade').click(function() {
+  window.onpageshow = function(e) {
+    // fix Mobile Safari back button navigation
+    if (e.persisted) $('#content').removeClass('faded')
+  }
+
+  $('a.fade').on('click', function() {
     fadeTo(this.href)
     return false
   })

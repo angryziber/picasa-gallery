@@ -18,7 +18,7 @@
   <h1 id="title">${gallery.author} Photography</h1>
 </div>
 
-<div id="content">
+<div id="content" class="faded">
   <div id="map"></div>
   <div class="albums thumbs">
     #foreach($album in $gallery.albums.values())

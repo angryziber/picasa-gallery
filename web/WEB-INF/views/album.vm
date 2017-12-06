@@ -44,7 +44,7 @@
   </h1>
 </div>
 
-<div id="content">
+<div id="content" class="faded">
   #if($album.content)
     <div id="album-long-content" class="#if(!$bot)closed#end">
       ${album.content}

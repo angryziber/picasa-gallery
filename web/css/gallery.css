@@ -4,8 +4,8 @@ html {
 
 body {
   font-family: sans-serif;
-  color: #888;
-  background: #000;
+  color: grey;
+  background: black;
   overflow-y: scroll;
   font-size: 16px;
 }
@@ -125,9 +125,14 @@ h2 {
 }
 
 #content {
-  display: none; /* will fade in */
   width: 100%;
   margin: 60px auto;
+  opacity: 1;
+  transition: opacity 1s;
+}
+
+#content.faded {
+  opacity: 0;
 }
 
 #album-long-content {
