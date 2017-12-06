@@ -315,7 +315,6 @@ function PhotoViewer() {
   }
 
   function onResize() {
-    if (window.innerHeight) wrapper.height(window.innerHeight) // iPhone workaround, http://bugs.jquery.com/ticket/6724, height:100% doesn't work if address bar is hidden
     centerImage()
   }
 
