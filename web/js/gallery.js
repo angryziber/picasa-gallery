@@ -117,9 +117,8 @@ function PhotoViewer() {
 
     onHashChange()
     $(window).bind('hashchange', onHashChange)
+    if (history.pushState) history.pushState('open', null)
     loadPhoto()
-    var photo = photos[index]
-    if (history.pushState) history.pushState(stateURL(photo), photo.title, stateURL(photo))
     return false
   }
 
@@ -134,7 +133,7 @@ function PhotoViewer() {
     window.onpopstate = $.noop
 
     stopSlideshow()
-    if (history.replaceState) history.replaceState(stateURL(), '', stateURL())
+    if (history.state) history.back()
     var img = wrapper.find('img.photo')
     var thumb = $('#' + photos[index].id)
     img.animate({
@@ -176,8 +175,9 @@ function PhotoViewer() {
   }
 
   function requestFullScreen() {
+    return
     var fs = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
-    if (fs) return;
+    if (fs) return
     var el = document.documentElement
     var rfs = (el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen)
     if (rfs) rfs.call(el)
@@ -242,8 +242,8 @@ function PhotoViewer() {
     return false
   }
 
-  function onPopState(event) {
-    if (event.state) pub.close()
+  function onPopState() {
+    pub.close()
   }
 
   function posAction(x, y) {
