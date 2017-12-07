@@ -57,7 +57,7 @@ function PhotoViewer() {
 
   pub.setup = function() {
     photos = []
-    $('a.photo').click(pub.open).each(function() {
+    $('a.photo').on('click', pub.open).each(function() {
       var title = $('img', this).attr('alt')
       photos.push({
         url: this.href,
@@ -170,13 +170,11 @@ function PhotoViewer() {
     return false
   }
 
-  function requestFullScreen() {
-    return
-    var fs = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
-    if (fs) return
+  var requestFullScreen = function() {
     var el = document.documentElement
     var rfs = (el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen)
     if (rfs) rfs.call(el)
+    requestFullScreen = $.noop
   }
 
   function onHashChange() {
