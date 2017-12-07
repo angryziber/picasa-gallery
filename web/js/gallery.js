@@ -72,12 +72,12 @@ function PhotoViewer() {
     })
 
     wrapper = $('#photo-wrapper')
-    wrapper.unbind()
-    wrapper.click(onMouseClick)
-    wrapper.mousemove(onMouseMove)
+    wrapper.off()
+    wrapper.on('click', onMouseClick)
+    wrapper.on('mousemove', onMouseMove)
     controls = wrapper.find('#photo-controls')
-    controls.find('#inc-interval').click(incInterval)
-    controls.find('#dec-interval').click(decInterval)
+    controls.find('#inc-interval').on('click', incInterval)
+    controls.find('#dec-interval').on('click', decInterval)
     position = controls.find('#position')
     interval = controls.find('#interval')
     timeRemaining = controls.find('#time-remaining')
@@ -116,7 +116,7 @@ function PhotoViewer() {
     requestFullScreen()
 
     onHashChange()
-    $(window).bind('hashchange', onHashChange)
+    $(window).on('hashchange', onHashChange)
     if (history.pushState) history.pushState('open', null)
     loadPhoto()
     return false
@@ -127,9 +127,9 @@ function PhotoViewer() {
     wrapper.fadeOut(function() {
       controls.addClass('visible')
     })
-    $(document).unbind('keyup', keyHandler)
-    $(window).unbind('resize', onResize)
-    $(window).unbind('hashchange', onHashChange)
+    $(document).off('keyup', keyHandler)
+    $(window).off('resize', onResize)
+    $(window).off('hashchange', onHashChange)
     window.onpopstate = null
 
     stopSlideshow()
@@ -521,7 +521,7 @@ $(function() {
     return false
   })
 
-  $('form#search').submit(function() {
+  $('form#search').on('submit', function() {
     fadeTo('/?q=' + $(this).find('input').val() + location.search.replace(/\?q=.*?(&|$)/, '&'))
     return false
   })
