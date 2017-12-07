@@ -93,10 +93,6 @@ function PhotoViewer() {
     return this
   }
 
-  pub.isOpen = function() {
-    return isOpen
-  }
-
   pub.open = function() {
     if (isOpen) return false
     isOpen = true
