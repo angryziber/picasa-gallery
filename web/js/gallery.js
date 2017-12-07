@@ -103,7 +103,7 @@ function PhotoViewer() {
     onResize()
     $(document).on('keyup', keyHandler)
     $(window).resize(onResize)
-    window.onpopstate = onPopState
+    window.onpopstate = pub.close
     wrapper[0].ontouchstart = onTouchStart
     wrapper[0].ontouchmove = onTouchMove
 
@@ -130,7 +130,7 @@ function PhotoViewer() {
     $(document).unbind('keyup', keyHandler)
     $(window).unbind('resize', onResize)
     $(window).unbind('hashchange', onHashChange)
-    window.onpopstate = $.noop
+    window.onpopstate = null
 
     stopSlideshow()
     if (history.state) history.back()
@@ -240,10 +240,6 @@ function PhotoViewer() {
       startSlideshow()
     }
     return false
-  }
-
-  function onPopState() {
-    pub.close()
   }
 
   function posAction(x, y) {
