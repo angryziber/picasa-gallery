@@ -43,7 +43,10 @@ class GalleryLoader(val content: LocalContent, thumbSize: Int) : XMLListener<Gal
 
   override fun end(path: String) {
     if ("entry" == path) {
-      if (!skip(album)) result += album
+      if (!skip(album)) {
+        content.applyTo(album)
+        result += album
+      }
       album = Album()
       albumType = ""
     }

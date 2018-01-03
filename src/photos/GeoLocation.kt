@@ -2,13 +2,6 @@ package photos
 
 import java.lang.Float.parseFloat
 
-class GeoLocation(value: String) {
-  val lat: Float
-  val lon: Float
-
-  init {
-    val parts = value.split(" ")
-    lat = parseFloat(parts[0])
-    lon = parseFloat(parts[1])
-  }
+data class GeoLocation(val lat: Float, val lon: Float) {
+  constructor(value: String) : this(parseFloat(value.substringBefore(" ")), parseFloat(value.substringAfter(" ")))
 }

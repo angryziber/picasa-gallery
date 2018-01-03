@@ -78,7 +78,7 @@ class AlbumLoader(val content: LocalContent, thumbSize: Int) : XMLListener<Album
     if ("entry" == path) {
       photo = null
       comment = null
-      result.content = content.forAlbum(result.name)
+      content.applyTo(result)
     }
   }
 }
