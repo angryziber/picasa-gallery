@@ -21,7 +21,8 @@ function createMap(selector, moreOpts) {
     zoomControl: false,
     panControl: false,
     mapTypeControl: false,
-    minZoom: 1
+    minZoom: 1,
+    backgroundColor: '#3e5e89'
   }
   $.extend(options, moreOpts)
   return new google.maps.Map($(selector)[0], options)
