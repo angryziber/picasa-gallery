@@ -29,6 +29,15 @@ function GalleryMap() {
     else {
       map.fitBounds(initialBounds)
     }
+
+    $(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', function() {
+      if (document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen) {
+        if (map.getZoom() < hoverZoom) {
+          map.setCenter(latLng(0, 0))
+          map.setZoom(hoverZoom - 1)
+        }
+      }
+    });
   }
 
   function albumThumbHover(thumb, map, marker) {
@@ -36,8 +45,7 @@ function GalleryMap() {
       setMarkerIcon(marker, 'marker_orange')
       clearTimeout(zoomTimer)
       zoomTimer = setTimeout(function() {
-        if (map.getZoom() < hoverZoom)
-          map.setZoom(hoverZoom)
+        if (map.getZoom() < hoverZoom) map.setZoom(hoverZoom)
         map.panTo(marker.getPosition())
       }, 500)
     })
