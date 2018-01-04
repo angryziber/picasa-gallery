@@ -1,7 +1,7 @@
 'use strict'
 
 function GalleryMap() {
-  var initialBounds, hoverZoom, mouseoutTimer
+  var initialBounds, hoverZoom, zoomTimer
 
   function init() {
     if (!window.google) return
@@ -33,16 +33,19 @@ function GalleryMap() {
 
   function albumThumbHover(thumb, map, marker) {
     thumb.on('mouseover', function() {
-      clearTimeout(mouseoutTimer)
       setMarkerIcon(marker, 'marker_orange')
-      if (map.getZoom() < hoverZoom)
-        map.setZoom(hoverZoom)
-      map.panTo(marker.getPosition())
+      clearTimeout(zoomTimer)
+      zoomTimer = setTimeout(function() {
+        if (map.getZoom() < hoverZoom)
+          map.setZoom(hoverZoom)
+        map.panTo(marker.getPosition())
+      }, 500)
     })
 
     thumb.on('mouseout', function() {
       setMarkerIcon(marker)
-      mouseoutTimer = setTimeout(function() {
+      clearTimeout(zoomTimer)
+      zoomTimer = setTimeout(function() {
         if (!$('#map').is(':hover'))
           map.fitBounds(initialBounds)
       }, 500)
