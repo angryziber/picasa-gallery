@@ -15,4 +15,3 @@
 * Mobile: reload google maps on orientation change
 * Allow pinch to zoom (doesn't work in fullscreen on Android by default)
 * Fix initial photo hash - it should pushState correctly
-* Zoom into album marker on the map during hover

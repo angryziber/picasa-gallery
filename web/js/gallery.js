@@ -11,8 +11,7 @@ function initMap() {
     setMarkerIcon(marker)
     bounds.extend(pos)
     google.maps.event.addListener(marker, 'click', function() {$(link).click()})
-    $(this).mouseover(function() {setMarkerIcon(marker, 'marker_orange')})
-    $(this).mouseout(function() {setMarkerIcon(marker)})
+    albumThumbHover($(this), map, marker)
   })
 
   if (bounds.isEmpty()) {
@@ -21,8 +20,23 @@ function initMap() {
   }
   else {
     map.fitBounds(bounds)
-    map.panBy(0, 15)
   }
+}
+
+function albumThumbHover(thumb, map, marker) {
+  var bounds;
+
+  thumb.on('mouseover', function() {
+    setMarkerIcon(marker, 'marker_orange')
+    bounds = map.getBounds()
+    map.setZoom(3)
+    map.panTo(marker.getPosition())
+  })
+
+  thumb.on('mouseout', function() {
+    setMarkerIcon(marker)
+    map.fitBounds(bounds)
+  })
 }
 
 function setMarkerIcon(marker, name) {
