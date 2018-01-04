@@ -22,6 +22,7 @@
   <meta property="og:site_name" content="${album.author} Photography">
 
   #parse('head.vm')
+  <script src="/js/album.js?${startTime}"></script>
   <script>
     var viewer = new PhotoViewer();
     $(function() {

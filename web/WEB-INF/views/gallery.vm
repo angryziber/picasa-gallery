@@ -7,8 +7,9 @@
   <meta property="og:image" content="${gallery.albums.values().iterator().next().thumbUrlLarge}">
   <meta property="og:site_name" content="${gallery.author} Photography">
   #parse('head.vm')
-  <script defer>$(initAlbumFilter);</script>
-  <script defer>$(initMap)</script>
+  <script src="/js/gallery-new.js?${startTime}"></script>
+  <script>$(initAlbumFilter);</script>
+  <script>$(initMap)</script>
 </head>
 
 <body style="background:black; color: gray">

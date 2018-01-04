@@ -19,15 +19,15 @@
 <link rel="stylesheet" type="text/css" href="/css/loader.css?${startTime}">
 
 <script src="/js/jquery.min.js"></script>
-<script src="/js/thumbs.js?${startTime}"></script>
-<script src="/js/gallery.js?${startTime}"></script>
 <script src="/js/prefixfree.min.js"></script>
+<script src="/js/common.js?${startTime}"></script>
+<script src="/js/thumbs.js?${startTime}"></script>
 #if(!$bot)
 <script defer src="/js/chromecast.js"></script>
 <script defer src="//maps.google.com/maps/api/js?key=${config.mapsKey}"></script>
 #end
 
-<script async defer>
+<script>
   #if($config.analyticsId)
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

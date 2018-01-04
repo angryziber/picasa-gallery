@@ -1,10 +1,5 @@
 'use strict'
 
-function changeUsername(username) {
-  username = prompt('Show photos by Google/Picasaweb user:', username)
-  if (username) fadeTo('/?by=' + username)
-}
-
 function Loader(wrapper) {
   var el = $('.loader', wrapper)
   var timer
@@ -412,111 +407,9 @@ function PhotoViewer() {
   }
 }
 
-function latLng(lat, lon) {
-  return window.google ? new google.maps.LatLng(lat, lon) : null
-}
-
-function createMap(selector, moreOpts) {
-  var options = {
-    mapTypeId: google.maps.MapTypeId.TERRAIN,
-    styles: [{
-      stylers: [
-        {saturation: -60},
-        {gamma: 0.3},
-        {lightness: -25}
-      ]
-    }],
-    streetViewControl: false,
-    zoomControl: false,
-    panControl: false,
-    mapTypeControl: false,
-    minZoom: 1
-  }
-  $.extend(options, moreOpts)
-  return new google.maps.Map($(selector)[0], options)
-}
-
-function extractPos(element) {
-  var coords = $(element).data('coords')
-  if (!coords) return null
-  coords = coords.split(':')
-  return latLng(coords[0], coords[1])
-}
-
 function extractExif(element) {
   var exif = $(element).data('exif')
   if (!exif) return null
   exif = exif.split(':')
   return {aperture: exif[0], shutter: exif[1], iso: exif[2], focal: exif[3]}
 }
-
-function setMarkerIcon(marker, name) {
-  marker.setIcon('https://maps.google.com/mapfiles/' + (name || 'marker') + '.png')
-  marker.setZIndex(1000)
-}
-
-function initMap() {
-  if (!window.google) return
-  var bounds = new google.maps.LatLngBounds()
-  var map = createMap('#map')
-  $('.albums > a').each(function(i, link) {
-    var pos = extractPos(this)
-    if (!pos) return
-    var marker = new google.maps.Marker({position: pos, map: map, title: $(link).find('.title > .text').text()})
-    setMarkerIcon(marker)
-    bounds.extend(pos)
-    google.maps.event.addListener(marker, 'click', function() {$(link).click()})
-    $(this).mouseover(function() {setMarkerIcon(marker, 'marker_orange')})
-    $(this).mouseout(function() {setMarkerIcon(marker)})
-  })
-
-  if (bounds.isEmpty()) {
-    map.setCenter(latLng(0, 0))
-    map.setZoom(1)
-  }
-  else {
-    map.fitBounds(bounds)
-    map.panBy(0, 15)
-  }
-}
-
-function initAlbumFilter() {
-  var albums = {}
-  $('.albums a').each(function() {
-    albums[this.id] = $(this).text().toLowerCase()
-  })
-  $('#search input').keyup(function() {
-    var q = $(this).val().toLowerCase()
-    // Note: direct CSS is much faster than $.show() and $.hide()
-    $.each(albums, function(id, text) {
-      var matches = q.length < 3 || text.match(q)
-      document.getElementById(id).style.display = matches ? 'block' : 'none'
-    })
-  })
-}
-
-function fadeTo(href) {
-  $('#content').addClass('faded')
-  setTimeout(function() {
-    location.href = href
-  }, 500)
-}
-
-$(function() {
-  $('#content').removeClass('faded')
-
-  window.onpageshow = function(e) {
-    // fix Mobile Safari back button navigation
-    if (e.persisted) $('#content').removeClass('faded')
-  }
-
-  $('a.fade').on('click', function() {
-    fadeTo(this.href)
-    return false
-  })
-
-  $('form#search').on('submit', function() {
-    fadeTo('/?q=' + $(this).find('input').val() + location.search.replace(/\?q=.*?(&|$)/, '&'))
-    return false
-  })
-})
