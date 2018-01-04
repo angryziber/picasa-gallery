@@ -9,7 +9,7 @@
   #parse('head.vm')
   <script src="/js/gallery.js?${startTime}"></script>
   <script>$(initAlbumFilter);</script>
-  <script>$(initMap)</script>
+  <script>$(GalleryMap)</script>
 </head>
 
 <body style="background:black; color: gray">

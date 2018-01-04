@@ -1,47 +1,51 @@
 'use strict'
 
-function initMap() {
-  if (!window.google) return
-  var bounds = new google.maps.LatLngBounds()
-  var map = createMap('#map')
-  $('.albums > a').each(function(i, link) {
-    var pos = extractPos(this)
-    if (!pos) return
-    var marker = new google.maps.Marker({position: pos, map: map, title: $(link).find('.title > .text').text()})
-    setMarkerIcon(marker)
-    bounds.extend(pos)
-    google.maps.event.addListener(marker, 'click', function() {$(link).click()})
-    albumThumbHover($(this), map, marker)
-  })
+function GalleryMap() {
+  function init() {
+    if (!window.google) return
+    var bounds = new google.maps.LatLngBounds()
+    var map = createMap('#map')
+    $('.albums > a').each(function(i, link) {
+      var pos = extractPos(this)
+      if (!pos) return
+      var marker = new google.maps.Marker({position: pos, map: map, title: $(link).find('.title > .text').text()})
+      setMarkerIcon(marker)
+      bounds.extend(pos)
+      google.maps.event.addListener(marker, 'click', function() {$(link).click()})
+      albumThumbHover($(this), map, marker)
+    })
 
-  if (bounds.isEmpty()) {
-    map.setCenter(latLng(0, 0))
-    map.setZoom(1)
+    if (bounds.isEmpty()) {
+      map.setCenter(latLng(0, 0))
+      map.setZoom(1)
+    }
+    else {
+      map.fitBounds(bounds)
+    }
   }
-  else {
-    map.fitBounds(bounds)
+
+  function albumThumbHover(thumb, map, marker) {
+    var bounds;
+
+    thumb.on('mouseover', function() {
+      setMarkerIcon(marker, 'marker_orange')
+      bounds = map.getBounds()
+      map.setZoom(3)
+      map.panTo(marker.getPosition())
+    })
+
+    thumb.on('mouseout', function() {
+      setMarkerIcon(marker)
+      map.fitBounds(bounds)
+    })
   }
-}
 
-function albumThumbHover(thumb, map, marker) {
-  var bounds;
+  function setMarkerIcon(marker, name) {
+    marker.setIcon('https://maps.google.com/mapfiles/' + (name || 'marker') + '.png')
+    marker.setZIndex(1000)
+  }
 
-  thumb.on('mouseover', function() {
-    setMarkerIcon(marker, 'marker_orange')
-    bounds = map.getBounds()
-    map.setZoom(3)
-    map.panTo(marker.getPosition())
-  })
-
-  thumb.on('mouseout', function() {
-    setMarkerIcon(marker)
-    map.fitBounds(bounds)
-  })
-}
-
-function setMarkerIcon(marker, name) {
-  marker.setIcon('https://maps.google.com/mapfiles/' + (name || 'marker') + '.png')
-  marker.setZIndex(1000)
+  init()
 }
 
 function initAlbumFilter() {
