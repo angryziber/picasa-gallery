@@ -1,42 +1,51 @@
 'use strict'
 
 function GalleryMap() {
+  var initialBounds, hoverZoom, mouseoutTimer
+
   function init() {
     if (!window.google) return
-    var bounds = new google.maps.LatLngBounds()
+    initialBounds = new google.maps.LatLngBounds()
     var map = createMap('#map')
     $('.albums > a').each(function(i, link) {
       var pos = extractPos(this)
       if (!pos) return
       var marker = new google.maps.Marker({position: pos, map: map, title: $(link).find('.title > .text').text()})
       setMarkerIcon(marker)
-      bounds.extend(pos)
+      initialBounds.extend(pos)
       google.maps.event.addListener(marker, 'click', function() {$(link).click()})
       albumThumbHover($(this), map, marker)
     })
 
-    if (bounds.isEmpty()) {
+    var zoomListener = google.maps.event.addListener(map, 'zoom_changed', function() {
+      hoverZoom = map.getZoom() + 3
+      google.maps.event.removeListener(zoomListener)
+    })
+
+    if (initialBounds.isEmpty()) {
       map.setCenter(latLng(0, 0))
       map.setZoom(1)
     }
     else {
-      map.fitBounds(bounds)
+      map.fitBounds(initialBounds)
     }
   }
 
   function albumThumbHover(thumb, map, marker) {
-    var bounds;
-
     thumb.on('mouseover', function() {
+      clearTimeout(mouseoutTimer)
       setMarkerIcon(marker, 'marker_orange')
-      bounds = map.getBounds()
-      map.setZoom(3)
+      if (map.getZoom() < hoverZoom)
+        map.setZoom(hoverZoom)
       map.panTo(marker.getPosition())
     })
 
     thumb.on('mouseout', function() {
       setMarkerIcon(marker)
-      map.fitBounds(bounds)
+      mouseoutTimer = setTimeout(function() {
+        if (!$('#map').is(':hover'))
+          map.fitBounds(initialBounds)
+      }, 500)
     })
   }
 
