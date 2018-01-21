@@ -93,8 +93,8 @@ function PhotoViewer() {
     isOpen = true
     onResize()
     $(document).on('keyup', keyHandler)
-    $(window).resize(onResize)
-    window.onpopstate = pub.close
+    $(window).on('resize', onResize);
+    window.onpopstate = pub.close;
     wrapper[0].ontouchstart = onTouchStart
     wrapper[0].ontouchmove = onTouchMove
 
@@ -106,8 +106,6 @@ function PhotoViewer() {
     }, 2000)
     requestFullScreen()
 
-    onHashChange()
-    $(window).on('hashchange', onHashChange)
     if (history.pushState) history.pushState('open', null)
     loadPhoto()
     return false
@@ -120,7 +118,6 @@ function PhotoViewer() {
     })
     $(document).off('keyup', keyHandler)
     $(window).off('resize', onResize)
-    $(window).off('hashchange', onHashChange)
     window.onpopstate = null
 
     stopSlideshow()
@@ -172,14 +169,8 @@ function PhotoViewer() {
     requestFullScreen = $.noop
   }
 
-  function onHashChange() {
-    var hash = location.hash.substring(1)
-    if (hash == 'slideshow') startSlideshow()
-    else if (slideshow) stopSlideshow()
-  }
-
   function stateURL(photo) {
-    return photo ? '#' + photo.id : slideshow ? '#slidehow' : location.href.replace(/#.*/, '')
+    return photo ? '#' + photo.id : location.href.replace(/#.*/, '')
   }
 
   function showTimeRemaining() {
@@ -202,14 +193,14 @@ function PhotoViewer() {
 
   function startSlideshow() {
     setSlideshowTimeout()
-    controls.find('#slideshow.button').text('Stop').attr('href', '#')
+    controls.find('#slideshow.button').text('Stop')
     showTimeRemaining()
   }
 
   function stopSlideshow() {
     clearTimeout(slideshow)
     slideshow = null
-    controls.find('#slideshow.button').text('Slideshow').attr('href', '#slideshow')
+    controls.find('#slideshow.button').text('Slideshow')
     timeRemaining.empty()
   }
 

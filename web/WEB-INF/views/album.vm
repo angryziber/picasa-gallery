@@ -27,7 +27,10 @@
     var viewer = new PhotoViewer();
     $(function() {
       viewer.setup();
-      if (location.hash == '#slideshow') $('a.photo').eq(0).click();
+      if (location.hash == '#slideshow') {
+        $('a.photo').eq(0).click();
+        setTimeout(viewer.slideshow, 500);
+      }
       else if (location.hash) $('a' + location.hash).click();
     });
   </script>
@@ -117,7 +120,7 @@
   <div id="photo-controls" class="visible">
     <div class="header clearfix">
       <a class="button first" id="close" onclick="viewer.close()">Close</a>
-      <a class="button" id="slideshow" href="#slideshow">Slideshow</a>
+      <a class="button" id="slideshow" onclick="viewer.slideshow()">Slideshow</a>
       <a class="button" id="dec-interval">-</a>
       <span class="left"><span id="interval">5</span> <span id="sec">sec</span></span>
       <a class="button" id="inc-interval">+</a>
