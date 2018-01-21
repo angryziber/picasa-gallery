@@ -8,7 +8,7 @@
       "type": "image/png"
     }
   ],
-  "display": "standalone",
+  "display": "fullscreen",
   "theme_color": "#313131",
   "background_color": "#000000"
 }
