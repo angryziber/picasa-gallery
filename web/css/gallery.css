@@ -535,6 +535,7 @@ h2 {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    width: 100%;
   }
 
   .thumbs.albums {
