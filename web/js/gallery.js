@@ -30,7 +30,7 @@ function GalleryMap() {
       map.fitBounds(initialBounds)
     }
 
-    $(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', function() {
+    $(document).on('webkitfullscreenchange mozfullscreenchange fullscreenchange', function() {
       if (document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen) {
         if (map.getZoom() < hoverZoom) {
           map.setCenter(latLng(0, 0))
