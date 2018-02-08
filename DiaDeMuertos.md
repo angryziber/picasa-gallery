@@ -29,4 +29,4 @@ Beware of pickpocketing. I was really careful with protecting my camera, but in 
 missing my wallet and phone. This made the rest of the trip quite difficult, because I also
 forgot about the basic precaution of splitting bank cards into several places. They took all of
 them at once. Anyway, the parade was great, as also the other days of visiting the altars all around the 
-city, especially in San Antonio and Coyoacan.
+city, especially in San Angel and Coyoacan.
