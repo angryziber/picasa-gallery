@@ -30,3 +30,6 @@ missing my wallet and phone. This made the rest of the trip quite difficult, bec
 forgot about the basic precaution of splitting bank cards into several places. They took all of
 them at once. Anyway, the parade was great, as also the other days of visiting the altars all around the 
 city, especially in San Angel and Coyoacan.
+
+During the whole time you can easily find make-up tents (e.g. next to Bellas Artes), where your face
+will become a skull if you are a male or a beatifully decorated Catrina if you are a female.
