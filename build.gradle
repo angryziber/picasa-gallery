@@ -1,5 +1,5 @@
 buildscript {
-  ext.kotlin_version = '1.2.40'
+  ext.kotlin_version = '1.2.51'
   ext.appengine_version = '1.9.59'
   repositories {
     mavenCentral()
