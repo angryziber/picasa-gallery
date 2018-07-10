@@ -1,7 +1,7 @@
 package photos
 
-import com.nhaarman.mockito_kotlin.doReturn
-import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
 import io.kotlintest.specs.StringSpec
 import org.assertj.core.api.Assertions.assertThat
 import util.XMLParser

@@ -49,9 +49,7 @@ dependencies {
   compile 'com.github.scribejava:scribejava-apis:4.0.0'
   compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
   testCompile 'org.assertj:assertj-core:3.6.1'
-  testCompile('com.nhaarman:mockito-kotlin:1.5.0') {
-    exclude group: 'org.jetbrains.kotlin'
-  }
+  testCompile 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0-RC1'
   testCompile 'io.kotlintest:kotlintest-runner-junit5:3.1.7'
 }
 

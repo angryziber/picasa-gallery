@@ -1,6 +1,6 @@
 package web
 
-import com.nhaarman.mockito_kotlin.*
+import com.nhaarman.mockitokotlin2.*
 import io.kotlintest.Description
 import io.kotlintest.specs.WordSpec
 import org.assertj.core.api.Assertions.assertThat
