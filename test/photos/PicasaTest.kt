@@ -4,14 +4,14 @@ import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.spy
 import com.nhaarman.mockito_kotlin.whenever
+import io.kotlintest.specs.StringSpec
 import org.assertj.core.api.Assertions.assertThat
-import org.jetbrains.spek.api.Spek
 import java.util.Arrays.asList
 
-class PicasaTest: Spek({
+class PicasaTest: StringSpec({
   var picasa = Picasa(LocalContent(null))
 
-  it("distributes weighted random according to the size of album") {
+  "distributes weighted random according to the size of album" {
     val album1 = mock<Album>()
     whenever(album1.size()).thenReturn(10)
     val album2 = mock<Album>()

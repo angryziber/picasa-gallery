@@ -2,14 +2,14 @@ package photos
 
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
+import io.kotlintest.specs.StringSpec
 import org.assertj.core.api.Assertions.assertThat
-import org.jetbrains.spek.api.Spek
 import util.XMLParser
 
-class GalleryLoaderTest: Spek({
+class GalleryLoaderTest: StringSpec({
   val xml = Gallery::class.java.getResourceAsStream("gallery.xml")
 
-  it("parses gallery feed") {
+  "parses gallery feed" {
     val gallery = XMLParser(GalleryLoader(LocalContent(null), 212)).parse(xml)
     assertThat(gallery.authorId).isEqualTo("117440562642491680332")
     assertThat(gallery.author).isEqualTo("Anton Keks")
@@ -30,7 +30,7 @@ class GalleryLoaderTest: Spek({
     assertThat(album.size()).isEqualTo(159)
   }
 
-  it("loads non-public albums which exist in content") {
+  "loads non-public albums which exist in content" {
     val content = mock<LocalContent> {
       on {contains("blah")} doReturn true
     }

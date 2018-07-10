@@ -2,17 +2,17 @@ package web
 
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
+import io.kotlintest.specs.StringSpec
 import org.assertj.core.api.Assertions.assertThat
-import org.jetbrains.spek.api.Spek
 import java.io.PrintWriter
 import java.io.StringWriter
 import javax.servlet.ServletContext
 import javax.servlet.http.HttpServletResponse
 
-class RendererTest() : Spek({
+class RendererTest() : StringSpec({
   val writer = StringWriter()
 
-  it("escapes html") {
+  "escapes html" {
     val servletContext = mock<ServletContext>()
     whenever(servletContext.getRealPath("/WEB-INF/views")).thenReturn("test")
     val response = mock<HttpServletResponse>()

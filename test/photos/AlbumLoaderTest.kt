@@ -1,13 +1,13 @@
 package photos
 
+import io.kotlintest.specs.StringSpec
 import org.assertj.core.api.Assertions.assertThat
-import org.jetbrains.spek.api.Spek
 import util.XMLParser
 
-class AlbumLoaderTest: Spek({
+class AlbumLoaderTest: StringSpec({
   val xml = Album::class.java.getResourceAsStream("album.xml")
 
-  it("parses album feed") {
+  "parses album feed" {
     val album = XMLParser(AlbumLoader(LocalContent(null), 144)).parse(xml)
     assertThat(album.id).isEqualTo("6259054820507852961")
     assertThat(album.name).isEqualTo("Morocco")
