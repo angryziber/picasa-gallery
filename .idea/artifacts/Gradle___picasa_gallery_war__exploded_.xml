@@ -20,15 +20,15 @@
           <element id="library" level="project" name="Gradle: org.apache.velocity:velocity:1.7" />
           <element id="library" level="project" name="Gradle: com.atlassian.commonmark:commonmark:0.7.1" />
           <element id="library" level="project" name="Gradle: com.github.scribejava:scribejava-apis:4.0.0" />
+          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.2.71" />
           <element id="library" level="project" name="Gradle: commons-collections:commons-collections:3.2.1" />
           <element id="library" level="project" name="Gradle: commons-lang:commons-lang:2.4" />
           <element id="library" level="project" name="Gradle: com.github.scribejava:scribejava-core:4.0.0" />
+          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.71" />
+          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.2.71" />
+          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.2.71" />
           <element id="library" level="project" name="Gradle: org.jetbrains:annotations:13.0" />
           <element id="library" level="project" name="Gradle: oro:oro:2.0.8" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.2.71/5470d1f752cd342edb77e1062bac07e838d2cea4/kotlin-stdlib-jdk8-1.2.71.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.2.71/4ce93f539e2133f172f1167291a911f83400a5d0/kotlin-stdlib-jdk7-1.2.71.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.71/d9717625bb3c731561251f8dd2c67a1011d6764c/kotlin-stdlib-1.2.71.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.2.71/ba18ca1aa0e40eb6f1865b324af2f4cbb691c1ec/kotlin-stdlib-common-1.2.71.jar" />
         </element>
       </element>
     </root>

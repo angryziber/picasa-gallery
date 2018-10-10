@@ -1,8 +1,8 @@
 package web
 
-import com.nhaarman.mockitokotlin2.*
 import io.kotlintest.Description
 import io.kotlintest.specs.WordSpec
+import io.mockk.*
 import org.assertj.core.api.Assertions.assertThat
 import photos.Album
 import photos.Config
@@ -12,12 +12,13 @@ import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpServletResponse.SC_MOVED_PERMANENTLY
 
 class RequestRouterTest: WordSpec() {
-  val req = mock<HttpServletRequest>()
-  val res = mock<HttpServletResponse>()
+  val req = mockk<HttpServletRequest>(relaxed = true)
+  val res = mockk<HttpServletResponse>(relaxed = true)
 
   override fun beforeTest(description: Description) {
-    reset(req, res)
-    whenever(req.servletPath).thenReturn("/")
+    clearMocks(req, res)
+    every {req.getParameter(any())} returns null
+    every {req.servletPath} returns "/"
   }
 
   init {
@@ -32,8 +33,8 @@ class RequestRouterTest: WordSpec() {
       }
 
       "redirect to default user in case of other user's request" {
-        whenever(req.getParameter("by")).thenReturn("other.user")
-        whenever(req.getHeader("User-Agent")).thenReturn("Googlebot/2")
+        every {req.getParameter("by")} returns "other.user"
+        every {req.getHeader("User-Agent")} returns "Googlebot/2"
 
         router(req, res).invoke()
 
@@ -42,35 +43,37 @@ class RequestRouterTest: WordSpec() {
     }
 
     "serves shared photo urls that redirect to hashes" should {
-      whenever(req.getHeader("User-Agent")).thenReturn("Normal Browser")
-      whenever(req.servletPath).thenReturn("/Orlova/5347257660284808946")
-      whenever(req["by"]).thenReturn("106730404715258343901")
+      every {req.getHeader("User-Agent")} returns "Normal Browser"
+      every {req.servletPath} returns "/Orlova/5347257660284808946"
+      every {req.getParameter("by")} returns "106730404715258343901"
 
-      val render = mock<Renderer>()
+      val render = mockk<Renderer>(relaxed = true)
       val router = router(req, res, render)
       val album = Album(id = "123123123", name = "Orlova")
       val photo = Photo()
       photo.id = "5347257660284808946"
       album.photos.add(photo)
 
-      router.picasa = spy(router.picasa)
-      doReturn(album).whenever(router.picasa).getAlbum("Orlova")
+      router.picasa = spyk(router.picasa) {
+        every {getAlbum("Orlova")} returns album
+      }
 
       router.invoke()
 
-      verify(render).invoke("photo", photo, router.attrs, res)
+      verify {render.invoke("photo", photo, router.attrs, res)}
       assertThat(router.attrs["album"]).isEqualTo(album)
       assertThat(router.attrs["redirectUrl"]).isEqualTo("/Orlova?by=106730404715258343901#5347257660284808946")
     }
 
     "album" should {
       "redirect id urls to names" {
-        whenever(req.servletPath).thenReturn("/123123123")
-        whenever(req.getHeader("User-Agent")).thenReturn("Normal Browser")
+        every {req.servletPath} returns "/123123123"
+        every {req.getHeader("User-Agent")} returns "Normal Browser"
 
         val router = router(req, res)
-        router.picasa = spy(router.picasa)
-        doReturn(Album(id = "123123123", name = "Hello")).whenever(router.picasa).getAlbum("123123123")
+        router.picasa = spyk(router.picasa) {
+          every {getAlbum("123123123")} returns Album(id = "123123123", name = "Hello")
+        }
 
         router.invoke()
 
@@ -79,10 +82,10 @@ class RequestRouterTest: WordSpec() {
     }
   }
 
-  private fun router(req: HttpServletRequest, res: HttpServletResponse, render: Renderer = mock()) = RequestRouter(req, res, render, mock(), mock())
+  private fun router(req: HttpServletRequest, res: HttpServletResponse, render: Renderer = mockk()) = RequestRouter(req, res, render, mockk(), mockk())
 
   private fun HttpServletResponse.verifyRedirectTo(url: String) {
-    verify(this).status = SC_MOVED_PERMANENTLY
-    verify(this).setHeader("Location", url)
+    verify {status = SC_MOVED_PERMANENTLY}
+    verify {setHeader("Location", url)}
   }
 }

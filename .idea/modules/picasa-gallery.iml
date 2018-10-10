@@ -84,30 +84,36 @@
     <orderEntry type="library" name="Gradle: org.jetbrains:annotations:13.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: oro:oro:2.0.8" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.assertj:assertj-core:3.6.1" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0-RC1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: io.kotlintest:kotlintest-runner-junit5:3.1.7" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: io.mockk:mockk:1.8.9" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: io.kotlintest:kotlintest-runner-jvm:3.1.7" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: io.arrow-kt:arrow-core:0.7.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: io.kotlintest:kotlintest-core:3.1.7" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: io.kotlintest:kotlintest-assertions:3.1.7" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-reflect:1.2.41" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: io.mockk:mockk-dsl-jvm:1.8.9" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-reflect:1.2.71" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: io.arrow-kt:arrow-annotations:0.7.1" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.mockito:mockito-core:2.19.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.junit.platform:junit-platform-launcher:1.2.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.junit.platform:junit-platform-engine:1.2.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.junit.platform:junit-platform-suite-api:1.2.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: net.bytebuddy:byte-buddy:1.8.10" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: net.bytebuddy:byte-buddy-agent:1.8.10" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: org.objenesis:objenesis:2.6" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: io.mockk:mockk-common:1.8.9" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: io.mockk:mockk-agent-jvm:1.8.9" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.univocity:univocity-parsers:2.6.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.reflections:reflections:0.9.11" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.slf4j:slf4j-api:1.7.25" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.junit.platform:junit-platform-commons:1.2.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.apiguardian:apiguardian-api:1.0.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.opentest4j:opentest4j:1.1.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: io.mockk:mockk-dsl:1.8.9" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: io.mockk:mockk-agent-common:1.8.9" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: io.mockk:mockk-agent-api:1.8.9" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.objenesis:objenesis:2.6" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: net.bytebuddy:byte-buddy:1.8.22" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: net.bytebuddy:byte-buddy-agent:1.8.22" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.guava:guava:20.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.javassist:javassist:3.21.0-GA" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: io.kindedj:kindedj:1.1.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: oro:oro:2.0.8" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: org.jetbrains.kotlin:kotlin-reflect:1.2.41" level="project" />
   </component>
 </module>

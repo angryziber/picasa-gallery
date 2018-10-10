@@ -1,8 +1,8 @@
 package photos
 
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
 import io.kotlintest.specs.StringSpec
+import io.mockk.every
+import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat
 import util.XMLParser
 
@@ -31,8 +31,8 @@ class GalleryLoaderTest: StringSpec({
   }
 
   "loads non-public albums which exist in content" {
-    val content = mock<LocalContent> {
-      on {contains("blah")} doReturn true
+    val content = mockk<LocalContent>(relaxed = true) {
+      every {contains("blah")} returns true
     }
     val loader = GalleryLoader(content, 212)
 
