@@ -2,6 +2,7 @@ package web
 
 import photos.LocalContent
 import photos.Picasa
+import views.sitemap
 import javax.servlet.ServletConfig
 import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
@@ -28,8 +29,9 @@ class SiteMapServlet : HttpServlet() {
         }
         "/sitemap.xml" -> {
           resp.contentType = "text/xml"
+          resp.setHeader("Cache-Control", "public")
           val picasa = Picasa(content)
-          render("sitemap", null, mutableMapOf("gallery" to picasa.gallery, "host" to req.getHeader("Host")), resp)
+          out.write(sitemap(req.getHeader("Host"), picasa.gallery))
         }
         else -> resp.sendError(SC_NOT_FOUND)
       }
