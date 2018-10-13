@@ -6,7 +6,7 @@ import javax.servlet.annotation.WebFilter
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-@WebFilter(urlPatterns = ["/*"])
+@WebFilter("/*")
 class RequestFilter : Filter {
   private lateinit var render: Renderer
   private lateinit var content: LocalContent
