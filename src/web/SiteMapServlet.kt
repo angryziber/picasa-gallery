@@ -4,11 +4,13 @@ import photos.LocalContent
 import photos.Picasa
 import views.sitemap
 import javax.servlet.ServletConfig
+import javax.servlet.annotation.WebServlet
 import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpServletResponse.SC_NOT_FOUND
 
+@WebServlet(urlPatterns = ["/robots.txt", "/sitemap.xml"])
 class SiteMapServlet : HttpServlet() {
   lateinit var render: Renderer
   lateinit var content: LocalContent

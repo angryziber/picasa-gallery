@@ -2,9 +2,11 @@ package web
 
 import photos.LocalContent
 import javax.servlet.*
+import javax.servlet.annotation.WebFilter
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
+@WebFilter(urlPatterns = ["/*"])
 class RequestFilter : Filter {
   private lateinit var render: Renderer
   private lateinit var content: LocalContent
