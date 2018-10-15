@@ -63,7 +63,6 @@ private val css = """
 //language=JavaScript
 private fun morePhotosJS(photos: List<Photo>, delayMs: String?, refresh: Boolean) = """
   var photos = [${photos.toJson()}];
-  photos.pop();
   var index = 1;
   new Image().src = photos[index].url;
   var desc = document.getElementById('description');
