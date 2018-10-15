@@ -19,15 +19,15 @@ fun random(random: RandomPhotos, delayMs: String?, refresh: Boolean) = """
   <div>${+random.author}</div>
 </div>
 <script>
-  var img = document.getElementById('img');
-  img.style.display = 'none';
+  var img = document.getElementById('img')
+  img.style.display = 'none'
   window.onload = function() {
-    img.style.display = 'block';
-  };
+    img.style.display = 'block'
+  }
 </script>
 <script src="/js/chromecast.js"></script>
 <script>
-  chromecast.send('${+random.photos[0].url}');
+  chromecast.send('${+random.photos[0].url}')
   ${(random.photos.size > 1) / morePhotosJS(random.photos, delayMs, refresh)}
 </script>
 </body>
@@ -62,22 +62,22 @@ private const val css = """
 
 //language=JavaScript
 private fun morePhotosJS(photos: List<Photo>, delayMs: String?, refresh: Boolean) = """
-  var photos = [${photos.toJson()}];
-  var index = 1;
-  new Image().src = photos[index].url;
-  var desc = document.getElementById('description');
+  var photos = [${photos.toJson()}]
+  var index = 1
+  new Image().src = photos[index].url
+  var desc = document.getElementById('description')
 
   setInterval(function() {
-    ${refresh / """if (index == 0) { location.reload(); return; }"""}
-    var url = photos[index].url;
-    img.style.backgroundImage = 'url(' + url + ')';
-    chromecast.send(url);
-    desc.innerHTML = photos[index].description;
-    if (++index >= photos.length) index = 0;
-    new Image().src = photos[index].url;
-  }, ${delayMs ?: 8000});
+    ${refresh / """if (index == 0) { location.reload(); return }"""}
+    var url = photos[index].url
+    img.style.backgroundImage = 'url(' + url + ')'
+    chromecast.send(url)
+    desc.innerHTML = photos[index].description
+    if (++index >= photos.length) index = 0
+    new Image().src = photos[index].url
+  }, ${delayMs ?: 8000})
 """
 
-private fun List<Photo>.toJson() = joinToString {
-  """{url:'${it.url.escapeJS()}', description:'${it.description?.replace(newline, " ")?.escapeJS()}'}"""
+private fun List<Photo>.toJson() = joinToString { """
+  {url:'${it.url.escapeJS()}', description:'${it.description?.replace(newline, " ")?.escapeJS()}'}"""
 }
