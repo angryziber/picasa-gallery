@@ -18,7 +18,6 @@ fun random(random: RandomPhotos, delayMs: String?, refresh: Boolean) = """
   <div id="description">${random.photos[0].description}</div>
   <div>${random.author}</div>
 </div>
-</body>
 <script>
   var img = document.getElementById('img');
   img.style.display = 'none';
@@ -31,6 +30,7 @@ fun random(random: RandomPhotos, delayMs: String?, refresh: Boolean) = """
   chromecast.send('${random.photos[0].url}');
   ${(random.photos.size > 1) / morePhotosJS(random.photos, delayMs, refresh)}
 </script>
+</body>
 </html>
 """
 
