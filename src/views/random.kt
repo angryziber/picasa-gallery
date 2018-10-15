@@ -8,30 +8,7 @@ fun random(random: RandomPhotos, delayMs: String?, refresh: Boolean) = """
 <html>
 <head>
   <title>Random photo by ${random.author} from ${random.album}</title>
-  <style type="text/css">
-    html, body {
-      height: 100%;
-      background: black;
-      margin: 0;
-      font-family: sans-serif;
-    }
-    #img {
-      width: 100%;
-      height: 100%;
-      background: no-repeat center;
-      background-size: contain;
-      transition: background-image 0.5s;
-    }
-    #title {
-      position: absolute;
-      bottom: 25px;
-      right: 40px;
-      color: white;
-      text-shadow: 0 0 10px black;
-      padding: 3px 5px;
-      text-align: right;
-    }
-  </style>
+  <style type="text/css">$css</style>
 </head>
 <body>
 <div id="img" style="background-image: url(${random.photos[0].url})"></div>
@@ -74,6 +51,32 @@ fun random(random: RandomPhotos, delayMs: String?, refresh: Boolean) = """
   """ else ""}
 </script>
 </html>
+"""
+
+//language=CSS
+private val css = """
+  html, body {
+    height: 100%;
+    background: black;
+    margin: 0;
+    font-family: sans-serif;
+  }
+  #img {
+    width: 100%;
+    height: 100%;
+    background: no-repeat center;
+    background-size: contain;
+    transition: background-image 0.5s;
+  }
+  #title {
+    position: absolute;
+    bottom: 25px;
+    right: 40px;
+    color: white;
+    text-shadow: 0 0 10px black;
+    padding: 3px 5px;
+    text-align: right;
+  }
 """
 
 private val newline = "\r?\n".toRegex()
