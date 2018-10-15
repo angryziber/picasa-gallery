@@ -29,23 +29,7 @@ fun random(random: RandomPhotos, delayMs: String?, refresh: Boolean) = """
 <script src="/js/chromecast.js"></script>
 <script>
   chromecast.send('${random.photos[0].url}');
-  ${if(random.photos.size > 1) """
-    var photos = [${random.photos.toJson()}];
-    photos.pop();
-    var index = 1;
-    new Image().src = photos[index].url;
-    var desc = document.getElementById('description');
-
-    setInterval(function() {
-      ${if (refresh) """if (index == 0) { location.reload(); return; }""" else ""}
-      var url = photos[index].url;
-      img.style.backgroundImage = 'url(' + url + ')';
-      chromecast.send(url);
-      desc.innerHTML = photos[index].description;
-      if (++index >= photos.length) index = 0;
-      new Image().src = photos[index].url;
-    }, ${delayMs ?: 8000});
-  """ else ""}
+  ${(random.photos.size > 1) / morePhotosJS(random.photos, delayMs, refresh)}
 </script>
 </html>
 """
@@ -76,8 +60,29 @@ private val css = """
   }
 """
 
+//language=JavaScript
+private fun morePhotosJS(photos: List<Photo>, delayMs: String?, refresh: Boolean) = """
+  var photos = [${photos.toJson()}];
+  photos.pop();
+  var index = 1;
+  new Image().src = photos[index].url;
+  var desc = document.getElementById('description');
+
+  setInterval(function() {
+    ${refresh / """if (index == 0) { location.reload(); return; }"""}
+    var url = photos[index].url;
+    img.style.backgroundImage = 'url(' + url + ')';
+    chromecast.send(url);
+    desc.innerHTML = photos[index].description;
+    if (++index >= photos.length) index = 0;
+    new Image().src = photos[index].url;
+  }, ${delayMs ?: 8000});
+"""
+
 private fun List<Photo>.toJson() = joinToString {
   """{url:'${it.url}', description:'${it.description?.replace(newline, "")}'}"""
 }
 
 private val newline = "\r?\n".toRegex()
+
+private operator fun Boolean.div(s: String) = if (this) s else ""
