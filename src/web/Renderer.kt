@@ -41,4 +41,17 @@ open class Renderer(servletContext: ServletContext) {
 
     logger.info("Rendered in " + (System.currentTimeMillis() - start) + " ms")
   }
+
+  open operator fun invoke(response: HttpServletResponse, html: () -> String) {
+    val start = System.currentTimeMillis()
+
+    if (response.contentType == null)
+      response.contentType = "text/html; charset=utf8"
+
+    response.setHeader("Cache-Control", "public")
+
+    response.writer.write(html())
+
+    logger.info("Rendered in " + (System.currentTimeMillis() - start) + " ms")
+  }
 }

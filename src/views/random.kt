@@ -1,3 +1,9 @@
+package views
+
+import photos.RandomPhotos
+
+//language=HTML
+fun random(random: RandomPhotos, delayMs: String?, refresh: Boolean) = """
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,8 +18,7 @@
     #img {
       width: 100%;
       height: 100%;
-      background-position: center center;
-      background-repeat: no-repeat;
+      background: no-repeat center;
       background-size: contain;
       transition: background-image 0.5s;
     }
@@ -44,29 +49,29 @@
   };
 </script>
 <script src="/js/chromecast.js"></script>
-#set($newline="
-")
 <script>
   chromecast.send('${random.photos[0].url}');
-  #if($random.photos.size() > 1)
+  ${if(random.photos.size > 1) """
     var photos = [
-        #foreach($photo in $random.photos)
-            {url:'${photo.url}', description:'${photo.description.replace("\r", "").replace($newline, " ")}'},
-        #end null];
+      ${random.photos.map {
+        """{url:'${it.url}', description:'${it.description?.replace("\r", "")?.replace("\n", " ")}'}"""
+      }.joinToString()}
+    ];
     photos.pop();
     var index = 1;
     new Image().src = photos[index].url;
     var desc = document.getElementById('description');
 
     setInterval(function() {
-      #if($refresh)if (index == 0) { location.reload(); return; }#end
+      ${if (refresh) """if (index == 0) { location.reload(); return; }""" else ""}
       var url = photos[index].url;
       img.style.backgroundImage = 'url(' + url + ')';
       chromecast.send(url);
       desc.innerHTML = photos[index].description;
       if (++index >= photos.length) index = 0;
       new Image().src = photos[index].url;
-    }, #if($delay) ${delay} #else 8000 #end);
-  #end
+    }, ${delayMs ?: 8000});
+  """ else ""}
 </script>
 </html>
+"""
