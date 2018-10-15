@@ -54,7 +54,7 @@ fun random(random: RandomPhotos, delayMs: String?, refresh: Boolean) = """
   ${if(random.photos.size > 1) """
     var photos = [
       ${random.photos.map {
-        """{url:'${it.url}', description:'${it.description?.replace("\r", "")?.replace("\n", " ")}'}"""
+        """{url:'${it.url}', description:'${it.description?.replace(newline, "")}'}"""
       }.joinToString()}
     ];
     photos.pop();
@@ -75,3 +75,5 @@ fun random(random: RandomPhotos, delayMs: String?, refresh: Boolean) = """
 </script>
 </html>
 """
+
+private val newline = "\r?\n".toRegex()
