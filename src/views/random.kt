@@ -1,5 +1,6 @@
 package views
 
+import photos.Photo
 import photos.RandomPhotos
 
 //language=HTML
@@ -29,11 +30,7 @@ fun random(random: RandomPhotos, delayMs: String?, refresh: Boolean) = """
 <script>
   chromecast.send('${random.photos[0].url}');
   ${if(random.photos.size > 1) """
-    var photos = [
-      ${random.photos.map {
-        """{url:'${it.url}', description:'${it.description?.replace(newline, "")}'}"""
-      }.joinToString()}
-    ];
+    var photos = [${random.photos.toJson()}];
     photos.pop();
     var index = 1;
     new Image().src = photos[index].url;
@@ -78,5 +75,9 @@ private val css = """
     text-align: right;
   }
 """
+
+private fun List<Photo>.toJson() = joinToString {
+  """{url:'${it.url}', description:'${it.description?.replace(newline, "")}'}"""
+}
 
 private val newline = "\r?\n".toRegex()
