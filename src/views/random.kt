@@ -8,15 +8,15 @@ fun random(random: RandomPhotos, delayMs: String?, refresh: Boolean) = """
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Random photo by ${random.author} from ${random.album}</title>
+  <title>Random photo by ${+random.author} from ${+random.album}</title>
   <style type="text/css">$css</style>
 </head>
 <body>
-<div id="img" style="background-image: url(${random.photos[0].url})"></div>
+<div id="img" style="background-image: url(${+random.photos[0].url})"></div>
 <div id="title">
-  <b>${random.album}</b>
-  <div id="description">${random.photos[0].description}</div>
-  <div>${random.author}</div>
+  <b>${+random.album}</b>
+  <div id="description">${+random.photos[0].description}</div>
+  <div>${+random.author}</div>
 </div>
 <script>
   var img = document.getElementById('img');
@@ -27,7 +27,7 @@ fun random(random: RandomPhotos, delayMs: String?, refresh: Boolean) = """
 </script>
 <script src="/js/chromecast.js"></script>
 <script>
-  chromecast.send('${random.photos[0].url}');
+  chromecast.send('${+random.photos[0].url}');
   ${(random.photos.size > 1) / morePhotosJS(random.photos, delayMs, refresh)}
 </script>
 </body>
@@ -35,7 +35,7 @@ fun random(random: RandomPhotos, delayMs: String?, refresh: Boolean) = """
 """
 
 //language=CSS
-private val css = """
+private const val css = """
   html, body {
     height: 100%;
     background: black;
@@ -79,9 +79,5 @@ private fun morePhotosJS(photos: List<Photo>, delayMs: String?, refresh: Boolean
 """
 
 private fun List<Photo>.toJson() = joinToString {
-  """{url:'${it.url}', description:'${it.description?.replace(newline, "")}'}"""
+  """{url:'${it.url.escapeJS()}', description:'${it.description?.replace(newline, " ")?.escapeJS()}'}"""
 }
-
-private val newline = "\r?\n".toRegex()
-
-private operator fun Boolean.div(s: String) = if (this) s else ""
