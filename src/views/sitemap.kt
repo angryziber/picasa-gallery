@@ -6,15 +6,15 @@ import photos.Gallery
 fun sitemap(host: String, gallery: Gallery) = """
 <urlset xmlns="http://www.google.com/schemas/sitemap/0.9">
   <url>
-    <loc>https://${host}/</loc>
+    <loc>https://$host/</loc>
     <lastmod>${gallery.timestampISO}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1</priority>
   </url>
-  ${gallery.albums.values.joinToString("") { album -> """
+  ${gallery.albums.values.each { """
     <url>
-      <loc>https://${host}/${album.name}</loc>
-      <lastmod>${album.timestampISO}</lastmod>
+      <loc>https://$host/$name</loc>
+      <lastmod>$timestampISO</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.8</priority>
     </url>

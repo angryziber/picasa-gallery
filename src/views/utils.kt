@@ -8,3 +8,5 @@ fun String?.escapeHTML() = this?.replace("<", "&lt;") ?: ""
 fun String?.escapeJS() = this?.replace("'", "\\'") ?: ""
 
 operator fun String?.unaryPlus() = escapeHTML()
+
+fun <T> Collection<T>.each(itemTemplate: T.() -> String) = joinToString("", transform = itemTemplate)
