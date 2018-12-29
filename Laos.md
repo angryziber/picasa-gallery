@@ -3,7 +3,7 @@
 # Laos
 ## May 2018
 
-We went to Laos from Chiang Rai (Thailand), opting for a famous "slow boat" that takes you from Huay Xai
+We went to Laos from Chiang Rai (Thailand), opting for the famous "slow boat" that takes you from Huay Xai
 just across the border with Thailand downstream the Mekong river to Luang Prabang, the historical capital
 of Laos.
 
