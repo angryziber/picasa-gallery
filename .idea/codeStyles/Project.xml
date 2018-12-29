@@ -7,7 +7,7 @@
         <option name="TAB_SIZE" value="2" />
       </value>
     </option>
-    <JSCodeStyleSettings>
+    <JSCodeStyleSettings version="0">
       <option name="USE_SEMICOLON_AFTER_STATEMENT" value="false" />
       <option name="SPACE_BEFORE_FUNCTION_LEFT_PARENTH" value="false" />
     </JSCodeStyleSettings>

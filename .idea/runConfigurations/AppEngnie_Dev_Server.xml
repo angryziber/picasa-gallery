@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="AppEngnie Dev Server" type="GoogleAppEngineDevServer" factoryName="Local" APPLICATION_SERVER_NAME="AppEngine Dev 1.9.59" ALTERNATIVE_JRE_ENABLED="false">
+  <configuration default="false" name="AppEngnie Dev Server" type="GoogleAppEngineDevServer" factoryName="Local" APPLICATION_SERVER_NAME="AppEngine Dev 1.9.71" ALTERNATIVE_JRE_ENABLED="false">
     <option name="OPEN_IN_BROWSER" value="false" />
     <option name="SHOW_DIALOG_ON_UPDATE" value="false" />
     <server-settings>
