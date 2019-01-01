@@ -1,18 +1,16 @@
 'use strict'
 
 function GalleryMap() {
-  var initialBounds, hoverZoom, zoomTimer
+  var hoverZoom, zoomTimer
 
   function init() {
     if (!window.google) return
-    initialBounds = new google.maps.LatLngBounds()
     var map = createMap('#map')
     $('.albums > a').each(function(i, link) {
       var pos = extractPos(this)
       if (!pos) return
       var marker = new google.maps.Marker({position: pos, map: map, title: $(link).find('.title > .text').text()})
       setMarkerIcon(marker)
-      initialBounds.extend(pos)
       google.maps.event.addListener(marker, 'click', function() {$(link).click()})
       albumThumbHover($(this), map, marker)
     })
@@ -22,13 +20,7 @@ function GalleryMap() {
       google.maps.event.removeListener(zoomListener)
     })
 
-    if (initialBounds.isEmpty()) {
-      map.setCenter(latLng(0, 0))
-      map.setZoom(1)
-    }
-    else {
-      map.fitBounds(initialBounds)
-    }
+    resetBounds(map)
 
     $(document).on('webkitfullscreenchange mozfullscreenchange fullscreenchange', function() {
       if (document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen) {
@@ -38,6 +30,11 @@ function GalleryMap() {
         }
       }
     });
+  }
+
+  function resetBounds(map) {
+    map.setCenter(latLng(0, 0))
+    map.setZoom(0)
   }
 
   function albumThumbHover(thumb, map, marker) {
@@ -55,7 +52,7 @@ function GalleryMap() {
       clearTimeout(zoomTimer)
       zoomTimer = setTimeout(function() {
         if (!$('#map').is(':hover'))
-          map.fitBounds(initialBounds)
+          resetBounds(map)
       }, 500)
     })
   }
