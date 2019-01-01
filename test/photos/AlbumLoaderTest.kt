@@ -16,7 +16,6 @@ class AlbumLoaderTest: StringSpec({
     assertThat(album.author).isEqualTo("Anton Keks")
     assertThat(album.authorId).isEqualTo("117440562642491680332")
     assertThat(album.access).isEqualTo(Album.Access.public)
-    assertThat(album.isPublic).isTrue()
     assertThat(album.thumbUrl).isEqualTo("https://lh3.googleusercontent.com/-ooqeMhFMze0/VtyhMoYRIKE/AAAAAAABNJQ/DruDrN8NmjEw-QT-28mIrn0OPW4sqwXPgCHM/s160-c/Morocco.jpg")
     assertThat(album.timestamp).isEqualTo(1431327600000L)
     assertThat(album.geo!!.lat).isEqualTo(31.791702f)

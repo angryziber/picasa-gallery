@@ -15,7 +15,6 @@ open class Album(
 
   var size = 0
   var access = Access.private
-  val isPublic get() = access == Access.public
 
   var name = name
     set(value) { if (value != id) field = value }

@@ -133,9 +133,7 @@
   </div>
 </div>
 
-#if($album.public)
-  #parse('sharing.vm')
-#end
+#parse('sharing.vm')
 
 <script>new ThumbsView(${album.thumbSize})</script>
 
