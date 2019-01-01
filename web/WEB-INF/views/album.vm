@@ -75,7 +75,8 @@
          #if($photo.timestamp)data-time="${photo.dateTime}"#end
          #if($photo.geo)data-coords="${photo.geo.lat}:${photo.geo.lon}"#end
          #if($photo.exif.fstop)data-exif="${photo.exif.fstop}:${photo.exif.exposure}:${photo.exif.iso}:${photo.exif.focal}"#end>
-        <img data-src="${photo.thumbUrl}" #if(!$photo.description.empty)alt="${photo.description}"#end>
+        <img #if($bot)src="${photo.thumbUrl}"#else data-src="${photo.thumbUrl}"#end
+             #if(!$photo.description.empty)alt="${photo.description}"#end>
       </a>
     #end
   </div>
