@@ -50,7 +50,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
         picasa.urlPrefix == path || "/" == path -> renderGallery()
         path.isResource() -> chain.doFilter(req, res)
         // pathParts.size == 1 -> throw Redirect(picasa.urlPrefix + path)
-        pathParts.size == 2 && pathParts[1].matches("\\d+".toRegex()) -> photoShareUrl(pathParts[0], pathParts[1])
+        pathParts.size == 2 && pathParts[1].matches("\\d+".toRegex()) -> renderPhotoPage(pathParts[0], pathParts[1])
         else -> renderAlbum(pathParts.last())
       }
     }
@@ -63,7 +63,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
     }
   }
 
-  fun String.isResource() = lastIndexOf('.') >= length - 5
+  private fun String.isResource() = lastIndexOf('.') >= length - 5
 
   private fun renderGallery() {
     render("gallery", picasa.gallery, attrs, res)
@@ -76,13 +76,11 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
     render("album", album, attrs, res)
   }
 
-  private fun photoShareUrl(albumId: String, photoId: String) {
-    if (bot) throw MissingResourceException(path, "", "")
+  private fun renderPhotoPage(albumId: String, photoId: String) {
     val album = picasa.getAlbum(albumId)
     val photo = album.photos.find { it.id == photoId } ?: throw MissingResourceException(path, "", "")
-    attrs["redirectUrl"] = "/${albumId}${picasa.urlSuffix}#${photoId}"
-    attrs["album"] = album
-    render("photo", photo, attrs, res)
+    val redirectUrl = "/${albumId}${picasa.urlSuffix}#${photoId}"
+    render(res) { views.photo(photo, album, if (bot) null else redirectUrl) }
   }
 
   private fun renderAlbum(name: String) {
