@@ -7,6 +7,7 @@ class Photo : Entity() {
   var height: Int? = null
   var url: String? = null
   var exif = Exif()
+  var albumId: String? = null
 
   val dateTime: String
     get() = SimpleDateFormat("yyyy-MM-dd HH:mm").format(timestamp)

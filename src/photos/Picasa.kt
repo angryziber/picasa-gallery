@@ -72,7 +72,7 @@ class Picasa(private val content: LocalContent, user: String? = null, private va
 
   fun search(query: String): Album {
     val thumbSize = 144
-    return AlbumLoader(content, thumbSize).load("?kind=photo&q=" + urlEncode(query) + "&imgmax=${imgSize}&thumbsize=${thumbSize}c")
+    return SearchLoader(content, thumbSize, gallery.albums.values).load("?kind=photo&q=" + urlEncode(query) + "&imgmax=${imgSize}&thumbsize=${thumbSize}c")
   }
 
   private fun <T: Entity> XMLListener<T>.load(query: String)

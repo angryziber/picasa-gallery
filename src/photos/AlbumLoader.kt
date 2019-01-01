@@ -2,7 +2,7 @@ package photos
 
 import util.XMLListener
 
-class AlbumLoader(val content: LocalContent, thumbSize: Int) : XMLListener<Album> {
+open class AlbumLoader(val content: LocalContent, thumbSize: Int) : XMLListener<Album> {
   private var photo: Photo? = null
   private var comment: Comment? = null
   override val result = Album(thumbSize)
@@ -25,14 +25,8 @@ class AlbumLoader(val content: LocalContent, thumbSize: Int) : XMLListener<Album
         }
         "where/Point/pos" -> geo = GeoLocation(value)
         "entry/category@term" -> when {
-          value.endsWith("photo") -> {
-            photo = Photo()
-            photos.add(photo!!)
-          }
-          value.endsWith("comment") -> {
-            comment = Comment()
-            comments.add(comment!!)
-          }
+          value.endsWith("photo") -> photo = Photo()
+          value.endsWith("comment") -> comment = Comment()
         }
       }
     }
@@ -40,6 +34,7 @@ class AlbumLoader(val content: LocalContent, thumbSize: Int) : XMLListener<Album
     photo?.apply { 
       when (path) {
         "entry/id" -> id = value
+        "entry/albumid" -> albumId = value
         "entry/title" -> title = value
         "entry/summary" -> description = value
         "entry/timestamp" -> timestamp = value.toLong()
@@ -74,9 +69,14 @@ class AlbumLoader(val content: LocalContent, thumbSize: Int) : XMLListener<Album
     return url.substring(0, url.lastIndexOf('/') + 1) + "${result.name}-${desc}.jpg"
   }
 
+  open protected fun addPhoto(photo: Photo) = result.photos.add(photo)
+  open protected fun addComment(comment: Comment) = result.comments.add(comment)
+
   override fun end(path: String) {
     if ("entry" == path) {
+      photo?.let(::addPhoto)
       photo = null
+      comment?.let(::addComment)
       comment = null
       content.applyTo(result)
     }
