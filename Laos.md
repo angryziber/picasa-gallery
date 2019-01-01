@@ -1,7 +1,7 @@
 .coords 19.8856764 102.1280478
 
 # Laos
-## May 2018
+## May 2018, Mekong and Luang Prabang
 
 We went to Laos from Chiang Rai (Thailand), opting for the famous "slow boat" that takes you from Huay Xai
 just across the border with Thailand downstream the Mekong river to Luang Prabang, the historical capital
