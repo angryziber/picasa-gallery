@@ -42,7 +42,7 @@ class RequestRouterTest: WordSpec() {
       }
     }
 
-    "serves shared photo urls that redirect to hashes" should {
+    "serves photo page for sharing and bots that redirect to album with photo hash" should {
       every {req.getHeader("User-Agent")} returns "Normal Browser"
       every {req.servletPath} returns "/Orlova/5347257660284808946"
       every {req.getParameter("by")} returns "106730404715258343901"
@@ -52,6 +52,7 @@ class RequestRouterTest: WordSpec() {
       val album = Album(id = "123123123", name = "Orlova")
       val photo = Photo()
       photo.id = "5347257660284808946"
+      photo.timestamp = 123L
       album.photos.add(photo)
 
       router.picasa = spyk(router.picasa) {
@@ -60,9 +61,9 @@ class RequestRouterTest: WordSpec() {
 
       router.invoke()
 
-      verify {render.invoke("photo", photo, router.attrs, res)}
-      assertThat(router.attrs["album"]).isEqualTo(album)
-      assertThat(router.attrs["redirectUrl"]).isEqualTo("/Orlova?by=106730404715258343901#5347257660284808946")
+      val view = slot<() -> String>()
+      verify {render.invoke(res, capture(view))}
+      assertThat(view.captured()).contains("'/Orlova?by=106730404715258343901#5347257660284808946'")
     }
 
     "album" should {
