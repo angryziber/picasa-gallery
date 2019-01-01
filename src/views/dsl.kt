@@ -3,6 +3,7 @@ package views
 val newline = "\r?\n".toRegex()
 
 operator fun Boolean.div(s: String) = if (this) s else ""
+operator fun Any?.div(s: String) = if (this != null) s else ""
 
 fun String?.escapeHTML() = this?.replace("<", "&lt;")?.replace("\"", "&quot;") ?: ""
 fun String?.escapeJS() = this?.replace("'", "\\'") ?: ""

@@ -28,9 +28,7 @@ fun photo(photo: Photo, album: Album, redirectUrl: String?) = """
       <img itemprop="image" src="${photo.url}" alt="${+(photo.description ?: album.title)}">
     </div>
   </div>
-  ${redirectUrl?.let { """
-    <script>location.href = '$it'</script>
-  """ } ?: ""}
+  ${redirectUrl / """<script>location.href = '$redirectUrl'</script>""" }}
 </body>
 </html>
 """
