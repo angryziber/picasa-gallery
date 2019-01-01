@@ -55,15 +55,17 @@ function PhotoViewer() {
     $('a.photo').on('click', pub.open).each(function() {
       var title = $('img', this).attr('alt')
       photos.push({
-        url: this.href,
+        url: this.dataset.url,
         title: title,
         id: this.id,
         pos: extractPos(this),
         exif: extractExif(this),
         time: this.dataset.time
       })
-      this.href = this.dataset.href
+      this.href = '#' + this.id
       if (title) this.setAttribute('title', title)
+      delete this.dataset.url
+      delete this.dataset.href
     })
 
     wrapper = $('#photo-wrapper')
