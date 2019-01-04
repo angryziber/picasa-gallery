@@ -9,6 +9,7 @@ fun photo(photo: Photo, album: Album, redirectUrl: String?) = """
 <html lang="en">
 <head>
   <title>${+album.title} - ${+photo.description} by ${+album.author}</title>
+  <meta name="viewport" content="width=device-width">
   <meta name="medium" content="image">
   <meta property="og:title" content="${+(photo.description ?: album.title)} by ${+album.author}">
   <meta property="og:image" content="${+photo.thumbUrlLarge}">
