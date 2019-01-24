@@ -81,7 +81,7 @@ class Picasa(private val content: LocalContent, user: String? = null, private va
   private fun toFullUrl(query: String): String {
     var url = Config.oauthScope + "feed/api/user/" + urlEncode(user) + query
     if (authKey != null) url += (if (url.contains("?")) "&" else "?") + "authkey=" + authKey
-    return url
+    return "$url&deprecation-extension=true"
   }
 
   private fun urlEncode(name: String): String {
