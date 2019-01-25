@@ -9,13 +9,14 @@ import java.util.*
 class Http {
   fun send(url: String, body: String? = null): InputStream {
     val conn = connect(url)
+    conn.setRequestProperty("Accept", "application/json")
     OAuth.authorize(conn)
 
     if (body != null) {
       conn.setRequestProperty("Content-Type", "application/json")
       conn.doOutput = true
-      conn.outputStream.use {
-        it.bufferedWriter().write(body)
+      conn.outputStream.bufferedWriter().use {
+        it.write(body)
       }
     }
 
