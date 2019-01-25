@@ -12,16 +12,16 @@ class Http {
     OAuth.authorize(conn)
 
     if (body != null) {
-      conn.doOutput = true
       conn.setRequestProperty("Content-Type", "application/json")
+      conn.doOutput = true
       conn.outputStream.use {
         it.bufferedWriter().write(body)
       }
     }
 
     if (conn.responseCode != 200)
-      throw MissingResourceException(url + ": " + (conn.errorStream
-          ?: conn.inputStream).readBytes().toString(Charsets.UTF_8), null, null)
+      throw MissingResourceException(url + ": " + (conn.errorStream ?: conn.inputStream)
+          .readBytes().toString(Charsets.UTF_8), null, null)
 
     return conn.inputStream
   }
