@@ -6,7 +6,7 @@ import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat
 
 class JsonLoaderTest: StringSpec({
-  "load many pages" {
+  "load all pages" {
     val http = mockk<Http>()
     every { http.get("http://albums?pageSize=50") } returns
         JsonLoader::class.java.getResourceAsStream("albums.json")
