@@ -24,9 +24,7 @@ class Picasa(private val content: LocalContent, user: String? = null, private va
   val gallery: Gallery
     get() {
       val thumbSize = 212
-      val url = "?kind=album&thumbsize=${thumbSize}c" +
-                "&fields=id,updated,gphoto:*,entry(title,summary,updated,content,category,gphoto:*,media:*,georss:*)"
-      return GalleryLoader(content, thumbSize).load(url)
+      return GalleryLoader(content, thumbSize).load("/v1/albums")
     }
 
   fun getAlbum(name: String): Album {
@@ -78,11 +76,7 @@ class Picasa(private val content: LocalContent, user: String? = null, private va
   private fun <T: Entity> XMLListener<T>.load(query: String)
       = URLLoader.load(toFullUrl(query), this)
 
-  private fun toFullUrl(query: String): String {
-    var url = Config.oauthScope + "feed/api/user/" + urlEncode(user) + query
-    if (authKey != null) url += (if (url.contains("?")) "&" else "?") + "authkey=" + authKey
-    return "$url&deprecation-extension=true"
-  }
+  private fun toFullUrl(query: String) = Config.apiBase + query
 
   private fun urlEncode(name: String): String {
     return URLEncoder.encode(name, "UTF-8")
