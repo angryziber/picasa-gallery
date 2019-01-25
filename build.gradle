@@ -48,6 +48,7 @@ dependencies {
   providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
   compile 'com.atlassian.commonmark:commonmark:0.7.1'
   compile 'com.github.scribejava:scribejava-apis:4.0.0'
+  compile 'com.google.code.gson:gson:2.8.5'
   compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
   testCompile 'org.assertj:assertj-core:3.6.1'
   testCompile 'io.kotlintest:kotlintest-runner-junit5:3.1.7'
