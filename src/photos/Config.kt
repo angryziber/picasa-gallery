@@ -10,7 +10,8 @@ object Config {
 
   val defaultUser = get("google.user")!!
 
-  val oauthScope = "https://picasaweb.google.com/data/"
+  val apiBase = "https://photoslibrary.googleapis.com"
+  val oauthScope = "https://www.googleapis.com/auth/photoslibrary.readonly"
   val oauthClientId = get("google.oauth.clientId")
   val oauthClientSecret = get("google.oauth.clientSecret")
   var oauthRefreshToken = get("google.oauth.refreshToken")
