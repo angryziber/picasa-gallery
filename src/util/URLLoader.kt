@@ -25,7 +25,7 @@ object URLLoader {
   private fun <T> loadAndParse(fullUrl: String, loader: XMLListener<T>): XMLListener<T> {
     val conn = URL(fullUrl).openConnection() as HttpURLConnection
     OAuth.authorize(conn)
-    if (conn.responseCode != 200) throw MissingResourceException(fullUrl + ": " + conn.errorStream.readBytes().toString(Charsets.UTF_8), null, null)
+    if (conn.responseCode != 200) throw MissingResourceException(fullUrl + ": " + (conn.errorStream ?: conn.inputStream).readBytes().toString(Charsets.UTF_8), null, null)
     conn.inputStream.use {
       XMLParser(loader).parse(it)
       return loader
