@@ -59,7 +59,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
       res.setHeader("Location", e.path)
     }
     catch (e: MissingResourceException) {
-      res.sendError(SC_NOT_FOUND)
+      res.sendError(SC_NOT_FOUND, e.message)
     }
   }
 
