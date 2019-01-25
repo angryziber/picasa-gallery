@@ -24,7 +24,6 @@ class JsonLoader(private val http: Http = Http()) {
     while (response.nextPageToken != null) {
       params["pageToken"] = response.nextPageToken
       response = load(url, responseType, params)
-      println(response.items.size)
       items += response.items
     }
     return items
@@ -46,6 +45,7 @@ class AlbumsResponse: JsonResponse<JsonAlbum>() {
 data class JsonAlbum(
   var id: String = "",
   var title: String? = null,
+  var productUrl: String? = null,
   var mediaItemsCount: Int = 0,
   var coverPhotoBaseUrl: BaseUrl = BaseUrl("")
 )
@@ -59,6 +59,7 @@ data class JsonMediaItem(
   var id: String = "",
   var description: String? = null,
   var baseUrl: BaseUrl = BaseUrl(""),
+  var productUrl: String? = null,
   var filename: String = "",
   var mediaMetadata: MediaMetadata
 )
@@ -73,7 +74,7 @@ data class MediaMetadata(
 data class PhotoMetadata(
   val cameraMake: String? = null,
   val cameraModel: String? = null,
-  val focalLength: String? = null,
+  val focalLength: Float? = null,
   val apertureFNumber: String? = null,
   val isoEquivalent: Int? = null,
   val exposureTime: String? = null
@@ -85,6 +86,8 @@ inline class BaseUrl(val url: String) {
 }
 
 fun main() {
+  //PlatformLogger.getLogger("sun.net.www.protocol.http.HttpURLConnection").setLevel(PlatformLogger.Level.ALL);
+
   println(measureNanoTime {
     val albums = JsonLoader().loadAll(Config.apiBase + "/v1/albums", AlbumsResponse::class)
     println(albums.size)
