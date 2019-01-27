@@ -1,3 +1,5 @@
+.coords 51.276302 30.221899
+
 # Chernobyl
 ## May 2015
 
