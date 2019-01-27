@@ -10,7 +10,6 @@ import java.util.*
 class Picasa(
   private val content: LocalContent,
   user: String? = null,
-  private val authKey: String? = null,
   private val jsonLoader: JsonLoader = JsonLoader()
 ) {
   companion object {
