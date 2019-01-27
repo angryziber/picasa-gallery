@@ -7,7 +7,12 @@ import java.net.URLEncoder
 import java.security.SecureRandom
 import java.util.*
 
-class Picasa(private val content: LocalContent, user: String? = null, private val authKey: String? = null) {
+class Picasa(
+  private val content: LocalContent,
+  user: String? = null,
+  private val authKey: String? = null,
+  private val jsonLoader: JsonLoader = JsonLoader()
+) {
   companion object {
     internal var random: Random = SecureRandom()
   }
@@ -22,10 +27,7 @@ class Picasa(private val content: LocalContent, user: String? = null, private va
     get() = if (user != Config.defaultUser) "?by=${user}" else ""
 
   val gallery: Gallery
-    get() {
-      val thumbSize = 212
-      return GalleryLoader(content, thumbSize).load("/v1/albums")
-    }
+    get() = jsonLoader.loadAll("/v1/albums", AlbumsResponse::class).toGallery(user, 212)
 
   fun getAlbum(name: String): Album {
     val thumbSize = 144
@@ -80,5 +82,17 @@ class Picasa(private val content: LocalContent, user: String? = null, private va
 
   private fun urlEncode(name: String): String {
     return URLEncoder.encode(name, "UTF-8")
+  }
+}
+
+private fun List<JsonAlbum>.toGallery(user: String, thumbSize: Int): Gallery {
+  return Gallery(thumbSize).apply {
+    author = user
+    albums.putAll(filter { it.title != null }.map {
+      it.title!! to Album(thumbSize, it.id, it.name, it.title, null, null, user).apply {
+        thumbUrl = it.coverPhotoBaseUrl.crop(thumbSize)
+        size = it.mediaItemsCount
+      }
+    }.toMap())
   }
 }

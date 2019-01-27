@@ -8,8 +8,8 @@ class JsonLoader(private val http: Http = Http()) {
   private val gson = Gson()
 
   fun <T, R: JsonResponse<T>> load(url: String, responseType: KClass<out R>, params: Map<String, Any?>): R {
-    val request = if (url.contains("albums")) http.send(url + params.toUrl())
-                  else http.send(url, gson.toJson(params))
+    val request = if (url.contains("albums")) http.send(Config.apiBase + url + params.toUrl())
+                  else http.send(Config.apiBase + url, gson.toJson(params))
 
     return request.use {
       gson.fromJson(it.bufferedReader(), responseType.java)
@@ -48,7 +48,9 @@ data class JsonAlbum(
   var productUrl: String? = null,
   var mediaItemsCount: Int = 0,
   var coverPhotoBaseUrl: BaseUrl = BaseUrl("")
-)
+) {
+  val name: String? get() = title?.replace("[^\\d\\w]".toRegex(), "")
+}
 
 class PhotosResponse: JsonResponse<JsonMediaItem>() {
   var mediaItems: List<JsonMediaItem> = mutableListOf()
