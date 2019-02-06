@@ -83,7 +83,9 @@ class Picasa(
   private fun List<JsonAlbum>.toGallery(thumbSize: Int) = Gallery(thumbSize).apply {
     author = OAuth.userName()
     albums.putAll(filter { content.contains(it.name) }.map {
-      it.name!! to Album(thumbSize, it.id, it.name, it.title, null, null, author).apply {
+      val albumContent = content.forAlbum(it.name)
+      it.name!! to Album(thumbSize, it.id, it.name, it.title, null, albumContent?.content, author).apply {
+        geo = albumContent?.geo
         thumbUrl = it.coverPhotoBaseUrl.crop(thumbSize)
         size = it.mediaItemsCount
       }
