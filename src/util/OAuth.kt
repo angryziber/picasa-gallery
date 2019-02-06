@@ -1,8 +1,6 @@
 package util
 
-import com.auth0.jwt.JWT
 import com.github.scribejava.apis.GoogleApi20
-import com.github.scribejava.apis.google.GoogleToken
 import com.github.scribejava.core.builder.ServiceBuilder
 import com.github.scribejava.core.model.OAuth2AccessToken
 import photos.Config
@@ -43,6 +41,4 @@ object OAuth {
   fun authorize(conn: HttpURLConnection) {
     token?.apply { conn.setRequestProperty("Authorization", "$tokenType $accessToken") }
   }
-
-  fun userName() = JWT.decode((token as GoogleToken).openIdToken).getClaim("name").asString()
 }

@@ -11,7 +11,7 @@ object Config {
   val defaultUser = get("google.user")!!
 
   val apiBase = "https://photoslibrary.googleapis.com"
-  val oauthScope = "profile openid https://www.googleapis.com/auth/photoslibrary.readonly"
+  val oauthScope = "profile https://www.googleapis.com/auth/photoslibrary.readonly"
   val oauthClientId = get("google.oauth.clientId")
   val oauthClientSecret = get("google.oauth.clientSecret")
   var oauthRefreshToken = get("google.oauth.refreshToken")

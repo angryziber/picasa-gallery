@@ -8,8 +8,9 @@ class JsonLoader(private val http: Http = Http()) {
   private val gson = Gson()
 
   fun <T, R: JsonResponse<T>> load(url: String, responseType: KClass<out R>, params: Map<String, Any?>): R {
-    val request = if (url.contains("albums")) http.send(Config.apiBase + url + params.toUrl())
-                  else http.send(Config.apiBase + url, gson.toJson(params))
+    val fullUrl = (Config.apiBase.takeUnless { url.startsWith("http") } ?: "") + url
+    val request = if (url.contains("albums") || url.contains("userinfo")) http.send(fullUrl + params.toUrl())
+                  else http.send(fullUrl, gson.toJson(params))
 
     return request.use {
       gson.fromJson(it.bufferedReader(), responseType.java)
@@ -17,7 +18,7 @@ class JsonLoader(private val http: Http = Http()) {
   }
 
   fun <T, R: JsonResponse<T>> loadAll(url: String, responseType: KClass<out R>, params: Map<String, Any?> = emptyMap()): List<T> {
-    val params = HashMap(params)
+    @Suppress("NAME_SHADOWING") val params = HashMap(params)
     params["pageSize"] = if (url.contains("albums")) 50 else 100
     var response = load(url, responseType, params)
     val items = ArrayList(response.items)
@@ -35,6 +36,10 @@ class JsonLoader(private val http: Http = Http()) {
 abstract class JsonResponse<T> {
   abstract val items: List<T>
   var nextPageToken: String? = null
+}
+
+data class Profile(var id: String? = null, var name: String? = null, var link: String? = null, var picture: String? = null): JsonResponse<Profile>() {
+  override val items get() = listOf(this)
 }
 
 class AlbumsResponse: JsonResponse<JsonAlbum>() {

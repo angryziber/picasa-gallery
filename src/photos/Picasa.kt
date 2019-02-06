@@ -7,6 +7,7 @@ import java.lang.Math.min
 import java.net.URLEncoder
 import java.security.SecureRandom
 import java.util.*
+import kotlin.collections.HashMap
 
 class Picasa(
   private val content: LocalContent,
@@ -18,6 +19,7 @@ class Picasa(
   }
 
   val user: String = user ?: Config.defaultUser
+  val profile = jsonLoader.load("https://www.googleapis.com/oauth2/v1/userinfo", Profile::class, mapOf("alt" to "json"))
   val imgSize = 1600 // this is max that Google allows as imgmax
 
   val urlPrefix get() = "/${user}"
@@ -81,7 +83,7 @@ class Picasa(
   }
 
   private fun List<JsonAlbum>.toGallery(thumbSize: Int) = Gallery(thumbSize).apply {
-    author = OAuth.userName()
+    author = profile.name
     albums.putAll(filter { content.contains(it.name) }.map {
       val albumContent = content.forAlbum(it.name)
       it.name!! to Album(thumbSize, it.id, it.name, it.title, null, albumContent?.content, author).apply {
