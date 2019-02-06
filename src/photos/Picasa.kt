@@ -1,6 +1,5 @@
 package photos
 
-import com.auth0.jwt.JWT
 import util.OAuth
 import util.URLLoader
 import util.XMLListener
@@ -21,14 +20,11 @@ class Picasa(
   val user: String = user ?: Config.defaultUser
   val imgSize = 1600 // this is max that Google allows as imgmax
 
-  val urlPrefix: String
-    get() = "/${user}"
+  val urlPrefix get() = "/${user}"
 
-  val urlSuffix: String
-    get() = if (user != Config.defaultUser) "?by=${user}" else ""
+  val urlSuffix get() = if (user != Config.defaultUser) "?by=$user" else ""
 
-  val gallery: Gallery
-    get() = jsonLoader.loadAll("/v1/albums", AlbumsResponse::class).toGallery(user, 212)
+  val gallery get() = jsonLoader.loadAll("/v1/albums", AlbumsResponse::class).toGallery(212)
 
   fun getAlbum(name: String): Album {
     val thumbSize = 144
@@ -76,21 +72,18 @@ class Picasa(
     return SearchLoader(content, thumbSize, gallery.albums.values).load("?kind=photo&q=" + urlEncode(query) + "&imgmax=${imgSize}&thumbsize=${thumbSize}c")
   }
 
-  private fun <T: Entity> XMLListener<T>.load(query: String)
-      = URLLoader.load(toFullUrl(query), this)
+  private fun <T: Entity> XMLListener<T>.load(query: String) = URLLoader.load(toFullUrl(query), this)
 
   private fun toFullUrl(query: String) = Config.apiBase + query
 
   private fun urlEncode(name: String): String {
     return URLEncoder.encode(name, "UTF-8")
   }
-}
 
-private fun List<JsonAlbum>.toGallery(user: String, thumbSize: Int): Gallery {
-  return Gallery(thumbSize).apply {
+  private fun List<JsonAlbum>.toGallery(thumbSize: Int) = Gallery(thumbSize).apply {
     author = OAuth.userName()
-    albums.putAll(filter { it.title != null }.map {
-      it.title!! to Album(thumbSize, it.id, it.name, it.title, null, null, author).apply {
+    albums.putAll(filter { content.contains(it.name) }.map {
+      it.name!! to Album(thumbSize, it.id, it.name, it.title, null, null, author).apply {
         thumbUrl = it.coverPhotoBaseUrl.crop(thumbSize)
         size = it.mediaItemsCount
       }
