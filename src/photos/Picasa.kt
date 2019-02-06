@@ -1,5 +1,7 @@
 package photos
 
+import com.auth0.jwt.JWT
+import util.OAuth
 import util.URLLoader
 import util.XMLListener
 import java.lang.Math.min
@@ -86,9 +88,9 @@ class Picasa(
 
 private fun List<JsonAlbum>.toGallery(user: String, thumbSize: Int): Gallery {
   return Gallery(thumbSize).apply {
-    author = user
+    author = OAuth.userName()
     albums.putAll(filter { it.title != null }.map {
-      it.title!! to Album(thumbSize, it.id, it.name, it.title, null, null, user).apply {
+      it.title!! to Album(thumbSize, it.id, it.name, it.title, null, null, author).apply {
         thumbUrl = it.coverPhotoBaseUrl.crop(thumbSize)
         size = it.mediaItemsCount
       }

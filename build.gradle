@@ -50,6 +50,7 @@ dependencies {
   compile 'com.github.scribejava:scribejava-apis:4.0.0'
   compile 'com.google.code.gson:gson:2.8.5'
   compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+  compile "com.auth0:java-jwt:3.5.0"
   testCompile 'org.assertj:assertj-core:3.6.1'
   testCompile 'io.kotlintest:kotlintest-runner-junit5:3.1.7'
   testImplementation "io.mockk:mockk:1.8.9"
