@@ -28,7 +28,7 @@ class RequestRouter(
   var requestedUser = req["by"]
   val random = req["random"]
   val searchQuery = req["q"]
-  var picasa = Picasa(content, requestedUser)
+  var picasa = Picasa(OAuth.profile, content)
   var bot = false
 
   fun invoke() {

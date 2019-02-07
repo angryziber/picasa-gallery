@@ -41,6 +41,7 @@ abstract class JsonResponse<T> {
 
 data class Profile(var id: String? = null, var name: String? = null, var link: String? = null, var picture: String? = null): JsonResponse<Profile>() {
   override val items get() = listOf(this)
+  val slug get() = name?.toLowerCase()?.replace(' ', '.')
 }
 
 class AlbumsResponse: JsonResponse<JsonAlbum>() {

@@ -1,5 +1,6 @@
 package web
 
+import integration.OAuth
 import photos.LocalContent
 import photos.Picasa
 import views.sitemap
@@ -21,7 +22,7 @@ class SiteMapServlet : HttpServlet() {
     resp.writer.use { out ->
       resp.contentType = "text/xml"
       resp.setHeader("Cache-Control", "public")
-      val picasa = Picasa(content)
+      val picasa = Picasa(OAuth.profile, content)
       out.write(sitemap(req.getHeader("Host"), picasa.gallery))
     }
   }

@@ -6,21 +6,16 @@ import java.security.SecureRandom
 import java.util.*
 
 class Picasa(
+  private val profile: Profile,
   private val content: LocalContent,
-  user: String? = null,
   private val jsonLoader: JsonLoader = JsonLoader()
 ) {
   companion object {
     internal var random: Random = SecureRandom()
   }
 
-  val user: String = user ?: Config.defaultUser
-  val profile = Cache.get("profile") {
-    jsonLoader.load("https://www.googleapis.com/oauth2/v1/userinfo", Profile::class, mapOf("alt" to "json"))
-  }
-
-  val urlPrefix get() = "/$user"
-  val urlSuffix get() = if (user != Config.defaultUser) "?by=$user" else ""
+  val urlPrefix get() = "/${profile.slug}"
+  val urlSuffix get() = if (profile.slug != Config.defaultUser) "?by=${profile.slug}" else ""
 
   val gallery get() = Cache.get("gallery") {
     jsonLoader.loadAll("/v1/albums", AlbumsResponse::class).toGallery()

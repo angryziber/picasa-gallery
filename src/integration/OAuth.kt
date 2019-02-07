@@ -3,6 +3,7 @@ package integration
 import com.github.scribejava.apis.GoogleApi20
 import com.github.scribejava.core.builder.ServiceBuilder
 import com.github.scribejava.core.model.OAuth2AccessToken
+import photos.Cache
 import photos.Config
 import java.net.HttpURLConnection
 
@@ -26,6 +27,10 @@ object OAuth {
         expiresAt = System.currentTimeMillis() + expiresIn * 1000 - 10000
       }
     }
+
+  val profile = Cache.get("profile") {
+    JsonLoader().load("https://www.googleapis.com/oauth2/v1/userinfo", Profile::class, mapOf("alt" to "json"))
+  }
 
   fun token(code: String) = service.getAccessToken(code).apply {
     token = this
