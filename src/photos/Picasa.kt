@@ -1,9 +1,6 @@
 package photos
 
-import util.URLLoader
-import util.XMLListener
 import java.lang.Math.min
-import java.net.URLEncoder
 import java.security.SecureRandom
 import java.util.*
 
@@ -18,7 +15,6 @@ class Picasa(
 
   val user: String = user ?: Config.defaultUser
   val profile = jsonLoader.load("https://www.googleapis.com/oauth2/v1/userinfo", Profile::class, mapOf("alt" to "json"))
-  val imgSize = 1600 // this is max that Google allows as imgmax
 
   val urlPrefix get() = "/${user}"
 
@@ -61,16 +57,10 @@ class Picasa(
   }
 
   fun search(query: String): Album {
-    val thumbSize = 144
-    return SearchLoader(content, thumbSize, gallery.albums.values).load("?kind=photo&q=" + urlEncode(query) + "&imgmax=${imgSize}&thumbsize=${thumbSize}c")
-  }
-
-  private fun <T: Entity> XMLListener<T>.load(query: String) = URLLoader.load(toFullUrl(query), this)
-
-  private fun toFullUrl(query: String) = Config.apiBase + query
-
-  private fun urlEncode(name: String): String {
-    return URLEncoder.encode(name, "UTF-8")
+    return Album(144).apply {
+      // TODO: there is no way to search for text currently... https://developers.google.com/photos/library/reference/rest/v1/mediaItems/search#Filters
+      // photos += jsonLoader.loadAll("/v1/mediaItems:search", PhotosResponse::class).toPhotos()
+    }
   }
 
   private fun List<JsonAlbum>.toGallery() = Gallery(212).apply {

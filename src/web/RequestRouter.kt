@@ -5,7 +5,6 @@ import photos.Config
 import photos.LocalContent
 import photos.Picasa
 import util.OAuth
-import util.URLLoader
 import java.util.*
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
@@ -40,7 +39,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
       attrs["servletPath"] = path
       attrs["startTime"] = startTime
 
-      if (req["reload"] != null) URLLoader.reload(picasa)
+      // TODO if (req["reload"] != null)
 
       when {
         "/oauth" == path -> handleOAuth()
@@ -70,7 +69,6 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
   }
 
   private fun renderSearch(q: String) {
-    // TODO: no longer works for non-logged-in requests
     val album = picasa.search(q)
     album.title = "Photos matching '$q'"
     render("album", album, attrs, res)
