@@ -1,5 +1,6 @@
 package photos
 
+import integration.*
 import java.lang.Math.min
 import java.security.SecureRandom
 import java.util.*
@@ -14,10 +15,11 @@ class Picasa(
   }
 
   val user: String = user ?: Config.defaultUser
-  val profile = jsonLoader.load("https://www.googleapis.com/oauth2/v1/userinfo", Profile::class, mapOf("alt" to "json"))
+  val profile = Cache.get("profile") {
+    jsonLoader.load("https://www.googleapis.com/oauth2/v1/userinfo", Profile::class, mapOf("alt" to "json"))
+  }
 
-  val urlPrefix get() = "/${user}"
-
+  val urlPrefix get() = "/$user"
   val urlSuffix get() = if (user != Config.defaultUser) "?by=$user" else ""
 
   val gallery get() = Cache.get("gallery") {

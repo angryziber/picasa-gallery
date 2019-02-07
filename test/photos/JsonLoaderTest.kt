@@ -1,5 +1,8 @@
 package photos
 
+import integration.AlbumsResponse
+import integration.Http
+import integration.JsonLoader
 import io.kotlintest.specs.StringSpec
 import io.mockk.every
 import io.mockk.mockk

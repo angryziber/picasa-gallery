@@ -1,7 +1,7 @@
-package photos
+package integration
 
 import com.google.gson.Gson
-import java.text.SimpleDateFormat
+import photos.Config
 import kotlin.reflect.KClass
 import kotlin.system.measureNanoTime
 
@@ -64,12 +64,12 @@ class PhotosResponse: JsonResponse<JsonMediaItem>() {
 }
 
 data class JsonMediaItem(
-  var id: String = "",
-  var description: String? = null,
-  var baseUrl: BaseUrl = BaseUrl(""),
-  var productUrl: String? = null,
-  var filename: String = "",
-  var mediaMetadata: MediaMetadata? = null
+    var id: String = "",
+    var description: String? = null,
+    var baseUrl: BaseUrl = BaseUrl(""),
+    var productUrl: String? = null,
+    var filename: String = "",
+    var mediaMetadata: MediaMetadata? = null
 )
 
 data class MediaMetadata(

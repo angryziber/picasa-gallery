@@ -1,7 +1,7 @@
 package web
 
 import photos.*
-import util.OAuth
+import integration.OAuth
 import java.util.*
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
