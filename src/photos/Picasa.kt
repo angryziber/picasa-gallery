@@ -15,7 +15,7 @@ class Picasa(
   }
 
   val urlPrefix get() = "/${profile.slug}"
-  val urlSuffix get() = if (profile.slug != Config.defaultUser) "?by=${profile.slug}" else ""
+  val urlSuffix get() = if (profile != OAuth.profile) "?by=${profile.slug}" else ""
 
   val gallery get() = Cache.get("gallery") {
     jsonLoader.loadAll("/v1/albums", AlbumsResponse::class).toGallery()

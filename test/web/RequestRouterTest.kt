@@ -1,5 +1,6 @@
 package web
 
+import integration.OAuth
 import io.kotlintest.Description
 import io.kotlintest.specs.WordSpec
 import io.mockk.*
@@ -38,7 +39,7 @@ class RequestRouterTest: WordSpec() {
 
         router(req, res).invoke()
 
-        res.verifyRedirectTo("/${Config.defaultUser}")
+        res.verifyRedirectTo("/${OAuth.profile.slug}")
       }
     }
 

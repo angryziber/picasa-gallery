@@ -8,8 +8,6 @@ object Config {
     Config.javaClass.getResourceAsStream("/local.properties")?.use { load(it) }
   }
 
-  val defaultUser = get("google.user")!!
-
   val apiBase = "https://photoslibrary.googleapis.com"
   val oauthScope = "profile https://www.googleapis.com/auth/photoslibrary.readonly"
   val oauthClientId = get("google.oauth.clientId")

@@ -117,7 +117,7 @@ class RequestRouter(
   private fun detectBot() {
     bot = isBot(userAgent)
     if (bot && requestedUser != null) {
-      throw Redirect("/${Config.defaultUser}")
+      throw Redirect("/${OAuth.profile.slug}")
     }
     attrs["bot"] = bot
   }
