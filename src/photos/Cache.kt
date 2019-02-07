@@ -7,7 +7,7 @@ import java.util.logging.Logger
 
 object Cache {
   private val logger = Logger.getLogger(javaClass.name)
-  private val expirationMs = 30 * 60 * 1000
+  private const val expirationMs = 30 * 60 * 1000
   private val data: MutableMap<String, Entry> = ConcurrentHashMap()
 
   fun <T> get(key: String, loader: () -> T): T {
