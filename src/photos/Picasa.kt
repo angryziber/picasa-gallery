@@ -61,7 +61,7 @@ class Picasa(
   }
 
   fun search(query: String): Album {
-    return Album(144).apply {
+    return Album().apply {
       // TODO: there is no way to search for text currently... https://developers.google.com/photos/library/reference/rest/v1/mediaItems/search#Filters
       // photos += jsonLoader.loadAll("/v1/mediaItems:search", PhotosResponse::class).toPhotos()
     }
@@ -71,9 +71,9 @@ class Picasa(
     author = profile.name
     albums.putAll(filter { content.contains(it.name) }.map {
       val albumContent = content.forAlbum(it.name)
-      it.name!! to Album(144, it.id, it.name, it.title, null, albumContent?.content, author).apply {
+      it.name!! to Album(it.id, it.name, it.title, null, albumContent?.content, author).apply {
         geo = albumContent?.geo
-        thumbUrl = it.coverPhotoBaseUrl.crop(212)
+        baseUrl = it.coverPhotoBaseUrl
         size = it.mediaItemsCount
       }
     }.toMap())
@@ -84,8 +84,7 @@ class Picasa(
       id = it.id
       width = it.mediaMetadata?.width
       height = it.mediaMetadata?.height
-      thumbUrl = it.baseUrl.crop(144)
-      url = it.baseUrl.fit(1920, 1080)
+      baseUrl = it.baseUrl
       description = it.description
       timestampISO = it.mediaMetadata?.creationTime
       it.mediaMetadata?.photo?.let {

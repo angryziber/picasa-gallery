@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 open class Entity(var id: String? = null, open var title: String? = null, description: String? = null) {
-  var thumbUrl: String? = null
+  var baseUrl: BaseUrl? = null
   var timestamp: Long? = null
   var geo: GeoLocation? = null
 
@@ -18,6 +18,9 @@ open class Entity(var id: String? = null, open var title: String? = null, descri
         timestamp = timestampFormat.parse(iso).time
       }
     }
+
+  val thumbUrlLarge: String?
+    get() = baseUrl?.fit(1200, 800)
 
   companion object {
     private val timestampFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").apply {

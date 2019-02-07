@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat
 class Photo : Entity() {
   var width: Int? = null
   var height: Int? = null
-  var url: String? = null
   var exif = Exif()
   var albumId: String? = null
 
@@ -15,8 +14,10 @@ class Photo : Entity() {
   val date: String
     get() = SimpleDateFormat("yyyy-MM-dd").format(timestamp)
 
-  val thumbUrlLarge: String?
-    get() = thumbUrl?.replace("/s\\d+-c/".toRegex(), "/s1024/")
+  val thumbUrl: String?
+    get() = baseUrl?.crop(144)
+
+  val url = baseUrl?.fit(1920, 1080)
 
   override var description: String?
     get() = super.description
