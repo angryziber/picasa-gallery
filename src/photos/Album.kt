@@ -26,8 +26,8 @@ open class Album(
       if (name == null) name = value?.replace(" ", "")
     }
 
-  var photos = ArrayList<Photo>()
-  var comments = ArrayList<Comment>()
+  val photos = ArrayList<Photo>()
+  val comments = ArrayList<Comment>()
 
   val thumbUrlLarge: String?
     get() = thumbUrl?.replace("/s\\d+-c/".toRegex(), "/s1024/")

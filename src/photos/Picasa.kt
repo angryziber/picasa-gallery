@@ -1,13 +1,11 @@
 package photos
 
-import util.OAuth
 import util.URLLoader
 import util.XMLListener
 import java.lang.Math.min
 import java.net.URLEncoder
 import java.security.SecureRandom
 import java.util.*
-import kotlin.collections.HashMap
 
 class Picasa(
   private val content: LocalContent,
@@ -26,18 +24,11 @@ class Picasa(
 
   val urlSuffix get() = if (user != Config.defaultUser) "?by=$user" else ""
 
-  val gallery get() = jsonLoader.loadAll("/v1/albums", AlbumsResponse::class).toGallery(212)
+  val gallery get() = jsonLoader.loadAll("/v1/albums", AlbumsResponse::class).toGallery()
 
   fun getAlbum(name: String): Album {
-    val thumbSize = 144
-    val id = gallery.albums[name]?.id ?: name
-    val path = if (id.matches("\\d+".toRegex())) "/albumid/" + id else "/album/" + urlEncode(name)
-    val url = path + "?kind=photo,comment&imgmax=${imgSize}&thumbsize=${thumbSize}c&max-results=500" +
-      "&fields=id,updated,title,subtitle,icon,gphoto:*,georss:where(gml:Point),entry(title,summary,content,author,category,gphoto:id,gphoto:photoid,gphoto:width,gphoto:height,gphoto:commentCount,gphoto:timestamp,exif:*,media:*,georss:where(gml:Point))"
-    val loader = AlbumLoader(content, thumbSize)
-    val album = loader.load(url)
-    while (album.size > album.photos.size)
-      loader.load(url + "&start-index=${album.photos.size+1}")
+    val album = gallery.albums[name]!!
+    album.photos += jsonLoader.loadAll("/v1/mediaItems:search", PhotosResponse::class, mapOf("albumId" to album.id)).toPhotos()
     return album
   }
 
@@ -82,15 +73,36 @@ class Picasa(
     return URLEncoder.encode(name, "UTF-8")
   }
 
-  private fun List<JsonAlbum>.toGallery(thumbSize: Int) = Gallery(thumbSize).apply {
+  private fun List<JsonAlbum>.toGallery() = Gallery(212).apply {
     author = profile.name
     albums.putAll(filter { content.contains(it.name) }.map {
       val albumContent = content.forAlbum(it.name)
-      it.name!! to Album(thumbSize, it.id, it.name, it.title, null, albumContent?.content, author).apply {
+      it.name!! to Album(144, it.id, it.name, it.title, null, albumContent?.content, author).apply {
         geo = albumContent?.geo
-        thumbUrl = it.coverPhotoBaseUrl.crop(thumbSize)
+        thumbUrl = it.coverPhotoBaseUrl.crop(212)
         size = it.mediaItemsCount
       }
     }.toMap())
+  }
+
+  private fun List<JsonMediaItem>.toPhotos() = map {
+    Photo().apply {
+      id = it.id
+      width = it.mediaMetadata?.width
+      height = it.mediaMetadata?.height
+      thumbUrl = it.baseUrl.crop(144)
+      url = it.baseUrl.fit(1920, 1080)
+      description = it.description
+      timestampISO = it.mediaMetadata?.creationTime
+      it.mediaMetadata?.photo?.let {
+        exif = Exif().apply {
+          camera = it.cameraModel
+          exposure = it.exposureTime
+          focal = it.focalLength
+          iso = it.isoEquivalent
+          fstop = it.apertureFNumber
+        }
+      }
+    }
   }
 }

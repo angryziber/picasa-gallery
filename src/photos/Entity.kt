@@ -11,8 +11,13 @@ open class Entity(var id: String? = null, open var title: String? = null, descri
   open var description = description
     get() = field ?: ""
 
-  val timestampISO: String?
+  var timestampISO: String?
     get() = timestamp?.formatISO()
+    set(iso) {
+      synchronized(timestampFormat) {
+        timestamp = timestampFormat.parse(iso).time
+      }
+    }
 
   companion object {
     private val timestampFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").apply {

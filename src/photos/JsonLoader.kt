@@ -1,6 +1,7 @@
 package photos
 
 import com.google.gson.Gson
+import java.text.SimpleDateFormat
 import kotlin.reflect.KClass
 import kotlin.system.measureNanoTime
 
@@ -9,8 +10,8 @@ class JsonLoader(private val http: Http = Http()) {
 
   fun <T, R: JsonResponse<T>> load(url: String, responseType: KClass<out R>, params: Map<String, Any?>): R {
     val fullUrl = (Config.apiBase.takeUnless { url.startsWith("http") } ?: "") + url
-    val request = if (url.contains("albums") || url.contains("userinfo")) http.send(fullUrl + params.toUrl())
-                  else http.send(fullUrl, gson.toJson(params))
+    val request = if (url.endsWith("search")) http.send(fullUrl, gson.toJson(params))
+                  else http.send(fullUrl + params.toUrl())
 
     return request.use {
       gson.fromJson(it.bufferedReader(), responseType.java)
@@ -68,7 +69,7 @@ data class JsonMediaItem(
   var baseUrl: BaseUrl = BaseUrl(""),
   var productUrl: String? = null,
   var filename: String = "",
-  var mediaMetadata: MediaMetadata
+  var mediaMetadata: MediaMetadata? = null
 )
 
 data class MediaMetadata(
@@ -82,9 +83,9 @@ data class PhotoMetadata(
   val cameraMake: String? = null,
   val cameraModel: String? = null,
   val focalLength: Float? = null,
-  val apertureFNumber: String? = null,
+  val apertureFNumber: Float? = null,
   val isoEquivalent: Int? = null,
-  val exposureTime: String? = null
+  val exposureTime: Float? = null
 )
 
 inline class BaseUrl(val url: String) {
@@ -93,16 +94,14 @@ inline class BaseUrl(val url: String) {
 }
 
 fun main() {
-  //PlatformLogger.getLogger("sun.net.www.protocol.http.HttpURLConnection").setLevel(PlatformLogger.Level.ALL);
-
   println(measureNanoTime {
-    val albums = JsonLoader().loadAll(Config.apiBase + "/v1/albums", AlbumsResponse::class)
+    val albums = JsonLoader().loadAll("/v1/albums", AlbumsResponse::class)
     println(albums.size)
     println(albums)
   } / 1000_000)
 
   println(measureNanoTime {
-    val photos = JsonLoader().loadAll(Config.apiBase + "/v1/mediaItems:search", PhotosResponse::class, mapOf("albumId" to "ANEKkbUIzG8mAO4pnPWN4bl97MlZrXEBLAA0FBmZ9Fb2PJOug16HvXiw0c4BBBZOxdt24gS1o5Jd"))
+    val photos = JsonLoader().loadAll("/v1/mediaItems:search", PhotosResponse::class, mapOf("albumId" to "ANEKkbUIzG8mAO4pnPWN4bl97MlZrXEBLAA0FBmZ9Fb2PJOug16HvXiw0c4BBBZOxdt24gS1o5Jd"))
     println(photos.size)
     println(photos)
   } / 1000_000)

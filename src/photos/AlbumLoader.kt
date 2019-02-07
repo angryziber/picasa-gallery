@@ -45,7 +45,7 @@ open class AlbumLoader(val content: LocalContent, thumbSize: Int) : XMLListener<
         "entry/tags/fstop" -> exif.fstop = value.toFloat()
         "entry/tags/exposure" -> exif.exposure = value.toFloat()
         "entry/tags/focallength" -> exif.focal = value.toFloat()
-        "entry/tags/iso" -> exif.iso = value
+        "entry/tags/iso" -> exif.iso = value.toInt()
         "entry/tags/model" -> exif.camera = value
         "entry/where/Point/pos" -> geo = GeoLocation(value)
       }
