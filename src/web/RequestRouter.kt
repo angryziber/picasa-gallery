@@ -1,9 +1,6 @@
 package web
 
-import photos.Album
-import photos.Config
-import photos.LocalContent
-import photos.Picasa
+import photos.*
 import util.OAuth
 import java.util.*
 import javax.servlet.FilterChain
@@ -12,7 +9,13 @@ import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpServletResponse.SC_MOVED_PERMANENTLY
 import javax.servlet.http.HttpServletResponse.SC_NOT_FOUND
 
-class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, val render: Renderer, content: LocalContent, val chain: FilterChain) {
+class RequestRouter(
+    val req: HttpServletRequest,
+    val res: HttpServletResponse,
+    val render: Renderer,
+    content: LocalContent,
+    val chain: FilterChain
+) {
   companion object {
     val startTime = System.currentTimeMillis() / 1000 % 1000000
   }
@@ -39,7 +42,7 @@ class RequestRouter(val req: HttpServletRequest, val res: HttpServletResponse, v
       attrs["servletPath"] = path
       attrs["startTime"] = startTime
 
-      // TODO if (req["reload"] != null)
+      if (req["reload"] != null) Cache.reload()
 
       when {
         "/oauth" == path -> handleOAuth()

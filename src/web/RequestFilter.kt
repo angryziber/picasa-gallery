@@ -1,5 +1,6 @@
 package web
 
+import photos.Cache
 import photos.LocalContent
 import javax.servlet.*
 import javax.servlet.annotation.WebFilter

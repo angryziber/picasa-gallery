@@ -20,11 +20,15 @@ class Picasa(
 
   val urlSuffix get() = if (user != Config.defaultUser) "?by=$user" else ""
 
-  val gallery get() = jsonLoader.loadAll("/v1/albums", AlbumsResponse::class).toGallery()
+  val gallery get() = Cache.get("gallery") {
+    jsonLoader.loadAll("/v1/albums", AlbumsResponse::class).toGallery()
+  }
 
   fun getAlbum(name: String): Album {
     val album = gallery.albums[name]!!
-    album.photos += jsonLoader.loadAll("/v1/mediaItems:search", PhotosResponse::class, mapOf("albumId" to album.id)).toPhotos()
+    album.photos += Cache.get(album.id!!) {
+      jsonLoader.loadAll("/v1/mediaItems:search", PhotosResponse::class, mapOf("albumId" to album.id)).toPhotos()
+    }
     return album
   }
 
