@@ -39,7 +39,7 @@ class RequestRouterTest: WordSpec() {
 
         router(req, res).invoke()
 
-        res.verifyRedirectTo("/${OAuth.profile.slug}")
+        res.verifyRedirectTo("/${OAuth.default.profile.slug}")
       }
     }
 
@@ -48,17 +48,16 @@ class RequestRouterTest: WordSpec() {
       every {req.servletPath} returns "/Orlova/5347257660284808946"
       every {req.getParameter("by")} returns "106730404715258343901"
 
-      val render = mockk<Renderer>(relaxed = true)
-      val router = router(req, res, render)
       val album = Album(id = "123123123", name = "Orlova")
+
+      val render = mockk<Renderer>(relaxed = true)
+      val router = spyk(router(req, res, render)) {
+        every { picasa.getAlbum("Orlova") } returns album
+      }
       val photo = Photo()
       photo.id = "5347257660284808946"
       photo.timestamp = 123L
       album.photos.add(photo)
-
-      router.picasa = spyk(router.picasa) {
-        every {getAlbum("Orlova")} returns album
-      }
 
       router.invoke()
 
@@ -72,9 +71,8 @@ class RequestRouterTest: WordSpec() {
         every {req.servletPath} returns "/123123123"
         every {req.getHeader("User-Agent")} returns "Normal Browser"
 
-        val router = router(req, res)
-        router.picasa = spyk(router.picasa) {
-          every {getAlbum("123123123")} returns Album(id = "123123123", name = "Hello")
+        val router = spyk(router(req, res)) {
+          every { picasa.getAlbum("123123123") } returns Album(id = "123123123", name = "Hello")
         }
 
         router.invoke()

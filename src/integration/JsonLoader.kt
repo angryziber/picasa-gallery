@@ -8,24 +8,24 @@ import kotlin.system.measureNanoTime
 class JsonLoader(private val http: Http = Http()) {
   private val gson = Gson()
 
-  fun <T, R: JsonResponse<T>> load(url: String, responseType: KClass<out R>, params: Map<String, Any?>): R {
+  fun <T, R: JsonResponse<T>> load(auth: OAuth, url: String, responseType: KClass<out R>, params: Map<String, Any?>): R {
     val fullUrl = (Config.apiBase.takeUnless { url.startsWith("http") } ?: "") + url
-    val request = if (url.endsWith("search")) http.send(fullUrl, gson.toJson(params))
-                  else http.send(fullUrl + params.toUrl())
+    val request = if (url.endsWith("search")) http.send(auth, fullUrl, gson.toJson(params))
+                  else http.send(auth, fullUrl + params.toUrl())
 
     return request.use {
       gson.fromJson(it.bufferedReader(), responseType.java)
     }
   }
 
-  fun <T, R: JsonResponse<T>> loadAll(url: String, responseType: KClass<out R>, params: Map<String, Any?> = emptyMap()): List<T> {
+  fun <T, R: JsonResponse<T>> loadAll(auth: OAuth, url: String, responseType: KClass<out R>, params: Map<String, Any?> = emptyMap()): List<T> {
     @Suppress("NAME_SHADOWING") val params = HashMap(params)
     params["pageSize"] = if (url.contains("albums")) 50 else 100
-    var response = load(url, responseType, params)
+    var response = load(auth, url, responseType, params)
     val items = ArrayList(response.items)
     while (response.nextPageToken != null) {
       params["pageToken"] = response.nextPageToken
-      response = load(url, responseType, params)
+      response = load(auth, url, responseType, params)
       items += response.items
     }
     return items
@@ -96,13 +96,13 @@ inline class BaseUrl(val url: String) {
 
 fun main() {
   println(measureNanoTime {
-    val albums = JsonLoader().loadAll("/v1/albums", AlbumsResponse::class)
+    val albums = JsonLoader().loadAll(OAuth.default, "/v1/albums", AlbumsResponse::class)
     println(albums.size)
     println(albums)
   } / 1000_000)
 
   println(measureNanoTime {
-    val photos = JsonLoader().loadAll("/v1/mediaItems:search", PhotosResponse::class, mapOf("albumId" to "ANEKkbUIzG8mAO4pnPWN4bl97MlZrXEBLAA0FBmZ9Fb2PJOug16HvXiw0c4BBBZOxdt24gS1o5Jd"))
+    val photos = JsonLoader().loadAll(OAuth.default, "/v1/mediaItems:search", PhotosResponse::class, mapOf("albumId" to "ANEKkbUIzG8mAO4pnPWN4bl97MlZrXEBLAA0FBmZ9Fb2PJOug16HvXiw0c4BBBZOxdt24gS1o5Jd"))
     println(photos.size)
     println(photos)
   } / 1000_000)

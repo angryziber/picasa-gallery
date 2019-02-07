@@ -28,7 +28,7 @@ class RequestRouter(
   var requestedUser = req["by"]
   val random = req["random"]
   val searchQuery = req["q"]
-  var picasa = Picasa(OAuth.profile, content)
+  val picasa = Picasa(OAuth.default, content)
   var bot = false
 
   fun invoke() {
@@ -46,6 +46,7 @@ class RequestRouter(
 
       when {
         "/oauth" == path -> handleOAuth()
+        Config.oauthRefreshToken == null -> throw Redirect("/oauth")
         random != null -> renderRandom()
         searchQuery != null -> renderSearch(searchQuery)
         (path == null || "/" == path) && requestedUser == null -> throw Redirect(picasa.urlPrefix)
@@ -100,7 +101,7 @@ class RequestRouter(
   }
 
   private fun handleOAuth() {
-    val token = req["code"]?.let { code -> OAuth.token(code) }
+    val token = req["code"]?.let { code -> OAuth.default.token(code) }
     render("oauth", token, attrs, res)
   }
 
@@ -117,7 +118,7 @@ class RequestRouter(
   private fun detectBot() {
     bot = isBot(userAgent)
     if (bot && requestedUser != null) {
-      throw Redirect("/${OAuth.profile.slug}")
+      throw Redirect("/${OAuth.default.profile.slug}")
     }
     attrs["bot"] = bot
   }

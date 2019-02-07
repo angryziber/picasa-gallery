@@ -6,7 +6,7 @@ import java.security.SecureRandom
 import java.util.*
 
 class Picasa(
-  private val profile: Profile,
+  private val auth: OAuth,
   private val content: LocalContent,
   private val jsonLoader: JsonLoader = JsonLoader()
 ) {
@@ -14,17 +14,17 @@ class Picasa(
     internal var random: Random = SecureRandom()
   }
 
-  val urlPrefix get() = "/${profile.slug}"
-  val urlSuffix get() = if (profile != OAuth.profile) "?by=${profile.slug}" else ""
+  val urlPrefix get() = "/${auth.profile.slug}"
+  val urlSuffix get() = if (auth != OAuth.default) "?by=${auth.profile.slug}" else ""
 
   val gallery get() = Cache.get("gallery") {
-    jsonLoader.loadAll("/v1/albums", AlbumsResponse::class).toGallery()
+    jsonLoader.loadAll(auth, "/v1/albums", AlbumsResponse::class).toGallery()
   }
 
   fun getAlbum(name: String): Album {
     val album = gallery.albums[name]!!
     album.photos += Cache.get(album.id!!) {
-      jsonLoader.loadAll("/v1/mediaItems:search", PhotosResponse::class, mapOf("albumId" to album.id)).toPhotos()
+      jsonLoader.loadAll(auth, "/v1/mediaItems:search", PhotosResponse::class, mapOf("albumId" to album.id)).toPhotos()
     }
     return album
   }
@@ -65,7 +65,8 @@ class Picasa(
   }
 
   private fun List<JsonAlbum>.toGallery() = Gallery(212).apply {
-    author = profile.name
+    author = auth.profile.name
+    authorId = auth.profile.slug
     albums.putAll(filter { content.contains(it.name) }.map {
       val albumContent = content.forAlbum(it.name)
       it.name!! to Album(it.id, it.name, it.title, null, albumContent?.content, author).apply {

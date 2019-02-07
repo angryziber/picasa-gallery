@@ -6,10 +6,10 @@ import java.net.URL
 import java.util.*
 
 class Http {
-  fun send(url: String, body: String? = null): InputStream {
+  fun send(auth: OAuth, url: String, body: String? = null): InputStream {
     val conn = connect(url)
     conn.setRequestProperty("Accept", "application/json")
-    OAuth.authorize(conn)
+    auth.authorize(conn)
 
     if (body != null) {
       conn.setRequestProperty("Content-Type", "application/json")

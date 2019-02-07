@@ -22,7 +22,7 @@ class SiteMapServlet : HttpServlet() {
     resp.writer.use { out ->
       resp.contentType = "text/xml"
       resp.setHeader("Cache-Control", "public")
-      val picasa = Picasa(OAuth.profile, content)
+      val picasa = Picasa(OAuth.default, content)
       out.write(sitemap(req.getHeader("Host"), picasa.gallery))
     }
   }

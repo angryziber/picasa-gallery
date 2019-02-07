@@ -7,12 +7,16 @@ import photos.Cache
 import photos.Config
 import java.net.HttpURLConnection
 
-object OAuth {
-  private val service = ServiceBuilder()
-        .apiKey(Config.oauthClientId)
-        .apiSecret(Config.oauthClientSecret)
-        .callback("http://localhost:8080/oauth")
-        .build(GoogleApi20.instance())
+data class OAuth(var refreshToken: String?) {
+  companion object {
+    val default = OAuth(Config.oauthRefreshToken)
+
+    private val service = ServiceBuilder()
+      .apiKey(Config.oauthClientId)
+      .apiSecret(Config.oauthClientSecret)
+      .callback("http://localhost:8080/oauth")
+      .build(GoogleApi20.instance())
+  }
 
   private var expiresAt: Long = 0
   private val isExpired get() = expiresAt <= System.currentTimeMillis()
@@ -23,22 +27,24 @@ object OAuth {
       return field
     }
     set(value) {
-      field = value?.apply {
-        expiresAt = System.currentTimeMillis() + expiresIn * 1000 - 10000
+      field = value?.also {
+        expiresAt = System.currentTimeMillis() + it.expiresIn * 1000 - 10000
+        refreshToken = it.refreshToken
       }
     }
 
-  val profile = Cache.get("profile") {
-    JsonLoader().load("https://www.googleapis.com/oauth2/v1/userinfo", Profile::class, mapOf("alt" to "json"))
+  val profile by lazy {
+    Cache.get("profile") {
+      JsonLoader().load(this, "https://www.googleapis.com/oauth2/v1/userinfo", Profile::class, mapOf("alt" to "json"))
+    }
   }
 
-  fun token(code: String) = service.getAccessToken(code).apply {
-    token = this
-    Config.oauthRefreshToken = refreshToken
+  fun token(code: String) = service.getAccessToken(code).also {
+    token = it
   }
 
   private fun refresh() {
-    Config.oauthRefreshToken?.let {
+    refreshToken.let {
       token = service.refreshAccessToken(it)
     }
   }
