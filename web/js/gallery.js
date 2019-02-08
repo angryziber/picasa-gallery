@@ -79,8 +79,3 @@ function initAlbumFilter() {
     })
   })
 }
-
-function changeUsername(username) {
-  username = prompt('Show photos by Google/Picasaweb user:', username)
-  if (username) fadeTo('/?by=' + username)
-}

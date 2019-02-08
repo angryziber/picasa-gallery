@@ -39,7 +39,7 @@ class RequestRouterTest: WordSpec() {
 
         router(req, res).invoke()
 
-        res.verifyRedirectTo("/${OAuth.default.profile.slug}")
+        res.verifyRedirectTo("/${OAuth.default.profile?.slug}")
       }
     }
 

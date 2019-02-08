@@ -14,8 +14,8 @@ class Picasa(
     internal var random: Random = SecureRandom()
   }
 
-  val urlPrefix get() = "/${auth.profile.slug}"
-  val urlSuffix get() = if (auth != OAuth.default) "?by=${auth.profile.slug}" else ""
+  val urlPrefix get() = "/${auth.profile?.slug}"
+  val urlSuffix get() = if (auth != OAuth.default) "?by=${auth.profile?.slug}" else ""
 
   val gallery get() = Cache.get("gallery") {
     jsonLoader.loadAll(auth, "/v1/albums", AlbumsResponse::class).toGallery()
@@ -65,8 +65,8 @@ class Picasa(
   }
 
   private fun List<JsonAlbum>.toGallery() = Gallery(212).apply {
-    author = auth.profile.name
-    authorId = auth.profile.slug
+    author = auth.profile?.name
+    authorId = auth.profile?.slug
     albums.putAll(filter { content.contains(it.name) }.map {
       val albumContent = content.forAlbum(it.name)
       it.name!! to Album(it.id, it.name, it.title, null, albumContent?.content, author).apply {

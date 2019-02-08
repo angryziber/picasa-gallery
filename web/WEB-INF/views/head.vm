@@ -1,7 +1,7 @@
 #if($picasa.urlSuffix != '')
   <meta name="robots" content="noindex">
 #end
-<meta property="fb:admins" content="${picasa.user}"/>
+<meta property="fb:admins" content="${picasa.profile.slug}"/>
 
 <meta name="viewport" content="width=device-width">
 <meta name="mobile-web-app-capable" content="yes">

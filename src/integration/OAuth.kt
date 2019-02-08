@@ -34,8 +34,10 @@ data class OAuth(var refreshToken: String?) {
     }
 
   val profile by lazy {
-    Cache.get("profile") {
-      JsonLoader().load(this, "https://www.googleapis.com/oauth2/v1/userinfo", Profile::class, mapOf("alt" to "json"))
+    refreshToken?.let {
+      Cache.get("profile:$it") {
+        JsonLoader().load(this, "https://www.googleapis.com/oauth2/v1/userinfo", Profile::class, mapOf("alt" to "json"))
+      }
     }
   }
 
