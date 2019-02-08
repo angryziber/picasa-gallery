@@ -49,7 +49,7 @@ class RequestRouter(
 
       when {
         "/oauth" == path -> handleOAuth()
-        Config.oauthRefreshToken == null -> throw Redirect("/oauth")
+        auth.refreshToken == null -> throw Redirect("/oauth")
         random != null -> renderRandom()
         searchQuery != null -> renderSearch(searchQuery)
         (path == null || "/" == path) && requestedUser == null -> throw Redirect(picasa.urlPrefix)
