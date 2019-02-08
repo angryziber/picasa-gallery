@@ -14,8 +14,8 @@ class Picasa(
     internal var random: Random = SecureRandom()
   }
 
-  val urlPrefix get() = "/${auth.profile?.slug}"
-  val urlSuffix get() = if (auth != OAuth.default) "?by=${auth.profile?.slug}" else ""
+  val urlPrefix get() = "/${auth.profile?.slug ?: ""}"
+  val urlSuffix get() = if (auth.isDefault) "" else "?by=${auth.profile?.slug}"
 
   val gallery get() = Cache.get("gallery") {
     jsonLoader.loadAll(auth, "/v1/albums", AlbumsResponse::class).toGallery()

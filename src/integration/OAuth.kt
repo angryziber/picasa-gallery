@@ -7,9 +7,9 @@ import photos.Cache
 import photos.Config
 import java.net.HttpURLConnection
 
-data class OAuth(var refreshToken: String?) {
+data class OAuth(var refreshToken: String?, val isDefault: Boolean = false) {
   companion object {
-    val default = OAuth(Config.oauthRefreshToken)
+    val default = OAuth(Config.oauthRefreshToken, isDefault = true)
 
     private val service = ServiceBuilder()
       .apiKey(Config.oauthClientId)
