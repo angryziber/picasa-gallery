@@ -10,6 +10,7 @@ import java.net.HttpURLConnection
 data class OAuth(var refreshToken: String?, val isDefault: Boolean = false) {
   companion object {
     val default = OAuth(Config.oauthRefreshToken, isDefault = true)
+    val auths: MutableMap<String, OAuth> = mutableMapOf()
 
     private val service = ServiceBuilder()
       .apiKey(Config.oauthClientId)
