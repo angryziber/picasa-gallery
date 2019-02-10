@@ -341,8 +341,10 @@ function PhotoViewer() {
   }
 
   function photoUrl(photo) {
-    var imgSize = Math.round(window.innerWidth * (window.devicePixelRatio || 1))
-    return photo.url.replace('/s1920/', '/s' + imgSize + '/')
+    var ratio = window.devicePixelRatio || 1
+    var imgMaxWidth = Math.round(window.innerWidth * ratio)
+    var imgMaxHeight = Math.round(window.innerHeight * ratio)
+    return photo.url + '=w' + imgMaxWidth + '-h' + imgMaxHeight
   }
 
   function loadPhoto() {
@@ -358,7 +360,7 @@ function PhotoViewer() {
     newImg.style.display = 'none'
     newImg.onload = imageOnLoad
     newImg.src = photoUrl(photo)
-    if ('chromecast' in window) chromecast.send(photo.url)
+    if ('chromecast' in window) chromecast.send(newImg.src)
 
     title.text(photo.title)
     if (photo.title) title.fadeIn()

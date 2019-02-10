@@ -27,7 +27,7 @@ fun photo(photo: Photo, album: Album, profile: Profile, redirectUrl: String?) = 
     <a href="/${album.name}">${+album.title} by <span itemprop="author">${+profile.name}</span></a>
     <span itemprop="description">${+photo.description}</span>
     <div>
-      <img itemprop="image" src="${photo.url}" alt="${+(photo.description ?: album.title)}">
+      <img itemprop="image" src="${photo.fullHdUrl}" alt="${+(photo.description ?: album.title)}">
     </div>
   </div>
   ${redirectUrl / """<script>location.href = '$redirectUrl'</script>""" }}

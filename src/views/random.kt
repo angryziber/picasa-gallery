@@ -12,7 +12,7 @@ fun random(random: RandomPhotos, delayMs: String?, refresh: Boolean) = """
   <style type="text/css">$css</style>
 </head>
 <body>
-<div id="img" style="background-image: url(${+random.photos[0].url})"></div>
+<div id="img" style="background-image: url(${+random.photos[0].fullHdUrl})"></div>
 <div id="title">
   <b>${+random.album}</b>
   <div id="description">${+random.photos[0].description}</div>
@@ -27,7 +27,7 @@ fun random(random: RandomPhotos, delayMs: String?, refresh: Boolean) = """
 </script>
 <script src="/js/chromecast.js"></script>
 <script>
-  chromecast.send('${+random.photos[0].url}')
+  chromecast.send('${+random.photos[0].fullHdUrl}')
   ${(random.photos.size > 1) / morePhotosJS(random.photos, delayMs, refresh)}
 </script>
 </body>
@@ -79,5 +79,5 @@ private fun morePhotosJS(photos: List<Photo>, delayMs: String?, refresh: Boolean
 """
 
 private fun List<Photo>.toJson() = each { """
-  {url:'${url.escapeJS()}', description:'${description?.replace(newline, " ")?.escapeJS()}'}"""
+  {url:'${fullHdUrl.escapeJS()}', description:'${description?.replace(newline, " ")?.escapeJS()}'}"""
 }

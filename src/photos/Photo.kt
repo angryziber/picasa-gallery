@@ -14,7 +14,7 @@ class Photo : Entity() {
 
   val thumbUrl get() = baseUrl?.crop(144)
 
-  val url get() = baseUrl?.fit(1920, 1080)
+  val fullHdUrl get() = baseUrl?.fit(1920, 1080)
 
   override var description: String?
     get() = super.description
