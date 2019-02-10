@@ -11,6 +11,7 @@
     <property name="appengine.api.urlfetch.defaultDeadline" value="10"/>
   </system-properties>
   <static-files>
+    <include path="/manifest.json" expiration="7d"/>
     <include path="/**.jpg" expiration="30d"/>
     <include path="/**.png" expiration="30d"/>
     <include path="/**.gif" expiration="30d"/>
