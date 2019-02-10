@@ -44,7 +44,7 @@ class RequestRouter(
         picasa.urlPrefix == path || "/" == path -> renderGallery()
         path.isResource() -> chain.doFilter(req, res)
         // pathParts.size == 1 -> throw Redirect(picasa.urlPrefix + path)
-        pathParts.size == 2 && pathParts[1].matches("\\d+".toRegex()) -> renderPhotoPage(pathParts[0], pathParts[1])
+        pathParts.size == 2 -> renderPhotoPage(pathParts[0], pathParts[1])
         else -> renderAlbum(pathParts.last())
       }
     }
