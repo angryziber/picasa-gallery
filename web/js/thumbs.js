@@ -15,15 +15,10 @@ function ThumbsView(thumbSize) {
     return window.innerWidth > 700
   }
 
-  function isHdpi() {
-    return isDesktop() && window.devicePixelRatio >= 2
-  }
-
   function setSrc(img) {
     if (!img.src) {
-      var src = img.dataset.src
-      img.src = hdpi ? src.replace('/s' + thumbSize + '-c/', '/s' + (thumbSize * 2) + '-c/') : src
-      delete img.dataset.src
+      img.src = img.dataset.url + '=w' + scaledThumbSize + '-h' + scaledThumbSize + '-c'
+      delete img.dataset.url
     }
   }
 
@@ -55,7 +50,8 @@ function ThumbsView(thumbSize) {
     }
   }
 
-  var hdpi = isHdpi()
+  var pixelRatio = (isDesktop() ? window.devicePixelRatio : 1) || 1
+  var scaledThumbSize = thumbSize * pixelRatio
   updateLayout()
   $(loadVisibleThumbs)
 
