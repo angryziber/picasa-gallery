@@ -1,7 +1,5 @@
 package photos
 
-import java.util.*
-
 open class Album(
     id: String? = null,
     name: String? = null,
@@ -30,6 +28,7 @@ open class Album(
     }
 
   var photos: List<Photo> = emptyList()
+  var parts = LinkedHashMap<String?, AlbumPart>()
   var comments: List<Comment> = emptyList()
 
   val thumbUrl: String?
@@ -37,3 +36,5 @@ open class Album(
 
   open fun size() = size
 }
+
+data class AlbumPart(val photos: List<Photo>, val nextPageToken: String?)

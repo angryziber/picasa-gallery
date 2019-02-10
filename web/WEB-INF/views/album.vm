@@ -31,7 +31,6 @@
         $('a.photo').eq(0).click();
         setTimeout(viewer.slideshow, 500);
       }
-      else if (location.hash) $('a' + location.hash).click();
     });
   </script>
 </head>
@@ -74,15 +73,7 @@
   <br>
 
   <div class="thumbs clear">
-    #foreach($photo in $album.photos)
-      <a id="${photo.id}" class="photo" href="/${album.name}/${photo.id}" data-url="${photo.baseUrl}"
-         #if($photo.timestamp)data-time="${photo.dateTime}"#end
-         #if($photo.geo)data-coords="${photo.geo.lat}:${photo.geo.lon}"#end
-         #if($photo.exif)data-exif="${photo.exif}"#end>
-        <img #if($bot)src="${photo.thumbUrl}"#end
-             #if(!$photo.description.empty)alt="${photo.description}"#end>
-      </a>
-    #end
+    #parse('albumPart.vm')
   </div>
 
   <p id="footer">

@@ -29,6 +29,15 @@ class Picasa(
     return album
   }
 
+  fun getAlbumPhotos(album: Album, pageToken: String?): AlbumPart {
+    val part = Cache.get(album.name + ":" + album.id + ":" + pageToken) {
+      val photos = jsonLoader.load(auth, "/v1/mediaItems:search", PhotosResponse::class, mapOf("albumId" to album.id, "pageToken" to pageToken))
+      AlbumPart(photos.mediaItems.toPhotos(), photos.nextPageToken)
+    }
+    album.parts[pageToken] = part
+    return part
+  }
+
   fun getRandomPhotos(numNext: Int): RandomPhotos {
     val album = weightedRandom(gallery.albums.values)
     val photos = getAlbum(album.name!!).photos

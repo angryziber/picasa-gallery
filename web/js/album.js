@@ -51,20 +51,7 @@ function PhotoViewer() {
   var loader, photoMap
 
   pub.setup = function() {
-    photos = []
-    $('a.photo').on('click', pub.open).each(function() {
-      var title = $('img', this).attr('alt')
-      photos.push({
-        url: this.dataset.url,
-        title: title,
-        id: this.id,
-        pos: extractPos(this),
-        exif: extractExif(this),
-        time: this.dataset.time
-      })
-      this.href = '#' + this.id
-      if (title) this.setAttribute('title', title)
-    })
+    $(document).on('click', 'a.photo', pub.open);
 
     wrapper = $('#photo-wrapper')
     wrapper.off()
@@ -86,6 +73,23 @@ function PhotoViewer() {
     loader = new Loader(wrapper)
     photoMap = new PhotoMap()
     return this
+  }
+
+  pub.addPhotos = function() {
+    $('a.photo').slice(photos.length).each(function() {
+      var title = $('img', this).attr('alt')
+      photos.push({
+        url: this.dataset.url,
+        title: title,
+        id: this.id,
+        pos: extractPos(this),
+        exif: extractExif(this),
+        time: this.dataset.time
+      })
+      this.href = '#' + this.id
+      if (title) this.setAttribute('title', title)
+    })
+    if (location.hash) $('a' + location.hash).click();
   }
 
   pub.open = function() {

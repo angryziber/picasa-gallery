@@ -57,7 +57,7 @@ class RequestRouter(
     }
   }
 
-  private fun render(template: String, model: Any?) {
+  private fun render(template: String, model: Any?, extra: Map<String, Any?> = emptyMap()) {
     val attrs = mutableMapOf(
       "config" to Config,
       "bot" to bot,
@@ -68,6 +68,7 @@ class RequestRouter(
       "servletPath" to path,
       "startTime" to startTime
     )
+    attrs += extra
     render(template, model, attrs, res)
   }
 
@@ -91,18 +92,23 @@ class RequestRouter(
   }
 
   private fun renderAlbum(name: String) {
-    var album: Album
-    try {
-      album = picasa.getAlbum(name)
-      if (album.id == name && album.id != album.name)
-        throw Redirect("/${album.name}${picasa.urlSuffix}")
-    }
-    catch (e: MissingResourceException) {
+    var album = picasa.gallery.albums[name]
+    if (album == null) {
       album = Album(title = pathParts[0], content = "No such album")
       res.status = SC_NOT_FOUND
+      render("album", album)
+      return
     }
 
-    render("album", album)
+    if (album.id == name && album.id != album.name)
+      throw Redirect("/${album.name}${picasa.urlSuffix}")
+
+    val pageToken = req["pageToken"]
+    val part = picasa.getAlbumPhotos(album, pageToken)
+    if (pageToken == null)
+      render("album", album, mapOf("albumPart" to part))
+    else
+      render("albumPart", part, mapOf("album" to album))
   }
 
   private fun handleOAuth() {
