@@ -23,7 +23,7 @@ class Picasa(
 
   fun getAlbum(name: String): Album {
     val album = gallery.albums[name]!!
-    album.photos += Cache.get(album.id!!) {
+    album.photos = Cache.get(name + ":" + album.id) {
       jsonLoader.loadAll(auth, "/v1/mediaItems:search", PhotosResponse::class, mapOf("albumId" to album.id)).toPhotos()
     }
     return album

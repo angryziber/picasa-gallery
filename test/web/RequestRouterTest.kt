@@ -57,7 +57,7 @@ class RequestRouterTest: WordSpec() {
       val photo = Photo()
       photo.id = "5347257660284808946"
       photo.timestamp = 123L
-      album.photos.add(photo)
+      album.photos = listOf(photo)
 
       router.invoke()
 

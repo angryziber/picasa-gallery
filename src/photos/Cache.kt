@@ -4,9 +4,10 @@ import java.lang.System.currentTimeMillis
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.Executors
 import java.util.concurrent.ThreadFactory
-import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeUnit.SECONDS
 import java.util.logging.Level.SEVERE
 import java.util.logging.Logger
+import kotlin.system.measureTimeMillis
 
 object Cache {
   private val logger = Logger.getLogger(javaClass.name)
@@ -17,7 +18,7 @@ object Cache {
     var entry = data[key]
     if (entry == null || (currentTimeMillis() - entry.createdAt) > expirationMs) {
       try {
-        entry = Entry(loader(), loader)
+        entry = Entry(logTime(key, loader), loader)
         data[key] = entry
       } catch (e: Exception) {
         logger.log(SEVERE, "Failed to load", e)
@@ -27,17 +28,22 @@ object Cache {
     return entry!!.value as T
   }
 
+  private fun <T> logTime(key: String, loader: () -> T): T {
+    var result: T? = null
+    val millis = measureTimeMillis { result = loader() }
+    logger.info("Loaded $key in $millis ms")
+    return result!!
+  }
+
   fun reload() {
     val pool = Executors.newFixedThreadPool(10, threadFactory())
     data.entries.sortedBy { it.value.createdAt }.forEach { e ->
       pool.execute {
-        println("Reloading ${e.key}")
-        e.value.value = e.value.loader()
-        println("Reloaded ${e.key}")
+        e.value.value = logTime(e.key, e.value.loader)
       }
     }
     pool.shutdown()
-    pool.awaitTermination(30, TimeUnit.SECONDS)
+    pool.awaitTermination(30, SECONDS)
   }
 
   private fun threadFactory(): ThreadFactory = try {

@@ -7,6 +7,7 @@ import java.util.*
 import java.util.logging.Logger
 import javax.servlet.ServletContext
 import javax.servlet.http.HttpServletResponse
+import kotlin.system.measureTimeMillis
 
 open class Renderer(servletContext: ServletContext) {
   private val logger = Logger.getLogger(RequestRouter::class.java.name)
@@ -25,21 +26,20 @@ open class Renderer(servletContext: ServletContext) {
   }
 
   open operator fun invoke(template: String, source: Any?, attrs: MutableMap<String, Any?>, response: HttpServletResponse) {
-    val start = System.currentTimeMillis()
+    val millis = measureTimeMillis {
+      if (response.contentType == null)
+        response.contentType = "text/html; charset=utf8"
+      if (source is Entity && source.timestamp != null)
+        response.addDateHeader("Last-Modified", source.timestamp!!)
 
-    if (response.contentType == null)
-      response.contentType = "text/html; charset=utf8"
-    if (source is Entity && source.timestamp != null)
-      response.addDateHeader("Last-Modified", source.timestamp!!)
+      response.setHeader("Cache-Control", "public")
 
-    response.setHeader("Cache-Control", "public")
-
-    attrs[template] = source
-    val ctx = VelocityContext(attrs)
-    val tmpl = velocity.getTemplate(template + ".vm")
-    tmpl.merge(ctx, response.writer)
-
-    logger.info("Rendered in " + (System.currentTimeMillis() - start) + " ms")
+      attrs[template] = source
+      val ctx = VelocityContext(attrs)
+      val tmpl = velocity.getTemplate(template + ".vm")
+      tmpl.merge(ctx, response.writer)
+    }
+    logger.info("Rendered in $millis ms")
   }
 
   open operator fun invoke(response: HttpServletResponse, html: () -> String) {
