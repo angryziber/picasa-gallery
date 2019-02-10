@@ -20,7 +20,6 @@ class RequestRouter(
     val startTime = System.currentTimeMillis() / 1000 % 1000000
   }
 
-  val attrs: MutableMap<String, Any?> = HashMap()
   val userAgent: String? = req.getHeader("User-Agent")
   val path = req.servletPath
   val pathParts = path.substring(1).split("/")
@@ -29,22 +28,12 @@ class RequestRouter(
   val random = req["random"]
   val searchQuery = req["q"]
   val auth = requestedUser?.let { OAuth.auths[it] } ?: OAuth.default
-  val profile = auth.profile
   val picasa = Picasa(auth, content)
-  var bot = false
+  var bot = isBot(userAgent)
+  var mobile = detectMobile()
 
   fun invoke() {
     try {
-      detectMobile()
-      detectBot()
-
-      attrs["config"] = Config
-      attrs["picasa"] = picasa
-      attrs["profile"] = profile
-      attrs["host"] = host
-      attrs["servletPath"] = path
-      attrs["startTime"] = startTime
-
       if (req["reload"] != null) Cache.reload()
 
       when {
@@ -69,16 +58,30 @@ class RequestRouter(
     }
   }
 
+  private fun render(template: String, model: Any?) {
+    val attrs = mutableMapOf(
+      "config" to Config,
+      "bot" to bot,
+      "mobile" to mobile,
+      "picasa" to picasa,
+      "profile" to auth.profile,
+      "host" to host,
+      "servletPath" to path,
+      "startTime" to startTime
+    )
+    render(template, model, attrs, res)
+  }
+
   private fun String.isResource() = lastIndexOf('.') >= length - 5
 
   private fun renderGallery() {
-    render("gallery", picasa.gallery, attrs, res)
+    render("gallery", picasa.gallery)
   }
 
   private fun renderSearch(q: String) {
     val album = picasa.search(q)
     album.title = "Photos matching '$q'"
-    render("album", album, attrs, res)
+    render("album", album)
   }
 
   private fun renderPhotoPage(albumId: String, photoId: String) {
@@ -96,16 +99,16 @@ class RequestRouter(
         throw Redirect("/${album.name}${picasa.urlSuffix}")
     }
     catch (e: MissingResourceException) {
-      album = Album(title = pathParts[0], description = "No such album", author = profile?.name)
+      album = Album(title = pathParts[0], description = "No such album", author = auth.profile?.name)
       res.status = SC_NOT_FOUND
     }
 
-    render("album", album, attrs, res)
+    render("album", album)
   }
 
   private fun handleOAuth() {
     val token = req["code"]?.let { code -> auth.token(code) }
-    render("oauth", token, attrs, res)
+    render("oauth", token)
   }
 
   private fun renderRandom() {
@@ -114,18 +117,9 @@ class RequestRouter(
     render(res) { views.random(randomPhotos, req["delay"], req["refresh"] != null) }
   }
 
-  private fun detectMobile() {
-    attrs["mobile"] = userAgent != null && userAgent.contains("Mobile") && !userAgent.contains("iPad") && !userAgent.contains("Tab")
-  }
-
-  private fun detectBot() {
-    bot = isBot(userAgent)
-    if (bot && requestedUser != null) {
-      throw Redirect("/${profile?.slug}")
-    }
-    attrs["bot"] = bot
-  }
-
+  private fun detectMobile() =
+     userAgent != null && userAgent.contains("Mobile") && !userAgent.contains("iPad") && !userAgent.contains("Tab")
+  
   internal fun isBot(userAgent: String?): Boolean {
     return userAgent == null || userAgent.contains("bot/", true) || userAgent.contains("spider/", true)
   }
