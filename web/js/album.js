@@ -64,8 +64,6 @@ function PhotoViewer() {
       })
       this.href = '#' + this.id
       if (title) this.setAttribute('title', title)
-      delete this.dataset.url
-      delete this.dataset.href
     })
 
     wrapper = $('#photo-wrapper')

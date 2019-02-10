@@ -17,8 +17,9 @@ function ThumbsView(thumbSize) {
 
   function setSrc(img) {
     if (!img.src) {
-      img.src = img.dataset.url + '=w' + scaledThumbSize + '-h' + scaledThumbSize + '-c'
-      delete img.dataset.url
+      var baseUrl = img.parentElement.dataset.url
+      img.src = baseUrl + '=w' + scaledThumbSize + '-h' + scaledThumbSize + '-c'
+      delete img.parentElement.dataset.url
     }
   }
 
