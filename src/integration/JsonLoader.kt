@@ -20,7 +20,7 @@ class JsonLoader(private val http: Http = Http()) {
 
   fun <T, R: JsonResponse<T>> loadAll(auth: OAuth, url: String, responseType: KClass<out R>, params: Map<String, Any?> = emptyMap()): List<T> {
     @Suppress("NAME_SHADOWING") val params = HashMap(params)
-    params["pageSize"] = if (url.contains("albums")) 50 else 100
+    params["pageSize"] = if (url.contains("albums", ignoreCase = true)) 50 else 100
     var response = load(auth, url, responseType, params)
     val items = ArrayList(response.items)
     while (response.nextPageToken != null) {
@@ -49,15 +49,29 @@ class AlbumsResponse: JsonResponse<JsonAlbum>() {
   override val items: List<JsonAlbum> get() = albums
 }
 
+class SharedAlbumsResponse: JsonResponse<JsonAlbum>() {
+  var sharedAlbums: List<JsonAlbum> = mutableListOf()
+  override val items: List<JsonAlbum> get() = sharedAlbums
+}
+
 data class JsonAlbum(
   var id: String = "",
   var title: String? = null,
   var productUrl: String? = null,
+  var shareInfo: JsonAlbumShareInfo? = null,
   var mediaItemsCount: Int = 0,
   var coverPhotoBaseUrl: BaseUrl = BaseUrl("")
 ) {
   val name: String? get() = title?.replace("[^\\d\\w]".toRegex(), "")
 }
+
+data class JsonAlbumShareInfo(
+  var shareableUrl: String? = null,
+  var shareToken: String? = null,
+  var sharedAlbumOptions: JsonSharedAlbumOptions? = null
+)
+
+data class JsonSharedAlbumOptions(var isCollaborative: Boolean, var isCommentable: Boolean)
 
 class PhotosResponse: JsonResponse<JsonMediaItem>() {
   var mediaItems: List<JsonMediaItem> = mutableListOf()
