@@ -64,7 +64,7 @@ class Picasa(
     }
   }
 
-  private fun List<JsonAlbum>.toGallery() = Gallery(212).apply {
+  private fun List<JsonAlbum>.toGallery() = Gallery().apply {
     author = auth.profile?.name
     authorId = auth.profile?.slug
     albums.putAll(filter { content.contains(it.name) }.map {

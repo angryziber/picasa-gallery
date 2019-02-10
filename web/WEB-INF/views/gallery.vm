@@ -46,7 +46,7 @@
 
 #parse('sharing.vm')
 
-<script>new ThumbsView(${gallery.thumbSize})</script>
+<script>new ThumbsView(212)</script>
 
 </body>
 </html>

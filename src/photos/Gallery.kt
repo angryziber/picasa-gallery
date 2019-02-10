@@ -2,7 +2,7 @@ package photos
 
 import java.util.*
 
-class Gallery(val thumbSize: Int) : Entity() {
+class Gallery : Entity() {
   var author: String? = null
   var authorId: String? = null
   var albums: MutableMap<String, Album> = LinkedHashMap(64)
