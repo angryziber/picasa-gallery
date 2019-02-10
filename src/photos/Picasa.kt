@@ -33,7 +33,7 @@ class Picasa(
     val album = weightedRandom(gallery.albums.values)
     val photos = getAlbum(album.name!!).photos
     val index = random(photos.size)
-    return RandomPhotos(photos.subList(index, min(index + numNext, photos.size)), album.author, album.title)
+    return RandomPhotos(photos.subList(index, min(index + numNext, photos.size)), album.title, auth.profile!!)
   }
 
   fun weightedRandom(albums: Collection<Album>): Album {
@@ -67,7 +67,7 @@ class Picasa(
   private fun List<JsonAlbum>.toGallery() = Gallery().apply {
     albums.putAll(filter { content.contains(it.name) }.map {
       val albumContent = content.forAlbum(it.name)
-      it.name!! to Album(it.id, it.name, it.title, null, albumContent?.content, auth.profile?.slug).apply {
+      it.name!! to Album(it.id, it.name, it.title, null, albumContent?.content).apply {
         geo = albumContent?.geo
         baseUrl = it.coverPhotoBaseUrl
         size = it.mediaItemsCount

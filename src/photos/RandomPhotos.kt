@@ -1,3 +1,5 @@
 package photos
 
-class RandomPhotos(val photos: List<Photo>, val author: String?, val album: String?)
+import integration.Profile
+
+class RandomPhotos(val photos: List<Photo>, val album: String?, val profile: Profile)

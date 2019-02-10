@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>${album.title} by ${album.author} - Photos</title>
-  <meta name="description" content="${album.title} photos by ${album.author}: ${album.description}">
+  <title>${album.title} by ${profile.name} - Photos</title>
+  <meta name="description" content="${album.title} photos by ${profile.name}: ${album.description}">
 
   #if($mobile)
     <link rel="apple-touch-icon" href="${album.thumbUrl}">
@@ -11,7 +11,7 @@
   <link rel="shortcut icon" href="${album.thumbUrl}" type="image/jpeg">
 
   <meta name="medium" content="image">
-  <meta property="og:title" content="${album.title} photos by ${album.author}">
+  <meta property="og:title" content="${album.title} photos by ${profile.name}">
   <meta property="og:image" content="${album.thumbUrlLarge}">
   <link rel="image_src" href="${album.thumbUrlLarge}">
   #if($album.geo)
@@ -19,7 +19,7 @@
     <meta property="og:longitude" content="${album.geo.lon}">
   #end
   <meta property="og:description" content="${album.description}">
-  <meta property="og:site_name" content="${album.author} Photography">
+  <meta property="og:site_name" content="${profile.name} Photography">
 
   #parse('head.vm')
   <script src="/js/album.js?${startTime}"></script>
@@ -44,7 +44,7 @@
   <form id="search"><input></form>
   <h1 id="title">
     ${album.title}
-    <small>by ${album.author}</small>
+    <small>by ${profile.name}</small>
   </h1>
 </div>
 

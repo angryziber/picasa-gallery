@@ -8,7 +8,7 @@ fun random(random: RandomPhotos, delayMs: String?, refresh: Boolean) = """
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Random photo by ${+random.author} from ${+random.album}</title>
+  <title>Random photo by ${+random.profile.name} from ${+random.album}</title>
   <style type="text/css">$css</style>
 </head>
 <body>
@@ -16,7 +16,7 @@ fun random(random: RandomPhotos, delayMs: String?, refresh: Boolean) = """
 <div id="title">
   <b>${+random.album}</b>
   <div id="description">${+random.photos[0].description}</div>
-  <div>${+random.author}</div>
+  <div>${+random.profile.name}</div>
 </div>
 <script>
   var img = document.getElementById('img')
