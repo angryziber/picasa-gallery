@@ -30,7 +30,7 @@ data class OAuth(var refreshToken: String?, val isDefault: Boolean = false) {
     set(value) {
       field = value?.also {
         expiresAt = System.currentTimeMillis() + it.expiresIn * 1000 - 10000
-        refreshToken = it.refreshToken
+        if (it.refreshToken != null) refreshToken = it.refreshToken
       }
     }
 
