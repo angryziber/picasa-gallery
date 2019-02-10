@@ -50,19 +50,23 @@
 
 <div id="content" class="faded">
   #if($album.content)
-    <div id="album-long-content" class="#if(!$bot)closed#end">
+    #if($album.contentIsLong)
+      <div id="album-long-content" class="#if(!$bot)closed#end">
+        ${album.content}
+      </div>
+      <script>
+        $('#album-long-content')
+            .on('mousedown', function(e) {
+              $(this).data('time', new Date())
+            })
+            .on('mouseup', function() {
+              if (new Date() - $(this).data('time') < 300)
+                $(this).toggleClass('closed');
+            });
+      </script>
+    #else
       ${album.content}
-    </div>
-    <script>
-      $('#album-long-content')
-          .on('mousedown', function(e) {
-            $(this).data('time', new Date())
-          })
-          .on('mouseup', function() {
-            if (new Date() - $(this).data('time') < 300)
-              $(this).toggleClass('closed');
-          });
-    </script>
+    #end
   #elseif(!$album.description.empty)
     <h1>${album.title}</h1>
     <h2>${album.description}</h2>

@@ -152,7 +152,7 @@ h2 {
 }
 
 #album-long-content.closed {
-  height: 15em;
+  max-height: 15em;
   overflow: hidden;
 }
 

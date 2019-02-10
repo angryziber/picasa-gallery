@@ -12,6 +12,8 @@ open class Album(
 
   var size = 0
 
+  val contentIsLong get() = (content?.length ?: 0) > 300
+
   var name = name
     set(value) { if (value != id) field = value }
 
