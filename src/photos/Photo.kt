@@ -8,16 +8,13 @@ class Photo : Entity() {
   var exif = Exif()
   var albumId: String? = null
 
-  val dateTime: String
-    get() = SimpleDateFormat("yyyy-MM-dd HH:mm").format(timestamp)
+  val dateTime get() = SimpleDateFormat("yyyy-MM-dd HH:mm").format(timestamp)
 
-  val date: String
-    get() = SimpleDateFormat("yyyy-MM-dd").format(timestamp)
+  val date get() = SimpleDateFormat("yyyy-MM-dd").format(timestamp)
 
-  val thumbUrl: String?
-    get() = baseUrl?.crop(144)
+  val thumbUrl get() = baseUrl?.crop(144)
 
-  val url = baseUrl?.fit(1920, 1080)
+  val url get() = baseUrl?.fit(1920, 1080)
 
   override var description: String?
     get() = super.description

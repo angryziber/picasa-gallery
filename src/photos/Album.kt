@@ -8,8 +8,7 @@ open class Album(
     title: String? = null,
     description: String? = null,
     var content: String? = null,
-    var author: String? = null,
-    var authorId: String? = null
+    var author: String? = null
 ) : Entity(id, title, description) {
 
   var size = 0

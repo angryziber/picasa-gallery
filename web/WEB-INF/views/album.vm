@@ -82,7 +82,7 @@
   </div>
 
   <p id="footer">
-    Photos by <a href="https://plus.google.com/${album.authorId}/about" rel="author" target="_blank">${album.author}</a>. All rights reserved.
+    Photos by <a href="https://plus.google.com/${profile.id}" rel="author" target="_blank">${profile.name}</a>. All rights reserved.
     <br>
     Rendered by <a href="https://github.com/angryziber/picasa-gallery">Picasa Gallery</a>.
   </p>
@@ -111,7 +111,7 @@
     #foreach($comment in $album.comments)
       <div class="comment photo-${comment.photoId} hidden">
         <img src="${comment.avatarUrl}">
-        <a target="_blank" href="/#if($album.authorId != $comment.authorId)?by=${comment.authorId}#end" rel="nofollow">
+        <a target="_blank" href="/#if($profile.id != $comment.authorId)?by=${comment.authorId}#end" rel="nofollow">
             ${comment.author}
         </a>
         <br>${comment.text}
