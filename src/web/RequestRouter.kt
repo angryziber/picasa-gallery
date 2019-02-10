@@ -30,7 +30,6 @@ class RequestRouter(
   val auth = requestedUser?.let { OAuth.auths[it] } ?: OAuth.default
   val picasa = Picasa(auth, content)
   var bot = isBot(userAgent)
-  var mobile = detectMobile()
 
   fun invoke() {
     try {
@@ -62,7 +61,7 @@ class RequestRouter(
     val attrs = mutableMapOf(
       "config" to Config,
       "bot" to bot,
-      "mobile" to mobile,
+      "mobile" to detectMobile(),
       "picasa" to picasa,
       "profile" to auth.profile,
       "host" to host,
