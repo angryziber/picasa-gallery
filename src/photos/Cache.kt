@@ -2,12 +2,15 @@ package photos
 
 import java.lang.System.currentTimeMillis
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.Executors
+import java.util.concurrent.ThreadFactory
+import java.util.concurrent.TimeUnit
 import java.util.logging.Level.SEVERE
 import java.util.logging.Logger
 
 object Cache {
   private val logger = Logger.getLogger(javaClass.name)
-  private const val expirationMs = 30 * 60 * 1000
+  private const val expirationMs = 55 * 60 * 1000
   private val data: MutableMap<String, Entry> = ConcurrentHashMap()
 
   fun <T> get(key: String, loader: () -> T): T {
@@ -25,8 +28,24 @@ object Cache {
   }
 
   fun reload() {
-    data.clear()
+    val pool = Executors.newFixedThreadPool(10, threadFactory())
+    data.entries.sortedBy { it.value.createdAt }.forEach { e ->
+      pool.execute {
+        println("Reloading ${e.key}")
+        e.value.value = e.value.loader()
+        println("Reloaded ${e.key}")
+      }
+    }
+    pool.shutdown()
+    pool.awaitTermination(30, TimeUnit.SECONDS)
   }
 
-  data class Entry(val value: Any?, val loader: () -> Any?, val createdAt: Long = currentTimeMillis())
+  private fun threadFactory(): ThreadFactory = try {
+    com.google.appengine.api.ThreadManager.currentRequestThreadFactory()
+  }
+  catch (e: Exception) {
+    ThreadFactory { Thread(it) }
+  }
+
+  data class Entry(var value: Any?, val loader: () -> Any?, val createdAt: Long = currentTimeMillis())
 }

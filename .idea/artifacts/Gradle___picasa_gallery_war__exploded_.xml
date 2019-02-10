@@ -22,14 +22,17 @@
           <element id="library" level="project" name="Gradle: com.github.scribejava:scribejava-apis:4.0.0" />
           <element id="library" level="project" name="Gradle: com.google.code.gson:gson:2.8.5" />
           <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.11" />
+          <element id="library" level="project" name="Gradle: org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1" />
           <element id="library" level="project" name="Gradle: commons-collections:commons-collections:3.2.1" />
           <element id="library" level="project" name="Gradle: commons-lang:commons-lang:2.4" />
           <element id="library" level="project" name="Gradle: com.github.scribejava:scribejava-core:4.0.0" />
           <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.11" />
+          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.3.20" />
+          <element id="library" level="project" name="Gradle: org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.1.1" />
+          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.3.20" />
           <element id="library" level="project" name="Gradle: org.jetbrains:annotations:13.0" />
           <element id="library" level="project" name="Gradle: oro:oro:2.0.8" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.3.11/4cbc5922a54376018307a731162ccaf3ef851a39/kotlin-stdlib-1.3.11.jar" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.11/d8b8e746e279f1c4f5e08bc14a96b82e6bb1de02/kotlin-stdlib-common-1.3.11.jar" />
+          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.appengine/appengine-api-1.0-sdk/1.9.71/c582a01c66b382f9d90b447dab1b12bbb5d5cb12/appengine-api-1.0-sdk-1.9.71.jar" />
         </element>
       </element>
     </root>

@@ -43,6 +43,7 @@ sourceSets {
 
 dependencies {
   appengineSdk "com.google.appengine:appengine-java-sdk:$appengine_sdk_version"
+  compile 'com.google.appengine:appengine-api-1.0-sdk:+'
   compile 'org.apache.velocity:velocity:1.7'
   runtime 'oro:oro:2.0.8'
   providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
