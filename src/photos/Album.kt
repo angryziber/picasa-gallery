@@ -6,13 +6,18 @@ open class Album(
     id: String? = null,
     name: String? = null,
     title: String? = null,
-    description: String? = null,
     var content: String? = null
-) : Entity(id, title, description) {
+) : Entity(id, title) {
+
+  companion object {
+    val descriptionRegex = Regex("<h2>(.*?)</h2>")
+  }
 
   var size = 0
 
   val contentIsLong get() = (content?.length ?: 0) > 300
+
+  val description = content?.let { descriptionRegex.find(it)?.groups?.get(1)?.value } ?: ""
 
   var name = name
     set(value) { if (value != id) field = value }

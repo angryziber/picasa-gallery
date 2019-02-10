@@ -20,7 +20,7 @@ class RequestRouter(
     val startTime = System.currentTimeMillis() / 1000 % 1000000
   }
 
-  val userAgent: String? = req.getHeader("User-Agent")
+  val userAgent: String = req.getHeader("User-Agent") ?: ""
   val path = req.servletPath
   val pathParts = path.substring(1).split("/")
   val host = req.getHeader("host")
@@ -98,7 +98,7 @@ class RequestRouter(
         throw Redirect("/${album.name}${picasa.urlSuffix}")
     }
     catch (e: MissingResourceException) {
-      album = Album(title = pathParts[0], description = "No such album")
+      album = Album(title = pathParts[0], content = "No such album")
       res.status = SC_NOT_FOUND
     }
 
@@ -117,10 +117,10 @@ class RequestRouter(
   }
 
   private fun detectMobile() =
-     userAgent != null && userAgent.contains("Mobile") && !userAgent.contains("iPad") && !userAgent.contains("Tab")
+     userAgent.contains("Mobile") && !userAgent.contains("iPad") && !userAgent.contains("Tab")
   
-  internal fun isBot(userAgent: String?) =
-    userAgent == null || userAgent.contains("bot/", true) || userAgent.contains("spider/", true)
+  internal fun isBot(userAgent: String) =
+    userAgent.contains("bot/", true) || userAgent.contains("spider/", true)
 }
 
 class Redirect(val path: String): Exception()

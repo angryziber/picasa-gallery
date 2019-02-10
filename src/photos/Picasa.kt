@@ -67,7 +67,7 @@ class Picasa(
   private fun List<JsonAlbum>.toGallery() = Gallery().apply {
     albums.putAll(filter { content.contains(it.name) }.map {
       val albumContent = content.forAlbum(it.name)
-      it.name!! to Album(it.id, it.name, it.title, null, albumContent?.content).apply {
+      it.name!! to Album(it.id, it.name, it.title, albumContent?.content).apply {
         geo = albumContent?.geo
         baseUrl = it.coverPhotoBaseUrl
         size = it.mediaItemsCount

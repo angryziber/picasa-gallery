@@ -4,13 +4,10 @@ import integration.BaseUrl
 import java.text.SimpleDateFormat
 import java.util.*
 
-open class Entity(var id: String? = null, open var title: String? = null, description: String? = null) {
+open class Entity(var id: String? = null, open var title: String? = null) {
   var baseUrl: BaseUrl? = null
   var timestamp: Long? = null
   var geo: GeoLocation? = null
-
-  open var description = description
-    get() = field ?: ""
 
   var timestampISO: String?
     get() = timestamp?.formatISO()

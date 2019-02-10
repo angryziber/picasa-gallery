@@ -15,10 +15,9 @@ class Photo : Entity() {
 
   val fullHdUrl get() = baseUrl?.fit(1920, 1080)
 
-  override var description: String?
-    get() = super.description
+  var description: String? = null
     set(value) {
       // remove filename-like descriptions that don't make any sense
-      super.description = if (value?.matches("(IMG|DSC)?[0-9-_.]+".toRegex()) ?: false) null else value
+      field = if (value?.matches("(IMG|DSC)?[0-9-_.]+".toRegex()) == true) null else value
     }
 }
