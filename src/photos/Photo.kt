@@ -5,8 +5,7 @@ import java.text.SimpleDateFormat
 class Photo : Entity() {
   var width: Int? = null
   var height: Int? = null
-  var exif = Exif()
-  var albumId: String? = null
+  var exif: Exif? = null
 
   val dateTime get() = SimpleDateFormat("yyyy-MM-dd HH:mm").format(timestamp)
 

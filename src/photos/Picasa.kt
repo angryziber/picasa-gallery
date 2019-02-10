@@ -84,13 +84,7 @@ class Picasa(
       description = it.description
       timestampISO = it.mediaMetadata?.creationTime
       it.mediaMetadata?.photo?.let {
-        exif = Exif().apply {
-          camera = it.cameraModel
-          exposure = it.exposureTime
-          focal = it.focalLength
-          iso = it.isoEquivalent
-          fstop = it.apertureFNumber
-        }
+        exif = Exif(it.cameraModel, it.apertureFNumber, it.exposureTime, it.focalLength, it.isoEquivalent)
       }
     }
   }

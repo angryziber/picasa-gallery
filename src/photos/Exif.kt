@@ -1,9 +1,11 @@
 package photos
 
-class Exif {
-  var fstop: Float? = null
-  var exposure: Float? = null
-  var focal: Float? = null
-  var iso: Int? = null
-  var camera: String? = null
+class Exif(
+  val camera: String?,
+  val fstop: Float?,
+  val exposure: Float?,
+  val focal: Float?,
+  val iso: Int?
+) {
+  override fun toString() = "${fstop ?: ""}:${exposure ?: ""}:${iso ?: ""}:${focal ?: ""}"
 }
