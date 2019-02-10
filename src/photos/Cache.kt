@@ -18,6 +18,7 @@ object Cache {
         data[key] = entry
       } catch (e: Exception) {
         logger.log(SEVERE, "Failed to load", e)
+        if (entry?.value == null) throw e
       }
     }
     return entry!!.value as T
