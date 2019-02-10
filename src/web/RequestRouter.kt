@@ -119,9 +119,8 @@ class RequestRouter(
   private fun detectMobile() =
      userAgent != null && userAgent.contains("Mobile") && !userAgent.contains("iPad") && !userAgent.contains("Tab")
   
-  internal fun isBot(userAgent: String?): Boolean {
-    return userAgent == null || userAgent.contains("bot/", true) || userAgent.contains("spider/", true)
-  }
+  internal fun isBot(userAgent: String?) =
+    userAgent == null || userAgent.contains("bot/", true) || userAgent.contains("spider/", true)
 }
 
 class Redirect(val path: String): Exception()
