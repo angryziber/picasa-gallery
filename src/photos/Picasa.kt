@@ -7,7 +7,7 @@ import java.util.*
 
 class Picasa(
   private val auth: OAuth,
-  private val content: LocalContent,
+  private val localContent: LocalContent?,
   private val jsonLoader: JsonLoader = JsonLoader()
 ) {
   companion object {
@@ -17,8 +17,11 @@ class Picasa(
   val urlPrefix get() = "/${auth.profile?.slug ?: ""}"
   val urlSuffix get() = if (auth.isDefault) "" else "?by=${auth.profile?.slug}"
 
-  val gallery get() = Cache.get("gallery") {
-    jsonLoader.loadAll(auth, "/v1/albums", AlbumsResponse::class).toGallery()
+  val gallery get() = Cache.get("gallery:${auth.profile?.slug}") {
+    if (localContent != null)
+      jsonLoader.loadAll(auth, "/v1/albums", AlbumsResponse::class).toGallery()
+    else
+      jsonLoader.loadAll(auth, "/v1/sharedAlbums", SharedAlbumsResponse::class).toGallery()
   }
 
   fun getAlbumPhotos(album: Album, pageToken: String?) = Cache.get(album.name + ":" + album.id + ":" + pageToken) {
@@ -84,9 +87,10 @@ class Picasa(
   }
 
   private fun List<JsonAlbum>.toGallery() = Gallery().apply {
-    albums.putAll(filter { content.contains(it.name) }.map {
-      val albumContent = content.forAlbum(it.name)
-      it.name!! to Album(it.id, it.name, it.title, albumContent?.content).apply {
+    albums.putAll(asSequence().filter { localContent == null || localContent.contains(it.name) }
+        .filter { it.title != null && it.mediaItemsCount > 1 }.map {
+      val albumContent = localContent?.forAlbum(it.name)
+      it.name to Album(it.id, it.name, it.title, albumContent?.content).apply {
         geo = albumContent?.geo
         baseUrl = it.coverPhotoBaseUrl
         size = it.mediaItemsCount

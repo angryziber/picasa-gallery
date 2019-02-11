@@ -13,7 +13,7 @@ class RequestRouter(
     val req: HttpServletRequest,
     val res: HttpServletResponse,
     val render: Renderer,
-    content: LocalContent,
+    localContent: LocalContent,
     val chain: FilterChain
 ) {
   companion object {
@@ -28,7 +28,7 @@ class RequestRouter(
   val random = req["random"]
   val searchQuery = req["q"]
   val auth = requestedUser?.let { OAuth.auths[it] } ?: OAuth.default
-  val picasa = Picasa(auth, content)
+  val picasa = Picasa(auth, if (auth.isDefault) localContent else null)
   var bot = isBot(userAgent) || req["bot"] != null
 
   fun invoke() {
@@ -107,7 +107,12 @@ class RequestRouter(
   }
 
   private fun handleOAuth() {
+    val auth = if (OAuth.default.refreshToken == null) OAuth.default else OAuth(null)
     val token = req["code"]?.let { code -> auth.token(code) }
+    auth.profile?.slug?.let {
+      OAuth.auths[it] = auth
+      if (!auth.isDefault) throw Redirect("/?by=$it")
+    }
     render("oauth", token)
   }
 
