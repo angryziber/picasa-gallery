@@ -16,7 +16,7 @@ object Cache {
 
   fun <T> get(key: String, loader: () -> T): T {
     var entry = data[key]
-    if (entry == null || (currentTimeMillis() - entry.createdAt) > expirationMs) {
+    if (entry == null || (currentTimeMillis() - entry.loadedAt) > expirationMs) {
       try {
         entry = Entry(logTime(key, loader), loader)
         data[key] = entry
@@ -37,9 +37,10 @@ object Cache {
 
   fun reload() {
     val pool = Executors.newFixedThreadPool(10, threadFactory())
-    data.entries.sortedBy { it.value.createdAt }.forEach { e ->
+    data.entries.sortedBy { it.value.loadedAt }.forEach { e ->
       pool.execute {
         e.value.value = logTime(e.key, e.value.loader)
+        e.value.loadedAt = currentTimeMillis()
       }
     }
     pool.shutdown()
@@ -53,5 +54,5 @@ object Cache {
     ThreadFactory { Thread(it) }
   }
 
-  data class Entry(var value: Any?, val loader: () -> Any?, val createdAt: Long = currentTimeMillis())
+  data class Entry(var value: Any?, val loader: () -> Any?, var loadedAt: Long = currentTimeMillis())
 }
