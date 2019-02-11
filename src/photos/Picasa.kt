@@ -26,14 +26,14 @@ class Picasa(
     AlbumPart(photos.mediaItems.toPhotos(), photos.nextPageToken)
   }
 
-  fun getAllAlbumPhotos(album: Album): List<Photo> {
+  fun getAlbumPhotos(album: Album, upToIndex: Int = Int.MAX_VALUE): List<Photo> {
     var pageToken: String? = null
     val photos = mutableListOf<Photo>()
     do {
       val albumPart = getAlbumPhotos(album, pageToken)
       pageToken = albumPart.nextPageToken
       photos += albumPart.photos
-    } while (pageToken != null)
+    } while (pageToken != null && photos.size < upToIndex)
     return photos
   }
 
@@ -49,9 +49,10 @@ class Picasa(
 
   fun getRandomPhotos(numNext: Int): RandomPhotos {
     val album = weightedRandom(gallery.albums.values)
-    val photos = getAllAlbumPhotos(album)
-    val index = random(photos.size)
-    return RandomPhotos(photos.subList(index, min(index + numNext, photos.size)), album.title, auth.profile!!)
+    val index = random(album.size)
+    val upToIndex = min(index + numNext, album.size)
+    val photos = getAlbumPhotos(album, upToIndex)
+    return RandomPhotos(photos.subList(index, upToIndex), album.title, auth.profile!!)
   }
 
   fun weightedRandom(albums: Collection<Album>): Album {

@@ -78,6 +78,6 @@ private fun morePhotosJS(photos: List<Photo>, delayMs: String?, refresh: Boolean
   }, ${delayMs ?: 8000})
 """
 
-private fun List<Photo>.toJson() = each { """
-  {url:'${fullHdUrl.escapeJS()}', description:'${description?.replace(newline, " ")?.escapeJS()}'}"""
+private fun List<Photo>.toJson() = joinToString { """
+  {url:'${it.fullHdUrl.escapeJS()}', description:'${it.description?.replace(newline, " ")?.escapeJS()}'}"""
 }
