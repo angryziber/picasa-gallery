@@ -62,7 +62,7 @@ data class JsonAlbum(
   var mediaItemsCount: Int = 0,
   var coverPhotoBaseUrl: BaseUrl = BaseUrl("")
 ) {
-  val name: String? get() = title?.replace("[^\\d\\w]".toRegex(), "")
+  val name get() = (title ?: id).replace("[^\\d\\w]".toRegex(), "")
 }
 
 data class JsonAlbumShareInfo(
