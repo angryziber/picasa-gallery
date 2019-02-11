@@ -29,7 +29,7 @@ class RequestRouter(
   val searchQuery = req["q"]
   val auth = requestedUser?.let { OAuth.auths[it] } ?: OAuth.default
   val picasa = Picasa(auth, content)
-  var bot = isBot(userAgent)
+  var bot = isBot(userAgent) || req["bot"] != null
 
   fun invoke() {
     try {
@@ -92,13 +92,7 @@ class RequestRouter(
   }
 
   private fun renderAlbum(name: String) {
-    var album = picasa.gallery.albums[name]
-    if (album == null) {
-      album = Album(title = pathParts[0], content = "No such album")
-      res.status = SC_NOT_FOUND
-      render("album", album)
-      return
-    }
+    val album = picasa.gallery.albums[name] ?: throw MissingResourceException(path, "", "")
 
     if (album.id == name && album.id != album.name)
       throw Redirect("/${album.name}${picasa.urlSuffix}")
