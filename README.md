@@ -1,8 +1,8 @@
 What is it?
 ===========
 
-A good-looking frontend for albums stored in Google Photos (former Google+ or Picasa web), with nice transitions,
-mobile device support, and full-screen photo browsing with quick loading (prefetching).
+A good-looking public frontend for shared albums stored in Google Photos (former Google+ or Picasa web), with nice transitions,
+mobile device support, and full-screen photo browsing.
 
 Perfect for those who still want to have a public gallery of albums after transition to Google Photos, which has no public
 gallery of it's own anymore.
@@ -13,36 +13,36 @@ How does it work?
 =================
 
 It's a small app made to be hosted for free on Google App Engine.
-It uses [Google Web Albums Data API](https://developers.google.com/picasa-web) to fetch and display your albums and photos, so whenever you change anything
-on Google Photos/Picasaweb, it will become visible in this gallery.
+It uses [Google Photos API](https://developers.google.com/photos/) to fetch and display your albums and photos. 
+After the introduction of this new API, unfortunately, all requests must be authenticated.
 
 Features
 ========
 
 - Dark theme that emphasizes photos
-- Shows your existing public albums, no additional storage needed
+- Shows your shared albums
 - HDPI/Retina screens use hi-res thumbnails
-- Search within the gallery (by tags, keywords, descriptions, etc) - *works only for authenticated use, see below*
+- Search within the gallery (by tags, keywords, descriptions, etc) - *currently not supported by Google in the new API*
 - Nice shareable URLs for albums, individual photos, search results
-- Gallery map if albums are geotagged
+- Gallery map if albums are geotagged - *geotagging is not available in the API - use web/content to provide location data*
 - Optional content/blog in Markdown format - put it into `web/content`, see [content branch](https://github.com/angryziber/picasa-gallery/tree/content) for a sample
 - Full-screen photo viewer
-- Fast: minimum number of requests, optimized caching, preloading of next photos
+- Fast: minimum number of API requests, optimized caching, preloading of next photos - *but the new Google Photos API is quite slow by itself*
 - Keyboard navigation
 - Mobile device support, eg iPhone, iPad, Android (including touch events)
-- Facebook Like buttons for albums and individual photos
+- Facebook/Instagram/Twitter/Pinterest sharing for albums and individual photos
 - Opengraph metadata (for FB sharing, etc)
 - Google analytics support
-- Viewing of other people's albums, just add "?by=username" parameter
 - Slideshow with adjustable delay, add "#slideshow" to the URL if you want it to start automatically
 - Showing of a single (weighted) random photo from all albums, just add "?random" parameter
-- ChromeCast support - send currently viewed photo to the TV (provided you own the ChromeCast dongle)
+- ChromeCast support - send currently viewed photo to the TV
 
 How to use it for your own photos [![Build Status](https://travis-ci.org/angryziber/picasa-gallery.svg?branch=master)](https://travis-ci.org/angryziber/picasa-gallery)
 =================================
 
 - Clone this repository as described on Github
-- Specify your Google username, Google Maps key, etc in `src/config.properties`
+- Specify some properties e.g. OAuth refresh token, Google Maps key, etc in `src/config.properties`
+- To authorize the gallery with your Google account and get refresh token, launch the app and navigate to `/oauth`
 - Specify your AppEngine application ID in web/WEB-INF/appengine-web.xml
 - Uploading and testing
   * `./gradlew appengineUpdate` - will upload the app to Google AppEngine
@@ -52,17 +52,17 @@ How to use it for your own photos [![Build Status](https://travis-ci.org/angryzi
 
 - If you use Intellij IDEA, you can import `build.gradle` and run all the actions from an IDE. 
 
-## Picasaweb retirement
+## Picasaweb retirement and Google Photos API limitations
 
 Since the beginning of 2016, Google has started removing features from Picasaweb API, and now the
 whole Picasaweb service has been closed, being replaced by Album Archive.
 
-This gallery still works for your old *public* albums stored in the archive (or just Google Photos).
+Now the Picasaweb API has been finally replaced by the new Google Photos API, which is unlike the old API,
+is not tailored to public sharing. This app overcomes this by authorizing the access with your Google
+account and provided the `web/content` (see above) to selects visible albums and provide location and other metadata
+that Google Photos API no longer returns.
 
-However, when you upload new albums to Google Photos, there is no way anymore to mark them as *public*.
-It seems that Google Photos right now is built to be mostly private photo storage service.
-
-As previous workarounds don't work anymore, you now can still show your non-public albums by authenticating
-with this app and adding names of *protected* albums to `web/content`. Unfortunately, there is currently no
-way of telling if album is private or shared in Google Photos using the API.
-See the comments in `config.properties` on how to authenticate.
+Unfortunately, as of now, Google Photos API is quite slow, with response sizes limited and taking several seconds to complete.
+Probably the reason is that it now generates expiring image URLs (in about 1 hour).
+This limitation also makes it harder to cache and reload efficiently. Also, location metadata is not provided and even
+stripped from the embedded Exif. Hopefully these issues will be resolved in future.
