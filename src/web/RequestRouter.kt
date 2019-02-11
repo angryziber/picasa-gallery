@@ -104,7 +104,8 @@ class RequestRouter(
       throw Redirect("/${album.name}${picasa.urlSuffix}")
 
     val pageToken = req["pageToken"]
-    val part = picasa.getAlbumPhotos(album, pageToken)
+    val part = if (bot) AlbumPart(picasa.getAlbumPhotos(album), null)
+               else picasa.getAlbumPhotos(album, pageToken)
     if (pageToken == null)
       render("album", album, mapOf("albumPart" to part))
     else
