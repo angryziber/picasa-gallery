@@ -1,6 +1,8 @@
 'use strict'
 
 function ThumbsView(thumbSize) {
+  var self = this
+  self.loadingFinished = false
 
   function updateLayout() {
     if (!isDesktop()) return
@@ -23,7 +25,7 @@ function ThumbsView(thumbSize) {
     }
   }
 
-  function loadVisibleThumbs() {
+  self.loadVisibleThumbs = function() {
     var loadTop = window.scrollY - window.innerHeight
     var loadBottom = window.scrollY + window.innerHeight * 2
 
@@ -41,11 +43,13 @@ function ThumbsView(thumbSize) {
     })
   }
 
+  var lastEventTimestamp = 0
+
   function loadVisibleThumbsDebounce(e) {
-    if (e.timeStamp - (loadVisibleThumbs.lastTimeStamp || 0) > 200) {
-      loadVisibleThumbs.lastTimeStamp = e.timeStamp
+    if (e.timeStamp - lastEventTimestamp > 200) {
+      lastEventTimestamp = e.timeStamp
       setTimeout(function() {
-        if (loadVisibleThumbs() === false)
+        if (self.loadVisibleThumbs() === false && self.loadingFinished)
           $(window).off('resize scroll', loadVisibleThumbsDebounce)
       }, 0)
     }
@@ -54,7 +58,7 @@ function ThumbsView(thumbSize) {
   var pixelRatio = (isDesktop() ? window.devicePixelRatio : 1) || 1
   var scaledThumbSize = thumbSize * pixelRatio
   updateLayout()
-  $(loadVisibleThumbs)
+  $(self.loadVisibleThumbs)
 
   $(window).on('resize', updateLayout)
            .on('resize scroll', loadVisibleThumbsDebounce)

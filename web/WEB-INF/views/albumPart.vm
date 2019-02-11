@@ -13,6 +13,9 @@
   #if($albumPart.nextPageToken)
     $.get(location.href + '?pageToken=${albumPart.nextPageToken}').then(function(html) {
       $('.thumbs').append(html)
+      thumbsView.loadVisibleThumbs()
     })
+  #else
+    thumbsView.loadingFinished = true
   #end
 </script>

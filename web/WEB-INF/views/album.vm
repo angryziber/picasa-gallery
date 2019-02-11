@@ -131,7 +131,7 @@
 
 #parse('sharing.vm')
 
-<script>new ThumbsView(144)</script>
+<script>var thumbsView = new ThumbsView(144)</script>
 
 </body>
 </html>
