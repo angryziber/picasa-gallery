@@ -9,6 +9,8 @@ import java.net.HttpURLConnection
 
 data class OAuth(var refreshToken: String?, val isDefault: Boolean = false) {
   companion object {
+    fun startUrl(host: String) = "https://accounts.google.com/o/oauth2/v2/auth?client_id=${Config.oauthClientId}&response_type=code&access_type=offline&prompt=consent&redirect_uri=http://$host/oauth&scope=${Config.oauthScopes}"
+
     val default = OAuth(Config.oauthRefreshToken, isDefault = true)
     val auths: MutableMap<String, OAuth> = mutableMapOf()
 

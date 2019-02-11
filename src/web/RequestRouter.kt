@@ -107,8 +107,11 @@ class RequestRouter(
   }
 
   private fun handleOAuth() {
+    val code = req["code"] ?: throw Redirect(OAuth.startUrl(host))
+
     val auth = if (OAuth.default.refreshToken == null) OAuth.default else OAuth(null)
-    val token = req["code"]?.let { code -> auth.token(code) }
+    val token = auth.token(code)
+
     auth.profile?.slug?.let {
       OAuth.auths[it] = auth
       if (!auth.isDefault) throw Redirect("/?by=$it")
