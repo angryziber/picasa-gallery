@@ -11,7 +11,7 @@
 <script>
   viewer.addPhotos()
   #if($albumPart.nextPageToken)
-    $.get(location.href + '?pageToken=${albumPart.nextPageToken}').then(function(html) {
+    $.get(location.pathname + '?pageToken=${albumPart.nextPageToken}').then(function(html) {
       $('.thumbs').append(html)
       thumbsView.loadVisibleThumbs()
     })
