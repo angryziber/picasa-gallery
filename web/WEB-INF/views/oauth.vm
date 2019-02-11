@@ -15,7 +15,7 @@
     You need to give read-only access to your Google Photos in order to load albums.
     Then paste the obtained oauth token to config.properties.
     <br><br>
-    <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=${config.oauthClientId}&response_type=code&access_type=offline&state=init&redirect_uri=http://$host/oauth&scope=${config.oauthScope}">
+    <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=${config.oauthClientId}&response_type=code&access_type=offline&prompt=consent&redirect_uri=http://$host/oauth&scope=${config.oauthScope}">
       <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png" border="0" alt="Google sign-in">
     </a>
   #end
