@@ -1,12 +1,13 @@
 package views
 
+import integration.Profile
 import photos.Gallery
 
 //language=XML
-fun sitemap(host: String, gallery: Gallery) = """
+fun sitemap(host: String, profile: Profile?, gallery: Gallery) = """
 <urlset xmlns="http://www.google.com/schemas/sitemap/0.9">
   <url>
-    <loc>https://$host/</loc>
+    <loc>https://$host/${profile?.slug ?: ""}</loc>
     <lastmod>${gallery.values.first().timestampISO}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1</priority>

@@ -2,6 +2,7 @@ package photos
 
 import integration.*
 import java.lang.Math.min
+import java.lang.System.currentTimeMillis
 import java.security.SecureRandom
 import java.util.*
 
@@ -94,6 +95,7 @@ class Picasa(
         geo = albumContent?.geo
         baseUrl = it.coverPhotoBaseUrl
         size = it.mediaItemsCount
+        timestamp = currentTimeMillis()
       }
     }.toMap()
 
