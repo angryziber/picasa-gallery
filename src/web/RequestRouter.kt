@@ -36,7 +36,7 @@ class RequestRouter(
       if (req["reload"] != null) Cache.reload()
 
       when {
-        "/oauth" == path -> handleOAuth()
+        "/oauth" == path || auth.refreshToken == null -> handleOAuth()
         auth.refreshToken == null -> throw Redirect("/oauth")
         random != null -> renderRandom()
         searchQuery != null -> renderSearch(searchQuery)
