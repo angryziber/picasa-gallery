@@ -4,7 +4,7 @@
   <title>${profile.name} Photography</title>
   <meta name="description" content="${profile.name} photo albums from around the World">
   <meta property="og:title" content="${profile.name} Photography">
-  <meta property="og:image" content="${gallery.albums.values().iterator().next().thumbUrlLarge}">
+  <meta property="og:image" content="${gallery.values().iterator().next().thumbUrlLarge}">
   <meta property="og:site_name" content="${profile.name} Photography">
   #parse('head.vm')
   <script src="/js/gallery.js?${startTime}"></script>
@@ -22,7 +22,7 @@
 <div id="content" class="faded">
   <div id="map"></div>
   <div class="albums thumbs">
-    #foreach($album in $gallery.albums.values())
+    #foreach($album in $gallery.values())
       <a id="${album.name}" class="fade" href="/${album.name}${picasa.urlSuffix}"
          #if(${album.geo})data-coords="${album.geo.lat}:${album.geo.lon}"#end
          data-url="${album.baseUrl}">

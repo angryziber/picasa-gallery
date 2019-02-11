@@ -51,7 +51,7 @@ class Picasa(
   }
 
   fun getRandomPhotos(numNext: Int): RandomPhotos {
-    val album = weightedRandom(gallery.albums.values)
+    val album = weightedRandom(gallery.values)
     val index = random(album.size)
     val upToIndex = min(index + numNext, album.size)
     val photos = getAlbumPhotos(album, upToIndex)
@@ -86,17 +86,16 @@ class Picasa(
     }
   }
 
-  private fun List<JsonAlbum>.toGallery() = Gallery().apply {
-    albums.putAll(asSequence().filter { localContent == null || localContent.contains(it.name) }
-        .filter { it.title != null && it.mediaItemsCount > 1 }.map {
+  private fun List<JsonAlbum>.toGallery(): Gallery = asSequence()
+    .filter { localContent == null || localContent.contains(it.name) }
+    .filter { it.title != null && it.mediaItemsCount > 1 }.map {
       val albumContent = localContent?.forAlbum(it.name)
       it.name to Album(it.id, it.name, it.title, albumContent?.content).apply {
         geo = albumContent?.geo
         baseUrl = it.coverPhotoBaseUrl
         size = it.mediaItemsCount
       }
-    }.toMap())
-  }
+    }.toMap()
 
   private fun List<JsonMediaItem>.toPhotos() = map {
     Photo().apply {

@@ -36,3 +36,5 @@ open class Album(
 }
 
 data class AlbumPart(val photos: List<Photo>, val nextPageToken: String?)
+
+typealias Gallery = Map<String, Album>
