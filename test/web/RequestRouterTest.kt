@@ -49,15 +49,16 @@ class RequestRouterTest: WordSpec() {
       every {req.getParameter("by")} returns "106730404715258343901"
 
       val album = Album(id = "123123123", name = "Orlova")
+      val photo = Photo().apply {
+        id = "5347257660284808946"
+        timestamp = 123
+      }
 
       val render = mockk<Renderer>(relaxed = true)
       val router = spyk(router(req, res, render)) {
-        every { picasa.getAlbum("Orlova") } returns album
+        every { picasa.gallery.albums["Orlova"] } returns album
+        every { picasa.findAlbumPhoto(album, "5347257660284808946") } returns photo
       }
-      val photo = Photo()
-      photo.id = "5347257660284808946"
-      photo.timestamp = 123L
-      album.photos = listOf(photo)
 
       router.invoke()
 
@@ -72,7 +73,7 @@ class RequestRouterTest: WordSpec() {
         every {req.getHeader("User-Agent")} returns "Normal Browser"
 
         val router = spyk(router(req, res)) {
-          every { picasa.getAlbum("123123123") } returns Album(id = "123123123", name = "Hello")
+          every { picasa.gallery.albums["123123123"] } returns Album(id = "123123123", name = "Hello")
         }
 
         router.invoke()

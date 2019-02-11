@@ -27,8 +27,6 @@ open class Album(
       if (name == null) name = value?.replace(" ", "")
     }
 
-  var photos: List<Photo> = emptyList()
-  var parts = LinkedHashMap<String?, AlbumPart>()
   var comments: List<Comment> = emptyList()
 
   val thumbUrl: String?

@@ -84,10 +84,10 @@ class RequestRouter(
     render("album", album)
   }
 
-  private fun renderPhotoPage(albumId: String, photoId: String) {
-    val album = picasa.getAlbum(albumId)
-    val photo = album.photos.find { it.id == photoId } ?: throw MissingResourceException(path, "", "")
-    val redirectUrl = "/${albumId}${picasa.urlSuffix}#$photoId"
+  private fun renderPhotoPage(albumName: String, photoId: String) {
+    val album = picasa.gallery.albums[albumName] ?: throw MissingResourceException(path, "", "")
+    val photo = picasa.findAlbumPhoto(album, photoId) ?: throw MissingResourceException(path, "", "")
+    val redirectUrl = "/$albumName${picasa.urlSuffix}#$photoId"
     render(res) { views.photo(photo, album, auth.profile!!, if (bot) null else redirectUrl) }
   }
 

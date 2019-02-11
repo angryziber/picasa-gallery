@@ -21,26 +21,35 @@ class Picasa(
     jsonLoader.loadAll(auth, "/v1/albums", AlbumsResponse::class).toGallery()
   }
 
-  fun getAlbum(name: String): Album {
-    val album = gallery.albums[name]!!
-    album.photos = Cache.get(name + ":" + album.id) {
-      jsonLoader.loadAll(auth, "/v1/mediaItems:search", PhotosResponse::class, mapOf("albumId" to album.id)).toPhotos()
-    }
-    return album
+  fun getAlbumPhotos(album: Album, pageToken: String?) = Cache.get(album.name + ":" + album.id + ":" + pageToken) {
+    val photos = jsonLoader.load(auth, "/v1/mediaItems:search", PhotosResponse::class, mapOf("albumId" to album.id, "pageToken" to pageToken))
+    AlbumPart(photos.mediaItems.toPhotos(), photos.nextPageToken)
   }
 
-  fun getAlbumPhotos(album: Album, pageToken: String?): AlbumPart {
-    val part = Cache.get(album.name + ":" + album.id + ":" + pageToken) {
-      val photos = jsonLoader.load(auth, "/v1/mediaItems:search", PhotosResponse::class, mapOf("albumId" to album.id, "pageToken" to pageToken))
-      AlbumPart(photos.mediaItems.toPhotos(), photos.nextPageToken)
-    }
-    album.parts[pageToken] = part
-    return part
+  fun getAllAlbumPhotos(album: Album): List<Photo> {
+    var pageToken: String? = null
+    val photos = mutableListOf<Photo>()
+    do {
+      val albumPart = getAlbumPhotos(album, pageToken)
+      pageToken = albumPart.nextPageToken
+      photos += albumPart.photos
+    } while (pageToken != null)
+    return photos
+  }
+
+  fun findAlbumPhoto(album: Album, photoId: String): Photo? {
+    var pageToken: String? = null
+    do {
+      val albumPart = getAlbumPhotos(album, pageToken)
+      pageToken = albumPart.nextPageToken
+      albumPart.photos.find { it.id == photoId }?.let { return it }
+    } while (pageToken != null)
+    return null
   }
 
   fun getRandomPhotos(numNext: Int): RandomPhotos {
     val album = weightedRandom(gallery.albums.values)
-    val photos = getAlbum(album.name!!).photos
+    val photos = getAllAlbumPhotos(album)
     val index = random(photos.size)
     return RandomPhotos(photos.subList(index, min(index + numNext, photos.size)), album.title, auth.profile!!)
   }
