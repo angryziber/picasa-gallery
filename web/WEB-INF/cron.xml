@@ -5,9 +5,9 @@
     <description>Keep instance warm</description>
     <schedule>every 1 minutes</schedule>
   </cron>
-  <cron>
+<!--  <cron>
     <url>/?reload</url>
     <description>Reload cache</description>
     <schedule>every 50 minutes</schedule>
-  </cron>
+  </cron>-->
 </cronentries>
