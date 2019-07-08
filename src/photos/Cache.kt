@@ -11,7 +11,7 @@ import kotlin.system.measureTimeMillis
 
 object Cache {
   private val logger = Logger.getLogger(javaClass.name)
-  private const val expirationMs = 55 * 60 * 1000
+  private const val expirationMs = 59 * 60 * 1000
   private val data: MutableMap<String, Entry> = ConcurrentHashMap()
 
   fun <T> get(key: String, loader: () -> T): T {
