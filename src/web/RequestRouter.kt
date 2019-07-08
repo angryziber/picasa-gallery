@@ -120,9 +120,17 @@ class RequestRouter(
   }
 
   private fun renderRandom() {
+    if (req.remoteAddr == "82.131.59.12" && isNight())
+      return render(res) { "<h1>Night mode</h1>" }
+
     val numRandom = if (random.isNotEmpty()) random.toInt() else 1
     val randomPhotos = picasa.getRandomPhotos(numRandom)
     render(res) { views.random(randomPhotos, req["delay"], req["refresh"] != null) }
+  }
+
+  private fun isNight(): Boolean {
+    val now = Date()
+    return now.hours >= 21 || now.hours < 8
   }
 
   private fun detectMobile() =
