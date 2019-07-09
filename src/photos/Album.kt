@@ -1,5 +1,9 @@
 package photos
 
+import java.text.SimpleDateFormat
+import java.time.Instant
+import java.util.*
+
 open class Album(
     id: String? = null,
     name: String? = null,
@@ -35,6 +39,8 @@ open class Album(
   open fun size() = size
 }
 
-data class AlbumPart(val photos: List<Photo>, val nextPageToken: String?)
+data class AlbumPart(val photos: List<Photo>, val nextPageToken: String?) {
+  val loadedAt = Date()
+}
 
 typealias Gallery = Map<String, Album>

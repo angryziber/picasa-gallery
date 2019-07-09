@@ -16,7 +16,7 @@ object Cache {
 
   fun <T> get(key: String, loader: () -> T): T {
     var entry = data[key]
-    if (entry == null || (currentTimeMillis() - entry.loadedAt) > expirationMs) {
+    if (entry == null || (currentTimeMillis() - entry.loadedAt) >= expirationMs) {
       try {
         entry = Entry(logTime(key, loader), loader)
         data[key] = entry

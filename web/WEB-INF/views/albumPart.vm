@@ -1,3 +1,5 @@
+<div class="load-time hidden">$albumPart.photos.size() loaded at $albumPart.loadedAt</div>
+
 #foreach($photo in $albumPart.photos)
   <a id="${photo.id}" class="photo" href="/${album.name}/${photo.id}" data-url="${photo.baseUrl}"
      #if($photo.timestamp)data-time="${photo.dateTime}"#end
