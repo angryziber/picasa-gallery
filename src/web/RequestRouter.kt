@@ -129,8 +129,8 @@ class RequestRouter(
   }
 
   private fun isNight(): Boolean {
-    val now = Date()
-    return now.hours >= 21 || now.hours < 8
+    val utcHours = Date().let { it.hours + it.timezoneOffset / 60 }
+    return utcHours >= 18 || utcHours < 5
   }
 
   private fun detectMobile() =
