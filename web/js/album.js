@@ -76,7 +76,8 @@ function PhotoViewer() {
   }
 
   pub.addPhotos = function() {
-    $('a.photo').slice(photos.length).each(function() {
+    var photoLinks = $('a.photo')
+    photoLinks.slice(photos.length).each(function() {
       var title = $('img', this).attr('alt')
       photos.push({
         url: this.dataset.url,
@@ -91,7 +92,7 @@ function PhotoViewer() {
     })
     if (location.hash) {
       var idx = parseInt(location.hash.substring(1))
-      if (idx) $('a.photo').eq(idx - 1).click()
+      if (idx) photoLinks.eq(idx - 1).click()
       else $('a' + location.hash).click()
     }
   }
@@ -230,7 +231,7 @@ function PhotoViewer() {
     return false
   }
 
-  function posAction(x, y) {
+  function posAction(x) {
     var img = wrapper.find('img.photo')
     if (!img.length) return pub.close
     var left = img.offset().left
@@ -245,9 +246,9 @@ function PhotoViewer() {
 
   function onMouseMove(e) {
     var newMousePos = e.pageX + ':' + e.pageY
-    if (lastMousePos != newMousePos) {
+    if (lastMousePos !== newMousePos) {
       var action = posAction(e.pageX, e.pageY)
-      var cursor = action == pub.prev ? 'url(/img/left-cursor.png),w-resize' : action == pub.next ? 'url(/img/right-cursor.png),e-resize' : 'default'
+      var cursor = action === pub.prev ? 'url(/img/left-cursor.png),w-resize' : action === pub.next ? 'url(/img/right-cursor.png),e-resize' : 'default'
       wrapper.css('cursor', cursor)
     }
     lastMousePos = newMousePos
