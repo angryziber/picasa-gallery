@@ -41,12 +41,14 @@ class Picasa(
     return photos
   }
 
-  fun findAlbumPhoto(album: Album, photoId: String): Photo? {
+  fun findAlbumPhoto(album: Album, photoIdxOrId: String): Photo? {
     var pageToken: String? = null
+    val photoIdx = photoIdxOrId.toIntOrNull()
     do {
       val albumPart = getAlbumPhotos(album, pageToken)
       pageToken = albumPart.nextPageToken
-      albumPart.photos.find { it.id == photoId }?.let { return it }
+      if (photoIdx != null && albumPart.photos.size > photoIdx) return albumPart.photos[photoIdx]
+      albumPart.photos.find { it.id == photoIdxOrId }?.let { return it }
     } while (pageToken != null)
     return null
   }

@@ -1,7 +1,7 @@
 package web
 
-import photos.*
 import integration.OAuth
+import photos.*
 import java.util.*
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
@@ -84,10 +84,10 @@ class RequestRouter(
     render("album", album)
   }
 
-  private fun renderPhotoPage(albumName: String, photoId: String) {
+  private fun renderPhotoPage(albumName: String, photoIdxOrId: String) {
     val album = picasa.gallery[albumName] ?: throw MissingResourceException(path, "", "")
-    val photo = picasa.findAlbumPhoto(album, photoId) ?: throw MissingResourceException(path, "", "")
-    val redirectUrl = "/$albumName${picasa.urlSuffix}#$photoId"
+    val photo = picasa.findAlbumPhoto(album, photoIdxOrId) ?: throw MissingResourceException(path, "", "")
+    val redirectUrl = "/$albumName${picasa.urlSuffix}#$photoIdxOrId"
     render(res) { views.photo(photo, album, auth.profile!!, if (bot) null else redirectUrl) }
   }
 
