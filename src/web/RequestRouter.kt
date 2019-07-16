@@ -10,11 +10,14 @@ import javax.servlet.http.HttpServletResponse.SC_MOVED_PERMANENTLY
 import javax.servlet.http.HttpServletResponse.SC_NOT_FOUND
 
 class RequestRouter(
-    val req: HttpServletRequest,
-    val res: HttpServletResponse,
-    val render: Renderer,
-    localContent: LocalContent,
-    val chain: FilterChain
+  val req: HttpServletRequest,
+  val res: HttpServletResponse,
+  val chain: FilterChain,
+  val render: Renderer,
+  localContent: LocalContent,
+  var requestedUser: String? = req["by"],
+  val auth: OAuth = requestedUser?.let { OAuth.auths[it] } ?: OAuth.default,
+  val picasa: Picasa = Picasa(auth, if (auth.isDefault) localContent else null)
 ) {
   companion object {
     val startTime = System.currentTimeMillis() / 1000 % 1000000
@@ -24,11 +27,8 @@ class RequestRouter(
   val path = req.servletPath
   val pathParts = path.substring(1).split("/")
   val host = req.getHeader("host")
-  var requestedUser = req["by"]
   val random = req["random"]
   val searchQuery = req["q"]
-  val auth = requestedUser?.let { OAuth.auths[it] } ?: OAuth.default
-  val picasa = Picasa(auth, if (auth.isDefault) localContent else null)
   var bot = isBot(userAgent) || req["bot"] != null
 
   fun invoke() {
