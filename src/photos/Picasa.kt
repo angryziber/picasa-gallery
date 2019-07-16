@@ -47,7 +47,7 @@ class Picasa(
     do {
       val albumPart = getAlbumPhotos(album, pageToken)
       pageToken = albumPart.nextPageToken
-      if (photoIdx != null && albumPart.photos.size > photoIdx) return albumPart.photos[photoIdx]
+      if (photoIdx != null && albumPart.photos.size > photoIdx) return albumPart.photos[photoIdx - 1]
       albumPart.photos.find { it.id == photoIdxOrId }?.let { return it }
     } while (pageToken != null)
     return null
