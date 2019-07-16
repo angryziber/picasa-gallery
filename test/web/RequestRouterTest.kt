@@ -1,7 +1,7 @@
 package web
 
 import integration.OAuth
-import io.kotlintest.Description
+import io.kotlintest.TestCase
 import io.kotlintest.specs.WordSpec
 import io.mockk.*
 import org.assertj.core.api.Assertions.assertThat
@@ -16,7 +16,7 @@ class RequestRouterTest: WordSpec() {
   val req = mockk<HttpServletRequest>(relaxed = true)
   val res = mockk<HttpServletResponse>(relaxed = true)
 
-  override fun beforeTest(description: Description) {
+  override fun beforeTest(testCase: TestCase) {
     clearMocks(req, res)
     every {req.getParameter(any())} returns null
     every {req.servletPath} returns "/"
