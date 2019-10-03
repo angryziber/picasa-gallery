@@ -1,7 +1,5 @@
 package photos
 
-import java.text.SimpleDateFormat
-import java.time.Instant
 import java.util.*
 
 open class Album(
@@ -10,7 +8,6 @@ open class Album(
     title: String? = null,
     var content: String? = null
 ) : Entity(id, title) {
-
   companion object {
     val descriptionRegex = Regex("<h2>(.*?)</h2>")
   }
@@ -43,4 +40,8 @@ data class AlbumPart(val photos: List<Photo>, val nextPageToken: String?) {
   val loadedAt = Date()
 }
 
-typealias Gallery = Map<String, Album>
+class Gallery(val albums: Map<String, Album>) {
+  val loadedAt = Date()
+
+  operator fun get(albumName: String) = albums[albumName]
+}

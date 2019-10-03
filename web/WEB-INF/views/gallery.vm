@@ -22,7 +22,7 @@
 <div id="content" class="faded">
   <div id="map"></div>
   <div class="albums thumbs">
-    #foreach($album in $gallery.values())
+    #foreach($album in $gallery.albums.values())
       <a id="${album.name}" class="fade" href="/${album.name}${picasa.urlSuffix}"
          #if(${album.geo})data-coords="${album.geo.lat}:${album.geo.lon}"#end
          data-url="${album.baseUrl}">
@@ -48,6 +48,8 @@
 #parse('sharing.vm')
 
 <script>new ThumbsView(212)</script>
+
+<div class="load-time hidden">${gallery.loadedAt}</div>
 
 </body>
 </html>
