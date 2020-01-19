@@ -33,6 +33,7 @@ class RequestRouter(
 
   fun invoke() {
     try {
+      if (req["clear"] != null) Cache.clear()
       if (req["reload"] != null) Cache.reload()
 
       when {

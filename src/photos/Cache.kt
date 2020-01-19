@@ -35,6 +35,10 @@ object Cache {
     return result!!
   }
 
+  fun clear() {
+    data.clear()
+  }
+
   fun reload() {
     val pool = Executors.newFixedThreadPool(10, threadFactory())
     data.entries.sortedBy { it.value.loadedAt }.forEach { e ->
