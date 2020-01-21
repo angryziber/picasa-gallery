@@ -75,6 +75,7 @@
   <div class="thumbs clear">
     #parse('albumPart.vm')
   </div>
+  <div class="loader clear"></div>
 
   <p id="footer">
     Photos by <a href="${profile.link}" rel="author" target="_blank">${profile.name}</a>. All rights reserved.

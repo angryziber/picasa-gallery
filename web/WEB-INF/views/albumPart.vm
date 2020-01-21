@@ -19,5 +19,6 @@
     })
   #else
     thumbsView.loadingFinished = true
+    $('.thumbs').next('.loader').remove()
   #end
 </script>
