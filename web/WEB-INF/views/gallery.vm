@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>${profile.name} Photography</title>
   <meta name="description" content="${profile.name} photo albums from around the World">

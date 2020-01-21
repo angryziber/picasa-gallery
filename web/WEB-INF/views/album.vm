@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>${album.title} by ${profile.name} - Photos</title>
   <meta name="description" content="${album.title} photos by ${profile.name}: ${album.description}">
