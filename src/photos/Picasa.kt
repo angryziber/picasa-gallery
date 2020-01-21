@@ -13,6 +13,11 @@ class Picasa(
 ) {
   companion object {
     internal var random: Random = SecureRandom()
+    private val instances = mutableMapOf<OAuth, Picasa>()
+
+    fun of(auth: OAuth, localContent: LocalContent?) = instances.computeIfAbsent(auth) {
+      Picasa(auth, localContent)
+    }
   }
 
   val urlPrefix get() = "/${auth.profile?.slug ?: ""}"

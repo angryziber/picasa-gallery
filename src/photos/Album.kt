@@ -1,5 +1,7 @@
 package photos
 
+import java.net.URL
+import java.net.URLConnection
 import java.util.*
 
 open class Album(

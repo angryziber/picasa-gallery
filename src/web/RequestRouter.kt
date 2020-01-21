@@ -17,7 +17,7 @@ class RequestRouter(
   localContent: LocalContent,
   var requestedUser: String? = req["by"],
   val auth: OAuth = requestedUser?.let { OAuth.auths[it] } ?: OAuth.default,
-  val picasa: Picasa = Picasa(auth, if (auth.isDefault) localContent else null)
+  val picasa: Picasa = Picasa.of(auth, if (auth.isDefault) localContent else null)
 ) {
   companion object {
     val startTime = System.currentTimeMillis() / 1000 % 1000000
