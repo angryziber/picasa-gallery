@@ -14,7 +14,7 @@ fun sitemap(host: String, profile: Profile?, gallery: Gallery) = """
   </url>
   ${gallery.albums.values.each { """
     <url>
-      <loc>https://$host/$name</loc>
+      <loc>https://$host$url</loc>
       <lastmod>$timestampISO</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.8</priority>

@@ -24,7 +24,7 @@ fun photo(photo: Photo, album: Album, profile: Profile, redirectUrl: String?) = 
 <body>
   <div itemscope itemtype="http://schema.org/Photograph">
     <meta itemprop="datePublished" content="${photo.date}">
-    <a href="/${album.name}">${+album.title} by <span itemprop="author">${+profile.name}</span></a>
+    <a href="${album.url}">${+album.title} by <span itemprop="author">${+profile.name}</span></a>
     <span itemprop="description">${+photo.description}</span>
     <div>
       <img itemprop="image" src="${photo.fullHdUrl}" alt="${+(photo.description ?: album.title)}">

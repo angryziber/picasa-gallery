@@ -43,6 +43,7 @@ class RequestRouter(
         searchQuery != null -> renderSearch(searchQuery)
         (path == null || "/" == path) && requestedUser == null -> throw Redirect(picasa.urlPrefix)
         picasa.urlPrefix == path || "/" == path -> renderGallery()
+        pathParts.size == 1 && path.endsWith(".jpg") -> renderAlbumThumb(pathParts.last().substringBefore(".jpg"))
         path.isResource() -> chain.doFilter(req, res)
         // pathParts.size == 1 -> throw Redirect(picasa.urlPrefix + path)
         pathParts.size == 2 -> renderPhotoPage(pathParts[0], pathParts[1])
@@ -96,7 +97,7 @@ class RequestRouter(
     val album = picasa.gallery[name] ?: throw MissingResourceException(path, "", "")
 
     if (album.id == name && album.id != album.name)
-      throw Redirect("/${album.name}${picasa.urlSuffix}")
+      throw Redirect("${album.url}${picasa.urlSuffix}")
 
     val pageToken = req["pageToken"]
     val part = if (bot) AlbumPart(picasa.getAlbumPhotos(album), null)
@@ -105,6 +106,17 @@ class RequestRouter(
       render("album", album, mapOf("albumPart" to part))
     else
       render("albumPart", part, mapOf("album" to album))
+  }
+
+  private fun renderAlbumThumb(name: String) {
+    val album = picasa.gallery[name] ?: throw MissingResourceException(path, "", "")
+    if (album.thumbContent == null) res.sendRedirect(album.thumbUrl)
+    else {
+      res.contentType = "image/jpeg"
+      res.addIntHeader("Content-Length", album.thumbContent!!.size)
+      res.addDateHeader("Last-Modified", album.timestamp!!)
+      res.outputStream.write(album.thumbContent!!)
+    }
   }
 
   private fun handleOAuth() {

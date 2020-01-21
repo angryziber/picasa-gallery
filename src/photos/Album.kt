@@ -1,7 +1,5 @@
 package photos
 
-import java.net.URL
-import java.net.URLConnection
 import java.util.*
 
 open class Album(
@@ -13,6 +11,8 @@ open class Album(
   companion object {
     val descriptionRegex = Regex("<h2>(.*?)</h2>")
   }
+
+  val url get() = "/$name"
 
   var size = 0
 
@@ -34,6 +34,8 @@ open class Album(
 
   val thumbUrl: String?
     get() = baseUrl?.crop(212)
+
+  var thumbContent: ByteArray? = null
 
   open fun size() = size
 }

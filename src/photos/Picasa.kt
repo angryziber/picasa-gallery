@@ -1,10 +1,13 @@
 package photos
 
+import com.google.appengine.api.ThreadManager
 import integration.*
 import java.lang.Math.min
 import java.lang.System.currentTimeMillis
+import java.net.URL
 import java.security.SecureRandom
 import java.util.*
+import kotlin.concurrent.thread
 
 class Picasa(
   private val auth: OAuth,
@@ -23,12 +26,17 @@ class Picasa(
   val urlPrefix get() = "/${auth.profile?.slug ?: ""}"
   val urlSuffix get() = if (auth.isDefault) "" else "?by=${auth.profile?.slug}"
 
-  val gallery get() = Cache.get("gallery:${auth.profile?.slug}") {
-    if (localContent != null)
-      jsonLoader.loadAll(auth, "/v1/albums", AlbumsResponse::class).toGallery()
+  val gallery = (if (localContent != null)
+      jsonLoader.loadAll(auth, "/v1/albums", AlbumsResponse::class)
     else
-      jsonLoader.loadAll(auth, "/v1/sharedAlbums", SharedAlbumsResponse::class).toGallery()
-  }
+      jsonLoader.loadAll(auth, "/v1/sharedAlbums", SharedAlbumsResponse::class)
+    ).toGallery().also { loadThumbs(it.albums.values) }
+
+  private fun loadThumbs(albums: Iterable<Album>) = ThreadManager.createBackgroundThread {
+    albums.forEach { album ->
+      album.thumbContent = URL(album.thumbUrl).openConnection().getInputStream().use { it.readBytes() }
+    }
+  }.start()
 
   fun getAlbumPhotos(album: Album, pageToken: String?) = Cache.get(album.name + ":" + album.id + ":" + pageToken) {
     val photos = jsonLoader.load(auth, "/v1/mediaItems:search", PhotosResponse::class, mapOf("albumId" to album.id, "pageToken" to pageToken))

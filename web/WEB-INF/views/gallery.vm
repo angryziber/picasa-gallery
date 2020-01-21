@@ -23,9 +23,9 @@
   <div id="map"></div>
   <div class="albums thumbs">
     #foreach($album in $gallery.albums.values())
-      <a id="${album.name}" class="fade" href="/${album.name}${picasa.urlSuffix}"
+      <a id="${album.name}" class="fade" href="${album.url}${picasa.urlSuffix}"
          #if(${album.geo})data-coords="${album.geo.lat}:${album.geo.lon}"#end
-         data-url="${album.baseUrl}">
+         data-url="${album.url}.jpg">
         <img alt="${album.title} photos" title="${album.description}">
 
         <div class="title">

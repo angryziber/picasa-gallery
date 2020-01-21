@@ -20,7 +20,10 @@ function ThumbsView(thumbSize) {
   function setSrc(img) {
     if (!img.src) {
       var baseUrl = img.parentElement.dataset.url
-      img.src = baseUrl + '=w' + scaledThumbSize + '-h' + scaledThumbSize + '-c'
+      if (baseUrl.endsWith('.jpg'))
+        img.src = baseUrl + '?pixelRatio=' + pixelRatio
+      else
+        img.src = baseUrl + '=w' + scaledThumbSize + '-h' + scaledThumbSize + '-c'
       delete img.parentElement.dataset.url
     }
   }
