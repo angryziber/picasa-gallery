@@ -7,7 +7,6 @@ import java.lang.System.currentTimeMillis
 import java.net.URL
 import java.security.SecureRandom
 import java.util.*
-import kotlin.concurrent.thread
 
 class Picasa(
   private val auth: OAuth,
@@ -34,7 +33,10 @@ class Picasa(
 
   private fun loadThumbs(albums: Iterable<Album>) = ThreadManager.createBackgroundThread {
     albums.forEach { album ->
-      album.thumbContent = URL(album.thumbUrl).openConnection().getInputStream().use { it.readBytes() }
+      album.thumbContent = URL(album.baseUrl?.crop(album.thumbSize)).readBytes()
+    }
+    albums.forEach { album ->
+      album.thumbContent2x = URL(album.baseUrl?.crop(album.thumbSize * 2)).readBytes()
     }
   }.start()
 

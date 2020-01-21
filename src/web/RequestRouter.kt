@@ -110,12 +110,14 @@ class RequestRouter(
 
   private fun renderAlbumThumb(name: String) {
     val album = picasa.gallery[name] ?: throw MissingResourceException(path, "", "")
-    if (album.thumbContent == null) res.sendRedirect(album.thumbUrl)
+    val x2 = req["x2"] != null
+    val thumbContent = if (x2) album.thumbContent2x else album.thumbContent
+    if (thumbContent == null) res.sendRedirect(album.baseUrl?.crop(album.thumbSize * (if (x2) 2 else 1)))
     else {
       res.contentType = "image/jpeg"
-      res.addIntHeader("Content-Length", album.thumbContent!!.size)
+      res.addIntHeader("Content-Length", thumbContent.size)
       res.addDateHeader("Last-Modified", album.timestamp!!)
-      res.outputStream.write(album.thumbContent!!)
+      res.outputStream.write(thumbContent)
     }
   }
 

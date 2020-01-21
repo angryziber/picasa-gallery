@@ -32,10 +32,9 @@ open class Album(
 
   var comments: List<Comment> = emptyList()
 
-  val thumbUrl: String?
-    get() = baseUrl?.crop(212)
-
+  val thumbSize = 212
   var thumbContent: ByteArray? = null
+  var thumbContent2x: ByteArray? = null
 
   open fun size() = size
 }

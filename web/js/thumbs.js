@@ -21,7 +21,7 @@ function ThumbsView(thumbSize) {
     if (!img.src) {
       var baseUrl = img.parentElement.dataset.url
       if (baseUrl.endsWith('.jpg'))
-        img.src = baseUrl + '?pixelRatio=' + pixelRatio
+        img.src = baseUrl + (pixelRatio >= 1.5 ? '?x2' : '')
       else
         img.src = baseUrl + '=w' + scaledThumbSize + '-h' + scaledThumbSize + '-c'
       delete img.parentElement.dataset.url
