@@ -79,12 +79,12 @@ class PhotosResponse: JsonResponse<JsonMediaItem>() {
 }
 
 data class JsonMediaItem(
-    var id: String = "",
-    var description: String? = null,
-    var baseUrl: BaseUrl = BaseUrl(""),
-    var productUrl: String? = null,
-    var filename: String = "",
-    var mediaMetadata: MediaMetadata? = null
+  var id: String = "",
+  var description: String? = null,
+  var baseUrl: BaseUrl = BaseUrl(""),
+  var productUrl: String? = null,
+  var filename: String = "",
+  var mediaMetadata: MediaMetadata? = null
 )
 
 data class MediaMetadata(
