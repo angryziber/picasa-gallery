@@ -208,6 +208,7 @@ h2 {
 }
 
 .thumbs a {
+  box-sizing: border-box;
   float: left;
   width: 144px;
   height: 144px;
