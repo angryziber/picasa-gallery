@@ -1,6 +1,5 @@
 package photos
 
-import com.google.appengine.api.ThreadManager
 import integration.*
 import java.lang.Math.min
 import java.lang.System.currentTimeMillis
@@ -31,14 +30,18 @@ class Picasa(
       jsonLoader.loadAll(auth, "/v1/sharedAlbums", SharedAlbumsResponse::class)
     ).toGallery().also { loadThumbs(it.albums.values) }
 
-  private fun loadThumbs(albums: Iterable<Album>) = ThreadManager.createBackgroundThread {
-    albums.forEach { album ->
-      album.thumbContent = URL(album.baseUrl?.crop(album.thumbSize)).readBytes()
+  private fun loadThumbs(albums: Iterable<Album>) {
+    appEngineThread {
+      albums.forEach { album ->
+        album.thumbContent = URL(album.baseUrl?.crop(album.thumbSize)).readBytes()
+      }
     }
-    albums.forEach { album ->
-      album.thumbContent2x = URL(album.baseUrl?.crop(album.thumbSize * 2)).readBytes()
+    appEngineThread {
+      albums.forEach { album ->
+        album.thumbContent2x = URL(album.baseUrl?.crop(album.thumbSize * 2)).readBytes()
+      }
     }
-  }.start()
+  }
 
   fun getAlbumPhotos(album: Album, pageToken: String?) = Cache.get(album.name + ":" + album.id + ":" + pageToken) {
     val photos = jsonLoader.load(auth, "/v1/mediaItems:search", PhotosResponse::class, mapOf("albumId" to album.id, "pageToken" to pageToken))
