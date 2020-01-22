@@ -24,6 +24,8 @@ data class OAuth(var refreshToken: String?, val isDefault: Boolean = false) {
   private var expiresAt: Long = 0
   private val isExpired get() = expiresAt <= System.currentTimeMillis()
 
+  val isInitialized get() = refreshToken != null
+
   private var token: OAuth2AccessToken? = null
     get() {
       if (isExpired) refresh()

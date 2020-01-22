@@ -9,34 +9,34 @@ import java.util.*
 
 class Picasa(
   private val auth: OAuth,
-  private val localContent: LocalContent?,
+  private val localContent: LocalContent? = null,
   private val jsonLoader: JsonLoader = JsonLoader()
 ) {
   companion object {
     internal var random: Random = SecureRandom()
     private val instances = mutableMapOf<OAuth, Picasa>()
 
-    fun of(auth: OAuth, localContent: LocalContent?) = instances.computeIfAbsent(auth) {
-      Picasa(auth, localContent)
+    fun loadDefault(auth: OAuth, localContent: LocalContent?) = logTime("Default gallery loaded") {
+      instances.put(auth, Picasa(auth, localContent))
     }
+
+    fun of(auth: OAuth) = instances.computeIfAbsent(auth) { Picasa(auth) }
   }
 
   val urlPrefix get() = "/${auth.profile?.slug ?: ""}"
   val urlSuffix get() = if (auth.isDefault) "" else "?by=${auth.profile?.slug}"
 
-  val gallery = (if (localContent != null)
-      jsonLoader.loadAll(auth, "/v1/albums", AlbumsResponse::class)
-    else
-      jsonLoader.loadAll(auth, "/v1/sharedAlbums", SharedAlbumsResponse::class)
-    ).toGallery().also { loadThumbsAsync(it.albums.values) }
+  val gallery = (if (localContent != null) jsonLoader.loadAll(auth, "/v1/albums", AlbumsResponse::class)
+                 else jsonLoader.loadAll(auth, "/v1/sharedAlbums", SharedAlbumsResponse::class))
+      .toGallery().also { loadThumbsAsync(it.albums.values) }
 
   private fun loadThumbsAsync(albums: Iterable<Album>) {
-    appEngineThread { logTime("Thumbs loaded") {
+    appEngineThread { logTime("Album thumbs loaded") {
       albums.forEach { album ->
         album.thumbContent = URL(album.baseUrl?.crop(album.thumbSize)).readBytes()
       }
     }}
-    appEngineThread { logTime("Thumbs2x loaded") {
+    appEngineThread { logTime("Album thumbs2x loaded") {
       albums.forEach { album ->
         album.thumbContent2x = URL(album.baseUrl?.crop(album.thumbSize * 2)).readBytes()
       }

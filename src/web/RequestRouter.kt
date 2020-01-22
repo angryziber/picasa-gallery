@@ -1,7 +1,10 @@
 package web
 
 import integration.OAuth
-import photos.*
+import photos.AlbumPart
+import photos.Cache
+import photos.Config
+import photos.Picasa
 import java.util.*
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
@@ -14,10 +17,9 @@ class RequestRouter(
   val res: HttpServletResponse,
   val chain: FilterChain,
   val render: Renderer,
-  localContent: LocalContent,
   var requestedUser: String? = req["by"],
   val auth: OAuth = requestedUser?.let { OAuth.auths[it] } ?: OAuth.default,
-  val picasa: Picasa = Picasa.of(auth, if (auth.isDefault) localContent else null)
+  val picasa: Picasa = Picasa.of(auth)
 ) {
   companion object {
     val startTime = System.currentTimeMillis() / 1000 % 1000000
