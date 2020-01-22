@@ -17,7 +17,7 @@
           <element id="dir-copy" path="$PROJECT_DIR$/out/production/resources" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="Gradle: com.google.appengine:appengine-api-1.0-sdk:1.9.77" />
+          <element id="library" level="project" name="Gradle: com.google.appengine:appengine-api-1.0-sdk:1.9.78" />
           <element id="library" level="project" name="Gradle: org.apache.velocity:velocity:1.7" />
           <element id="library" level="project" name="Gradle: com.atlassian.commonmark:commonmark:0.7.1" />
           <element id="library" level="project" name="Gradle: com.github.scribejava:scribejava-apis:4.0.0" />
