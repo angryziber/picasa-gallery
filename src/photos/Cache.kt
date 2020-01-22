@@ -7,7 +7,6 @@ import java.util.concurrent.ThreadFactory
 import java.util.concurrent.TimeUnit.SECONDS
 import java.util.logging.Level.SEVERE
 import java.util.logging.Logger
-import kotlin.system.measureTimeMillis
 
 object Cache {
   private val logger = Logger.getLogger(javaClass.name)
@@ -18,7 +17,7 @@ object Cache {
     var entry = data[key]
     if (entry == null || (currentTimeMillis() - entry.loadedAt) >= expirationMs) {
       try {
-        entry = Entry(logTime(key, loader), loader)
+        entry = Entry(loader(), loader)
         data[key] = entry
       } catch (e: Exception) {
         logger.log(SEVERE, "Failed to load", e)
@@ -26,13 +25,6 @@ object Cache {
       }
     }
     return entry!!.value as T
-  }
-
-  private fun <T> logTime(key: String, loader: () -> T): T {
-    var result: T? = null
-    val millis = measureTimeMillis { result = loader() }
-    logger.info("Loaded $key in $millis ms")
-    return result!!
   }
 
   fun clear() {
@@ -43,7 +35,7 @@ object Cache {
     val pool = Executors.newFixedThreadPool(10, threadFactory())
     data.entries.sortedBy { it.value.loadedAt }.forEach { e ->
       pool.execute {
-        e.value.value = logTime(e.key, e.value.loader)
+        e.value.value = e.value.loader()
         e.value.loadedAt = currentTimeMillis()
       }
     }

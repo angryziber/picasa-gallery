@@ -8,14 +8,11 @@ import kotlin.system.measureNanoTime
 class JsonLoader(private val http: Http = Http()) {
   private val gson = Gson()
 
-  fun <T, R: JsonResponse<T>> load(auth: OAuth, url: String, responseType: KClass<out R>, params: Map<String, Any?>): R {
+  fun <T, R: JsonResponse<T>> load(auth: OAuth, url: String, responseType: KClass<out R>, params: Map<String, Any?>): R = logTime("$url $params loaded") {
     val fullUrl = (Config.apiBase.takeUnless { url.startsWith("http") } ?: "") + url
     val request = if (url.endsWith("search")) http.send(auth, fullUrl, gson.toJson(params))
                   else http.send(auth, fullUrl + params.toUrl())
-
-    return request.use {
-      gson.fromJson(it.bufferedReader(), responseType.java)
-    }
+    request.use { gson.fromJson(it.bufferedReader(), responseType.java) }
   }
 
   fun <T, R: JsonResponse<T>> loadAll(auth: OAuth, url: String, responseType: KClass<out R>, params: Map<String, Any?> = emptyMap()): List<T> {

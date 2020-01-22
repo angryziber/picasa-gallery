@@ -28,19 +28,19 @@ class Picasa(
       jsonLoader.loadAll(auth, "/v1/albums", AlbumsResponse::class)
     else
       jsonLoader.loadAll(auth, "/v1/sharedAlbums", SharedAlbumsResponse::class)
-    ).toGallery().also { loadThumbs(it.albums.values) }
+    ).toGallery().also { loadThumbsAsync(it.albums.values) }
 
-  private fun loadThumbs(albums: Iterable<Album>) {
-    appEngineThread {
+  private fun loadThumbsAsync(albums: Iterable<Album>) {
+    appEngineThread { logTime("Thumbs loaded") {
       albums.forEach { album ->
         album.thumbContent = URL(album.baseUrl?.crop(album.thumbSize)).readBytes()
       }
-    }
-    appEngineThread {
+    }}
+    appEngineThread { logTime("Thumbs2x loaded") {
       albums.forEach { album ->
         album.thumbContent2x = URL(album.baseUrl?.crop(album.thumbSize * 2)).readBytes()
       }
-    }
+    }}
   }
 
   fun getAlbumPhotos(album: Album, pageToken: String?) = Cache.get(album.name + ":" + album.id + ":" + pageToken) {
