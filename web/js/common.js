@@ -51,9 +51,4 @@ $(function() {
     fadeTo(this.href)
     return false
   })
-
-  $('form#search').on('submit', function() {
-    fadeTo('/?q=' + $(this).find('input').val() + location.search.replace(/\?q=.*?(&|$)/, '&'))
-    return false
-  })
 })
