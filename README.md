@@ -22,7 +22,6 @@ Features
 - Dark theme that emphasizes photos
 - Shows your shared albums
 - HDPI/Retina screens use hi-res thumbnails
-- Search within the gallery (by tags, keywords, descriptions, etc) - *currently not supported by Google in the new API*
 - Nice shareable URLs for albums, individual photos, search results
 - Gallery map if albums are geotagged - *geotagging is not available in the API - use web/content to provide location data*
 - Optional content/blog in Markdown format - put it into `web/content`, see [content branch](https://github.com/angryziber/picasa-gallery/tree/content) for a sample

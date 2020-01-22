@@ -28,7 +28,6 @@ class RequestRouter(
   val pathParts = path.substring(1).split("/")
   val host = req.getHeader("host")
   val random = req["random"]
-  val searchQuery = req["q"]
   var bot = isBot(userAgent) || req["bot"] != null
 
   fun invoke() {
@@ -40,7 +39,6 @@ class RequestRouter(
         "/oauth" == path || auth.refreshToken == null -> handleOAuth()
         auth.refreshToken == null -> throw Redirect("/oauth")
         random != null -> renderRandom()
-        searchQuery != null -> renderSearch(searchQuery)
         (path == null || "/" == path) && requestedUser == null -> throw Redirect(picasa.urlPrefix)
         picasa.urlPrefix == path || "/" == path -> renderGallery()
         pathParts.size == 1 && path.endsWith(".jpg") -> renderAlbumThumb(pathParts.last().substringBefore(".jpg"))
@@ -78,12 +76,6 @@ class RequestRouter(
 
   private fun renderGallery() {
     render("gallery", picasa.gallery)
-  }
-
-  private fun renderSearch(q: String) {
-    val album = picasa.search(q)
-    album.title = "Photos matching '$q'"
-    render("album", album)
   }
 
   private fun renderPhotoPage(albumName: String, photoIdxOrId: String) {

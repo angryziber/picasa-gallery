@@ -100,13 +100,6 @@ class Picasa(
     return if (max == 0) 0 else random.nextInt(max)
   }
 
-  fun search(query: String): Album {
-    return Album().apply {
-      // TODO: there is no way to search for text currently... https://developers.google.com/photos/library/reference/rest/v1/mediaItems/search#Filters
-      // photos += jsonLoader.loadAll("/v1/mediaItems:search", PhotosResponse::class).toPhotos()
-    }
-  }
-
   private fun List<JsonAlbum>.toGallery() = Gallery(asSequence()
     .filter { localContent == null || localContent.contains(it.name) }
     .filter { it.title != null && it.mediaItemsCount > 1 }

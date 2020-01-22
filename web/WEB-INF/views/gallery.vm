@@ -8,14 +8,12 @@
   <meta property="og:site_name" content="${profile.name} Photography">
   #parse('head.vm')
   <script src="/js/gallery.js?${startTime}"></script>
-  <script>$(initAlbumFilter);</script>
   <script>$(GalleryMap)</script>
 </head>
 
 <body style="background:black; color: gray">
 
 <div id="header" class="header">
-  <form id="search"><input type="text" placeholder="Filter or Search" title="Type to filter albums or press enter to search for individual photos"></form>
   <h1 id="title">${profile.name} Photography</h1>
 </div>
 
