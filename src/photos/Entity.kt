@@ -17,7 +17,7 @@ open class Entity(var id: String? = null, open var title: String? = null) {
       }
     }
 
-  val thumbUrlLarge: String?
+  open val thumbUrlLarge: String?
     get() = baseUrl?.fit(1200, 800)
 
   companion object {

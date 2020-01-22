@@ -4,7 +4,7 @@
   <title>${profile.name} Photography</title>
   <meta name="description" content="${profile.name} photo albums from around the World">
   <meta property="og:title" content="${profile.name} Photography">
-  <meta property="og:image" content="${gallery.values().iterator().next().thumbUrlLarge}">
+  <meta property="og:image" content="${gallery.albums.values().iterator().next().thumbUrlLarge}">
   <meta property="og:site_name" content="${profile.name} Photography">
   #parse('head.vm')
   <script src="/js/gallery.js?${startTime}"></script>
@@ -47,7 +47,7 @@
 
 #parse('sharing.vm')
 
-<script>new ThumbsView(212)</script>
+<script>new ThumbsView(${gallery.albums.values().iterator().next().thumbSize})</script>
 
 <div class="load-time hidden">${gallery.loadedAt}</div>
 
