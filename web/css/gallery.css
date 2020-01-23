@@ -203,6 +203,12 @@ h2 {
   text-align: center;
 }
 
+.thumbs a .loader {
+  width: 80% !important;
+  height: 80% !important;
+  margin: 0;
+}
+
 .thumbs.albums a {
   width: 212px;
   height: 212px;
