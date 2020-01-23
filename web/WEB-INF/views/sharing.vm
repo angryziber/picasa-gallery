@@ -8,7 +8,7 @@
   $('#sharing > a').each(function() {
     var url = this.href + encodeURIComponent(location.href.replace(/#.*/, ''))
     url = url.replace('description=', 'description=' + encodeURIComponent($('h1:first').text().trim()))
-    url = url.replace('media=', 'media=' + encodeURIComponent($('[property="og:image"]').attr('content')))
+    url = url.replace('media=', 'media=' + ($('img.photo').attr('src') || encodeURIComponent($('[property="og:image"]').attr('content'))))
     this.href = url
   }).on('click', function() {
     var w = 700, h = 500;
