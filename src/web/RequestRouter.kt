@@ -38,7 +38,7 @@ class RequestRouter(
       if (req["reload"] != null) Cache.reload()
 
       when {
-        "/poll" == path -> { res.writer.use { it.write("OK") } }
+        "/poll" == path || "/_ah/start" == path -> { res.writer.use { it.write("OK") } }
         "/oauth" == path || auth.refreshToken == null -> handleOAuth()
         auth.refreshToken == null -> throw Redirect("/oauth")
         random != null -> renderRandom()
