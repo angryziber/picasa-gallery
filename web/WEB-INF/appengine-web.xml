@@ -10,6 +10,9 @@
     <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
     <property name="appengine.api.urlfetch.defaultDeadline" value="10"/>
   </system-properties>
+  <manual-scaling>
+    <instances>1</instances>
+  </manual-scaling>
   <static-files>
     <include path="/manifest.json" expiration="7d"/>
     <include path="/**.jpg" expiration="30d"/>
