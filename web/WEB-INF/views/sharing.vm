@@ -1,6 +1,6 @@
 <div id="sharing">
   <a href="https://www.facebook.com/sharer/sharer.php?u=" title="Share on Facebook" class="facebook"></a>
-  <a href="https://twitter.com/home?status=" title="Share on Twitter" class="twitter"></a>
+  <a href="https://twitter.com/intent/tweet?text=" title="Share on Twitter" class="twitter"></a>
   <a href="https://pinterest.com/pin/create/button/?media=&description=&image_url=&url=" title="Share on Pinterest" class="pinterest"></a>
 </div>
 
