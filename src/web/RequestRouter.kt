@@ -90,7 +90,7 @@ class RequestRouter(
   }
 
   private fun renderAlbum(name: String) {
-    val album = picasa.gallery[name] ?: throw MissingResourceException(path, "", "")
+    val album = picasa.gallery[name] ?: throw Redirect("/")
 
     if (album.id == name && album.id != album.name)
       throw Redirect("${album.url}${picasa.urlSuffix}")
