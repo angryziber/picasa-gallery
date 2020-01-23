@@ -1,14 +1,14 @@
 <div id="sharing">
   <a href="https://www.facebook.com/sharer/sharer.php?u=" title="Share on Facebook" class="facebook"></a>
   <a href="https://twitter.com/intent/tweet?url=" title="Share on Twitter" class="twitter"></a>
-  <a href="https://pinterest.com/pin/create/button/?media=&description=&image_url=&url=" title="Share on Pinterest" class="pinterest"></a>
+  <a href="https://pinterest.com/pin/create/button/?media=&description=&url=" title="Share on Pinterest" class="pinterest"></a>
 </div>
 
 <script>
   $('#sharing > a').each(function() {
     var url = this.href + encodeURIComponent(location.href.replace(/#.*/, ''))
     url = url.replace('description=', 'description=' + encodeURIComponent($('h1:first').text().trim()))
-    url = url.replace('image_url=', 'image_url=' + encodeURIComponent($('[property="og:image"]').attr('content')))
+    url = url.replace('media=', 'media=' + encodeURIComponent($('[property="og:image"]').attr('content')))
     this.href = url
   }).on('click', function() {
     var w = 700, h = 500;
