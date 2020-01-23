@@ -31,7 +31,7 @@ class Picasa(
       .toGallery().also { loadThumbsAsync(it.albums.values) }
 
   private fun loadThumbsAsync(albums: Iterable<Album>) {
-    BackgroundTasks.submit { logTime("Album thumbs loaded") {
+    appEngineThread { logTime("Album thumbs loaded") {
       albums.forEach { album ->
         album.thumbContent = URL(album.baseUrl?.crop(album.thumbSize)).readBytes()
         album.thumbContent2x = URL(album.baseUrl?.crop(album.thumbSize * 2)).readBytes()

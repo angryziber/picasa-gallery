@@ -2,8 +2,8 @@
 <cronentries>
   <cron>
     <url>/poll</url>
-    <description>Keep instance warm and run background tasks</description>
-    <schedule>every 1 minutes</schedule>
+    <description>Keep instance warm</description>
+    <schedule>every 30 minutes</schedule>
   </cron>
 <!--  <cron>
     <url>/?reload</url>
