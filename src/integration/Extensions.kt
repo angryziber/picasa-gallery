@@ -1,9 +1,6 @@
 package integration
 
-import com.google.appengine.api.ThreadManager
 import java.util.logging.Logger
-
-fun appEngineThread(runnable: () -> Unit) = ThreadManager.createBackgroundThread(runnable).start()
 
 private val timeLogger = Logger.getLogger("time")
 fun <T> logTime(what: String, block: () -> T): T {

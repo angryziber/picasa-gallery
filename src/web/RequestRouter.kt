@@ -1,5 +1,6 @@
 package web
 
+import integration.BackgroundTasks
 import integration.OAuth
 import photos.AlbumPart
 import photos.Cache
@@ -38,6 +39,7 @@ class RequestRouter(
       if (req["reload"] != null) Cache.reload()
 
       when {
+        "/poll" == path -> BackgroundTasks.run().also { res.writer.use { it.write("OK") } }
         "/oauth" == path || auth.refreshToken == null -> handleOAuth()
         auth.refreshToken == null -> throw Redirect("/oauth")
         random != null -> renderRandom()

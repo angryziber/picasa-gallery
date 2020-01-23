@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cronentries>
   <cron>
-    <url>/</url>
-    <description>Keep instance warm</description>
+    <url>/poll</url>
+    <description>Keep instance warm and run background tasks</description>
     <schedule>every 1 minutes</schedule>
   </cron>
 <!--  <cron>
