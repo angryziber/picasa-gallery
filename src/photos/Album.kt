@@ -36,7 +36,7 @@ open class Album(
   var thumbContent: ByteArray? = null
   var thumbContent2x: ByteArray? = null
 
-  override val thumbUrlLarge: String? get() = if (thumbContent2x != null) "$url.jpg?x2" else super.thumbUrlLarge
+  override val thumbUrlLarge: String? get() = "$url.jpg?x2"
 
   open fun size() = size
 }

@@ -5,15 +5,15 @@
   <meta name="description" content="${album.title} photos by ${profile.name}: ${album.description}">
 
   #if($mobile)
-    <link rel="apple-touch-icon" href="${album.thumbUrl}">
+    <link rel="apple-touch-icon" href="https://${host}${album.thumbUrlLarge}">
   #end
 
-  <link rel="shortcut icon" href="${album.thumbUrl}" type="image/jpeg">
+  <link rel="shortcut icon" href="https://${host}${album.thumbUrlLarge}" type="image/jpeg">
 
   <meta name="medium" content="image">
   <meta property="og:title" content="${album.title} photos by ${profile.name}">
-  <meta property="og:image" content="${album.thumbUrlLarge}">
-  <link rel="image_src" href="${album.thumbUrlLarge}">
+  <meta property="og:image" content="https://${host}${album.thumbUrlLarge}">
+  <link rel="image_src" href="https://${host}${album.thumbUrlLarge}">
   #if($album.geo)
     <meta property="og:latitude" content="${album.geo.lat}">
     <meta property="og:longitude" content="${album.geo.lon}">
