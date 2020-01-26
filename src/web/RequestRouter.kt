@@ -113,6 +113,7 @@ class RequestRouter(
       res.contentType = "image/jpeg"
       res.addIntHeader("Content-Length", thumbContent.size)
       res.addDateHeader("Last-Modified", album.timestamp!!)
+      res.addHeader("Cache-Control", "public, max-age=" + (14 * 24 * 3600))
       res.outputStream.write(thumbContent)
     }
   }
