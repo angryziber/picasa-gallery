@@ -10,10 +10,10 @@
     <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
     <property name="appengine.api.urlfetch.defaultDeadline" value="10"/>
   </system-properties>
-  <auto-scaling>
+  <automatic-scaling>
     <min-instances>1</min-instances>
     <max-instances>1</max-instances>
-  </auto-scaling>
+  </automatic-scaling>
   <static-files>
     <include path="/manifest.json" expiration="7d"/>
     <include path="/**.jpg" expiration="30d"/>
