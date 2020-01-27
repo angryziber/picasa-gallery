@@ -1,10 +1,11 @@
 package views
 
 import integration.Profile
+import photos.Config.startTime
 import photos.Picasa
 
 //language=HTML
-fun gallery(picasa: Picasa, profile: Profile, startTime: Long, host: String, bot: Boolean) = """
+fun gallery(picasa: Picasa, profile: Profile, host: String, bot: Boolean) = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,8 +14,8 @@ fun gallery(picasa: Picasa, profile: Profile, startTime: Long, host: String, bot
   <meta property="og:title" content="${+profile.name} Photography">
   <meta property="og:image" content="https://${host}${picasa.gallery.albums.values.first().thumbUrlLarge}">
   <meta property="og:site_name" content="${+profile.name} Photography">
-  ${head(picasa, profile, startTime, bot)}
-  <script src="/js/gallery.js?${startTime}"></script>
+  ${head(picasa, profile, bot)}
+  <script src="/js/gallery.js?$startTime"></script>
   <script>jQuery(GalleryMap)</script>
 </head>
 

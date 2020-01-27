@@ -3,10 +3,11 @@ package views
 import integration.Profile
 import photos.Album
 import photos.AlbumPart
+import photos.Config.startTime
 import photos.Picasa
 
 // language=HTML
-fun album(album: Album, albumPart: AlbumPart, profile: Profile, picasa: Picasa, startTime: Long, host: String, mobile: Boolean, bot: Boolean) = """
+fun album(album: Album, albumPart: AlbumPart, profile: Profile, picasa: Picasa, host: String, mobile: Boolean, bot: Boolean) = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,8 +29,8 @@ fun album(album: Album, albumPart: AlbumPart, profile: Profile, picasa: Picasa, 
   <meta property="og:description" content="${+album.description}">
   <meta property="og:site_name" content="${+profile.name} Photography">
 
-  ${head(picasa, profile, startTime, bot)}
-  <script src="/js/album.js?${startTime}"></script>
+  ${head(picasa, profile, bot)}
+  <script src="/js/album.js?$startTime"></script>
   <script>
     var viewer = new PhotoViewer();
     jQuery(function() {

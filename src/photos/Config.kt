@@ -17,5 +17,7 @@ object Config {
   val analyticsId = get("google.analytics")
   val mapsKey = get("google.maps.key")
 
+  val startTime = System.currentTimeMillis() / 1000 % 1000000
+
   operator fun get(key: String) = (props[key] as String?).let { if (it == "") null else it }
 }

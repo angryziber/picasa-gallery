@@ -2,10 +2,11 @@ package views
 
 import integration.Profile
 import photos.Config
+import photos.Config.startTime
 import photos.Picasa
 
 // language=HTML
-fun head(picasa: Picasa, profile: Profile, startTime: Long, bot: Boolean) = """
+fun head(picasa: Picasa, profile: Profile, bot: Boolean) = """
 ${picasa.urlSuffix.isNotEmpty() / """<meta name="robots" content="noindex">"""}  
 <meta property="fb:admins" content="${profile.slug}"/>
 
@@ -20,14 +21,14 @@ ${picasa.urlSuffix.isNotEmpty() / """<meta name="robots" content="noindex">"""}
 <link rel="manifest" href="/manifest.json">
 
 <link rel="stylesheet" type="text/css" href="/css/reset.css">
-<link rel="stylesheet" type="text/css" href="/css/gallery.css?${startTime}">
-<link rel="stylesheet" type="text/css" href="/css/scrollbars.css?${startTime}">
-<link rel="stylesheet" type="text/css" href="/css/loader.css?${startTime}">
+<link rel="stylesheet" type="text/css" href="/css/gallery.css?$startTime">
+<link rel="stylesheet" type="text/css" href="/css/scrollbars.css?$startTime">
+<link rel="stylesheet" type="text/css" href="/css/loader.css?$startTime">
 
 <script src="/js/jquery.min.js"></script>
 <script src="/js/prefixfree.min.js"></script>
-<script src="/js/common.js?${startTime}"></script>
-<script src="/js/thumbs.js?${startTime}"></script>
+<script src="/js/common.js?$startTime"></script>
+<script src="/js/thumbs.js?$startTime"></script>
 ${!bot / """
 <script defer src="/js/chromecast.js"></script>
 <script defer src="//maps.google.com/maps/api/js?key=${Config.mapsKey}"></script> 

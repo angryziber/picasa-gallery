@@ -21,10 +21,6 @@ class RequestRouter(
   val auth: OAuth = requestedUser?.let { OAuth.auths[it] } ?: OAuth.default,
   val picasa: Picasa = Picasa.of(auth)
 ) {
-  companion object {
-    val startTime = System.currentTimeMillis() / 1000 % 1000000
-  }
-
   val userAgent: String = req.getHeader("User-Agent") ?: ""
   val path = req.servletPath
   val pathParts = path.substring(1).split("/")
@@ -63,7 +59,7 @@ class RequestRouter(
   private fun String.isResource() = lastIndexOf('.') >= length - 5
 
   private fun renderGallery() {
-    render(res) { views.gallery(picasa, auth.profile!!, startTime, host, bot) }
+    render(res) { views.gallery(picasa, auth.profile!!, host, bot) }
   }
 
   private fun renderPhotoPage(albumName: String, photoIdxOrId: String) {
@@ -83,7 +79,7 @@ class RequestRouter(
     val part = if (bot) AlbumPart(picasa.getAlbumPhotos(album), null)
                else picasa.getAlbumPhotos(album, pageToken)
     if (pageToken == null)
-      render(res, album.timestamp) { views.album(album, part, auth.profile!!, picasa, startTime, host, detectMobile(), bot) }
+      render(res, album.timestamp) { views.album(album, part, auth.profile!!, picasa, host, detectMobile(), bot) }
     else
       render(res) { views.albumPart(part, album, bot) }
   }
