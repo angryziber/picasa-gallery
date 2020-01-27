@@ -1,6 +1,5 @@
 package web
 
-import integration.OAuth
 import io.kotlintest.TestCase
 import io.kotlintest.specs.StringSpec
 import io.mockk.*
@@ -24,7 +23,7 @@ class RequestRouterTest: StringSpec() {
 
   init {
     "bots are detected" {
-      val router = RequestRouter(req, res, mockk(relaxed = true), mockk(relaxed = true), mockk(relaxed = true))
+      val router = RequestRouter(req, res, mockk(relaxed = true), mockk(relaxed = true), picasa = mockk(relaxed = true))
       assertThat(router.isBot("Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")).isTrue()
       assertThat(router.isBot("Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)")).isTrue()
       assertThat(router.isBot("Mozilla/5.0 (compatible; AhrefsBot/5.0; +http://ahrefs.com/robot/)")).isTrue()
@@ -34,11 +33,14 @@ class RequestRouterTest: StringSpec() {
 
     "redirects to default user in case of root request" {
       every {req.servletPath} returns "/"
+      val picasa = mockk<Picasa>(relaxed = true) {
+        every {urlPrefix} returns "/user"
+      }
 
-      val router = RequestRouter(req, res, mockk(relaxed = true), mockk(relaxed = true), mockk(relaxed = true))
+      val router = RequestRouter(req, res, mockk(relaxed = true), mockk(relaxed = true), picasa = picasa)
       router.invoke()
 
-      res.verifyRedirectTo("/${OAuth.default.profile?.slug}")
+      res.verifyRedirectTo("/user")
     }
 
     "serves photo page for sharing and bots that redirect to album with photo hash" {
@@ -57,7 +59,7 @@ class RequestRouterTest: StringSpec() {
         every { urlSuffix } returns "?by=106730404715258343901"
         every { findAlbumPhoto(album, "5347257660284808946") } returns photo
       }
-      val router = RequestRouter(req, res, mockk(relaxed = true), render, mockk(relaxed = true), picasa = picasa)
+      val router = RequestRouter(req, res, mockk(relaxed = true), render, picasa = picasa)
 
       router.invoke()
 
@@ -74,7 +76,7 @@ class RequestRouterTest: StringSpec() {
         every { gallery["123123123"] } returns Album(id = "123123123", name = "Hello")
       }
 
-      val router = RequestRouter(req, res, mockk(relaxed = true), mockk(relaxed = true), mockk(relaxed = true), picasa = picasa)
+      val router = RequestRouter(req, res, mockk(relaxed = true), mockk(relaxed = true), picasa = picasa)
       router.invoke()
 
       res.verifyRedirectTo("/Hello")
