@@ -39,7 +39,7 @@ class RequestRouter(
 
       when {
         "/poll" == path || "/_ah/start" == path -> BackgroundTasks.run().also { res.writer.use { it.write("OK") } }
-        "/oauth" == path || auth.refreshToken == null -> handleOAuth()
+        "/oauth" == path -> handleOAuth()
         auth.refreshToken == null -> throw Redirect("/oauth")
         random != null -> renderRandom()
         (path == null || "/" == path) && requestedUser == null -> throw Redirect(picasa.urlPrefix)
