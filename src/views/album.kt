@@ -74,6 +74,8 @@ fun album(album: Album, albumPart: AlbumPart, profile: Profile, req: RequestProp
   """ else ""}
   <br>
 
+  <script>var thumbsView = new ThumbsView(144)</script>
+
   <div class="thumbs clear">
     ${albumPart(albumPart, album, req)}
   </div>
@@ -129,8 +131,6 @@ fun album(album: Album, albumPart: AlbumPart, profile: Profile, req: RequestProp
 </div>
 
 ${sharing()}
-
-<script>var thumbsView = new ThumbsView(144)</script>
 
 </body>
 </html>

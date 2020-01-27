@@ -46,6 +46,18 @@ function ThumbsView(thumbSize) {
     })
   }
 
+  self.loadMore = function(nextPageToken) {
+    if (nextPageToken) {
+      var thumbs = $('.thumbs').append('<a class="album-part-loader"><div class="loader"></div></a>')
+      $.get(location.pathname + (location.search ? location.search + '&' : '?') + 'pageToken=' + nextPageToken).then(function(html) {
+        thumbs.find('.album-part-loader').remove()
+        thumbs.append(html)
+        self.loadVisibleThumbs()
+      })
+    }
+    else self.loadingFinished = true
+  }
+
   var lastEventTimestamp = 0
 
   function loadVisibleThumbsDebounce(e) {

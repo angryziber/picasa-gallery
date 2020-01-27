@@ -19,15 +19,6 @@ ${albumPart.photos.each {"""
 
 <script>
   viewer.addPhotos()
-  ${if (albumPart.nextPageToken != null) /* language=JavaScript */ """
-    var thumbs = jQuery('.thumbs').append('<a class="album-part-loader"><div class="loader"></div></a>')
-    jQuery.get(location.pathname + (location.search ? location.search + '&' : '?') + 'pageToken=${albumPart.nextPageToken}').then(function(html) {
-      thumbs.find('.album-part-loader').remove()
-      thumbs.append(html)
-      thumbsView.loadVisibleThumbs()
-    })
-  """ else """
-    thumbsView.loadingFinished = true
-  """}  
+  thumbsView.loadMore('${+albumPart.nextPageToken}')
 </script>
 """
