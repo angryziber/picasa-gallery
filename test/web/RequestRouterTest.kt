@@ -62,7 +62,7 @@ class RequestRouterTest: StringSpec() {
       router.invoke()
 
       val view = slot<() -> String>()
-      verify {render.invoke(res, capture(view))}
+      verify {render.invoke(res, null, capture(view))}
       assertThat(view.captured()).contains("'/Orlova?by=106730404715258343901#5347257660284808946'")
     }
 

@@ -4,7 +4,6 @@ import integration.BackgroundTasks
 import integration.OAuth
 import photos.AlbumPart
 import photos.Cache
-import photos.Config
 import photos.Picasa
 import java.util.*
 import javax.servlet.FilterChain
@@ -61,21 +60,6 @@ class RequestRouter(
     }
   }
 
-  private fun render(template: String, model: Any?, extra: Map<String, Any?> = emptyMap()) {
-    val attrs = mutableMapOf(
-      "config" to Config,
-      "bot" to bot,
-      "mobile" to detectMobile(),
-      "picasa" to picasa,
-      "profile" to auth.profile,
-      "host" to host,
-      "servletPath" to path,
-      "startTime" to startTime
-    )
-    attrs += extra
-    render(template, model, attrs, res)
-  }
-
   private fun String.isResource() = lastIndexOf('.') >= length - 5
 
   private fun renderGallery() {
@@ -99,7 +83,7 @@ class RequestRouter(
     val part = if (bot) AlbumPart(picasa.getAlbumPhotos(album), null)
                else picasa.getAlbumPhotos(album, pageToken)
     if (pageToken == null)
-      render(res) { views.album(album, part, auth.profile!!, picasa, startTime, host, detectMobile(), bot) }
+      render(res, album.timestamp) { views.album(album, part, auth.profile!!, picasa, startTime, host, detectMobile(), bot) }
     else
       render(res) { views.albumPart(part, album, bot) }
   }
@@ -128,7 +112,7 @@ class RequestRouter(
       OAuth.auths[it] = auth
       if (!auth.isDefault) throw Redirect("/?by=$it")
     }
-    render("oauth", token)
+    render(res) { views.oauth(token.refreshToken) }
   }
 
   private fun renderRandom() {

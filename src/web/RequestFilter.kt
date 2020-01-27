@@ -13,7 +13,7 @@ class RequestFilter : Filter {
   private lateinit var render: Renderer
 
   override fun init(config: FilterConfig) {
-    this.render = Renderer(config.servletContext)
+    this.render = Renderer()
     if (OAuth.default.isInitialized)
       Picasa.loadDefault(OAuth.default, LocalContent(config.servletContext))
   }
