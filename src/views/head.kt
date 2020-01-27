@@ -1,7 +1,8 @@
+package views
+
 import integration.Profile
 import photos.Config
 import photos.Picasa
-import views.div
 
 // language=HTML
 fun head(picasa: Picasa, profile: Profile, startTime: Long, bot: Boolean) = """

@@ -99,9 +99,9 @@ class RequestRouter(
     val part = if (bot) AlbumPart(picasa.getAlbumPhotos(album), null)
                else picasa.getAlbumPhotos(album, pageToken)
     if (pageToken == null)
-      render("album", album, mapOf("albumPart" to part))
+      render(res) { views.album(album, part, auth.profile!!, picasa, startTime, host, detectMobile(), bot) }
     else
-      render("albumPart", part, mapOf("album" to album))
+      render(res) { views.albumPart(part, album, bot) }
   }
 
   private fun renderAlbumThumb(name: String) {

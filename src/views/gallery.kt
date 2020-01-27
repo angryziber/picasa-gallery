@@ -1,9 +1,7 @@
 package views
 
-import head
 import integration.Profile
 import photos.Picasa
-import sharing
 
 //language=HTML
 fun gallery(picasa: Picasa, profile: Profile, startTime: Long, host: String, bot: Boolean) = """

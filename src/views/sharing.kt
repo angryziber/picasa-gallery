@@ -1,3 +1,5 @@
+package views
+
 // language=HTML
 fun sharing() = """
 <div id="sharing">
