@@ -6,6 +6,7 @@ import java.lang.System.currentTimeMillis
 import java.net.URL
 import java.security.SecureRandom
 import java.util.*
+import kotlin.math.log10
 
 class Picasa(
   private val auth: OAuth,
@@ -76,6 +77,8 @@ class Picasa(
   }
 
   fun weightedRandom(albums: Collection<Album>): Album {
+    fun transform(n: Double) = (100.0 * log10(1 + n / 50.0)).toInt()
+
     var sum = 0
     for (album in albums) sum += transform(album.size().toDouble())
     val index = random(sum)
@@ -86,10 +89,6 @@ class Picasa(
       if (sum > index) return album
     }
     return albums.first()
-  }
-
-  private fun transform(n: Double): Int {
-    return (100.0 * Math.log10(1 + n / 50.0)).toInt()
   }
 
   internal fun random(max: Int): Int {
