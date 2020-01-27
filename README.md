@@ -36,7 +36,7 @@ Features
 - Showing of a single (weighted) random photo from all albums, just add "?random" parameter
 - ChromeCast support - send currently viewed photo to the TV
 
-How to use it for your own photos [![Build Status](https://travis-ci.org/angryziber/picasa-gallery.svg?branch=master)](https://travis-ci.org/angryziber/picasa-gallery)
+How to use it for your own photos [![Actions Status](https://github.com/angryziber/picasa-gallery/workflows/CI/badge.svg)](https://github.com/angryziber/picasa-gallery/actions)
 =================================
 
 - Clone this repository as described on Github
