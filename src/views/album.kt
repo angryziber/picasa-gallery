@@ -4,24 +4,24 @@ import integration.Profile
 import photos.Album
 import photos.AlbumPart
 import photos.Config.startTime
-import photos.Picasa
+import web.RequestProps
 
 // language=HTML
-fun album(album: Album, albumPart: AlbumPart, profile: Profile, picasa: Picasa, host: String, mobile: Boolean, bot: Boolean) = """
+fun album(album: Album, albumPart: AlbumPart, profile: Profile, req: RequestProps) = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <title>${+album.title} by ${+profile.name} - Photos</title>
   <meta name="description" content="${+album.title} photos by ${+profile.name}: ${+album.description}">
 
-  ${mobile / """<link rel="apple-touch-icon" href="https://${host}${album.thumbUrlLarge}">"""}
+  ${req.mobile / """<link rel="apple-touch-icon" href="https://${req.host}${album.thumbUrlLarge}">"""}
 
-  <link rel="shortcut icon" href="https://${host}${album.thumbUrlLarge}" type="image/jpeg">
+  <link rel="shortcut icon" href="https://${req.host}${album.thumbUrlLarge}" type="image/jpeg">
 
   <meta name="medium" content="image">
   <meta property="og:title" content="${+album.title} photos by ${+profile.name}">
-  <meta property="og:image" content="https://${host}${album.thumbUrlLarge}">
-  <link rel="image_src" href="https://${host}${album.thumbUrlLarge}">
+  <meta property="og:image" content="https://${req.host}${album.thumbUrlLarge}">
+  <link rel="image_src" href="https://${req.host}${album.thumbUrlLarge}">
   ${album.geo / """
     <meta property="og:latitude" content="${album.geo!!.lat}">
     <meta property="og:longitude" content="${album.geo!!.lon}"> 
@@ -29,7 +29,7 @@ fun album(album: Album, albumPart: AlbumPart, profile: Profile, picasa: Picasa, 
   <meta property="og:description" content="${+album.description}">
   <meta property="og:site_name" content="${+profile.name} Photography">
 
-  ${head(picasa, profile, bot)}
+  ${head(req, profile)}
   <script src="/js/album.js?$startTime"></script>
   <script>
     var viewer = new PhotoViewer();
@@ -46,7 +46,7 @@ fun album(album: Album, albumPart: AlbumPart, profile: Profile, picasa: Picasa, 
 <body style="background:black; color: gray">
 
 <div id="header" class="header">
-  <a href="${picasa.urlPrefix}" class="button fade">More albums</a>
+  <a href="${req.urlPrefix}" class="button fade">More albums</a>
 
   <h1 id="title">
     ${+album.title}
@@ -57,7 +57,7 @@ fun album(album: Album, albumPart: AlbumPart, profile: Profile, picasa: Picasa, 
 <div id="content" class="faded">
   ${if (album.content != null) """
     ${if (album.contentIsLong) """
-      <div id="album-long-content" class="${!bot / "closed"}">
+      <div id="album-long-content" class="${!req.bot / "closed"}">
         ${album.content}
       </div>
       <script>
@@ -80,7 +80,7 @@ fun album(album: Album, albumPart: AlbumPart, profile: Profile, picasa: Picasa, 
   <br>
 
   <div class="thumbs clear">
-    ${albumPart(albumPart, album, bot)}
+    ${albumPart(albumPart, album, req)}
   </div>
 
   <p id="footer">

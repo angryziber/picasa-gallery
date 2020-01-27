@@ -2,9 +2,10 @@ package views
 
 import photos.Album
 import photos.AlbumPart
+import web.RequestProps
 
 // language=HTML
-fun albumPart(albumPart: AlbumPart, album: Album, bot: Boolean) = """
+fun albumPart(albumPart: AlbumPart, album: Album, req: RequestProps) = """
 <div class="load-time hidden">${albumPart.photos.size} loaded at ${albumPart.loadedAt}</div>
 
 ${albumPart.photos.each {"""
@@ -12,7 +13,7 @@ ${albumPart.photos.each {"""
     ${timestamp / """data-time="$dateTime""""}
     ${geo / """data-coords="${geo?.lat}:${geo?.lon}""""}
     ${exif / """data-exif="$exif""""}>
-    <img ${bot / """src="$thumbUrl""""} ${description / """alt="$description""""}>
+    <img ${req.bot / """src="$thumbUrl""""} ${description / """alt="$description""""}>
   </a>
 """}}
 

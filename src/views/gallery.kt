@@ -2,19 +2,20 @@ package views
 
 import integration.Profile
 import photos.Config.startTime
-import photos.Picasa
+import photos.Gallery
+import web.RequestProps
 
 //language=HTML
-fun gallery(picasa: Picasa, profile: Profile, host: String, bot: Boolean) = """
+fun gallery(req: RequestProps, gallery: Gallery, profile: Profile) = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <title>${+profile.name} Photography</title>
   <meta name="description" content="${+profile.name} photo albums from around the World">
   <meta property="og:title" content="${+profile.name} Photography">
-  <meta property="og:image" content="https://${host}${picasa.gallery.albums.values.first().thumbUrlLarge}">
+  <meta property="og:image" content="https://${req.host}${gallery.albums.values.first().thumbUrlLarge}">
   <meta property="og:site_name" content="${+profile.name} Photography">
-  ${head(picasa, profile, bot)}
+  ${head(req, profile)}
   <script src="/js/gallery.js?$startTime"></script>
   <script>jQuery(GalleryMap)</script>
 </head>
@@ -28,8 +29,8 @@ fun gallery(picasa: Picasa, profile: Profile, host: String, bot: Boolean) = """
 <div id="content" class="faded">
   <div id="map"></div>
   <div class="albums thumbs">
-    ${picasa.gallery.albums.values.each { """
-      <a id="${+name}" class="fade" href="${url}${picasa.urlSuffix}"
+    ${gallery.albums.values.each { """
+      <a id="${+name}" class="fade" href="${url}${req.urlSuffix}"
          ${geo / """data-coords="${geo!!.lat}:${geo!!.lon}""""}
          data-url="${url}.jpg">
         <img alt="${+title} photos" title="${+description}">
@@ -44,7 +45,7 @@ fun gallery(picasa: Picasa, profile: Profile, host: String, bot: Boolean) = """
 
   <p id="footer">
     Photos by ${profile.name}. All rights reserved.
-    <a href="?random${picasa.urlSuffix.replace('?', '&')}" rel="nofollow">Random photo</a>.
+    <a href="?random${req.urlSuffix.replace('?', '&')}" rel="nofollow">Random photo</a>.
     <br>
     Rendered by <a href="https://github.com/angryziber/picasa-gallery">Picasa Gallery</a>.
     View your <a href="/oauth" rel="nofollow">own gallery</a>.
@@ -53,9 +54,9 @@ fun gallery(picasa: Picasa, profile: Profile, host: String, bot: Boolean) = """
 
 ${sharing()}
 
-<script>new ThumbsView(${picasa.gallery.albums.values.first().thumbSize})</script>
+<script>new ThumbsView(${gallery.albums.values.first().thumbSize})</script>
 
-<div class="load-time hidden">${picasa.gallery.loadedAt}</div>
+<div class="load-time hidden">${gallery.loadedAt}</div>
 
 </body>
 </html>

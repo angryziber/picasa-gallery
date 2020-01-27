@@ -3,11 +3,11 @@ package views
 import integration.Profile
 import photos.Config
 import photos.Config.startTime
-import photos.Picasa
+import web.RequestProps
 
 // language=HTML
-fun head(picasa: Picasa, profile: Profile, bot: Boolean) = """
-${picasa.urlSuffix.isNotEmpty() / """<meta name="robots" content="noindex">"""}  
+fun head(req: RequestProps, profile: Profile) = """
+${req.urlSuffix.isNotEmpty() / """<meta name="robots" content="noindex">"""}  
 <meta property="fb:admins" content="${profile.slug}"/>
 
 <meta name="viewport" content="width=device-width">
@@ -29,7 +29,7 @@ ${picasa.urlSuffix.isNotEmpty() / """<meta name="robots" content="noindex">"""}
 <script src="/js/prefixfree.min.js"></script>
 <script src="/js/common.js?$startTime"></script>
 <script src="/js/thumbs.js?$startTime"></script>
-${!bot / """
+${!req.bot / """
 <script defer src="/js/chromecast.js"></script>
 <script defer src="//maps.google.com/maps/api/js?key=${Config.mapsKey}"></script> 
 """}

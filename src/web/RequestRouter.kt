@@ -24,9 +24,9 @@ class RequestRouter(
   val userAgent: String = req.getHeader("User-Agent") ?: ""
   val path = req.servletPath
   val pathParts = path.substring(1).split("/")
-  val host = req.getHeader("host")
   val random = req["random"]
-  var bot = isBot(userAgent) || req["bot"] != null
+  val bot = isBot(userAgent) || req["bot"] != null
+  val reqProps = RequestProps(picasa.urlPrefix, picasa.urlSuffix, req.getHeader("host"), bot, detectMobile())
 
   fun invoke() {
     try {
@@ -59,7 +59,7 @@ class RequestRouter(
   private fun String.isResource() = lastIndexOf('.') >= length - 5
 
   private fun renderGallery() {
-    render(res) { views.gallery(picasa, auth.profile!!, host, bot) }
+    render(res, picasa.gallery.loadedAt.time) { views.gallery(reqProps, picasa.gallery, auth.profile!!) }
   }
 
   private fun renderPhotoPage(albumName: String, photoIdxOrId: String) {
@@ -79,9 +79,9 @@ class RequestRouter(
     val part = if (bot) AlbumPart(picasa.getAlbumPhotos(album), null)
                else picasa.getAlbumPhotos(album, pageToken)
     if (pageToken == null)
-      render(res, album.timestamp) { views.album(album, part, auth.profile!!, picasa, host, detectMobile(), bot) }
+      render(res, album.timestamp) { views.album(album, part, auth.profile!!, reqProps) }
     else
-      render(res) { views.albumPart(part, album, bot) }
+      render(res) { views.albumPart(part, album, reqProps) }
   }
 
   private fun renderAlbumThumb(name: String) {
@@ -99,7 +99,7 @@ class RequestRouter(
   }
 
   private fun handleOAuth() {
-    val code = req["code"] ?: throw Redirect(OAuth.startUrl(host))
+    val code = req["code"] ?: throw Redirect(OAuth.startUrl(reqProps.host))
 
     val auth = if (OAuth.default.refreshToken == null) OAuth.default else OAuth(null)
     val token = auth.token(code)
@@ -133,5 +133,7 @@ class RequestRouter(
 }
 
 class Redirect(val path: String): Exception()
+
+class RequestProps(val urlPrefix: String, val urlSuffix: String, val host: String, val bot: Boolean, val mobile: Boolean)
 
 operator fun HttpServletRequest.get(param: String) = getParameter(param)
