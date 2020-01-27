@@ -79,7 +79,7 @@ class RequestRouter(
   private fun String.isResource() = lastIndexOf('.') >= length - 5
 
   private fun renderGallery() {
-    render("gallery", picasa.gallery)
+    render(res) { views.gallery(picasa, auth.profile!!, startTime, host, bot) }
   }
 
   private fun renderPhotoPage(albumName: String, photoIdxOrId: String) {
