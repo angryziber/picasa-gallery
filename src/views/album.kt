@@ -13,11 +13,6 @@ fun album(album: Album, albumPart: AlbumPart, profile: Profile, req: RequestProp
 <head>
   <title>${+album.title} by ${+profile.name} - Photos</title>
   <meta name="description" content="${+album.title} photos by ${+profile.name}: ${+album.description}">
-
-  ${req.mobile / """<link rel="apple-touch-icon" href="https://${req.host}${album.thumbUrlLarge}">"""}
-
-  <link rel="shortcut icon" href="https://${req.host}${album.thumbUrlLarge}" type="image/jpeg">
-
   <meta name="medium" content="image">
   <meta property="og:title" content="${+album.title} photos by ${+profile.name}">
   <meta property="og:image" content="https://${req.host}${album.thumbUrlLarge}">

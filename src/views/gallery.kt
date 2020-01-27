@@ -12,9 +12,8 @@ fun gallery(req: RequestProps, gallery: Gallery, profile: Profile) = """
 <head>
   <title>${+profile.name} Photography</title>
   <meta name="description" content="${+profile.name} photo albums from around the World">
-  <meta property="og:title" content="${+profile.name} Photography">
   <meta property="og:image" content="https://${req.host}${gallery.albums.values.first().thumbUrlLarge}">
-  <meta property="og:site_name" content="${+profile.name} Photography">
+  <meta property="og:description" content="${+profile.name} Photography">
   ${head(req, profile)}
   <script src="/js/gallery.js?$startTime"></script>
   <script>jQuery(GalleryMap)</script>
