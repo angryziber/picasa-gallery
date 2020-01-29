@@ -13,4 +13,4 @@ jobs:
         java-version: '8'
         architecture: x64
     - name: Build
-      run: ./gradlew assemble test --stacktrace
+      run: ./gradlew assemble test
