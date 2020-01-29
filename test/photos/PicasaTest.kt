@@ -1,15 +1,13 @@
 package photos
 
-import integration.OAuth
 import io.kotlintest.specs.StringSpec
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
 import org.assertj.core.api.Assertions.assertThat
-import java.util.Arrays.asList
 
 class PicasaTest: StringSpec({
-  var picasa = Picasa(OAuth(""), LocalContent(null), mockk(relaxed = true))
+  var picasa = Picasa(mockk(relaxed = true), LocalContent(null), mockk(relaxed = true))
 
   "distributes weighted random according to the size of album" {
     val album1 = mockk<Album> {
@@ -22,7 +20,7 @@ class PicasaTest: StringSpec({
       every {size()} returns 30
     }
 
-    val albums = asList(album1, album2, album3)
+    val albums = listOf(album1, album2, album3)
     picasa = spyk(picasa)
 
     every {picasa.random(41)} returns 0
