@@ -1,5 +1,6 @@
 package web
 
+import integration.OAuth
 import io.kotlintest.TestCase
 import io.kotlintest.specs.StringSpec
 import io.mockk.*
@@ -14,11 +15,14 @@ import javax.servlet.http.HttpServletResponse.SC_MOVED_PERMANENTLY
 class RequestRouterTest: StringSpec() {
   val req = mockk<HttpServletRequest>(relaxed = true)
   val res = mockk<HttpServletResponse>(relaxed = true)
+  val auth = mockk<OAuth>(relaxed = true)
+  val picasa = mockk<Picasa>(relaxed = true)
 
   override fun beforeTest(testCase: TestCase) {
-    clearMocks(req, res)
+    clearMocks(req, res, auth, picasa)
     every {req.getParameter(any())} returns null
     every {req.servletPath} returns "/"
+    every {auth.refreshToken} returns "token"
   }
 
   init {
@@ -33,11 +37,9 @@ class RequestRouterTest: StringSpec() {
 
     "redirects to default user in case of root request" {
       every {req.servletPath} returns "/"
-      val picasa = mockk<Picasa>(relaxed = true) {
-        every {urlPrefix} returns "/user"
-      }
+      every {picasa.urlPrefix} returns "/user"
 
-      val router = RequestRouter(req, res, mockk(relaxed = true), mockk(relaxed = true), picasa = picasa)
+      val router = RequestRouter(req, res, mockk(relaxed = true), mockk(relaxed = true), auth = auth, picasa = picasa)
       router.invoke()
 
       res.verifyRedirectTo("/user")
@@ -54,12 +56,10 @@ class RequestRouterTest: StringSpec() {
       }
 
       val render = mockk<Renderer>(relaxed = true)
-      val picasa = mockk<Picasa>(relaxed = true) {
-        every { gallery["Orlova"] } returns album
-        every { urlSuffix } returns "?by=106730404715258343901"
-        every { findAlbumPhoto(album, "5347257660284808946") } returns photo
-      }
-      val router = RequestRouter(req, res, mockk(relaxed = true), render, picasa = picasa)
+      every { picasa.gallery["Orlova"] } returns album
+      every { picasa.urlSuffix } returns "?by=106730404715258343901"
+      every { picasa.findAlbumPhoto(album, "5347257660284808946") } returns photo
+      val router = RequestRouter(req, res, mockk(relaxed = true), render, auth = auth, picasa = picasa)
 
       router.invoke()
 
@@ -71,12 +71,9 @@ class RequestRouterTest: StringSpec() {
     "album redirect id urls to names" {
       every {req.servletPath} returns "/123123123"
       every {req.getHeader("User-Agent")} returns "Normal Browser"
+      every {picasa.gallery["123123123"]} returns Album(id = "123123123", name = "Hello")
 
-      val picasa = mockk<Picasa>(relaxed = true) {
-        every { gallery["123123123"] } returns Album(id = "123123123", name = "Hello")
-      }
-
-      val router = RequestRouter(req, res, mockk(relaxed = true), mockk(relaxed = true), picasa = picasa)
+      val router = RequestRouter(req, res, mockk(relaxed = true), mockk(relaxed = true), auth = auth, picasa = picasa)
       router.invoke()
 
       res.verifyRedirectTo("/Hello")
