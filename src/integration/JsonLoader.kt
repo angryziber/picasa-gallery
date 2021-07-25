@@ -94,10 +94,10 @@ data class MediaMetadata(
 data class PhotoMetadata(
   val cameraMake: String? = null,
   val cameraModel: String? = null,
-  val focalLength: Float? = null,
-  val apertureFNumber: Float? = null,
+  val focalLength: String? = null,
+  val apertureFNumber: String? = null,
   val isoEquivalent: Int? = null,
-  val exposureTime: Float? = null
+  val exposureTime: String? = null
 )
 
 inline class BaseUrl(val url: String) {

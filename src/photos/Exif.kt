@@ -2,9 +2,9 @@ package photos
 
 class Exif(
   val camera: String?,
-  val fstop: Float?,
-  val exposure: Float?,
-  val focal: Float?,
+  val fstop: String?,
+  val exposure: String?,
+  val focal: String?,
   val iso: Int?
 ) {
   override fun toString() = "${fstop ?: ""}:${exposure ?: ""}:${iso ?: ""}:${focal ?: ""}"
