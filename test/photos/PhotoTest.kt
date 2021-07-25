@@ -1,20 +1,21 @@
 package photos
 
-import io.kotlintest.specs.WordSpec
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
 
-class PhotoTest: WordSpec({
+class PhotoTest {
   val photo = Photo()
 
-  "description" should {
-    "leave normal descriptions intact" {
+  @Nested inner class description {
+    @Test fun `leave normal descriptions intact`() {
       photo.description = "Hello"
       assertThat(photo.description).isEqualTo("Hello")
     }
 
-    "remove filename-like descriptions" {
+    @Test fun `remove filename-like descriptions`() {
       photo.description = "20130320_133707"
       assertThat(photo.description).isNull()
     }
   }
-})
+}

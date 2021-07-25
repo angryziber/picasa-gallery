@@ -1,15 +1,15 @@
 package photos
 
-import io.kotlintest.specs.StringSpec
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 
-class PicasaTest: StringSpec({
+class PicasaTest {
   var picasa = Picasa(mockk(relaxed = true), LocalContent(null), mockk(relaxed = true))
 
-  "distributes weighted random according to the size of album" {
+  @Test fun `distributes weighted random according to the size of album`() {
     val album1 = mockk<Album> {
       every {size()} returns 10
     }
@@ -35,4 +35,4 @@ class PicasaTest: StringSpec({
     every {picasa.random(41)} returns 40
     assertThat(picasa.weightedRandom(albums)).isSameAs(album3)
   }
-})
+}
