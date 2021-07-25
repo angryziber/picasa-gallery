@@ -71,7 +71,7 @@ function ThumbsView(thumbSize) {
   }
 
   var pixelRatio = (isDesktop() ? window.devicePixelRatio : 1) || 1
-  var scaledThumbSize = thumbSize * pixelRatio
+  var scaledThumbSize = Math.round(thumbSize * pixelRatio)
   updateLayout()
   $(self.loadVisibleThumbs)
 
