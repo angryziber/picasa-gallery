@@ -1,26 +1,21 @@
 buildscript {
-  ext.kotlin_version = '1.3.50'
-  ext.appengine_version = '1.9.59'
-  ext.appengine_sdk_version = '1.9.78'
+  ext.kotlin_version = '1.5.21'
   repositories {
     mavenCentral()
   }
   dependencies {
-    classpath "com.google.appengine:gradle-appengine-plugin:$appengine_version"
+    classpath "com.google.cloud.tools:appengine-gradle-plugin:2.4.1"
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
   }
 }
 
 repositories {
-  jcenter()
-  maven {
-    url 'http://repository.jetbrains.com/all'
-  }
+  mavenCentral()
 }
 
 apply plugin: 'kotlin'
 apply plugin: 'war'
-apply plugin: 'appengine'
+apply plugin: 'com.google.cloud.tools.appengine-appenginewebxml'
 
 compileKotlin {
   kotlinOptions {
@@ -42,16 +37,19 @@ sourceSets {
 }
 
 dependencies {
-  appengineSdk "com.google.appengine:appengine-java-sdk:$appengine_sdk_version"
-  compile 'com.google.appengine:appengine-api-1.0-sdk:+'
+  implementation 'com.google.appengine:appengine-api-1.0-sdk:+'
   providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
-  compile 'com.atlassian.commonmark:commonmark:0.7.1'
-  compile 'com.github.scribejava:scribejava-apis:4.0.0'
-  compile 'com.google.code.gson:gson:2.8.5'
-  compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-  testCompile 'org.assertj:assertj-core:3.6.1'
-  testCompile 'io.kotlintest:kotlintest-runner-junit5:3.3.3'
-  testImplementation "io.mockk:mockk:1.9.3"
+  implementation 'com.atlassian.commonmark:commonmark:0.7.1'
+  implementation 'com.github.scribejava:scribejava-apis:4.0.0'
+  implementation 'com.google.code.gson:gson:2.8.5'
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+//  testImplementation 'com.google.appengine:appengine-testing:+'
+//  testImplementation 'com.google.appengine:appengine-api-stubs:+'
+//  testImplementation 'com.google.appengine:appengine-tools-sdk:+'
+  testImplementation 'org.assertj:assertj-core:3.6.1'
+  testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.3.3'
+  testImplementation "io.mockk:mockk:1.12.0"
 }
 
 test {
@@ -62,10 +60,12 @@ test {
   }
 }
 
+//appengineDeploy.dependsOn test
+//appengineStage.dependsOn test
+
 appengine {
-  downloadSdk = true
-  appcfg {
-    oauth2 = true
+  deploy {
+    version = '3'
+    projectId = 'anton-photos'
   }
-  jvmFlags = ['-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000']
 }
