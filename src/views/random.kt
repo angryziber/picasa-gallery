@@ -9,7 +9,7 @@ fun random(random: RandomPhotos, delayMs: String?, refresh: Boolean) = """
 <html>
 <head>
   <title>Random photo by ${+random.profile.name} from ${+random.album}</title>
-  <style type="text/css">$css</style>
+  <style>$css</style>
 </head>
 <body>
 <div id="img" style="background-image: url(${+random.photos[0].fullHdUrl})"></div>
@@ -72,7 +72,7 @@ private fun morePhotosJS(photos: List<Photo>, delayMs: String?, refresh: Boolean
     var url = photos[index].url
     img.style.backgroundImage = 'url(' + url + ')'
     chromecast.send(url)
-    desc.innerHTML = photos[index].description
+    desc.innerHTML = photos[index].description || ''
     if (++index >= photos.length) index = 0
     new Image().src = photos[index].url
   }, ${delayMs ?: 8000})
