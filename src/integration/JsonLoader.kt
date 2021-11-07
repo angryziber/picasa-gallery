@@ -38,7 +38,7 @@ abstract class JsonResponse<T> {
 
 data class Profile(var id: String? = null, var name: String? = null, var picture: String? = null): JsonResponse<Profile>() {
   override val items get() = listOf(this)
-  val slug get() = name?.toLowerCase()?.replace(' ', '.')
+  val slug get() = name?.lowercase()?.replace(' ', '.')
 }
 
 class AlbumsResponse: JsonResponse<JsonAlbum>() {
@@ -100,7 +100,8 @@ data class PhotoMetadata(
   val exposureTime: String? = null
 )
 
-inline class BaseUrl(val url: String) {
+@JvmInline
+value class BaseUrl(val url: String) {
   fun fit(w: Int, h: Int) = "$url=w$w-h$h"
   fun crop(s: Int) = fit(s, s) + "-c"
 }

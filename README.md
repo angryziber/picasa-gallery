@@ -44,7 +44,7 @@ How to use it for your own photos [![Actions Status](https://github.com/angryzib
 - To authorize the gallery with your Google account and get refresh token, launch the app and navigate to `/oauth`
 - Specify your AppEngine application ID in web/WEB-INF/appengine-web.xml
 - Uploading and testing
-  * `./gradlew appengineUpdate` - will upload the app to Google AppEngine
+  * `./gradlew appengineDeploy` - will upload the app to Google AppEngine
   * `./gradlew appengineRun` - will run the app locally on port 8080
 - Or, the app is a standard Java Servlet-based application, so it will work with any other Servlet Container  
   * `./gradlew war` - will build the war file (web application archive)
