@@ -12,10 +12,8 @@ class LocalContent(path: String?) {
   private val mdRenderer = HtmlRenderer.builder().build()
   private val albums: Map<String, AlbumContent> = path?.let { loadFilesFrom(it) } ?: emptyMap()
 
-  private fun loadFilesFrom(path: String) = File(path)
-      .listFiles { file -> file.name.endsWith(".md") }
-      .map { file -> Pair(file.name.substringBefore('.'), loadContentFrom(file)) }
-      .toMap()
+  private fun loadFilesFrom(path: String) = File(path).listFiles { file -> file.name.endsWith(".md") }
+      ?.associate { file -> file.name.substringBefore('.') to loadContentFrom(file) }
 
   private fun loadContentFrom(file: File): AlbumContent {
     var source = file.readText().trim()
@@ -34,13 +32,6 @@ class LocalContent(path: String?) {
 
   fun contains(albumName: String?) = albums.contains(albumName)
   fun forAlbum(albumName: String?) = albums[albumName]
-
-  fun applyTo(album: Album) {
-    albums[album.name]?.let {
-      album.content = it.content
-      album.geo = it.geo ?: album.geo
-    }
-  }
 }
 
 data class AlbumContent(val content: String?, val geo: GeoLocation?)
