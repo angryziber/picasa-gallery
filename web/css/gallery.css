@@ -517,15 +517,15 @@ h3 {
 }
 
 @media screen and (max-width: 568px) {
-  .header .button .text {
+  .header .button:first-child .text {
     display: none;
   }
 
-  .header .button {
+  .header .button:first-child {
     margin-left: 0;
   }
 
-  .header .button::after {
+  .header .button:first-child::after {
     content: '‹';
   }
 
