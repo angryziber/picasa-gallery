@@ -4,18 +4,19 @@
 ## October 2021
 
 I wanted to visit Azores Islands for a long time, but every time they seemed a bit remote, so weren't a priority.
-Finally, I was able to [sail on Atyla tall ship](/AtylaToAzores) to the islands and then 9 days enjoying these green and fertile islands.
+Finally, I was able to [sail on Atyla tall ship](/AtylaToAzores) to the islands and then spend 9 more days island-hopping 
+and exploring what these green and extremely fertile islands have to offer.
 
 ### São Miguel
 
 Most people arrive to Ponta Delgada on São Miguel island, the largest of the archipelago. It was also our sailing destination.
-São Miguel is pretty large and diverse, and is a great gateway to the islands - you can see there nice harbours,
+São Miguel is pretty large and diverse, and is a great gateway to the islands - you can see there nice harbour towns,
 at least 3 volcanic lakes, bath in hot springs, and eat food cooked using geothermal heat in Furnas.
 
 A perfect way to explore any of the islands is to rent a car, as otherwise you will only be able to enjoy the nice towns, 
 but nature of the islands is even more incredible. I have never seen islands that fertile - when in the mountains, you can
 see how lush green is the scenery, with plenty of rain and clouds, you can see plants quickly taking over even vertical 
-walls and cliffs.
+walls and cliffs. Many roads are decorated with chrysanthemum flowers, so you sometimes feel like in a flower shop. 
 
 Sete Cidades, the most beautiful of the crater lakes, also has a huge abandoned Hotel Monte Palace on the rim, 
 which is a joy to explore with very nice views to the lake and the ocean.
