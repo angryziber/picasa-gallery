@@ -15,8 +15,7 @@ data class OAuth(var refreshToken: String?, val isDefault: Boolean = false) {
     val auths: MutableMap<String, OAuth> = mutableMapOf()
 
     private val service by lazy {
-      ServiceBuilder()
-        .apiKey(Config.oauthClientId)
+      ServiceBuilder(Config.oauthClientId)
         .apiSecret(Config.oauthClientSecret)
         .callback("http://localhost:8080/oauth")
         .build(GoogleApi20.instance())
