@@ -197,6 +197,10 @@ h3 {
   padding-top: 6px;
 }
 
+#content a {
+  text-decoration: underline;
+}
+
 .thumbs a {
   box-sizing: border-box;
   float: left;
