@@ -41,7 +41,9 @@ fun album(album: Album, albumPart: AlbumPart, profile: Profile, req: RequestProp
 <body style="background:black; color: gray">
 
 <div id="header" class="header">
-  <a href="${req.urlPrefix}" class="button fade">More albums</a>
+  <a href="${req.urlPrefix}" class="button fade">
+    <span class="text">More albums</span>
+  </a>
 
   <h1 id="title">
     ${+album.title}

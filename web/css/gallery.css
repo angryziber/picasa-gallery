@@ -517,8 +517,16 @@ h3 {
 }
 
 @media screen and (max-width: 568px) {
-  #header #search input, #header .button {
+  .header .button .text {
     display: none;
+  }
+
+  .header .button {
+    margin-left: 0;
+  }
+
+  .header .button::after {
+    content: '‹';
   }
 
   #content {
