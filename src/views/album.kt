@@ -57,12 +57,12 @@ fun album(album: Album, albumPart: AlbumPart, profile: Profile, req: RequestProp
       </div>
       <script>
         jQuery('#album-long-content')
-          .on('mousedown', function(e) {
+          .on('mousedown', function() {
             jQuery(this).data('time', new Date())
           })
-          .on('mouseup', function() {
-            if (new Date() - jQuery(this).data('time') < 300)
-              jQuery(this).toggleClass('closed');
+          .on('mouseup', function(e) {
+            if (e.target.tagName !== 'A' && new Date() - jQuery(this).data('time') < 300)
+              jQuery(this).toggleClass('closed')
           })
       </script> 
     """ else """
