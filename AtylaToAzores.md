@@ -1,4 +1,4 @@
-.coords 33.981335, -22.615617
+.coords 33.981335 -22.615617
 
 # On Atyla to from Canary islands to Azores
 
