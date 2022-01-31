@@ -11,11 +11,11 @@ There are no other land for thousands of kilometers in any direction, so a 5-hou
 
 Thor Heyerdahl helped to popularize the island when he tried to prove the islanders may have come from the South America
 by rafts. He showed that it is possible, but he was wrong. The culture of the islanders is very much related to other
-Polynesian islands, even similar Hawaii. 
+Polynesian islands, even similar to Hawaii. 
 
-But the Moai heads are awesome. Unfortunately there were all knocked down by internal conflicts, but Thor helped to raise
+But the Moai heads are awesome. Unfortunately there were all knocked down by internal conflicts, but Thor and others helped to raise
 some of them back to their former glory. And the quarry, where they were built, Rano Raraku, is out of this world - you
-can see hundreds of funished and unfinished heads looking at you from different angles and directions.
+can see hundreds of finished and unfinished heads looking at you from different angles and directions. Too bad they don't allow general public to the inside of the crater.
 
 I was a big fan of Thor's books and adventures in the childhood, so visiting the Easter Island someday was a dream.
 The longest distance on the island is about 36km, so I rented a small 4x4 car - Suzuki Jimny and could visit and 
