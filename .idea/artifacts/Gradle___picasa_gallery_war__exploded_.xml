@@ -3,6 +3,8 @@
     <output-path>$PROJECT_DIR$/build/libs/exploded/picasa-gallery.war</output-path>
     <properties id="gradle-properties">
       <options external-project-path="$PROJECT_DIR$">
+        <buildTaskPath>:war_exploded</buildTaskPath>
+        <cleanTaskPath>:cleanWar_exploded</cleanTaskPath>
         <manifest>TWFuaWZlc3QtVmVyc2lvbjogMS4wDQoNCg==</manifest>
       </options>
     </properties>
@@ -17,13 +19,7 @@
           <element id="dir-copy" path="$PROJECT_DIR$/out/production/resources" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="Gradle: com.google.appengine:appengine-api-1.0-sdk:1.9.92" />
-          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.0" />
-          <element id="library" level="project" name="Gradle: javax.inject:javax.inject:1" />
-          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.0" />
-          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.6.0" />
-          <element id="library" level="project" name="Gradle: org.jetbrains:annotations:13.0" />
-          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.6.0" />
+          <element id="library" level="project" name="Gradle: com.google.appengine:appengine-api-1.0-sdk:2.0.3" />
           <element id="library" level="project" name="Gradle: com.github.scribejava:scribejava-apis:8.3.1" />
           <element id="library" level="project" name="Gradle: com.google.code.gson:gson:2.8.9" />
           <element id="library" level="project" name="Gradle: org.commonmark:commonmark:0.17.0" />
@@ -32,6 +28,11 @@
           <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.12.3" />
           <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.12.3" />
           <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.12.3" />
+          <element id="library" level="project" name="Gradle: org.jetbrains:annotations:13.0" />
+          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.10" />
+          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.10" />
+          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.6.10" />
+          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.6.10" />
         </element>
       </element>
     </root>
