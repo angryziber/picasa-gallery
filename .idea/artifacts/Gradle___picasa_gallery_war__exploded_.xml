@@ -22,17 +22,15 @@
           <element id="library" level="project" name="Gradle: com.google.appengine:appengine-api-1.0-sdk:2.0.10" />
           <element id="library" level="project" name="Gradle: com.github.scribejava:scribejava-apis:8.3.1" />
           <element id="library" level="project" name="Gradle: com.google.code.gson:gson:2.8.9" />
-          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.10" />
+          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.8.0" />
           <element id="library" level="project" name="Gradle: org.commonmark:commonmark:0.17.0" />
           <element id="library" level="project" name="Gradle: com.github.scribejava:scribejava-core:8.3.1" />
           <element id="library" level="project" name="Gradle: com.github.scribejava:scribejava-java8:8.3.1" />
           <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.12.3" />
           <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.12.3" />
           <element id="library" level="project" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.12.3" />
-          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.10" />
-          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.6.10" />
+          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.8.0" />
           <element id="library" level="project" name="Gradle: org.jetbrains:annotations:13.0" />
-          <element id="library" level="project" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-common:1.6.10" />
         </element>
       </element>
     </root>

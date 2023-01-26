@@ -1,5 +1,5 @@
 buildscript {
-  ext.kotlin_version = '1.6.10'
+  ext.kotlin_version = '1.8.0'
   repositories {
     mavenCentral()
   }
@@ -42,7 +42,7 @@ dependencies {
   implementation 'com.atlassian.commonmark:commonmark:0.17.0'
   implementation 'com.github.scribejava:scribejava-apis:8.3.1'
   implementation 'com.google.code.gson:gson:2.8.9'
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
   testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
