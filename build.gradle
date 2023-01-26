@@ -4,7 +4,7 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath "com.google.cloud.tools:appengine-gradle-plugin:2.4.1"
+    classpath "com.google.cloud.tools:appengine-gradle-plugin:2.4.5"
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
   }
 }
