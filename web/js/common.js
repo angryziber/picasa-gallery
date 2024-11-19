@@ -1,10 +1,9 @@
 'use strict'
 
 function fadeTo(href) {
-  var content = $('#content').addClass('faded')
+  $('#content').addClass('faded')
   setTimeout(function() {
-    content.remove()
-    $('body').append('<div class="loader"></div>')
+    $('body').prepend('<div class="loader"></div>')
     setTimeout(function() {
       location.href = href
     })
@@ -47,8 +46,10 @@ $(function() {
   $('#content').removeClass('faded')
 
   window.onpageshow = function(e) {
-    // fix Mobile Safari back button navigation
-    if (e.persisted) $('#content').removeClass('faded')
+    if (e.persisted) {
+      $('.loader').remove()
+      $('#content').removeClass('faded')
+    }
   }
 
   $('a.fade').on('click', function() {
