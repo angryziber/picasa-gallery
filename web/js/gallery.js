@@ -22,7 +22,7 @@ function GalleryMap() {
 
     resetBounds(map)
 
-    $(document).on('webkitfullscreenchange mozfullscreenchange fullscreenchange', function() {
+    $(document).on('fullscreenchange', function() {
       if (document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen) {
         if (map.getZoom() < hoverZoom) {
           map.setCenter(latLng(0, 0))
