@@ -2,15 +2,15 @@ package web
 
 import integration.OAuth
 import io.mockk.*
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
+import jakarta.servlet.http.HttpServletResponse.SC_MOVED_PERMANENTLY
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import photos.Album
 import photos.Photo
 import photos.Picasa
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
-import javax.servlet.http.HttpServletResponse.SC_MOVED_PERMANENTLY
 
 class RequestRouterTest {
   val req = mockk<HttpServletRequest>(relaxed = true)

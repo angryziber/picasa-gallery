@@ -1,9 +1,9 @@
 package photos
 
+import jakarta.servlet.ServletContext
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
 import java.io.File
-import javax.servlet.ServletContext
 
 class LocalContent(path: String?) {
   constructor(servletContext: ServletContext): this(servletContext.getRealPath("content"))

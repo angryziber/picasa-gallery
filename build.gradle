@@ -19,7 +19,7 @@ apply plugin: 'com.google.cloud.tools.appengine-appenginewebxml'
 
 compileKotlin {
   kotlinOptions {
-    jvmTarget = '1.8'
+    jvmTarget = '21'
   }
 }
 
@@ -38,7 +38,7 @@ sourceSets {
 
 dependencies {
   implementation 'com.google.appengine:appengine-api-1.0-sdk:+'
-  providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+  providedCompile 'jakarta.servlet:jakarta.servlet-api:5.0.0'
   implementation 'com.atlassian.commonmark:commonmark:0.17.0'
   implementation 'com.github.scribejava:scribejava-apis:8.3.1'
   implementation 'com.google.code.gson:gson:2.8.9'

@@ -1,6 +1,6 @@
 package web
 
-import javax.servlet.http.HttpServletResponse
+import jakarta.servlet.http.HttpServletResponse
 
 open class Renderer {
   open operator fun invoke(response: HttpServletResponse, lastModified: Long? = null, html: () -> String) {

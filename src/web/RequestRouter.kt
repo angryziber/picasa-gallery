@@ -2,15 +2,15 @@ package web
 
 import integration.BackgroundTasks
 import integration.OAuth
+import jakarta.servlet.FilterChain
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
+import jakarta.servlet.http.HttpServletResponse.SC_MOVED_PERMANENTLY
+import jakarta.servlet.http.HttpServletResponse.SC_NOT_FOUND
 import photos.AlbumPart
 import photos.Cache
 import photos.Picasa
 import java.util.*
-import javax.servlet.FilterChain
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
-import javax.servlet.http.HttpServletResponse.SC_MOVED_PERMANENTLY
-import javax.servlet.http.HttpServletResponse.SC_NOT_FOUND
 
 class RequestRouter(
   val req: HttpServletRequest,

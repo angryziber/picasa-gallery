@@ -2,9 +2,9 @@ package photos
 
 import io.mockk.every
 import io.mockk.mockk
+import jakarta.servlet.ServletContext
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import javax.servlet.ServletContext
 
 class LocalContentTest {
   val servletContext = mockk<ServletContext>()
