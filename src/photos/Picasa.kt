@@ -27,7 +27,8 @@ class Picasa(
   val urlPrefix get() = "/${auth.profile?.slug ?: ""}"
   val urlSuffix get() = if (auth.isDefault) "" else "?by=${auth.profile?.slug}"
 
-  val gallery = (if (localContent != null) jsonLoader.loadAll(auth, "/v1/albums", AlbumsResponse::class)
+  val gallery = (if (auth.refreshToken == null) emptyList() else
+                 if (localContent != null) jsonLoader.loadAll(auth, "/v1/albums", AlbumsResponse::class)
                  else jsonLoader.loadAll(auth, "/v1/sharedAlbums", SharedAlbumsResponse::class))
       .toGallery().also { loadThumbsAsync(it.albums.values) }
 

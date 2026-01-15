@@ -52,7 +52,7 @@ data class OAuth(var refreshToken: String?, val isDefault: Boolean = false) {
   }
 
   private fun refresh() {
-    refreshToken.let {
+    refreshToken?.let {
       token = service.refreshAccessToken(it)
     }
   }
