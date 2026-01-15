@@ -9,6 +9,8 @@ gallery of it's own anymore.
 
 Example gallery: [Anton Keks Photos](https://photos.azib.net/) - use the link at the bottom to try it with your own gallery!
 
+NB: Google has closed API access to Photos. This approach does not work anymore.
+
 How does it work?
 =================
 
